@@ -10,11 +10,7 @@ public class FileReader {
     private String line;
 
     public FileReader(File file){
-<<<<<<< HEAD
         this.log = file;
-=======
-        this.log = file
->>>>>>> d91e363fc2e6cb5e44c351d618c01d8d92f2c177
         try{
             scan = new Scanner(file);
         }catch(IOException e){
