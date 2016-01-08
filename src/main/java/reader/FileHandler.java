@@ -1,8 +1,9 @@
 package reader;
-import java.io.*;
-import java.lang.Runtime;
-import java.lang.InterruptedException;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
+import game.Game;
 
 /**
  * creates a object that holds the root folder with all compressed logs file
@@ -11,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 public class FileHandler {
 
     private File folderPath ;
+    private Game g;
 
 	/**
 	 *
@@ -48,7 +50,13 @@ public class FileHandler {
                     //iterates over all files in the temp folder
                     if(htmlList != null){
                         for(File log: htmlList){
-                            //TODO call the parser function with the log
+
+                            g = new Game();
+                            FileReader f = new FileReader(log);
+                            ReadGameHead r = new ReadGameHead(f , g);
+                            System.out.println(g.toString());
+                            f.close();
+
                         }
                     }else{
                         System.out.println("no files in temp");

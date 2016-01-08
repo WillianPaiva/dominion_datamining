@@ -20,6 +20,14 @@ public class FileReader {
 
 
 	/**
+	 * @return the scan
+	 */
+	public Scanner getScan() {
+		return scan;
+	}
+
+
+	/**
 	 *
 	 *
    * @return the actual line of the file
@@ -51,7 +59,7 @@ public class FileReader {
                 return this.line;
             }
         }
-        return null;
+        return this.line;
     }
 
 
