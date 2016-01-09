@@ -27,6 +27,19 @@ public class Game {
         this.players.add(s);
     }
 
+    public Player getPlayer(String s){
+        for(Player x: players){
+            if(x.getPlayerName().equals(s)){
+                return x;
+            }
+        }
+        return null;
+    }
+
+    public int getTotalPlayers(){
+        return this.players.size();
+    }
+
     public void insertWinner(String s){
         this.winners.add(s);
     }
@@ -40,7 +53,7 @@ public class Game {
     }
 
     public String toString(){
-        return winners.toString() + " " + gameNumber + " " + cardsGone.size() + " " + cardsInSuply.size() +" "+ players.toString();
+        return winners.toString() + " " + gameNumber + " " + cardsGone.size() + " " + cardsInSuply.size() +" "+ players.toString()+" "+trash.toString();
     }
 
 }
