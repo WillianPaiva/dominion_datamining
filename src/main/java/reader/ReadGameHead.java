@@ -65,65 +65,66 @@ public class ReadGameHead {
             }
 
             //jump to the players section of the log
-            this.doc = Jsoup.parse(r.searchLineWithString("(.*)-----------(.*)"));
-            if(r.getLine().contains("------------") && start == true){
-                start = false;
+            if(r.searchLineWithString("(.*)-----------(.*)")!=null){
+                this.doc = Jsoup.parse(r.searchLineWithString("(.*)-----------(.*)"));
+                if(r.getLine().contains("------------") && start == true){
+                    start = false;
 
-                //jumps to the first player
-                r.jumpline();
-                this.doc = Jsoup.parse(r.jumpline());
-                while(!r.getLine().contains("----------")){
+                    //jumps to the first player
+                    r.jumpline();
+                    this.doc = Jsoup.parse(r.jumpline());
+                    while(!r.getLine().contains("----------")){
 
-                    //create the player
-                    Player pl;
-                    String name;
-                    if(doc.select("b").text().contains("points")){
-                        name = doc.select("b").text().split(":")[0];
-                    }else{
-                        name = doc.select("b").text().replaceAll("#[0-9]* ","");
-                    }
-
-                    pl = new Player(name);
-
-                    //break the string into 2 parts to find the points
-                    if(doc.text().contains("points")){
-                        String[] firstBreak = doc.text().split("points");
-
-                        //set the player points
-                        String[] p = firstBreak[0].split(":");
-                        String temp = p[p.length-1].replace(" ","");
-                        if(temp.contains("resigned")){
-                            pl.setPoints(0);
+                        //create the player
+                        Player pl;
+                        String name;
+                        if(doc.select("b").text().contains("points")){
+                            name = doc.select("b").text().split(":")[0];
                         }else{
-                            pl.setPoints(Integer.parseInt(temp));
+                            name = doc.select("b").text().replaceAll("#[0-9]* ","");
                         }
 
-                        //split the string to get all victory points cards
-                        String list = firstBreak[1].split(";")[0];
-                        list = list.substring(2,list.length()-1).replace("and","");
-                        if(!list.contains("nothing")){
-                            String[] victoryCards = list.split(",");
+                        pl = new Player(name);
 
-                            //insert the victorycards on the player object
-                            for(String x: victoryCards){
-                                while(x.charAt(0)==' '){
-                                    x = x.substring(1);
-                                }
-                                String[] cards = x.split(" ");
-                                int qty;
-                                try {
-                                    qty = Integer.parseInt(cards[0]);
-                                } catch (NumberFormatException e) {
-                                    qty = 1;
-                                }
-                                String card = cards[1];
-                                pl.insertVictoryCard(qty,card);
+                        //break the string into 2 parts to find the points
+                        if(doc.text().contains("points")){
+                            String[] firstBreak = doc.text().split("points");
+
+                            //set the player points
+                            String[] p = firstBreak[0].split(":");
+                            String temp = p[p.length-1].replace(" ","");
+                            if(temp.contains("resigned")){
+                                pl.setPoints(0);
+                            }else{
+                                pl.setPoints(Integer.parseInt(temp));
                             }
 
+                            //split the string to get all victory points cards
+                            String list = firstBreak[1].split(";")[0];
+                            list = list.substring(2,list.length()-1).replace("and","");
+                            if(!list.contains("nothing")){
+                                String[] victoryCards = list.split(",");
+
+                                //insert the victorycards on the player object
+                                for(String x: victoryCards){
+                                    while(x.charAt(0)==' '){
+                                        x = x.substring(1);
+                                    }
+                                    String[] cards = x.split(" ");
+                                    int qty;
+                                    try {
+                                        qty = Integer.parseInt(cards[0]);
+                                    } catch (NumberFormatException e) {
+                                        qty = 1;
+                                    }
+                                    String card = cards[1];
+                                    pl.insertVictoryCard(qty,card);
+                                }
+
+                            }
+                            //get the turns
+                            pl.setTurns(Integer.parseInt(firstBreak[1].split(";")[1].replace(" turns","").replace(" ","")));
                         }
-                        //get the turns
-                        pl.setTurns(Integer.parseInt(firstBreak[1].split(";")[1].replace(" turns","").replace(" ","")));
-                    }
 
                         //get next line
                         doc = Jsoup.parse(r.jumpline());
@@ -156,16 +157,75 @@ public class ReadGameHead {
                             }
                         }
 
-                    g.insertPlayer(pl);
+                        g.insertPlayer(pl);
 
-                    //jumps 1 line
-                    r.jumpline();
-                    this.doc = Jsoup.parse(r.jumpline());
+                        //jumps 1 line
+                        r.jumpline();
+                        this.doc = Jsoup.parse(r.jumpline());
+                    }
+                }
+                //return the file pointer to the beginning of the file
+                r.rewindFile();
+
+                //look for the line that describes the trash
+                this.doc = Jsoup.parse(r.searchLineWithString("trash: (.*)"));
+
+                //parse the line trash and add the list to the game object
+                if(!doc.text().contains("nothing")){
+                    String[] trash = doc.text().replace("trash: ","").replace("and","").split(",");
+                    for(String x: trash){
+                        while(x.charAt(0)==' '){
+                            x = x.substring(1);
+                        }
+                        String[] cards = x.split(" ");
+                        int qty;
+                        try {
+                            qty = Integer.parseInt(cards[0]);
+                        } catch (NumberFormatException e) {
+                            qty = 1;
+                        }
+                        String card = cards[1];
+                        g.insertTrash(qty, card);
+                    }
                 }
 
+
+                //return the file pointer to the beginning of the file
                 r.rewindFile();
-                this.doc = Jsoup.parse(r.searchLineWithString("trash: (.*)"));
-                System.out.println(doc.text());
+
+                //look for the line that marks the beginning of the game log
+                this.doc = Jsoup.parse(r.searchLineWithString("<hr/><b>Game log</b>"));
+
+                //parse the first hand of each player on the match
+                if(r.searchLineWithString("(.*)'s first hand: (.*)")!=null){
+                    for(int x = 0 ; x < g.getTotalPlayers(); x++){
+                        this.doc = Jsoup.parse(r.searchLineWithString("(.*)'s first hand: (.*)"));
+                        String[] firstHand = doc.text().split("'s first hand: ");
+                        for(String y: firstHand[1].replace(".)", "").split("and")){
+                            while(y.charAt(0)==' '){
+                                y = y.substring(1);
+                            }
+                            String[] cards = y.split(" ");
+                            int qty;
+                            try{
+                                qty = Integer.parseInt(cards[0]);
+                            } catch (NumberFormatException e){
+                                qty = 1;
+                            }
+                            String card = cards[1];
+                            if(g.getPlayer(firstHand[0].substring(1))==null){
+                                System.out.println(firstHand[0]);
+                                System.exit(1);
+                            }
+                            g.getPlayer(firstHand[0].substring(1)).insertFirstHand(qty,card);
+
+                        }
+
+                    }
+                }
+
+
+
 
             }
         }else{
