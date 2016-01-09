@@ -1,5 +1,6 @@
 package game;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import game.player.Player;
 
@@ -8,6 +9,7 @@ public class Game {
     private ArrayList<String> cardsGone = new ArrayList<String>();
     private ArrayList<String> cardsInSuply = new ArrayList<String>();
     private ArrayList<Player> players = new ArrayList<Player>();
+    private HashMap<String,Integer> trash = new HashMap<String,Integer>();
     private int gameNumber;
 
     public Game(){}
@@ -31,6 +33,10 @@ public class Game {
 
     public void setGameNumber(int i){
         this.gameNumber = i ;
+    }
+
+    public void insertTrash(int q, String c){
+        trash.put(c,q);
     }
 
     public String toString(){
