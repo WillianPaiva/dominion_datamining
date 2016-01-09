@@ -7,11 +7,16 @@ public class Player {
     private HashMap<String,Integer> victoryCards = new HashMap<String,Integer>();
     private int points;
     private HashMap<String,Integer> deck = new HashMap<String,Integer>();
+    private HashMap<String,Integer> firstHand = new HashMap<String,Integer>();
     private int turns;
     private ArrayList<String> opening = new ArrayList<String>();
 
     public Player(String pl){
         this.pl = pl ;
+    }
+
+    public String getPlayerName(){
+        return this.pl;
     }
 
     public void setPlayer(){
@@ -39,8 +44,11 @@ public class Player {
         this.opening.add(s);
     }
 
+    public void insertFirstHand(int n , String s){
+        this.firstHand.put(s,n);
+    }
 
     public String toString(){
-        return pl + " " + points + " " + deck.size();
+        return "\n"+pl + " " + points + "\n " + deck.toString() + "\n" + victoryCards.toString() + "\n first hand: " + firstHand.toString();
     }
 }
