@@ -65,7 +65,7 @@ public class ReadGameHead {
             }
 
             //jump to the players section of the log
-            this.doc = Jsoup.parse(r.searchLineWithString("-----------"));
+            this.doc = Jsoup.parse(r.searchLineWithString("(.*)-----------(.*)"));
             if(r.getLine().contains("------------") && start == true){
                 start = false;
 
@@ -161,8 +161,11 @@ public class ReadGameHead {
                     //jumps 1 line
                     r.jumpline();
                     this.doc = Jsoup.parse(r.jumpline());
-                    System.out.println(doc.text());
                 }
+
+                r.rewindFile();
+                this.doc = Jsoup.parse(r.searchLineWithString("trash: (.*)"));
+                System.out.println(doc.text());
 
             }
         }else{
