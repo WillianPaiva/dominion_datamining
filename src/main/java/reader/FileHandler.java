@@ -51,6 +51,7 @@ public class FileHandler {
                     if(htmlList != null){
                         for(File log: htmlList){
 
+                            System.out.println(log.getAbsoluteFile());
                             g = new Game();
                             FileReader f = new FileReader(log);
                             ReadGameHead r = new ReadGameHead(f , g);
