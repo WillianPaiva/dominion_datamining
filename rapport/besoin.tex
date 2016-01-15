@@ -1,0 +1,203 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{listings} % Required for insertion of code
+\usepackage{courier} % Required for the courier font
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{verbatim}
+
+
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1} % Line spacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\rhead{\firstxmark} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%	Skip this unless you know what you're doing
+%----------------------------------------------------------------------------------------
+
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0} % Removes default section numbers
+\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
+\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
+\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
+\section{\homeworkProblemName} % Make a section in the document with the custom problem count
+\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+}{
+\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkTitle}{Dominion datamining: expression du besoin} % Assignment title
+\newcommand{\hmwkDueDate}{Friday,\ January\ 29,\ 2016} % Due date
+\newcommand{\hmwkClass}{PdP} % Course/class
+\newcommand{\hmwkClassInstructor}{Narbel Philippe, Boussicault Adrien} % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{VER VALEM Willian , BAYOL Elmer , Liliana Lopez Farfan , TAGNAOUTI Khaoula} % Your name
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{} % Insert date here if you want it to appear below your name
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC
+
+\newpage
+\tableofcontents
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+% To have just one problem per page, simply put a \clearpage after each problem
+
+\begin{homeworkProblem}[Présentation du projet]
+  Ce projet, proposé par Yvan Le Borgne du Labri, a pour but d'analyser des logs du jeu de cartes Dominion. En effet pendant plusieurs années, un serveur a été mis à disposition afin de pouvoir jouer au jeu de cartes. Les objectifs du projet sont d'obtenir une représentation des données utilisables (les logs sont très verbeux, au format html et ne respectent pas toujours la même structure) puis de porposer desmoyens de représentation de ces données afin d'en extraire des observations. Ces observations seront variées, mis à part les statistiques relatives au déroulement des parties, le projet vise également à discerner les différentes stratégies utilisées par les joueurs, pour cela un wiki est a disposition et les critères à reconnaître découlent de celui-ci.
+  
+\end{homeworkProblem}
+
+\begin{homeworkProblem}[Besoins non-fonctionnels]
+  \begin{homeworkSection}{Performances}
+    Concernant l'extraction des données à partir des logs, les performances ne sont pas très importantes car cette étape ne s'effectue qu'une seule fois. La taille des logs étant de près de 400 Go, un temps de parsing de plusieurs heures est envisageable. Au niveau de lexploitation des données extraites, un temps d'execution plus bas est demandé sans pour autant avoir d'exigeances particulières.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Fiabilité}
+    La quantité de parties enregistrées étant importante une quantité de 5\% à 10\% de logs ignorés est tolérable. Il est important de garder en mémoire que les données extraites seront utilisées à des fins statistiques.
+    \newline L'objectif concernant l'extraction des logs est de ne perdre aucune information, il pourrait même être possible de reconstituer les informations manquantes dans les logs mais ce problème pourra être traité en fonction du temps restant.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Facilité d'utilisation}
+    Le programme pourra être constitué d'une invite de commandes, une interface graphique n'est pas requise. Les statistiques extraites des données devront quand à elles être représentées graphiquement. Le déroulement d'une partie devra également être facilement visualisable afin de détecter de vérifier que les réultats obtenus (choix de stratégies) sont bien les bons.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Domaine d'action}
+    Les données traitées consistent en des logs d'un jeu de carte, ces logs pouvant être transcrits de manière diverse. Les utilisateurs du programme seront intéressés par les statistiques pouvant être obtenues à partir des données.
+  \end{homeworkSection}
+
+  \begin{homeworkSection}{Portabilité}
+    Le programme devra fonctionner sur un environnement linux, aucun autre sytème d'exploitation n'est visé.
+  \end{homeworkSection}
+
+  \begin{homeworkSection}{Taille des données}
+    Les logs étant très volumineux, le premier enjeu sera d'en extraire les données tout en réduisant drastiquement la taille de celles-ci, une taille de l'ordre de plusieurs dizaines de Go est acceptable.
+  \end{homeworkSection}
+
+  \begin{homeworkSection}{Souplesse d'utilisation}
+    Nous ne pouvons pas prévoir toutes les données intéressant le client, il faut donc autoriser une souplesse d'utilisation au niveau de l'extraction des données.
+  \end{homeworkSection}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}[Besoins fonctionnels]
+  \begin{homeworkSection}{Parsing}
+    Le programme doit pouvoir lire des logs de parties et récupérer les informations contenues dans ces logs
+    \begin {itemize}
+    \item Le parser doit pouvoir s'adapter aux différences entre les parties (informations manquantes). Il faut donc que le programme détecte si certaines portions du log sont manquantes et si possible, la reconsituer.
+    \item Le parser doit accepter tous les logs dans la mesure du possible, dans certains cas de figures le parser pourra ignorer certaines parties (noms invalides, ambigus)
+    \item Le parser va travailler par tranches de données, une tranche correspond à une journée de logs.
+    \item Le parser devra fournir le nombre de parties traitées par rapport au nombre de parties en entrée.
+    \end {itemize}
+  \end{homeworkSection}
+  \begin{homeworkSection}{Stockage}
+    Le stockage se fera a l'aide deux bases de données, un première de type no-SQL, une seconde de type relationnelle. Le système de stockage contiendra des requètes persistantes afin de faciliter l'accès aux données utiles.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Classement des joueurs}
+    Le programme devra fournir un moyen d'obtenir le classement des joueurs. La solution retenue consiste en l'utilisation du système d'Elo. Pour chaque partie il faudra connaitre l'elo initial de chaque joueur et calculer leur elo à l'issue de la partie.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Stratégies utilisées}
+    Le programme devra reconnaître la stratégie suivie par chaque joueur (si le joueur en suit une) dans une partie. Les stratégies sont décrites dans la page wiki du jeu.
+  \end{homeworkSection}
+  \begin{homeworkSection}{Greening}
+    Pour terminer une partie, les joueurs doivent acheter des points de victoire, le programme devra reconnaître à quel moment ces points commencent à être achetés
+  \end{homeworkSection}
+  \begin{homeworkSection}{Visualisation des données}
+    Il faut pouvoir représenter graphiquement les statistiques observées.
+    \begin {itemize}
+    \item Des statistiques intéressantes pourront être proposées par défaut et représentées directement à la demande.
+    \item L'utilisateur pourra également créer ses propres statistiques et les représenter à l'aide d'un programme dédié à cette tache.
+    \end {itemize}
+  \end{homeworkSection}
+\end{homeworkProblem}
+
+\end{document}
