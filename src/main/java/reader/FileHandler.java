@@ -55,7 +55,7 @@ public class FileHandler {
                             g = new Game();
                             FileReader f = new FileReader(log);
                             ReadGameHead r = new ReadGameHead(f , g);
-                            System.out.println(g.toString());
+                            // System.out.println(g.toString());
                             f.close();
 
                         }
