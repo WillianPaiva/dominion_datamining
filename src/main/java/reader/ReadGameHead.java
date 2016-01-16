@@ -65,15 +65,15 @@ public class ReadGameHead {
             }
 
             //jump to the players section of the log
-            if(r.searchLineWithString("(.*)-----------(.*)")!=null){
-                this.doc = Jsoup.parse(r.searchLineWithString("(.*)-----------(.*)"));
-                if(r.getLine().contains("------------") && start == true){
+            if(r.searchLineWithString("(.*)----------------------(.*)")!=null){
+                this.doc = Jsoup.parse(r.getLine());
+                if(r.getLine().contains("----------------------") && start == true){
                     start = false;
 
                     //jumps to the first player
                     r.jumpline();
                     this.doc = Jsoup.parse(r.jumpline());
-                    while(!r.getLine().contains("----------")){
+                    while(!r.getLine().contains("----------------------")){
 
                         //create the player
                         Player pl;
@@ -81,7 +81,7 @@ public class ReadGameHead {
                         if(doc.select("b").text().contains("points")){
                             name = doc.select("b").text().split(":")[0];
                         }else{
-                            name = doc.select("b").text().replaceAll("#[0-9]* ","");
+                            name = doc.select("b").text().replaceAll("^#[0-9]* ","");
                         }
 
                         pl = new Player(name);
@@ -164,42 +164,42 @@ public class ReadGameHead {
                         this.doc = Jsoup.parse(r.jumpline());
                     }
                 }
+
+            }
                 //return the file pointer to the beginning of the file
                 r.rewindFile();
 
                 //look for the line that describes the trash
-                this.doc = Jsoup.parse(r.searchLineWithString("trash: (.*)"));
+                if(r.searchLineWithString("trash: (.*)")!=null){
+                    this.doc = Jsoup.parse(r.getLine());
 
-                //parse the line trash and add the list to the game object
-                if(!doc.text().contains("nothing")){
-                    String[] trash = doc.text().replace("trash: ","").replace("and","").split(",");
-                    for(String x: trash){
-                        while(x.charAt(0)==' '){
-                            x = x.substring(1);
+                    //parse the line trash and add the list to the game object
+                    if(!doc.text().contains("nothing")){
+                        String[] trash = doc.text().replace("trash: ","").replace("and","").split(",");
+                        for(String x: trash){
+                            while(x.charAt(0)==' '){
+                                x = x.substring(1);
+                            }
+                            String[] cards = x.split(" ");
+                            int qty;
+                            try {
+                                qty = Integer.parseInt(cards[0]);
+                            } catch (NumberFormatException e) {
+                                qty = 1;
+                            }
+                            String card = cards[1];
+                            g.insertTrash(qty, card);
                         }
-                        String[] cards = x.split(" ");
-                        int qty;
-                        try {
-                            qty = Integer.parseInt(cards[0]);
-                        } catch (NumberFormatException e) {
-                            qty = 1;
-                        }
-                        String card = cards[1];
-                        g.insertTrash(qty, card);
                     }
                 }
-
 
                 //return the file pointer to the beginning of the file
                 r.rewindFile();
 
-                //look for the line that marks the beginning of the game log
-                this.doc = Jsoup.parse(r.searchLineWithString("<hr/><b>Game log</b>"));
-
                 //parse the first hand of each player on the match
                 if(r.searchLineWithString("(.*)'s first hand: (.*)")!=null){
                     for(int x = 0 ; x < g.getTotalPlayers(); x++){
-                        this.doc = Jsoup.parse(r.searchLineWithString("(.*)'s first hand: (.*)"));
+                        this.doc = Jsoup.parse(r.getLine());
                         String[] firstHand = doc.text().split("'s first hand: ");
                         for(String y: firstHand[1].replace(".)", "").split("and")){
                             while(y.charAt(0)==' '){
@@ -213,24 +213,62 @@ public class ReadGameHead {
                                 qty = 1;
                             }
                             String card = cards[1];
-                            if(g.getPlayer(firstHand[0].substring(1))==null){
-                                System.out.println(firstHand[0]);
-                                System.exit(1);
-                            }
                             g.getPlayer(firstHand[0].substring(1)).insertFirstHand(qty,card);
-
                         }
 
+                        r.searchLineWithString("(.*)'s first hand: (.*)");
+                    }
+                }
+
+                r.rewindFile();
+                this.doc = Jsoup.parse(r.searchLineWithString("(.*)'s turn 1(.*)"));
+                System.out.println(turnGetPlayer(doc.text()));
+                boolean finished = false;
+                while(finished == false){
+                    this.doc = Jsoup.parse(r.jumpline());
+                    while(!doc.text().matches("(.*)'s turn [0-9]*(.*)")){
+                        if(doc.text().contains("game aborted: ") || doc.text().contains("resigns from the game") || doc.text().matches("All [a-z A-z]* are gone.") || doc.text().matches("(.*) are all gone.")){
+                            finished = true;
+                            break;
+                        }else{
+                            if(doc.text().contains("plays")){
+                                System.out.println(doc.text()+"PLAYS");
+                            } else if(doc.text().contains("buys")){
+                                System.out.println(doc.text()+"BUYS");
+                            } else if(doc.text().contains("draws")){
+                                System.out.println(doc.text()+"DRAWS");
+                            } else if(doc.text().matches("^... drawing (.*)")){
+                                System.out.println(doc.text()+"DRAWING");
+                            } else if(doc.text().contains("gains")){
+                                System.out.println(doc.text()+"GAINS");
+                            } else if(doc.text().contains("getting")){
+                                System.out.println(doc.text()+"GETTING");
+                            } else if(doc.text().contains("trashes")){
+                                System.out.println(doc.text()+"TRASHES");
+                            }
+
+
+
+
+
+                            this.doc = Jsoup.parse(r.jumpline());
+                        }
                     }
                 }
 
 
 
 
-            }
+
         }else{
             System.out.println("ERROR EMPTYFILE");
         }
 
     }
+
+    private String turnGetPlayer(String t){
+        String[] temp = t.split("'s turn [0-9]* ");
+        return temp[0].replace(temp[1]+" ","");
+    }
 }
+
