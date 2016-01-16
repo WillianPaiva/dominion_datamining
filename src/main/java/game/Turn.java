@@ -1,15 +1,15 @@
-package main.java.game;
+package game;
 import java.util.ArrayList;
-import game.player.Player;
+import game.PlayerTurn;
 
 public class Turn {
-    private Player p ;
-    private ArrayList<Play> plays = new ArrayList<Play>();
-    public Turn(Player p){
-        this.p = p ;
+    private int number ;
+    private ArrayList<PlayerTurn> turns = new ArrayList<PlayerTurn>();
+    public Turn(int number){
+        this.number = number ;
     }
 
-    public void insertPlay(Play play){
-        plays.add(play);
+    public void insertPlay(PlayerTurn play){
+        turns.add(play);
     }
 }
