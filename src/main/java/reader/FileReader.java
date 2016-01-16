@@ -54,10 +54,10 @@ public class FileReader {
 	 */
     public String searchLineWithString(String target){
         while(scan.hasNextLine()){
+            this.line = this.scan.nextLine();
             if(line.matches(target)){
                 return this.line;
             }
-            this.line = this.scan.nextLine();
         }
         return null;
     }
