@@ -1,5 +1,6 @@
 package game;
 import java.util.HashMap;
+import game.Turn;
 
 public class TurnsLog {
     private int number ;

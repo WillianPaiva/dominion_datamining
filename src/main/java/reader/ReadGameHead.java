@@ -1,10 +1,13 @@
 package reader;
-import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import game.Game;
+import game.PlayerTurn;
+import game.Turn;
+import game.TurnsLog;
 import game.player.Player;
 
 
@@ -224,6 +227,12 @@ public class ReadGameHead {
                 this.doc = Jsoup.parse(r.searchLineWithString("(.*)'s turn 1(.*)"));
                 System.out.println(turnGetPlayer(doc.text()));
                 boolean finished = false;
+                int depth = 0;
+                int turn = 0;
+                PlayerTurn pturn;
+                Turn turn;
+                TurnsLog log;
+
                 while(finished == false){
                     this.doc = Jsoup.parse(r.jumpline());
                     while(!doc.text().matches("(.*)'s turn [0-9]*(.*)")){
