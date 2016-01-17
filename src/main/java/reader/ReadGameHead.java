@@ -5,6 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import game.Game;
+import game.Play;
 import game.PlayerTurn;
 import game.Turn;
 import game.TurnsLog;
@@ -225,48 +226,105 @@ public class ReadGameHead {
 
                 r.rewindFile();
                 this.doc = Jsoup.parse(r.searchLineWithString("(.*)'s turn 1(.*)"));
-                System.out.println(turnGetPlayer(doc.text()));
                 boolean finished = false;
                 int depth = 0;
-                int turn = 0;
-                PlayerTurn pturn;
-                Turn turn;
-                TurnsLog log;
+                int turn = 1;
+                Turn t = new Turn(turn);
+                TurnsLog log = new TurnsLog();
 
                 while(finished == false){
-                    this.doc = Jsoup.parse(r.jumpline());
-                    while(!doc.text().matches("(.*)'s turn [0-9]*(.*)")){
-                        if(doc.text().contains("game aborted: ") || doc.text().contains("resigns from the game") || doc.text().matches("All [a-z A-z]* are gone.") || doc.text().matches("(.*) are all gone.")){
-                            finished = true;
-                            break;
-                        }else{
-                            if(doc.text().contains("plays")){
-                                System.out.println(doc.text()+"PLAYS");
-                            } else if(doc.text().contains("buys")){
-                                System.out.println(doc.text()+"BUYS");
-                            } else if(doc.text().contains("draws")){
-                                System.out.println(doc.text()+"DRAWS");
-                            } else if(doc.text().matches("^... drawing (.*)")){
-                                System.out.println(doc.text()+"DRAWING");
-                            } else if(doc.text().contains("gains")){
-                                System.out.println(doc.text()+"GAINS");
-                            } else if(doc.text().contains("getting")){
-                                System.out.println(doc.text()+"GETTING");
-                            } else if(doc.text().contains("trashes")){
-                                System.out.println(doc.text()+"TRASHES");
-                            }else if(doc.text().contains("putting")){
-                                System.out.println(doc.text()+"PUTTING");
-                            }else if(doc.text().contains("revealing")){
-                                System.out.println(doc.text()+"REVEALING");
-                            }else if(doc.text().contains("reveals")){
-                                System.out.println(doc.text()+"REVEALS");
-                            }else if(doc.text().contains("trashing")){
-                                System.out.println(doc.text()+"TRASHING");
+
+                    if(doc.text().matches("(.*)'s turn [0-9]*(.*)")){
+                        int tempTurn = 0;
+                        if(!doc.text().contains("(possessed by")){
+                            tempTurn = Integer.parseInt(doc.text().split("'s turn")[1].replaceAll("[^0-9]+",""));
+                        }
+                        if(tempTurn > turn){
+                            turn = tempTurn;
+                            log.insertPlay(t);
+                            t = new Turn(turn);
+                        }
+
+                        Player tempPlayer = g.getPlayer(turnGetPlayer(doc.text()));
+                        PlayerTurn pturn = new PlayerTurn(tempPlayer);
+                        this.doc = Jsoup.parse(r.jumpline());
+
+                        while(!doc.text().matches("(.*)'s turn [0-9]*(.*)")){
+
+                            if(doc.text().contains("game aborted: ") ||
+                               doc.text().contains("resigns from the game") ||
+                               doc.text().matches("All [a-z A-z]* are gone.") ||
+                               doc.text().matches("(.*) are all gone.")){
+
+                                finished = true;
+                                break;
+                            }else{
+
+                                if(doc.text().contains("plays")){
+                                    Play temp = new Play("play",tempPlayer);
+                                    String cards = doc.text().split("plays")[1].replaceAll("\\.","");
+                                    if(cards.contains(",")){
+                                        cards = cards.replace("and","");
+                                            String[] playedCards = cards.split(",");
+
+                                            for(String x: playedCards){
+                                                while(x.charAt(0)==' '){
+                                                    x = x.substring(1);
+                                                }
+                                                String[] card = x.split(" ");
+                                                int qty;
+                                                try {
+                                                    qty = Integer.parseInt(card[0]);
+                                                } catch (NumberFormatException e) {
+                                                    qty = 1;
+                                                }
+                                                String c = card[1];
+                                                temp.insertCard(qty,c);
+                                            }
+                                            pturn.insertPlay(temp);
+                                    }else{
+                                        String[] playedCards = cards.split(" and ");
+                                        for(String x: playedCards){
+                                            int qty;
+                                            try {
+                                                qty = Integer.parseInt(x.replaceAll("[^0-9]+",""));
+                                            } catch (NumberFormatException e) {
+                                                qty = 1;
+                                            }
+                                            String c = x.replaceAll("[0-9]+","").replaceAll("a ","").replaceAll("an ","").replaceAll("^\\s+","");
+                                            temp.insertCard(qty,c);
+                                            System.out.println(c);
+                                        }
+                                        pturn.insertPlay(temp);
+                                    }
+                                } else if(doc.text().contains("buys")){
+                                    // System.out.println(doc.text()+"BUYS");
+                                } else if(doc.text().contains("draws")){
+                                    // System.out.println(doc.text()+"DRAWS");
+                                } else if(doc.text().matches("^... drawing (.*)")){
+                                    // System.out.println(doc.text()+"DRAWING");
+                                } else if(doc.text().contains("gains")){
+                                    // System.out.println(doc.text()+"GAINS");
+                                } else if(doc.text().contains("getting")){
+                                    // System.out.println(doc.text()+"GETTING");
+                                } else if(doc.text().contains("trashes")){
+                                    // System.out.println(doc.text()+"TRASHES");
+                                }else if(doc.text().contains("putting")){
+                                    // System.out.println(doc.text()+"PUTTING");
+                                }else if(doc.text().contains("revealing")){
+                                    // System.out.println(doc.text()+"REVEALING");
+                                }else if(doc.text().contains("reveals")){
+                                    // System.out.println(doc.text()+"REVEALS");
+                                }else if(doc.text().contains("trashing")){
+                                    // System.out.println(doc.text()+"TRASHING");
+                                }
                             }
                             this.doc = Jsoup.parse(r.jumpline());
                         }
                     }
                 }
+
+
 
 
 
@@ -279,7 +337,7 @@ public class ReadGameHead {
     }
 
     private String turnGetPlayer(String t){
-        String[] temp = t.split("'s turn [0-9]* ");
+        String[] temp = t.split("'s turn ");
         return temp[0].replace(temp[1]+" ","");
     }
 }
