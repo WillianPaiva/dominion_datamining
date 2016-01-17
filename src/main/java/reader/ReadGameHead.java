@@ -245,12 +245,15 @@ public class ReadGameHead {
                                 System.out.println(doc.text()+"GETTING");
                             } else if(doc.text().contains("trashes")){
                                 System.out.println(doc.text()+"TRASHES");
+                            }else if(doc.text().contains("putting")){
+                                System.out.println(doc.text()+"PUTTING");
+                            }else if(doc.text().contains("revealing")){
+                                System.out.println(doc.text()+"REVEALING");
+                            }else if(doc.text().contains("reveals")){
+                                System.out.println(doc.text()+"REVEALS");
+                            }else if(doc.text().contains("trashing")){
+                                System.out.println(doc.text()+"TRASHING");
                             }
-
-
-
-
-
                             this.doc = Jsoup.parse(r.jumpline());
                         }
                     }
