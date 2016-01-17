@@ -1,13 +1,16 @@
 package game;
 import java.util.HashMap;
 
+import game.player.Player;
+
 public class Play {
 
-    private int type ;
+    private String type ;
     private HashMap<String,Integer> move = new HashMap<String,Integer>();
     private HashMap<Integer,Play> followingPlays = new HashMap<Integer,Play>();
     private int counter = 0;
-    public Play(int type){
+    private Player p;
+    public Play(String type , Player p){
         this.type = type ;
     }
 
