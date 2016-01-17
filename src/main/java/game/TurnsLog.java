@@ -1,15 +1,13 @@
 package game;
-import java.util.HashMap;
+import java.util.ArrayList;
 import game.Turn;
 
 public class TurnsLog {
-    private int number ;
-    private HashMap<Integer,Turn> turns = new HashMap<Integer,Turn>();
-    public TurnsLog(int number){
-        this.number = number ;
+    private ArrayList<Turn> turns = new ArrayList<Turn>();
+    public TurnsLog(){
     }
 
     public void insertPlay(Turn n){
-        turns.put(number,n);
+        turns.add(n);
     }
 }
