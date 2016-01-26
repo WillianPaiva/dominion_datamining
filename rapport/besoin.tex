@@ -139,42 +139,46 @@
 \begin{homeworkProblem}[Présentation du projet]
   %Ce projet, proposé par Yvan Le Borgne du Labri, a pour but d'analyser des logs du jeu de cartes Dominion. En effet pendant plusieurs années, un serveur a été mis à disposition afin de pouvoir jouer au jeu de cartes. Les objectifs du projet sont d'obtenir une représentation des données utilisables (les logs sont très verbeux, au format html et ne respectent pas toujours la même structure) puis de proposer des moyens de représentation de ces données afin d'en extraire des observations. Ces observations seront variées, mis à part les statistiques relatives au déroulement des parties, le projet vise également à discerner les différentes stratégies utilisées par les joueurs, pour cela un wiki est à disposition et les critères à reconnaître découlent de celui-ci.
 
-  Le jeu de cartes Dominion a été mis a disposition sur un serveur de jeu de 2010 à 2013. Les parties effectuées via ce serveur ont été enregistrées dans des logs et sont a disposition du public. Le but de ce projet proposé par Yvan Le Borgne, chercheur au Labri, est de traiter ces logs afin de répondre à plusieurs interrogation.
-  \newline Un wiki relatif au jeu est disponible et propose une expertise sur ce jeu, notamment au niveau des stratégies proposées. Les données recueillies par notre programme devront être comparées au préconisations de ce wiki afin de valider ou non les informations fournies. Pour cela notre programme devra tout d'abord extraire les données présentes dans les logs car ceux-ci sont trop volumineux et trop compliqués à utiliser directement (structure changeante). Dans cette optique, le projet a pour but de créer une base de données recensant les parties puis un travail d'analyse sera effctuée à partir de celle-ci. Enfin une manière simple de représenter les données extraites et analysées sera proposée à l'utilisateur.
-  
+  Le jeu de cartes \textit{Dominion} a été mis à disposition sur un serveur de jeu d'octobre 2010 à mars 2013. Les parties effectuées via ce serveur ont été enregistrées dans des \textit{logs} qui mémorisaient toutes les actions des joueurs ; ces \textit{logs} ont été mis à disposition du public. Mais ces enregistrements n'ont pas conservé un certain nombre d'informations ayant un rapport avec les décisions prises par les joueurs.
+  \newline Un wiki relatif au jeu a été élaboré, et propose des avis d'experts comme aide à la décision pour les joueurs : il propose des conseils, notamment au niveau stratégique. Le but de ce projet, proposé par Yvan Le Borgne, chercheur au Labri, est de traiter ces \textit{logs} (soit plus de 12 millions de parties) afin de répondre à plusieurs interrogations. Il s'agira principalement de comparer Les données recueillies aux préconisations de ce wiki,afin de valider, à travers les contenus des parties, l'éventuelle efficacité des avis et suggestions fournies par les experts. A tout le moins, on cherchera à élaborer des outils de validation présentant une efficacité suffisante.
+   Dans cette optique, le projet a pour but de créer une base de données recensant les parties puis un travail d'analyse sera effectuée à partir de celle-ci.
+  Pour cela notre programme devra tout d'abord extraire les données présentes dans les logs, car ceux-ci sont trop volumineux et trop compliqués à utiliser directement (structure non standardisée). Il s'agira de mettre au point des structures de données permettant de stocker les données de manière plus efficace. Une manière simple de représenter les données extraites et analysées sera proposée à l'utilisateur.
+  Par ailleurs, il manque des informations dans les enregistrements (\textit{logs}). On cherchera à trouver par quelle méthode on peut les reconstituer et de les mettre dans un format qui contienne toutes les informations.
+  En outre, on cherchera à optimiser les opérations menées dans l'analyse des donnnées, en recherchant le meilleur équilibre possible entre la mémorisation des recherches et le re-calcul.
+  Enfin, on esssaiera de déterminer quelle stratégie a été utilisée dans chaque partie. Voire de faire émerger les changements de stratégie en cours de partie. Si on prend pour exemple une des stratégies (la \textit{Penultimate Province Rule}) peut on détecter à quel moment cette règle a été appliquée ou contournée ? ou qui a mis au point cette stratégie ? (découverte qui pourrait permettre d'organiser un classement des joueurs les plus performants) (une sorte de ELO demandé par le client). Dans la mesure où on parviendrait à mettre au point un nombre suffisant de ces démarches stratégiques, il s'agirait de déterminer le processus habituel d'apprentissage des joueurs.
+
+
 \end{homeworkProblem}
 
 \begin{homeworkProblem}[Besoins non-fonctionnels]
   \begin{homeworkSection}{Performances}
-    Concernant l'extraction des données à partir des logs, les performances ne sont pas très importantes car cette étape ne s'effectue qu'une seule fois. La taille des logs étant de près de 400 Go, un temps de parsing de plusieurs heures est envisageable. Au niveau de l'exploitation des données extraites, un temps d'execution plus bas est demandé sans pour autant avoir d'exigeances particulières.
+    Pour ce qui concerne l'extraction des données à partir des \textit{logs}, la durée de l'opération n'est pas cruciale pour l'exécution du projet. Néanmoins, elle devra rester dans les limites du raisonnable (par exemple 1 jour) car la taille des \textit{logs} atteint les 400 Go.
+    En ce qui concerne l'analyse des données extraites, un temps d'exécution plus bas est demandé. En l'absence du traitement d'un premier lot de données pouvant servir à une évaluation, il est difficile de déterminer un temps d'exécution, même approximatif.
   \end{homeworkSection}
   \begin{homeworkSection}{Fiabilité}
-    La quantité de parties enregistrées étant importante une quantité de 5\% à 10\% de logs ignorés est tolérable. Il est important de garder en mémoire que les données extraites seront utilisées à des fins statistiques.
-    \newline L'objectif concernant l'extraction des logs est de ne perdre aucune information, il pourrait même être possible de reconstituer les informations manquantes dans les logs mais ce problème pourra être traité en fonction du temps restant.
+    La quantité de parties enregistrées étant importante, on peut admettre de rejeter de 5 à 10\% de \textit{logs} inexploitables.
+    \newline L'objectif concernant l'extraction des logs est de ne perdre aucune information. En ce qui concerne la reconstitution des informations manquantes dans les \textit{logs}, l'équipe projet se réserve de réaliser cette partie en fonction du temps restant après la réalisation de la première phase du projet.
   \end{homeworkSection}
   \begin{homeworkSection}{Facilité d'utilisation}
-    Le programme pourra être constitué d'une invite de commandes, une interface graphique n'est pas requise. Les statistiques extraites des données devront quand à elles être représentées graphiquement. Le déroulement d'une partie devra également être facilement visualisable afin de vérifier que les réultats obtenus (choix de stratégies) sont bien les bons.
+    Le programme pourra être constitué d'une invite de commandes, une interface graphique n'est pas requise. Les statistiques extraites des données devront, quant à elles, être représentées graphiquement. Il faudra créer des tests destinés à s'assurer que les informations extraites des \textit{logs} correspondent à 100/100 aux données fournies.
   \end{homeworkSection}
   \begin{homeworkSection}{Domaine d'action}
-    Les données traitées consistent en des logs d'un jeu de carte, ces logs pouvant être transcrits de manière diverse. Les utilisateurs du programme seront intéressés par les statistiques pouvant être obtenues à partir des données.
+    Les données traitées consistent en des \textit{logs} d'un jeu de carte, ces "logs" pouvant être transcrits de manière diverse. Les utilisateurs du programme seront intéressés par les statistiques pouvant être obtenues à partir des données.
   \end{homeworkSection}
 
   \begin{homeworkSection}{Portabilité}
-    Le programme devra fonctionner sur un environnement linux, aucun autre sytème d'exploitation n'est visé.
+    Le programme devra fonctionner sur un environnement Linux, aucun autre sytème d'exploitation n'est envisagé.
   \end{homeworkSection}
 
   \begin{homeworkSection}{Taille des données}
-    Les logs étant très volumineux, le premier enjeu sera d'en extraire les données tout en réduisant drastiquement la taille de celles-ci, une taille de l'ordre de plusieurs dizaines de Go est acceptable.
-  \end{homeworkSection}
+    Les logs étant très volumineux, le premier enjeu sera d'en extraire les données tout en réduisant drastiquement la taille de ceux-ci, une taille inférieure à 20Go est la contrainte à respecter.
+    \end{homeworkSection}
 
-  \begin{homeworkSection}{Souplesse d'utilisation}
-    Nous ne pouvons pas prévoir toutes les données intéressant le client, il faut donc autoriser une souplesse d'utilisation au niveau de l'extraction des données.
-  \end{homeworkSection}
 \end{homeworkProblem}
 
 \begin{homeworkProblem}[Besoins fonctionnels]
   \begin{homeworkSection}{Parsing}
-    Le programme doit pouvoir lire des logs de parties et récupérer les informations contenues dans ces logs.
+    Le programme doit pouvoir lire des \textit{logs} de parties et récupérer les informations contenues dans ces logs.
     \begin {itemize}
     \item Le parser doit pouvoir s'adapter aux différences entre les parties (informations manquantes). Il faut donc que le programme détecte si certaines portions du log sont manquantes et si possible, les reconsituer.
     \item Le parser doit accepter tous les logs dans la mesure du possible, dans certains cas de figures le parser pourra ignorer certaines parties (noms invalides, ambigus)
