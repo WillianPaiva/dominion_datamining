@@ -18,9 +18,12 @@
 \documentclass{scrreprt}
 \usepackage{listings}
 \usepackage{underscore}
+\usepackage{graphicx}
+\usepackage{svg}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{hyperref}
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
@@ -159,7 +162,7 @@ Following is a list of the expected functions to be available on the software.
   \item{Analyze the data}
   \item{Plot the data analyzes on Charts}
 \end{itemize}
-A more precise description of each functionality will be provided in Section 3 of this document.
+A more precise description of each functionality will be provided in Section 4 of this document.
 
 
 
@@ -209,18 +212,9 @@ during the development ,is unknown until the moment.
 % $<$List the user documentation components (such as user manuals, on-line help,
 % and tutorials) that will be delivered along with the software. Identify any
 % known user documentation delivery formats or standards.$>$
+The software will be delivered with a documentation of the source code, the
+source code and a user manual.
 
-
-
-\section{Assumptions and Dependencies}
-% $<$List any assumed factors (as opposed to known facts) that could affect the
-% requirements stated in the SRS. These could include third-party or commercial
-% components that you plan to use, issues around the development or operating
-% environment, or constraints. The project could be affected if these assumptions
-% are incorrect, are not shared, or change. Also identify any dependencies the
-% project has on external factors, such as software components that you intend to
-% reuse from another project, unless they are already documented elsewhere (for
-% example, in the vision and scope document or the project plan).$>$
 
 
 \chapter{External Interface Requirements}
@@ -234,15 +228,19 @@ during the development ,is unknown until the moment.
 % Define the software components for which a user interface is needed. Details of
 % the user interface design should be documented in a separate user interface
 % specification.$>$
+The user interface required by the client can be a command line and
+graphical representation of the charts.
+A graphical interface is not the priority but should be implemented if possible
+to be done in the before the dead line.
 
-\section{Hardware Interfaces}
+% \section{Hardware Interfaces}
 % $<$Describe the logical and physical characteristics of each interface between
 % the software product and the hardware components of the system. This may include
 % the supported device types, the nature of the data and control interactions
 % between the software and the hardware, and communication protocols to be
 % used.$>$
 
-\section{Software Interfaces}
+ \section{Software Interfaces}
 % $<$Describe the connections between this product and other specific software
 % components (name and version), including databases, operating systems, tools,
 % libraries, and integrated commercial components. Identify the data items or
@@ -253,6 +251,11 @@ during the development ,is unknown until the moment.
 % sharing mechanism must be implemented in a specific way (for example, use of a
 % global data area in a multitasking operating system), specify this as an
 % implementation constraint.$>$
+ The software will be developed using a union of to different kind of databases.
+a SQL and a NO-SQL. The engine to used for the databases will be defined during the
+development of the software , as a study of which gives the best performance for
+the project will be done.
+\textit{For the SQL database a embedded version will be used.}
 
 \section{Communications Interfaces}
 % $<$Describe the requirements associated with any communications functions
@@ -261,7 +264,9 @@ during the development ,is unknown until the moment.
 % message formatting. Identify any communication standards that will be used, such
 % as FTP or HTTP. Specify any communication security or encryption issues, data
 % transfer rates, and synchronization mechanisms.$>$
-
+The Software will be developed to run offline and the databases will be used on
+the same machine of the software. What don't impose any requirements as
+encryption or communication protocols.
 
 \chapter{System Features}
 % $<$This template illustrates organizing the functional requirements for the
@@ -269,21 +274,85 @@ during the development ,is unknown until the moment.
 % prefer to organize this section by use case, mode of operation, user class,
 % object class, functional hierarchy, or combinations of these, whatever makes the
 % most logical sense for your product.$>$
+The software will be divided in 2 major functionalities the \textit{parser}  and
+the \textit{analyzer} that can be illustrated by those use-case diagrams:\\
 
-\section{System Feature 1}
+\textbf{the following image illustrate an overview of the use case of the software.}\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParsing}
+\newpage
+\textbf{this image shows with more details the use-case of the data analyzes and
+data recovery.}\\
+\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseDataMining}
+
+\newpage
+% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
+
+
+
+
+\section{The Parser}
 % $<$Don’t really say “System Feature 1.” State the feature name in just a few
 % words.$>$
+This section is dedicated to detail the functional needs of the parser and the
+possible problems to be faced on the development of the software.
 
 \subsection{Description and Priority}
 % $<$Provide a short description of the feature and indicate whether it is of
 % High, Medium, or Low priority. You could also include specific priority
 % component ratings, such as benefit, penalty, cost, and risk (each rated on a
 % relative scale from a low of 1 to a high of 9).$>$
+The parsing will be responsible to read the logs and charge on the database. It
+is the highest priority feature as all other functionalities depends on the data
+being parsed.
 
 \subsection{Stimulus/Response Sequences}
 % $<$List the sequences of user actions and system responses that stimulate the
 % behavior defined for this feature. These will correspond to the dialog elements
 % associated with use cases.$>$
+Where this feature will start automatically on the first run of the program or
+be started by the user will be defined on the future (To be decided by the client).
+
+\subsection{The Data}
+The data that was provided by the client is compressed in format tar.bz2 , one file for each day of \textit{Log}, the total size of the compressed data is
+13Gb.\\
+The decompressed data makes a total of 400Gb.
+Each \textit{Log} file is in \textit{HTML} format.
+A \textit{Log} should contain:
+\begin{itemize}
+  \item{\textbf{header}} containing the game number and a winner.
+  \item{\textbf{match resume}} containing the cards used on the match and how the match
+    finished
+  \item{\textbf{player resume}} containing each player victory cards, deck and points.UseCaseDataMining
+  \item{\textbf{game log}} that part contains all detailed moves made by the players
+    during the match
+\end{itemize}
+
+\subsubsection{Possibles Issues}
+The \textit{Logs} present some data inconsistency that can be problematic on the
+development of the parser.
+some problems found at the moment that this SRS is being write are:
+\begin{itemize}
+  \item \textbf{Log number}\\
+    The numeration of the logs aren't unique what implies that can't be used to
+    identify a log.
+  \item \textbf{User Names}\\
+    The logs show that no restriction where made on the user names of the game
+    and some user names have Keywords and special characters that can conflict
+    with the parser.
+   \item \textbf{Missing data}\\
+     Some of the logs are missing part of the data (like: the header, users
+     resume $\ldots$).
+   \item \textbf{Log format}\\
+     The syntax used to write the logs are not consistent and present some
+     difference between logs.
+    \item \textbf{Data compression}\\
+      As the data is compressed and the equipment provided to work on the
+      project can not handle the data uncompressed the project will have to work
+      with the compressed data, and after a first benchmark, 4 hours was needed
+      to decompress.
+\end{itemize}
+
 
 \subsection{Functional Requirements}
 % $<$Itemize the detailed functional requirements associated with this feature.
@@ -298,11 +367,122 @@ during the development ,is unknown until the moment.
 % meaningful tag of some kind.$>$
 
 % REQ-1:	REQ-2:
+\subsubsection{Read and Store}
+Provided the issues revealed by the logs (like: the inconsistency of the syntax)
+a use of a parser made with tools like \textit{YACC and LEX} is not recommended.
+For that a parser will be done by using the already present \textit{HTML} and
+key words presents on the logs.\\
 
-\section{System Feature 2 (and so on)}
+The parser will have to parse 100\% of the data present on the log and Restore
+any missing information as possible.\\
+
+The store of the log data will be done on a NO-SQL database keeping the same
+data structure present on the log.\\
+
+The data generated by the parser don't need to be human readable.\\
+
+The parser is also responsible in working with the compressed data.\\
+\newpage
+A glimpse of the data to be recognized by the parser is illustrated in this
+diagram (some data to be determined as all the possibilities inside a log
+haven't being revealed yet):\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
 
 
-\chapter{Other Nonfunctional Requirements}
+
+
+\subsubsection{database compression}
+the database will have to support compression as the client demands that the
+size of the database be under 20Gb.
+
+
+\subsubsection{Tests}
+
+The ideal testing for the parsing would be generate a reverse parser and diff
+the original document with the generated one (as proposed by the client).
+But provided all inconsistency on the logs creating such test would be really
+long, so to make test possible some logs randomly picked will be checked for
+lost information manually .
+
+
+\section{The Analyzer}
+% $<$Don’t really say “System Feature 1.” State the feature name in just a few
+% words.$>$
+This part of the software will be responsible to analyze the data and process
+the information generating related statistics and plot charts to easy visualize.
+
+
+\subsection{Description and Priority}
+% $<$Provide a short description of the feature and indicate whether it is of
+% High, Medium, or Low priority. You could also include specific priority
+% component ratings, such as benefit, penalty, cost, and risk (each rated on a
+% relative scale from a low of 1 to a high of 9).$>$
+This feature is the high priority of the  project as it is the main
+functionality of the program.
+
+\subsection{Stimulus/Response Sequences}
+% $<$List the sequences of user actions and system responses that stimulate the
+% behavior defined for this feature. These will correspond to the dialog elements
+% associated with use cases.$>$
+This feature has to parties:
+One that will be launched by the user , who will chose/create on type of
+analyses and plot.
+
+The other are persistent queries that will be implemented to improve the program
+performance, and will be started automatically by the software.
+
+
+\subsection{Functional Requirements}
+% $<$Itemize the detailed functional requirements associated with this feature.
+% These are the software capabilities that must be present in order for the user
+% to carry out the services provided by the feature, or to execute the use case.
+% Include how the product should respond to anticipated error conditions or
+% invalid inputs. Requirements should be concise, complete, unambiguous,
+% verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary
+% information is not yet available.$>$
+
+% $<$Each requirement should be uniquely identified with a sequence number or a
+% meaningful tag of some kind.$>$
+
+% REQ-1:	REQ-2:
+In this section the functionalities of the analyzer will be described in
+priority order
+
+\subsubsection{ELO}
+The first implementation to be made will be the ELO rating system.
+More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}
+The analyzer will have to calculate the ELO final for each player and what was a
+player ELO on a given game.
+
+\subsubsection{Strategies}
+The dominion wiki describe some strategies that can be used in the game for
+exemple :\\
+Big Money\\
+Beyond Silver \\
+Penultimate Province Rule \\
+More on \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
+
+And the analyzer will have to be able to recognize what strategy was used on a
+given match (if any strategy was used) and generate statistics.
+
+
+\subsubsection{Greening}
+The analyzer has to be capable of recognize the \textit{\textbf{greening}} moment on each match.
+More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}
+
+\subsubsection{Charts}
+Another function will be the creation of charts based on the analyzed data.
+For easy implementation native libraries for plotting charts will be used.
+
+\subsubsection{Queries}
+An abstract interface for queries will have to be implemented to give the user
+the ability to create his owns analyzes.
+
+
+
+
+
+\chapter{Nonfunctional Requirements}
 
 \section{Performance Requirements}
 % $<$If there are performance requirements for the product under various
@@ -311,21 +491,16 @@ during the development ,is unknown until the moment.
 % timing relationships for real time systems. Make such requirements as specific
 % as possible. You may need to state performance requirements for individual
 % functional requirements or features.$>$
+No specific performance requirement was made by the client. But for the analyzer
+a time of running should be less than an hour.
 
-\section{Safety Requirements}
-% $<$Specify those requirements that are concerned with possible loss, damage, or
-% harm that could result from the use of the product. Define any safeguards or
-% actions that must be taken, as well as actions that must be prevented. Refer to
-% any external policies or regulations that state safety issues that affect the
-% product’s design or use. Define any safety certifications that must be
-% satisfied.$>$
 
-\section{Security Requirements}
-% $<$Specify any requirements regarding security or privacy issues surrounding use
-% of the product or protection of the data used or created by the product. Define
-% any user identity authentication requirements. Refer to any external policies or
-% regulations containing security issues that affect the product. Define any
-% security or privacy certifications that must be satisfied.$>$
+
+\section{reliability}
+The client demands that the maximum number of logs should be parsed , as the
+data provided has some inconsistencies and some logs wont be possible to parse.
+the client agrees that between  5 to 10\% of the logs can be ignored.
+
 
 \section{Software Quality Attributes}
 % $<$Specify any additional quality characteristics for the product that will be
@@ -335,12 +510,8 @@ during the development ,is unknown until the moment.
 % and usability. Write these to be specific, quantitative, and verifiable when
 % possible. At the least, clarify the relative preferences for various attributes,
 % such as ease of use over ease of learning.$>$
-
-\section{Business Rules}
-% $<$List any operating principles about the product, such as which individuals or
-% roles can perform which functions under specific circumstances. These are not
-% functional requirements in themselves, but they may imply certain functional
-% requirements to enforce the rules.$>$
+Even if just a command line is expected for the final program it should have a
+easy learn curve and be easy to use.
 
 
 \chapter{Other Requirements}
