@@ -118,7 +118,7 @@ project will be presented in italic-bold
 % is available, refer to it rather than duplicating its contents here.
 
 
-\section{References}
+%\section{References}
 % $<$List any other documents or Web addresses to which this SRS refers. These may
 % include user interface style guides, contracts, standards, system requirements
 % specifications, use case documents, or a vision and scope document. Provide
@@ -137,13 +137,14 @@ project will be presented in italic-bold
 % identify interfaces between the two. A simple diagram that shows the major
 % components of the overall system, subsystem interconnections, and external
 % interfaces can be helpful.$>$
-  Le jeu de cartes \textit{Dominion} a été mis à disposition sur un serveur de jeu d'octobre 2010 à mars 2013. Les parties effectuées via ce serveur ont été enregistrées dans des \textit{logs} qui mémorisaient toutes les actions des joueurs ; ces \textit{logs} ont été mis à disposition du public. Mais ces enregistrements n'ont pas conservé un certain nombre d'informations ayant un rapport avec les décisions prises par les joueurs.
-  \newline Un wiki relatif au jeu a été élaboré, et propose des avis d'experts comme aide à la décision pour les joueurs : il propose des conseils, notamment au niveau stratégique. Le but de ce projet, proposé par Yvan Le Borgne, chercheur au Labri, est de traiter ces \textit{logs} (soit plus de 12 millions de parties) afin de répondre à plusieurs interrogations. Il s'agira principalement de comparer Les données recueillies aux préconisations de ce wiki,afin de valider, à travers les contenus des parties, l'éventuelle efficacité des avis et suggestions fournies par les experts. A tout le moins, on cherchera à élaborer des outils de validation présentant une efficacité suffisante.
-   Dans cette optique, le projet a pour but de créer une base de données recensant les parties puis un travail d'analyse sera effectuée à partir de celle-ci.
-  Pour cela notre programme devra tout d'abord extraire les données présentes dans les logs, car ceux-ci sont trop volumineux et trop compliqués à utiliser directement (structure non standardisée). Il s'agira de mettre au point des structures de données permettant de stocker les données de manière plus efficace. Une manière simple de représenter les données extraites et analysées sera proposée à l'utilisateur.
-  Par ailleurs, il manque des informations dans les enregistrements (\textit{logs}). On cherchera à trouver par quelle méthode on peut les reconstituer et de les mettre dans un format qui contienne toutes les informations.
-  En outre, on cherchera à optimiser les opérations menées dans l'analyse des donnnées, en recherchant le meilleur équilibre possible entre la mémorisation des recherches et le re-calcul.
-  Enfin, on esssaiera de déterminer quelle stratégie a été utilisée dans chaque partie. Voire de faire émerger les changements de stratégie en cours de partie. Si on prend pour exemple une des stratégies (la \textit{Penultimate Province Rule}) peut on détecter à quel moment cette règle a été appliquée ou contournée ? ou qui a mis au point cette stratégie ? (découverte qui pourrait permettre d'organiser un classement des joueurs les plus performants) (une sorte de ELO demandé par le client). Dans la mesure où on parviendrait à mettre au point un nombre suffisant de ces démarches stratégiques, il s'agirait de déterminer le processus habituel d'apprentissage des joueurs.
+  The \textit{Dominion} card game has been running on a server from October 2010 to March 2013. The games played on this server have been recorded in \textit{logs} that keep track of every players actions; Those \textit{logs} have been made available to the public. But some information relative to decisions made by the players haven't been recorded.
+  \newline A wiki about the game has been created, it offers expert advice in decision making during the game: it mainly offers advice on a strategy level. The goal of this project, submitted by Yvan Le Borgne, researcher at the Labri, is to process the \textit{logs} (more than 12 million games) in order to answer several questions. It mainly consists in comparing the gathered data to the wiki's information in order to validate the usefulness of the ideas and informations given by experts. We will at least create validation tools offering enough efficiency.
+  In order to fulfill this objective, the project's goal is to create a database containing all the games played and the to produce an analysis based on this information.
+  To do so, our program will first have to extract the \textit{log} data because they are too voluminous and too complicated to use directly (non-standardized structure). We will have to set up data structures allowing us to have a better data storage. A simple way to represent this data will be offered to the user.
+  Some information is also missing in the \textit{logs}(for example: cards drawn during a turn). We will try to find a method to rebuild this information and to add it to the existing information.
+  We will also try to optimize the opeations made by the data analyzing by finding a balance between memorizing requests and re-computing.
+  Finally, we will have to decide wich strategy is used with each game, or even recognize strategy changes during a game. We could also recognize ho applied a strategy first (who \textit{inveted} it).
+  If we can detect enough strategy related data, we can also detect the usual learning process of the players.
 
 \section{Product Functions}
 % $<$Summarize the major functions the product must perform or must let the user
@@ -178,8 +179,7 @@ A more precise description of each functionality will be provided in Section 4 o
 % Certain requirements may pertain only to certain user classes. Distinguish the
 % most important user classes for this product from those who are less important
 % to satisfy.$>$
-The Software to be developed is aimed to a personal use, and no privilege
-division or user definition will be made for the project.
+The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the interety of the code and data.
 \section{Operating Environment}
 % $<$Describe the environment in which the software will operate, including the
 % hardware platform, operating system and versions, and any other software
@@ -464,12 +464,16 @@ Penultimate Province Rule \\
 More on \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
 
 And the analyzer will have to be able to recognize what strategy was used on a
-given match (if any strategy was used) and generate statistics.
+given match (if any strategy was used) and generate statistics.\\
+
+In order to recognize the strategy coined Beyond Silver, the analyzer has to recognize when certain type of cards are bought, the list of these cards can be found on \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
+
+In order to recognize that the Penultimate Province Rule is respected (as explained on \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), the analyzer has to keep track of the amount of Victory Points of each player at every turn.
 
 
 \subsubsection{Greening}
 The analyzer has to be capable of recognize the \textit{\textbf{greening}} moment on each match.
-More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}
+More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}.
 
 \subsubsection{Charts}
 Another function will be the creation of charts based on the analyzed data.
