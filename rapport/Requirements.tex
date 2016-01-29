@@ -86,36 +86,59 @@
 % product that is covered by this SRS, particularly if this SRS describes only
 % part of the system or a single subsystem.
 This Document has as purpose to clarify and describe as precise as possible the
-requirements for the development of the software.
-Taking in consideration the complete development and tests.
-Also as this is a software that will be developed from the scratch no version
-numbering system is defined yet.
+requirements for the development of the program \textit{Dominion DataMining}.\\
+\textit{Dominion DataMining} is a program which consists of 3 parties:
 
-\section{Document Conventions}
-% Describe any standards or typographical conventions that were followed when
-% writing this SRS, such as fonts or highlighting that have special significance.
-% For example, state whether priorities  for higher-level requirements are assumed
-% to be inherited by detailed requirements, or whether every requirement statement
-% is to have its own priority.
+\begin{itemize}
+  \item \textbf{Parser} \- Responsible to read and remodel the data to be stored.
+  \item \textbf{Database Server} \- Store the parsed data
+  \item \textbf{Data analyzer} \- Responsible to query the database and generate
+    human readable statistics and and plot charts.
+\end{itemize}
 
-This document try to respect as close as possible the IEEE standard.
-For better understanding of the document key words that are specific to the
-project will be presented in italic-bold
+This requirements Specification is based on the version 0.0.1 of the program.
 
 
-% \section{Intended Audience and Reading Suggestions}
+
+ \section{Intended Audience and Reading Suggestions}
 % Describe the different types of reader that the document is intended for,
 % such as developers, project managers, marketing staff, users, testers, and
 % documentation writers. Describe what the rest of this SRS contains and how it is
 % organized. Suggest a sequence for reading the document, beginning with the
 % overview sections and proceeding through the sections that are most pertinent to
 % each reader type.
+This document is intended for any individual user,developer,tester,project manager or
+documentation writer that needs to understand the basic system architecture and its specifications.\\
+Here are the potential uses for each one of the reader types:\\
+\begin{itemize}
 
-% \section{Project Scope}
+\item \textbf{Developer:}The developer who wants to read,change,modify or add new requirements into
+the existing program,must firstly consult this document and update the requirements with
+appropriate manner so as to not destroy the actual meaning of them and pass the information
+correctly to the next phases of the development process.\\
+
+\item \textbf{User:}The user of this program reviews the diagrams and the specifications presented in this
+document and determines if the software has all the suitable requirements and if the software
+developer has implemented all of them.\\
+
+\item \textbf{Tester:}The tester needs this document to validate that the initial requirements of this
+programs actually corresponds to the executable program correctly.\\
+
+\end{itemize}
+
+\section{Project Scope}
 % Provide a short description of the software being specified and its purpose,
 % including relevant benefits, objectives, and goals. Relate the software to
 % corporate goals or business strategies. If a separate vision and scope document
 % is available, refer to it rather than duplicating its contents here.
+  The \textit{Dominion} card game has been running on a server from October 2010 to March 2013. The games played on this server have been recorded in \textit{logs} that keep track of every players actions; Those \textit{logs} have been made available to the public. But some information relative to decisions made by the players haven't been recorded.
+  \newline A wiki about the game has been created, it offers expert advice in decision making during the game: it mainly offers advice on a strategy level. The goal of this project, submitted by Yvan Le Borgne, researcher at the Labri, is to process the \textit{logs} (more than 12 million games) in order to answer several questions. It mainly consists in comparing the gathered data to the wiki's information in order to validate the usefulness of the ideas and informations given by experts. We will at least create validation tools offering enough efficiency.
+  In order to fulfill this objective, the project's goal is to create a database containing all the games played and the to produce an analysis based on this information.
+  To do so, our program will first have to extract the \textit{log} data because they are too voluminous and too complicated to use directly (non-standardized structure). We will have to set up data structures allowing us to have a better data storage. A simple way to represent this data will be offered to the user.
+  Some information is also missing in the \textit{logs}(for example: cards drawn during a turn). We will try to find a method to rebuild this information and to add it to the existing information.
+  We will also try to optimize the opeations made by the data analyzing by finding a balance between memorizing requests and re-computing.
+  Finally, we will have to decide wich strategy is used with each game, or even recognize strategy changes during a game. We could also recognize ho applied a strategy first (who \textit{inveted} it).
+  If we can detect enough strategy related data, we can also detect the usual learning process of the players.
 
 
 %\section{References}
@@ -137,14 +160,10 @@ project will be presented in italic-bold
 % identify interfaces between the two. A simple diagram that shows the major
 % components of the overall system, subsystem interconnections, and external
 % interfaces can be helpful.$>$
-  The \textit{Dominion} card game has been running on a server from October 2010 to March 2013. The games played on this server have been recorded in \textit{logs} that keep track of every players actions; Those \textit{logs} have been made available to the public. But some information relative to decisions made by the players haven't been recorded.
-  \newline A wiki about the game has been created, it offers expert advice in decision making during the game: it mainly offers advice on a strategy level. The goal of this project, submitted by Yvan Le Borgne, researcher at the Labri, is to process the \textit{logs} (more than 12 million games) in order to answer several questions. It mainly consists in comparing the gathered data to the wiki's information in order to validate the usefulness of the ideas and informations given by experts. We will at least create validation tools offering enough efficiency.
-  In order to fulfill this objective, the project's goal is to create a database containing all the games played and the to produce an analysis based on this information.
-  To do so, our program will first have to extract the \textit{log} data because they are too voluminous and too complicated to use directly (non-standardized structure). We will have to set up data structures allowing us to have a better data storage. A simple way to represent this data will be offered to the user.
-  Some information is also missing in the \textit{logs}(for example: cards drawn during a turn). We will try to find a method to rebuild this information and to add it to the existing information.
-  We will also try to optimize the opeations made by the data analyzing by finding a balance between memorizing requests and re-computing.
-  Finally, we will have to decide wich strategy is used with each game, or even recognize strategy changes during a game. We could also recognize ho applied a strategy first (who \textit{inveted} it).
-  If we can detect enough strategy related data, we can also detect the usual learning process of the players.
+The \textit{Dominion DataMining} has as objective to be able to read the
+
+
+
 
 \section{Product Functions}
 % $<$Summarize the major functions the product must perform or must let the user
@@ -155,20 +174,35 @@ project will be presented in italic-bold
 % or object class diagram, is often effective.$>$
 Following is a list of the expected functions to be available on the software.
 \begin{itemize}
-  \item{Ability to parse the logs}
-  \item{Restore logs with missing data}
-  \item{Compress the parsed data }
-  \item{Query the data }
-  \item{Recognize the game strategies}
-  \item{Calculate the player \textit{\textbf{ELO}}}
-  \item{Analyze the data}
-  \item{Plot the data analyzes on Charts}
+  \item{\textbf{Data modeling:}}
+    \begin{itemize}
+      \item{parser}
+      \item{log decompression}
+      \item{create object game-log}
+      \item{restore game-log}
+    \end{itemize}
+  \item{\textbf{Data Store:}}
+    \begin{itemize}
+      \item{Create SQL Database}
+      \item{Connect to SQL Database}
+      \item{Create NO-SQL Database}
+      \item{Connect to NO-SQL Database}
+      \item{Compression}
+      \item{Load game-log}
+      \item{Save game-log}
+      \item{Query Interface}
+    \end{itemize}
+  \item{\textbf{Data Analysis:}}
+    \begin{itemize}
+      \item{Generate Queries}
+      \item{Analyze}
+      \item{Plotting}
+      \item{Calculate \textit{\textbf{ELO}}}
+      \item{Recognize strategies}
+      \item{Recognize Greening}
+    \end{itemize}
 \end{itemize}
-A more precise description of each functionality will be provided in Section 4 of this document.
-
-
-
-
+\textit{ A more precise description of each functionality will be provided in Section 4 of this document. }
 
 
 \section{User Classes and Characteristics}
@@ -179,7 +213,21 @@ A more precise description of each functionality will be provided in Section 4 o
 % Certain requirements may pertain only to certain user classes. Distinguish the
 % most important user classes for this product from those who are less important
 % to satisfy.$>$
-The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the interety of the code and data.
+
+\textbf{Physical Actors:}\\
+\begin{itemize}
+ \item \textbf{User:} The user will be the one that demands analyses to be done
+   on the stored data.
+\end{itemize}
+\textbf{System Actors:}\\
+\begin{itemize}
+ \item \textbf{Parser:} The parser is the system has write access to the data
+   base and is responsible to store the parsed data on the database.
+ \item \textbf{Analyzer:} The Analyzer is the system that will query the data
+   base to collect data for analyze , and be able to create persistent queries.
+\end{itemize}
+
+\textit{The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the interety of the code and data.}
 \section{Operating Environment}
 % $<$Describe the environment in which the software will operate, including the
 % hardware platform, operating system and versions, and any other software
@@ -218,107 +266,13 @@ source code and a user manual.
 
 
 
-\chapter{External Interface Requirements}
+\chapter{The Logs}
 
-\section{User Interfaces}
-% $<$Describe the logical characteristics of each interface between the software
-% product and the users. This may include sample screen images, any GUI standards
-% or product family style guides that are to be followed, screen layout
-% constraints, standard buttons and functions (e.g., help) that will appear on
-% every screen, keyboard shortcuts, error message display standards, and so on.
-% Define the software components for which a user interface is needed. Details of
-% the user interface design should be documented in a separate user interface
-% specification.$>$
-The user interface required by the client can be a command line and
-graphical representation of the charts.
-A graphical interface is not the priority but should be implemented if possible
-to be done in the before the dead line.
-
-% \section{Hardware Interfaces}
-% $<$Describe the logical and physical characteristics of each interface between
-% the software product and the hardware components of the system. This may include
-% the supported device types, the nature of the data and control interactions
-% between the software and the hardware, and communication protocols to be
-% used.$>$
-
- \section{Software Interfaces}
-% $<$Describe the connections between this product and other specific software
-% components (name and version), including databases, operating systems, tools,
-% libraries, and integrated commercial components. Identify the data items or
-% messages coming into the system and going out and describe the purpose of each.
-% Describe the services needed and the nature of communications. Refer to
-% documents that describe detailed application programming interface protocols.
-% Identify data that will be shared across software components. If the data
-% sharing mechanism must be implemented in a specific way (for example, use of a
-% global data area in a multitasking operating system), specify this as an
-% implementation constraint.$>$
- The software will be developed using a union of to different kind of databases.
-a SQL and a NO-SQL. The engine to used for the databases will be defined during the
-development of the software , as a study of which gives the best performance for
-the project will be done.
-\textit{For the SQL database a embedded version will be used.}
-
-\section{Communications Interfaces}
-% $<$Describe the requirements associated with any communications functions
-% required by this product, including e-mail, web browser, network server
-% communications protocols, electronic forms, and so on. Define any pertinent
-% message formatting. Identify any communication standards that will be used, such
-% as FTP or HTTP. Specify any communication security or encryption issues, data
-% transfer rates, and synchronization mechanisms.$>$
-The Software will be developed to run offline and the databases will be used on
-the same machine of the software. What don't impose any requirements as
-encryption or communication protocols.
-
-\chapter{System Features}
-% $<$This template illustrates organizing the functional requirements for the
-% product by system features, the major services provided by the product. You may
-% prefer to organize this section by use case, mode of operation, user class,
-% object class, functional hierarchy, or combinations of these, whatever makes the
-% most logical sense for your product.$>$
-The software will be divided in 2 major functionalities the \textit{parser}  and
-the \textit{analyzer} that can be illustrated by those use-case diagrams:\\
-
-\textbf{the following image illustrate an overview of the use case of the software.}\\
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParsing}
-\newpage
-\textbf{this image shows with more details the use-case of the data analyzes and
-data recovery.}\\
-\\
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseDataMining}
-
-\newpage
-% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
-
-
-
-
-\section{The Parser}
-% $<$Don’t really say “System Feature 1.” State the feature name in just a few
-% words.$>$
-This section is dedicated to detail the functional needs of the parser and the
-possible problems to be faced on the development of the software.
-
-\subsection{Description and Priority}
-% $<$Provide a short description of the feature and indicate whether it is of
-% High, Medium, or Low priority. You could also include specific priority
-% component ratings, such as benefit, penalty, cost, and risk (each rated on a
-% relative scale from a low of 1 to a high of 9).$>$
-The parsing will be responsible to read the logs and charge on the database. It
-is the highest priority feature as all other functionalities depends on the data
-being parsed.
-
-\subsection{Stimulus/Response Sequences}
-% $<$List the sequences of user actions and system responses that stimulate the
-% behavior defined for this feature. These will correspond to the dialog elements
-% associated with use cases.$>$
-Where this feature will start automatically on the first run of the program or
-be started by the user will be defined on the future (To be decided by the client).
-
-\subsection{The Data}
+\subsection{Data description}
 The data that was provided by the client is compressed in format tar.bz2 , one file for each day of \textit{Log}, the total size of the compressed data is
 13Gb.\\
-The decompressed data makes a total of 400Gb.
-Each \textit{Log} file is in \textit{HTML} format.
+The decompressed data makes a total of 400Gb.\\
+Each \textit{Log} file is in \textit{HTML} format.\\
 A \textit{Log} should contain:
 \begin{itemize}
   \item{\textbf{header}} containing the game number and a winner.
@@ -329,7 +283,7 @@ A \textit{Log} should contain:
     during the match
 \end{itemize}
 
-\subsubsection{Possibles Issues}
+\subsubsection{Data inconsistency}
 The \textit{Logs} present some data inconsistency that can be problematic on the
 development of the parser.
 some problems found at the moment that this SRS is being write are:
@@ -354,105 +308,226 @@ some problems found at the moment that this SRS is being write are:
       to decompress.
 \end{itemize}
 
+\chapter{Functional Requirements}
+% $<$This template illustrates organizing the functional requirements for the
+% product by system features, the major services provided by the product. You may
+% prefer to organize this section by use case, mode of operation, user class,
+% object class, functional hierarchy, or combinations of these, whatever makes the
+% most logical sense for your product.$>$
+The functional requirements will be
+% \textbf{the following image illustrate an overview of the use case of the software.}\\
+% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParsing}
+% \newpage
+% \textbf{this image shows with more details the use-case of the data analyzes and
+% data recovery.}\\
+% \\
+% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseDataMining}
 
-\subsection{Functional Requirements}
-% $<$Itemize the detailed functional requirements associated with this feature.
-% These are the software capabilities that must be present in order for the user
-% to carry out the services provided by the feature, or to execute the use case.
-% Include how the product should respond to anticipated error conditions or
-% invalid inputs. Requirements should be concise, complete, unambiguous,
-% verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary
-% information is not yet available.$>$
+% \newpage
+% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
 
-% $<$Each requirement should be uniquely identified with a sequence number or a
-% meaningful tag of some kind.$>$
 
-% REQ-1:	REQ-2:
-\subsubsection{Read and Store}
+
+
+\section{Data Modeling}
+
+\subsection{Parser::REQ1}
+
+\subsubsection{Description and Priority}
+
+\textbf{Priority level=high}\\
+
 Provided the issues revealed by the logs (like: the inconsistency of the syntax)
 a use of a parser made with tools like \textit{YACC and LEX} is not recommended.
 For that a parser will be done by using the already present \textit{HTML} and
 key words presents on the logs.\\
-
-The store of the log data will be done on a NO-SQL database keeping the same
-data structure present on the log.\\
-
-The parser is also responsible in working with the compressed data.\\
-\newpage
+The parser is responsible for reading the logs and collect the important
+information without loosing the structure of the log.\\
 A glimpse of the data to be recognized by the parser is illustrated in this
 diagram (some data to be determined as all the possibilities inside a log
 haven't being revealed yet):\\
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
+\includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
+
+\subsubsection{Stimulus/response}
+
+This feature will be started by the user via command: parse.
+\subsubsection{Dependencies}
+
+depends on: REQ2, REQ3.
 
 
 
 
-\subsubsection{database compression}
-the database will have to support compression as the client demands that the
-size of the database be under 20Gb.
+
+\subsection{Log decompression::REQ2}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+
+To be able to work with the large volume of the data a system to decompress the
+the logs on demand will be implemented.
+
+This feature is responsible to decompress the tar.bz2 into a temporary folder
+and clean the folder.
+
+\subsubsection{Stimulus/response}
+This feature will be called by the system feature parser.
 
 
-\subsubsection{Tests}
-
-The ideal testing for the parsing would be generate a reverse parser and diff
-the original document with the generated one (as proposed by the client).
-But provided all inconsistency on the logs creating such test would be really
-long, so to make test possible some logs randomly picked will be checked for
-lost information manually .
-
-
-\section{The Analyzer}
-% $<$Don’t really say “System Feature 1.” State the feature name in just a few
-% words.$>$
-This part of the software will be responsible to analyze the data and process
-the information generating related statistics and plot charts to easy visualize.
+\subsection{Create game-log::REQ3}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This functionality is the creation of a data structure where the log data will
+be remodeled into.
+here is a graphical representation of an overview of the data structure:
+\includegraphics[scale=0.5,keepaspectratio]{game-log}
 
 
-\subsection{Description and Priority}
-% $<$Provide a short description of the feature and indicate whether it is of
-% High, Medium, or Low priority. You could also include specific priority
-% component ratings, such as benefit, penalty, cost, and risk (each rated on a
-% relative scale from a low of 1 to a high of 9).$>$
-This feature is the high priority of the  project as it is the main
-functionality of the program.
+\subsection{restore game-log::REQ4}
+\subsubsection{Description and Priority}
+\textbf{Priority level=medium}\\
+This feature is responsible to restore the missing information on the parsed
+logs, by using deduction based on the data obtained from the log.
+\subsubsection{Stimulus/response}
+This system functionality will be started automatically after a log have being parsed.
+\subsubsection{Dependencies}
+depends on: REQ1, REQ2 , REQ3.
 
-\subsection{Stimulus/Response Sequences}
-% $<$List the sequences of user actions and system responses that stimulate the
-% behavior defined for this feature. These will correspond to the dialog elements
-% associated with use cases.$>$
-This feature has to parties:
-One that will be launched by the user , who will chose/create on type of
-analyses and plot.
+\newpage
+\section{Data Store}
 
-The other are persistent queries that will be implemented to improve the program
-performance, and will be started automatically by the software.
+\subsection{Create SQL Database::REQ5}
+
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This functionality is responsible for the creation of the SQL database and the
+tables.
+for a better understand here is a  sketch of the database structure:\\
+
+\includegraphics[keepaspectratio]{SQL}
 
 
-\subsection{Functional Requirements}
-% $<$Itemize the detailed functional requirements associated with this feature.
-% These are the software capabilities that must be present in order for the user
-% to carry out the services provided by the feature, or to execute the use case.
-% Include how the product should respond to anticipated error conditions or
-% invalid inputs. Requirements should be concise, complete, unambiguous,
-% verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary
-% information is not yet available.$>$
+\subsection{Connect to SQL Database::REQ6}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This module will be in charge of managing the connection of the application with
+the SQL database
+\subsubsection{Dependencies}
+depends on: REQ5
 
-% $<$Each requirement should be uniquely identified with a sequence number or a
-% meaningful tag of some kind.$>$
 
-% REQ-1:	REQ-2:
-In this section the functionalities of the analyzer will be described in
-priority order
 
-\subsubsection{ELO}
-The first implementation to be made will be the ELO rating system.
-More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}
-The analyzer will have to calculate the ELO final for each player and what was a
+\subsection{Create NO-SQL Database::REQ7}
+
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This module will be responsible to create the NO-SQL (\textit{Documented based}) database.
+as a document based database will be used no data structure has to be defined.
+
+\subsection{Connect to NO-SQL Database::REQ8}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This module will be in charge of managing the connection of the application with
+the NO-SQL database
+\subsubsection{Dependencies}
+depends on: REQ7
+
+
+\subsection{compression::REQ9}
+\subsubsection{Description and Priority}
+\textbf{Priority level=medium}\\
+The NO-SQL data base will hold most of the data and some level of compression
+will have to be applied.
+The database in focus to be used at the moment is \textit{mongodb} and it offers
+2 levels of compression \textit{Zlib} and \textit{Snappy}.
+During the development the \textit{Snappy} will be used as it offers a better
+performance.
+But the final program should give the user the ability to chose the compression
+level.
+\subsubsection{Stimulus/response}
+The compression will be set on at the time of the creation of the data base.
+
+\subsubsection{Dependencies}
+depends on:REQ7
+
+\subsection{Load game-log::REQ10}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This is the functionality that will charge the game-log from the database into
+the data structure (see REQ3).
+\subsubsection{Dependencies}
+depends on: REQ3,REQ7,REQ5.
+
+
+\subsection{Save game-log::REQ11}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This is the functionality that will transform the game-log int a document
+compatible with the database and save it.
+The document format used by the database is json.
+For more information visit: \url{https://docs.mongodb.org/manual/core/document/}
+\subsubsection{Dependencies}
+depends on: REQ3,REQ7,REQ5.
+
+\subsection{Query interface::REQ12}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+As 2 different kind of databases will be used to store the data.
+a query interface that takes the 2 databases in consideration will have to be
+implemented.
+The query interface will have to choose automatically on what databases the
+information will be queried and return the results.
+\subsubsection{Dependencies}
+depends on: REQ3,REQ7,REQ5.
+
+\newpage
+
+
+
+\section{Data Analysis}
+
+\subsection{Generate Queries::REQ13}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This feature will have to be able to generate queries based on a set of
+parameters determined by the user.
+\subsubsection{Dependencies}
+depends on: REQ12,REQ3,REQ7,REQ5.
+
+
+\subsection{Analyze::REQ14}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This module will get the queries results analyze the data and process the
+information generating related human readable statistics data.
+\subsubsection{Dependencies}
+depends on: REQ13,REQ12,REQ3,REQ7,REQ5.
+
+\subsection{Plotting::REQ15}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+This module will receive the statistics generated by REQ14 and generated
+graphical charts.
+\subsubsection{Stimulus/response}
+This feature will be launched by the user via command: graphgem.
+\subsubsection{Dependencies}
+depends on: REQ14,REQ13,REQ12,REQ3,REQ7,REQ5.
+
+
+
+\subsection{Calculate \textit{\textbf{ELO}}::REQ16}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+The analyzer will have to calculate the final ELO for each player and what was a
 player ELO on a given game.
+More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}
+\subsubsection{Dependencies}
+depends on: REQ12,REQ3,REQ7,REQ5.
 
-\subsubsection{Strategies}
-The dominion wiki describe some strategies that can be used in the game for
-exemple :\\
+\subsection{Recognize strategies::REQ17}
+\subsubsection{Description and Priority}
+\textbf{Priority level=medium}\\
+
+The dominion wiki describe some strategies that can be used in the game .\\ For exemple :\\
 Big Money\\
 Beyond Silver \\
 Penultimate Province Rule \\
@@ -461,7 +536,7 @@ More on \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
 And the analyzer will have to be able to recognize what strategy was used on a
 given match (if any strategy was used) and generate statistics.\\
 \newpage
-\textbf{This image describes the decision process involved in the Big Money strategy}\\ 
+\textbf{This image describes the decision process involved in the Big Money strategy}\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{big-money}\\
 The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
 More on \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
@@ -470,21 +545,16 @@ In order to recognize the strategy coined Beyond Silver, the analyzer has to rec
 
 In order to recognize that the Penultimate Province Rule is respected (as explained on \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), the analyzer has to keep track of the amount of Victory Points of each player at every turn.
 
+\subsubsection{Dependencies}
+depends on: REQ12,REQ3,REQ7,REQ5.
 
-\subsubsection{Greening}
+\subsection{Recognize Greening::REQ18}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
 The analyzer has to be capable of recognize the \textit{\textbf{greening}} moment on each match.
 More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}.
-
-\subsubsection{Charts}
-Another function will be the creation of charts based on the analyzed data.
-For easy implementation native libraries for plotting charts will be used.
-
-\subsubsection{Queries}
-An abstract interface for queries will have to be implemented to give the user
-the ability to create his owns analyzes.
-
-
-
+\subsubsection{Dependencies}
+depends on: REQ12,REQ3,REQ7,REQ5.
 
 
 \chapter{Nonfunctional Requirements}
