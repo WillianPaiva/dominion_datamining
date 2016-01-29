@@ -330,20 +330,46 @@ some problems found at the moment that this SRS is being write are:
 % \newpage
 % \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
 \section{User interface}
+The program user interface will be composed of a executable(dominionmining) that will be
+executed with certain parameters to execute the desired action.
+The following diagram represents the different interactions available to the user:\\
 \includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}
-
+before the use of any features of the program , the user has to launch the parsing.
 \subsection{Launching the log parsing}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
+\begin{itemize}
+  \item The user will have to place all the  compressed logs (tar.bz2 files) to be parsed into a
+    specific folder.
+  \item Once the previous step is done , the user can execute the parsing by
+      typing : \textit{dominionmining parse (zlib/snappy)} if no compression is
+      given the default compression is \textit{snappy}.
+      \item once the parsing is done a message will be shown on the
+        console (parsing done).
+\end{itemize}
 
 \subsection{Statistics requests}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
+The request for a statistic can be made by typing \textit{dominionmining stats (parameters)}.  \\
+The list of parameters that will be possible to use will be determined in the
+future.\\
+
+The return of a statistic can be a chart displayed in a window or exported to a
+file if its a single value , a name or a sentence it will be returned in the prompt.
 
 \subsection{Strategy statistics requests}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
+The request for a strategy statistic request can be made by typing \textit{dominionmining strat (strategy name) (parameter)}\\
+The possible strategy names are:
+bigmoney , penprovince , beyondsilver.\\
+If other strategies are recognized by the program they will be added to the list.
 
+The list of parameters that will be possible to use will be determined in the
+future.\\
+The return of a statistic can be a chart displayed in a window or exported to a
+file if its a single value , a name or a sentence it will be returned in the prompt.
 \section{Data Modeling}
 
 \subsection{Log decompression}
@@ -354,7 +380,7 @@ some problems found at the moment that this SRS is being write are:
 \begin{itemize}
   \item The tar.bz2 files will be stored in a folder.
   \item The program will decompress one specified file from this folder in a temporary folder.
-  \item The programm will delete the decompressed logs on demand by the parser(REQ2).
+  \item The programm will delete the decompressed logs on demand by the parser.
 \end{itemize}
 
 \subsection{Parser}
