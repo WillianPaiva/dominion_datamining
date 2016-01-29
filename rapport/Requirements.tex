@@ -173,6 +173,12 @@ program actually corresponds to the executable program correctly.\\
 % or object class diagram, is often effective.$>$
 Following is a list of the expected functions to be available on the software.
 \begin{itemize}
+\item{\textbf{User interface:}}
+    \begin{itemize}
+    \item{Launch the log parsing}
+    \item{Statistics requests}
+    \item{Strategy statistics requests}
+    \end{itemize}
   \item{\textbf{Data modeling:}}
     \begin{itemize}
     \item{log decompression}
@@ -191,12 +197,10 @@ Following is a list of the expected functions to be available on the software.
     \item{Compression}
     \item{Load game-log}
     \item{Save game-log}
-    \item{Query Interface}
     \end{itemize}
   \item{\textbf{Data Analysis:}}
     \begin{itemize}
-      \item{Generate Queries}
-      \item{Analyze}
+      \item{Gather data}
       \item{restore game-log}
       \item{Plotting}
       \item{Calculate \textit{\textbf{ELO}}}
@@ -258,12 +262,12 @@ during the development are unknown at the moment.
 
 
 
-\section{User Documentation}
+%\section{User Documentation}
 % $<$List the user documentation components (such as user manuals, on-line help,
 % and tutorials) that will be delivered along with the software. Identify any
 % known user documentation delivery formats or standards.$>$
-The software will be delivered with a documentation of the source code, the
-source code and a user manual.\\
+%The software will be delivered with a documentation of the source code, the
+%source code and a user manual.\\
 
 
 
@@ -279,7 +283,7 @@ A \textit{Log} should contain:
   \item{\textbf{header}} containing the game number and a winner.
   \item{\textbf{match resume}} containing the cards used on the match and how the match
     finished
-  \item{\textbf{player resume}} containing each player victory cards, deck and points.UseCaseDataMining
+  \item{\textbf{player resume}} containing each player victory cards, deck and points.
   \item{\textbf{game log}} that part contains all detailed moves made by the players
     during the match
 \end{itemize}
@@ -325,9 +329,20 @@ some problems found at the moment that this SRS is being write are:
 
 % \newpage
 % \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
+\section{User interface}
+\includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}
 
+\subsection{Launching the log parsing}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
 
+\subsection{Statistics requests}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
 
+\subsection{Strategy statistics requests}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
 
 \section{Data Modeling}
 
@@ -373,10 +388,6 @@ haven't been revealed yet):\\
 
 The parser has to read every element shown in the previous graph as a part of the data when the user launches the parsing process.\\
 
-\subsubsection{Dependencies}
-
-depends on: REQ1, REQ3.
-
 
 \subsection{Create game-log}
 \subsubsection{Description and Priority}
@@ -390,8 +401,6 @@ here is a graphical representation of an overview of the data structure:\\
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 The program will send the game-log data structure to the database part of the project.
-
-\newpage
 \section{Data Storage}
 
 \includegraphics[keepaspectratio]{SQL}
@@ -405,10 +414,6 @@ The program will send the game-log data structure to the database part of the pr
 \item The program will be able to send requests to the database.
 \item The relational database will send the results of the requests made by the program.
 \end{itemize}
-
-\subsubsection{Dependencies}
-depends on: REQ5
-
 
 
 \subsection{Create document-oriented Database}
@@ -426,8 +431,6 @@ This module will be responsible to create the document-oriented database contain
 \item The document-oriented database will receive requests from the program.
 \item The document-oriented database will send results of the requests made by the program.
 \end{itemize}
-\subsubsection{Dependencies}
-depends on: REQ7
 
 
 \subsection{compression}
@@ -442,9 +445,6 @@ performance.
 But the final program should give the user the ability to chose the compression
 level when starting the log parsing.
 
-\subsubsection{Dependencies}
-depends on:REQ7
-
 
 \subsection{Save game-log}
 \subsubsection{Description and Priority}
@@ -454,86 +454,52 @@ depends on:REQ7
 \item The produced data in JSon format will be stored in the database.
 \end{itemize}
 
-\subsubsection{Dependencies}
-depends on: REQ3,REQ7,REQ5.
-
 \subsection{Load game-log}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 When asked for a game-log, the database will load the JSon formatted log in a game-log data structure indetical to the one described in the data modelling section.\\
 If there is missing information in the JSon document, the corresponding field will be left empty.
 
-\subsubsection{Dependencies}
-depends on: REQ3,REQ7,REQ5.
-
-\subsection{Query interface}
-\subsubsection{Description and Priority}
-\textbf{Priority level=high}\\
-As 2 different kind of databases will be used to store the data.
-a query interface that takes the 2 databases in consideration will have to be
-implemented.
-The query interface will have to choose automatically on what databases the
-information will be queried and return the results.
-The databases will receive the following type of queries:
-\begin{itemize}
-  \item 
-\end{itemize}
-\subsubsection{Dependencies}
-depends on: REQ3,REQ7,REQ5.
-
-\newpage
-
 
 
 \section{Data Analysis}
 
-\subsection{Generate Queries}
+
+\subsection{Gather data}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This feature will have to be able to generate queries based on a set of
-parameters determined by the user.
-\subsubsection{Dependencies}
-depends on: REQ12,REQ3,REQ7,REQ5.
-
-
-\subsection{Analyze}
-\subsubsection{Description and Priority}
-\textbf{Priority level=high}\\
-This module will get the queries results analyze the data and process the
-information generating related human readable statistics data.
-\subsubsection{Dependencies}
-depends on: REQ13,REQ12,REQ3,REQ7,REQ5.
+\begin{itemize}
+\item The data analyser will convert the queries results in a format usable by the plotting module.
+\item If the data is simple to read (eg: a number, a name, a sentence), the data analyser will simply output the result in text format.
+  \end{itemize}
 
 \subsection{restore game-log}
 \subsubsection{Description and Priority}
 \textbf{Priority level=medium}\\
 This feature is responsible to restore the missing information on the parsed
-logs, by using deduction based on the data obtained from the log.
-\subsubsection{Stimulus/response}
-This system functionality will be started automatically after a log have being parsed.
-\subsubsection{Dependencies}
-depends on: REQ1, REQ2 , REQ3.
+logs, by using deduction based on the data obtained from the log.\\
+In case of a missing game header or part of it missing:
+  \begin{itemize}
+  \item Winners/victory cards/victory points missing: the program can keep track of the cards owned by the players during the game in order to know how many victory cards they have at the end of the game.
+  \item Market missing: The program can keep track of the cards bought during the game in order to partially or totally reconstruct the cards available in the Market.
+  \item Cards Gone: As with a missing Market data, the program will keep track of cards bought and counting the amount bought for each card, if the maximum amount of cards is bought, the card is gone at the end of the game.
+  \item player name missing: the game moves part of a log also keeps track of the player names, the program will simply restore them in the header.
+  \item player cards: the program will keep track of the actions performed during the game relative to the player cards and add them in this list.
+  \end{itemize}
 
 \subsection{Plotting}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This module will receive the statistics generated by REQ14 and generated
-graphical charts.
-\subsubsection{Stimulus/response}
-This feature will be launched by the user via command: graphgem.
-\subsubsection{Dependencies}
-depends on: REQ14,REQ13,REQ12,REQ3,REQ7,REQ5.
-
-
+The plotting module will get the converted data obtained after the Gather Data process and will plot them in a graphical interface. This module will work in a similar way of \textit{GnuPlot}.
 
 \subsection{Calculate \textit{\textbf{ELO}}}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 The analyzer will have to calculate the final ELO for each player and what was a
 player ELO on a given game.
-More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}
-\subsubsection{Dependencies}
-depends on: REQ12,REQ3,REQ7,REQ5.
+for each game in chronological order, this module will request the initial elo of the players from the relational database and the winners of the game, then it will calculate the new elo of each player from the outcome of the game. The module will then set the calculated elo in the document-oriented database at the currently analyzed game and will also update the overall elo for each of the players participating in the game on the relational database.\\
+More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{elocalc}\\
 
 \subsection{Recognize strategies}
 \subsubsection{Description and Priority}
@@ -547,7 +513,6 @@ More on \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
 
 And the analyzer will have to be able to recognize what strategy was used on a
 given match (if any strategy was used) and generate statistics.\\
-\newpage
 \textbf{This image describes the decision process involved in the Big Money strategy}\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{big-money}\\
 The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
