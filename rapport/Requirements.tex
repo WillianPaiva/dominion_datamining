@@ -27,7 +27,7 @@
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
-    pdfauthor={VER VALEM Willian BAYOL Elmer Liliana Lopez Farfan TAGNAOUTI Khaoula},                     % author
+    pdfauthor={VER VALEM Willian BAYOL Elmer LOPEZ-FARFAN M. Liliana TAGNAOUTI Khaoula},                     % author
     pdfsubject={TeX and LaTeX},                        % subject of the document
     pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
     colorlinks=true,       % false: boxed links; true: colored links
@@ -85,18 +85,18 @@
 % document, including the revision or release number. Describe the scope of the
 % product that is covered by this SRS, particularly if this SRS describes only
 % part of the system or a single subsystem.
-This Document has as purpose to clarify and describe as precise as possible the
+This Document has as purpose to clarify and describe as precisely as possible the
 requirements for the development of the program \textit{Dominion DataMining}.\\
-\textit{Dominion DataMining} is a program which consists of 3 parties:
+\textit{Dominion DataMining} is a program which consists of 3 parts:
 
 \begin{itemize}
-  \item \textbf{Parser} \- Responsible to read and remodel the data to be stored.
-  \item \textbf{Database Server} \- Store the parsed data
+  \item \textbf{Data modeling} \- Responsible to read and remodel the data to be stored.
+  \item \textbf{Data Storage} \- Store the parsed data
   \item \textbf{Data analyzer} \- Responsible to query the database and generate
     human readable statistics and and plot charts.
 \end{itemize}
 
-This requirements Specification is based on the version 0.0.1 of the program.
+%This requirements Specification is based on the version 0.0.1 of the program.
 
 
 
@@ -107,22 +107,22 @@ This requirements Specification is based on the version 0.0.1 of the program.
 % organized. Suggest a sequence for reading the document, beginning with the
 % overview sections and proceeding through the sections that are most pertinent to
 % each reader type.
-This document is intended for any individual user,developer,tester,project manager or
+This document is intended for any individual user ,developer, tester, project manager or
 documentation writer that needs to understand the basic system architecture and its specifications.\\
 Here are the potential uses for each one of the reader types:\\
 \begin{itemize}
 
-\item \textbf{Developer:}The developer who wants to read,change,modify or add new requirements into
-the existing program,must firstly consult this document and update the requirements with
+\item \textbf{Developer: }The developer who wants to read,change,modify or add new requirements into
+the existing program, must firstly consult this document and update the requirements with
 appropriate manner so as to not destroy the actual meaning of them and pass the information
 correctly to the next phases of the development process.\\
 
-\item \textbf{User:}The user of this program reviews the diagrams and the specifications presented in this
+\item \textbf{User: }The user of this program reviews the diagrams and the specifications presented in this
 document and determines if the software has all the suitable requirements and if the software
 developer has implemented all of them.\\
 
-\item \textbf{Tester:}The tester needs this document to validate that the initial requirements of this
-programs actually corresponds to the executable program correctly.\\
+\item \textbf{Tester: }The tester needs this document to validate that the initial requirements of this
+program actually corresponds to the executable program correctly.\\
 
 \end{itemize}
 
@@ -160,7 +160,6 @@ programs actually corresponds to the executable program correctly.\\
 % identify interfaces between the two. A simple diagram that shows the major
 % components of the overall system, subsystem interconnections, and external
 % interfaces can be helpful.$>$
-The \textit{Dominion DataMining} has as objective to be able to read the
 
 
 
@@ -176,26 +175,29 @@ Following is a list of the expected functions to be available on the software.
 \begin{itemize}
   \item{\textbf{Data modeling:}}
     \begin{itemize}
-      \item{parser}
-      \item{log decompression}
-      \item{create object game-log}
-      \item{restore game-log}
+    \item{log decompression}
+    \item{parsing}
+    \item{create game-log}
+    \item{send game-log data}
     \end{itemize}
-  \item{\textbf{Data Store:}}
+  \item{\textbf{Data Storage:}}
     \begin{itemize}
-      \item{Create SQL Database}
-      \item{Connect to SQL Database}
-      \item{Create NO-SQL Database}
-      \item{Connect to NO-SQL Database}
-      \item{Compression}
-      \item{Load game-log}
-      \item{Save game-log}
-      \item{Query Interface}
+    \item{Create Database}
+    \item{Connect to Database}
+    \item{Create Relational Database}
+    \item{Connect to Relational Database}
+    \item{Create document-oriented Database}
+    \item{Connect to document-oriented Database}
+    \item{Compression}
+    \item{Load game-log}
+    \item{Save game-log}
+    \item{Query Interface}
     \end{itemize}
   \item{\textbf{Data Analysis:}}
     \begin{itemize}
       \item{Generate Queries}
       \item{Analyze}
+      \item{restore game-log}
       \item{Plotting}
       \item{Calculate \textit{\textbf{ELO}}}
       \item{Recognize strategies}
@@ -214,27 +216,21 @@ Following is a list of the expected functions to be available on the software.
 % most important user classes for this product from those who are less important
 % to satisfy.$>$
 
-\textbf{Physical Actors:}\\
+\textbf{Physical Actors :}\\
 \begin{itemize}
- \item \textbf{User:} The user will be the one that demands analyses to be done
-   on the stored data.
+ \item \textbf{User :} The user will launch the parsing of the logs and demands analyses to be done
+   on the stored data that will then be shown in the form of charts.
 \end{itemize}
-\textbf{System Actors:}\\
+\textbf{System Actors :}\\
 \begin{itemize}
- \item \textbf{Parser:} The parser is the system has write access to the data
+ \item \textbf{Parser :} The parser is the system that has write access to the data
    base and is responsible to store the parsed data on the database.
- \item \textbf{Analyzer:} The Analyzer is the system that will query the data
-   base to collect data for analyze , and be able to create persistent queries.
+ \item \textbf{Analyzer :} The Analyzer is the system that will query the data
+   base to collect data for analyzing, and will be able to create persistent queries.
+   \item \textbf{Database: }
 \end{itemize}
 
-\textit{The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the interety of the code and data.}
-\section{Operating Environment}
-% $<$Describe the environment in which the software will operate, including the
-% hardware platform, operating system and versions, and any other software
-% components or applications with which it must peacefully coexist.$>$
-The Software will be developed for the operational system \textit{Linux} and no
-other platform is necessary.
-And the software has to run on hardware found on simple personal computers.
+\textit{The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the intierty of the code and data.}
 
 \section{Design and Implementation Constraints}
 % $<$Describe any items or issues that will limit the options available to the
@@ -245,14 +241,19 @@ And the software has to run on hardware found on simple personal computers.
 % considerations; design conventions or programming standards (for example, if the
 % customer’s organization will be responsible for maintaining the delivered
 % software).$>$
-This section presents an overview of possible issues that cam limit the
-development of the Software:\\
-The data to be analyzed is considerable big (400Gb) and the client will not provide a
+This section presents an overview of possible issues that can limit the
+development of the Software:
+\begin{itemize}
+\item The Software will be developed for the operational system \textit{Linux} and no
+other platform is necessary.
+\item The software has to run on hardware found on simple personal computers.
+\item The data to be analyzed is considerably big (400Gb) and the client will not provide a
 server to work with the data uncompressed what can impact on the performance of
-the software.\\
-The \textit{Logs} provided by the client don't have an standard format and that
+the software.
+\item The \textit{Logs} provided by the client don't have an standard format and that
 can delay the time to develop the parser, as the problems that it can raise
-during the development ,is unknown until the moment.
+during the development are unknown at the moment.
+\end{itemize}
 
 
 
@@ -262,7 +263,7 @@ during the development ,is unknown until the moment.
 % and tutorials) that will be delivered along with the software. Identify any
 % known user documentation delivery formats or standards.$>$
 The software will be delivered with a documentation of the source code, the
-source code and a user manual.
+source code and a user manual.\\
 
 
 
@@ -314,7 +315,6 @@ some problems found at the moment that this SRS is being write are:
 % prefer to organize this section by use case, mode of operation, user class,
 % object class, functional hierarchy, or combinations of these, whatever makes the
 % most logical sense for your product.$>$
-The functional requirements will be
 % \textbf{the following image illustrate an overview of the use case of the software.}\\
 % \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParsing}
 % \newpage
@@ -331,7 +331,18 @@ The functional requirements will be
 
 \section{Data Modeling}
 
-\subsection{Parser::REQ1}
+\subsection{Log decompression::REQ1}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+
+
+\begin{itemize}
+  \item The tar.bz2 files will be stored in a folder.
+  \item The program will decompress one specified file from this folder in a temporary folder.
+  \item The programm will delete the decompressed logs on demand by the parser(REQ2).
+\end{itemize}
+
+\subsection{Parser::REQ2}
 
 \subsubsection{Description and Priority}
 
@@ -345,32 +356,26 @@ The parser is responsible for reading the logs and collect the important
 information without loosing the structure of the log.\\
 A glimpse of the data to be recognized by the parser is illustrated in this
 diagram (some data to be determined as all the possibilities inside a log
-haven't being revealed yet):\\
+haven't been revealed yet):\\
 \includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
 
-\subsubsection{Stimulus/response}
+\begin{itemize}
+\item Winners: The list of the winners of the game, it can be one winner or several winners if they are tied
+\item Market: The list of 10 available cards to be bought by the players
+\item Cards Gone: list of cards that have been entirely bought at the end of the game.
+\item Player Name: Name of the player.
+\item Victory points: Amount of points at the end of the game.
+\item Player cards: List of cards bought by the player with the amount they bought.
+\item Victory cards: List of victory cards the player with the bought.
+\item Trash: List of cards that that are discarded at the end of the game.
+\item Game Moves: Every action depending on this item correspond to an action performed during a player's turn.
+\end{itemize}
 
-This feature will be started by the user via command: parse.
+The parser has to read every element shown in the previous graph as a part of the data when the user launches the parsing process.\\
+
 \subsubsection{Dependencies}
 
-depends on: REQ2, REQ3.
-
-
-
-
-
-\subsection{Log decompression::REQ2}
-\subsubsection{Description and Priority}
-\textbf{Priority level=high}\\
-
-To be able to work with the large volume of the data a system to decompress the
-the logs on demand will be implemented.
-
-This feature is responsible to decompress the tar.bz2 into a temporary folder
-and clean the folder.
-
-\subsubsection{Stimulus/response}
-This feature will be called by the system feature parser.
+depends on: REQ1, REQ3.
 
 
 \subsection{Create game-log::REQ3}
@@ -378,56 +383,49 @@ This feature will be called by the system feature parser.
 \textbf{Priority level=high}\\
 This functionality is the creation of a data structure where the log data will
 be remodeled into.
-here is a graphical representation of an overview of the data structure:
+here is a graphical representation of an overview of the data structure:\\
 \includegraphics[scale=0.5,keepaspectratio]{game-log}
 
-
-\subsection{restore game-log::REQ4}
-\subsubsection{Description and Priority}
-\textbf{Priority level=medium}\\
-This feature is responsible to restore the missing information on the parsed
-logs, by using deduction based on the data obtained from the log.
-\subsubsection{Stimulus/response}
-This system functionality will be started automatically after a log have being parsed.
-\subsubsection{Dependencies}
-depends on: REQ1, REQ2 , REQ3.
-
-\newpage
-\section{Data Store}
-
-\subsection{Create SQL Database::REQ5}
-
+\subsection{Send game-log data}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This functionality is responsible for the creation of the SQL database and the
-tables.
-for a better understand here is a  sketch of the database structure:\\
+The program will send the game-log data structure to the database part of the project.
+
+\newpage
+\section{Data Storage}
 
 \includegraphics[keepaspectratio]{SQL}
 
 
-\subsection{Connect to SQL Database::REQ6}
+\subsection{Connect to Relational Database::REQ6}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This module will be in charge of managing the connection of the application with
-the SQL database
+\begin{itemize}
+\item The program will be able to send data relative to the player (eg: ID, Name, Elo, Games played by the player)
+\item The program will be able to send requests to the database.
+\item The relational database will send the results of the requests made by the program.
+\end{itemize}
+
 \subsubsection{Dependencies}
 depends on: REQ5
 
 
 
-\subsection{Create NO-SQL Database::REQ7}
+\subsection{Create document-oriented Database::REQ7}
 
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This module will be responsible to create the NO-SQL (\textit{Documented based}) database.
-as a document based database will be used no data structure has to be defined.
+This module will be responsible to create the document-oriented database containing data at the JSon format.
 
-\subsection{Connect to NO-SQL Database::REQ8}
+\subsection{Connect to document-oriented Database::REQ8}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This module will be in charge of managing the connection of the application with
-the NO-SQL database
+\begin{itemize}
+\item The document-oriented database will be handling exchanges through a specific socket.
+\item The document-oriented database will receive game-logs at the JSon format.
+\item The document-oriented database will receive requests from the program.
+\item The document-oriented database will send results of the requests made by the program.
+\end{itemize}
 \subsubsection{Dependencies}
 depends on: REQ7
 
@@ -435,36 +433,36 @@ depends on: REQ7
 \subsection{compression::REQ9}
 \subsubsection{Description and Priority}
 \textbf{Priority level=medium}\\
-The NO-SQL data base will hold most of the data and some level of compression
+The document-oriented data base will hold most of the data and some level of compression
 will have to be applied.
 The database in focus to be used at the moment is \textit{mongodb} and it offers
 2 levels of compression \textit{Zlib} and \textit{Snappy}.
 During the development the \textit{Snappy} will be used as it offers a better
 performance.
 But the final program should give the user the ability to chose the compression
-level.
-\subsubsection{Stimulus/response}
-The compression will be set on at the time of the creation of the data base.
+level when starting the log parsing.
 
 \subsubsection{Dependencies}
 depends on:REQ7
-
-\subsection{Load game-log::REQ10}
-\subsubsection{Description and Priority}
-\textbf{Priority level=high}\\
-This is the functionality that will charge the game-log from the database into
-the data structure (see REQ3).
-\subsubsection{Dependencies}
-depends on: REQ3,REQ7,REQ5.
 
 
 \subsection{Save game-log::REQ11}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-This is the functionality that will transform the game-log int a document
-compatible with the database and save it.
-The document format used by the database is json.
-For more information visit: \url{https://docs.mongodb.org/manual/core/document/}
+\begin{itemize}
+\item The document-oriented database will convert the game-log structure in a JSon formatted document.
+\item The produced data in JSon format will be stored in the database.
+\end{itemize}
+
+\subsubsection{Dependencies}
+depends on: REQ3,REQ7,REQ5.
+
+\subsection{Load game-log::REQ10}
+\subsubsection{Description and Priority}
+\textbf{Priority level=high}\\
+When asked for a game-log, the database will load the JSon formatted log in a game-log data structure indetical to the one described in the data modelling section.\\
+If there is missing information in the JSon document, the corresponding field will be left empty.
+
 \subsubsection{Dependencies}
 depends on: REQ3,REQ7,REQ5.
 
@@ -476,6 +474,10 @@ a query interface that takes the 2 databases in consideration will have to be
 implemented.
 The query interface will have to choose automatically on what databases the
 information will be queried and return the results.
+The databases will receive the following type of queries:
+\begin{itemize}
+  \item 
+\end{itemize}
 \subsubsection{Dependencies}
 depends on: REQ3,REQ7,REQ5.
 
@@ -501,6 +503,16 @@ This module will get the queries results analyze the data and process the
 information generating related human readable statistics data.
 \subsubsection{Dependencies}
 depends on: REQ13,REQ12,REQ3,REQ7,REQ5.
+
+\subsection{restore game-log::REQ4}
+\subsubsection{Description and Priority}
+\textbf{Priority level=medium}\\
+This feature is responsible to restore the missing information on the parsed
+logs, by using deduction based on the data obtained from the log.
+\subsubsection{Stimulus/response}
+This system functionality will be started automatically after a log have being parsed.
+\subsubsection{Dependencies}
+depends on: REQ1, REQ2 , REQ3.
 
 \subsection{Plotting::REQ15}
 \subsubsection{Description and Priority}
