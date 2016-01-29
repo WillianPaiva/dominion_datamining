@@ -93,7 +93,7 @@ requirements for the development of the program \textit{Dominion DataMining}.\\
   \item \textbf{Data modeling} \- Responsible to read and remodel the data to be stored.
   \item \textbf{Data Storage} \- Store the parsed data
   \item \textbf{Data analyzer} \- Responsible to query the database and generate
-    human readable statistics and and plot charts.
+    human readable statistics and plot charts.
 \end{itemize}
 
 %This requirements Specification is based on the version 0.0.1 of the program.
@@ -112,7 +112,7 @@ documentation writer that needs to understand the basic system architecture and 
 Here are the potential uses for each one of the reader types:\\
 \begin{itemize}
 
-\item \textbf{Developer: }The developer who wants to read,change,modify or add new requirements into
+\item \textbf{Developer: }The developer who wants to read, change, modify or add new requirements into
 the existing program, must firstly consult this document and update the requirements with
 appropriate manner so as to not destroy the actual meaning of them and pass the information
 correctly to the next phases of the development process.\\
@@ -151,7 +151,7 @@ program actually corresponds to the executable program correctly.\\
 
 \chapter{Overall Description}
 
-\section{Product Perspective}
+%\section{Product Perspective}
 % $<$Describe the context and origin of the product being specified in this SRS.
 % For example, state whether this product is a follow-on member of a product
 % family, a replacement for certain existing systems, or a new, self-contained
@@ -231,7 +231,7 @@ Following is a list of the expected functions to be available on the software.
    base and is responsible to store the parsed data on the database.
  \item \textbf{Analyzer :} The Analyzer is the system that will query the data
    base to collect data for analyzing, and will be able to create persistent queries.
-   \item \textbf{Database: }
+   \item \textbf{Database: } The database will store the data extracted from the logs and answer to the queries of the other parts of the program
 \end{itemize}
 
 \textit{The Software to be developed is aimed to a personal use, so there is no privileged access, the user will have access to the intierty of the code and data.}
@@ -333,15 +333,15 @@ some problems found at the moment that this SRS is being write are:
 The program user interface will be composed of a executable(dominionmining) that will be
 executed with certain parameters to execute the desired action.
 The following diagram represents the different interactions available to the user:\\
-\includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}
-before the use of any features of the program , the user has to launch the parsing.
+\includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}\\
+Before the use of any features of the program , the user has to launch the parsing.
 \subsection{Launching the log parsing}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 \begin{itemize}
-  \item The user will have to place all the  compressed logs (tar.bz2 files) to be parsed into a
+  \item The user will have to place all the compressed logs (tar.bz2 files) to be parsed into a
     specific folder.
-  \item Once the previous step is done , the user can execute the parsing by
+  \item Once the previous step is done, the user can execute the parsing by
       typing : \textit{dominionmining parse (zlib/snappy)} if no compression is
       given the default compression is \textit{snappy}.
       \item once the parsing is done a message will be shown on the
@@ -356,12 +356,12 @@ The list of parameters that will be possible to use will be determined in the
 future.\\
 
 The return of a statistic can be a chart displayed in a window or exported to a
-file if its a single value , a name or a sentence it will be returned in the prompt.
+file. If its a single value, a name or a sentence it will be returned in the prompt.
 
 \subsection{Strategy statistics requests}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
-The request for a strategy statistic request can be made by typing \textit{dominionmining strat (strategy name) (parameter)}\\
+The request for a strategy statistic can be made by typing \textit{dominionmining strat (strategy name) (parameter)}\\
 The possible strategy names are:
 bigmoney , penprovince , beyondsilver.\\
 If other strategies are recognized by the program they will be added to the list.
@@ -369,7 +369,7 @@ If other strategies are recognized by the program they will be added to the list
 The list of parameters that will be possible to use will be determined in the
 future.\\
 The return of a statistic can be a chart displayed in a window or exported to a
-file if its a single value , a name or a sentence it will be returned in the prompt.
+file. If its a single value, a name or a sentence it will be returned in the prompt.
 \section{Data Modeling}
 
 \subsection{Log decompression}
@@ -393,16 +393,16 @@ Provided the issues revealed by the logs (like: the inconsistency of the syntax)
 a use of a parser made with tools like \textit{YACC and LEX} is not recommended.
 For that a parser will be done by using the already present \textit{HTML} and
 key words presents on the logs.\\
-The parser is responsible for reading the logs and collect the important
-information without loosing the structure of the log.\\
+The parser is responsible for reading the logs and collecting the important
+information without losing the structure of the log.\\
 A glimpse of the data to be recognized by the parser is illustrated in this
 diagram (some data to be determined as all the possibilities inside a log
 haven't been revealed yet):\\
 \includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
 
 \begin{itemize}
-\item Winners: The list of the winners of the game, it can be one winner or several winners if they are tied
-\item Market: The list of 10 available cards to be bought by the players
+\item Winners: The list of the winners of the game, it can be one winner or several winners if they are tied.
+\item Market: The list of 10 available cards to be bought by the players.
 \item Cards Gone: list of cards that have been entirely bought at the end of the game.
 \item Player Name: Name of the player.
 \item Victory points: Amount of points at the end of the game.
@@ -429,15 +429,14 @@ here is a graphical representation of an overview of the data structure:\\
 The program will send the game-log data structure to the database part of the project.
 \section{Data Storage}
 
-\includegraphics[keepaspectratio]{SQL}
-
 
 \subsection{Connect to Relational Database}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
+\includegraphics[keepaspectratio]{SQL}
 \begin{itemize}
 \item The program will be able to send data relative to the player (eg: ID, Name, Elo, Games played by the player)
-\item The program will be able to send requests to the database.
+\item The program will be able to send requests to the database concerning every piece of data stored in it.
 \item The relational database will send the results of the requests made by the program.
 \end{itemize}
 
@@ -454,15 +453,15 @@ This module will be responsible to create the document-oriented database contain
 \begin{itemize}
 \item The document-oriented database will be handling exchanges through a specific socket.
 \item The document-oriented database will receive game-logs at the JSon format.
-\item The document-oriented database will receive requests from the program.
+\item The document-oriented database will receive requests from the program concerning every piece of data contained in it.
 \item The document-oriented database will send results of the requests made by the program.
 \end{itemize}
 
 
-\subsection{compression}
+\subsection{Compression}
 \subsubsection{Description and Priority}
 \textbf{Priority level=medium}\\
-The document-oriented data base will hold most of the data and some level of compression
+The document-oriented database will hold most of the data and some level of compression
 will have to be applied.
 The database in focus to be used at the moment is \textit{mongodb} and it offers
 2 levels of compression \textit{Zlib} and \textit{Snappy}.
@@ -495,7 +494,7 @@ If there is missing information in the JSon document, the corresponding field wi
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 \begin{itemize}
-\item The data analyser will convert the queries results in a format usable by the plotting module.
+\item The data analyser will convert the query results in a format usable by the plotting module.
 \item If the data is simple to read (eg: a number, a name, a sentence), the data analyser will simply output the result in text format.
   \end{itemize}
 
@@ -508,9 +507,9 @@ In case of a missing game header or part of it missing:
   \begin{itemize}
   \item Winners/victory cards/victory points missing: the program can keep track of the cards owned by the players during the game in order to know how many victory cards they have at the end of the game.
   \item Market missing: The program can keep track of the cards bought during the game in order to partially or totally reconstruct the cards available in the Market.
-  \item Cards Gone: As with a missing Market data, the program will keep track of cards bought and counting the amount bought for each card, if the maximum amount of cards is bought, the card is gone at the end of the game.
-  \item player name missing: the game moves part of a log also keeps track of the player names, the program will simply restore them in the header.
-  \item player cards: the program will keep track of the actions performed during the game relative to the player cards and add them in this list.
+  \item Cards Gone: As with a missing Market data, the program will keep track of cards bought and count the amount bought for each card, if the maximum amount of cards is bought, the card is gone at the end of the game.
+  \item Player name missing: the game moves part of a log also keeps track of the player names, the program will simply restore them in the header.
+  \item Player cards: the program will keep track of the actions performed during the game relative to the player cards and add them in this list.
   \end{itemize}
 
 \subsection{Plotting}
@@ -523,15 +522,16 @@ The plotting module will get the converted data obtained after the Gather Data p
 \textbf{Priority level=high}\\
 The analyzer will have to calculate the final ELO for each player and what was a
 player ELO on a given game.
-for each game in chronological order, this module will request the initial elo of the players from the relational database and the winners of the game, then it will calculate the new elo of each player from the outcome of the game. The module will then set the calculated elo in the document-oriented database at the currently analyzed game and will also update the overall elo for each of the players participating in the game on the relational database.\\
-More information about ELO cam be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
+For each game in chronological order, this module will request the initial elo of the players from the relational database and the winners of the game, then it will calculate the new elo of each player from the outcome of the game. The module will then set the calculated elo in the document-oriented database at the currently analyzed game and will also update the overall elo for each of the players participating in the game on the relational database.\\
+More information about ELO can be found on \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
+The following diagram illustrates the process of the elo calculation:\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{elocalc}\\
 
 \subsection{Recognize strategies}
 \subsubsection{Description and Priority}
 \textbf{Priority level=medium}\\
 
-The dominion wiki describe some strategies that can be used in the game .\\ For exemple :\\
+The dominion wiki describes some strategies that can be used in the game .\\ For exemple :\\
 Big Money\\
 Beyond Silver \\
 Penultimate Province Rule \\
@@ -548,16 +548,12 @@ In order to recognize the strategy coined Beyond Silver, the analyzer has to rec
 
 In order to recognize that the Penultimate Province Rule is respected (as explained on \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), the analyzer has to keep track of the amount of Victory Points of each player at every turn.
 
-\subsubsection{Dependencies}
-depends on: REQ12,REQ3,REQ7,REQ5.
-
 \subsection{Recognize Greening}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 The analyzer has to be capable of recognize the \textit{\textbf{greening}} moment on each match.
-More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}.
-\subsubsection{Dependencies}
-depends on: REQ12,REQ3,REQ7,REQ5.
+More about \textit{\textbf{greening}} on \url{http://wiki.dominionstrategy.com/index.php/Greening}.\\
+The program will recognize when the greening happens by detecting when victory cards begin to be bought.
 
 
 \chapter{Nonfunctional Requirements}
