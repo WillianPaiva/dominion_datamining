@@ -54,7 +54,7 @@
         \vspace{1.9cm}
         Dominion Logs Datamining\\
         \vspace{1.9cm}
-        Prepared by \\ VER VALEM Willian \\ BAYOL Elmer \\ Liliana Lopez Farfan
+        Prepared by \\ VER VALEM Willian \\ BAYOL Elmer \\ LOPEZ-FARFAN M. Liliana
         \\ TAGNAOUTI Khaoula\\
         \vspace{1.9cm}
         \today\\
@@ -355,16 +355,24 @@ Before the use of any features of the program , the user has to launch the parsi
 \end{itemize}
 
 %TODO
-%\subsection{Data mapping}
-%In order to allow the user to ask for specific statistics, the program can be run in order to generate a result of a certain query and then a python script will be applied to this result. This would allow more flexibility in the type of statistics displayable by the program.
+%\subsection{Game data mapping}
+%In order to allow the user to ask for specific statistics concerning a game, the program can be run in order to generate simplified game logs and then a python script will be applied to this log. This would allow more flexibility in the type of statistics displayable by the program.
 %\begin{itemize}
 %\item the program will be launched by using the following command: \textit{dominionmining data\_to\_query user\_script.py}
-% \item the python script will be applied to the generated query and return the statistics asked by the user.
+% \item the python script will be applied to the generated result and return the statistics asked by the user.
 %\item The generated file containing the query results will have the following format:
 %\begin{itemize}
-%\item file name?
-%\item for each value or list of values returned, the first line will be the name of the value (winner, game, player names)
-%\item then the following lines will contain the values, in case of a game description, each line will contain an action.(TODO: provide game description format)
+%\item The name of the produced file is \textit{game.txt}
+%\item The simplified log will contain each action made by the player, one action per line(TODO: provide a list of actions and their name in the simplified log). List of actions and their format:
+%\begin{itemize}
+%\item Revealing a card: \textit{player\_x reveals card\_name}
+%\item Drawing cards: \textit{player\_x draws n cards}
+%\item Buying a card: \textit{player\_x buys card\_name}
+%\item Trashing cards: \textit{player\_x trashes n cards}
+%\item Puts a card: \textit{player\_x puts card\_name}
+%\item Gaining a card: \textit{player\_x gains card\_name}
+%\item Plays a card: \textit{player\_x plays card\_name}
+%\end{itemize}
 %\end{itemize}
 %\end{itemize}
 
@@ -372,24 +380,15 @@ Before the use of any features of the program , the user has to launch the parsi
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 The request for a statistic can be made by typing \textit{dominionmining stats (parameters)}.  \\
-The list of parameters that will be possible to use will be determined in the
-future.\\
-
-The return of a statistic can be a chart displayed in a window or exported to a
-file. If its a single value, a name or a sentence it will be returned in the prompt.
-
-\subsection{Strategy statistics requests}
-\subsubsection{Description and Priority}
-\textbf{Priority level=high}\\
-The request for a strategy statistic can be made by typing \textit{dominionmining strat (strategy name) (parameter)}\\
 The possible strategy names are:
 bigmoney , penprovince , beyondsilver.\\
-If other strategies are recognized by the program they will be added to the list.
-
+If other strategies are recognized by the program they will be added to the list.\\
 The list of parameters that will be possible to use will be determined in the
 future.\\
+
 The return of a statistic can be a chart displayed in a window or exported to a
 file. If its a single value, a name or a sentence it will be returned in the prompt.
+
 \section{Data Modeling}
 
 \subsection{Log decompression}
@@ -509,14 +508,15 @@ If there is missing information in the JSon document, the corresponding field wi
 
 \section{Data Analysis}
 
-
 \subsection{Gather data}
 \subsubsection{Description and Priority}
 \textbf{Priority level=high}\\
 \begin{itemize}
 \item The data analyser will convert the query results in a format usable by the plotting module.
 \item If the data is simple to read (eg: a number, a name, a sentence), the data analyser will simply output the result in text format.
-  \end{itemize}
+\item The last query will be memorized with it's result in order to gain time if the next query made by the user is the same.
+\item If the user wants to apply a python script to game logs, the pogram will request the game logs and put them in a text file, this file will contain each action made by each player and the script will be applied to this file.
+\end{itemize}
 
 \subsection{restore game-log}
 \subsubsection{Description and Priority}
@@ -586,7 +586,9 @@ The program will recognize when the greening happens by detecting when victory c
 % as possible. You may need to state performance requirements for individual
 % functional requirements or features.$>$
 No specific performance requirement was made by the client. But for the analyzer
-a time of running should be less than an hour.
+a time of running should be less than an hour.\\
+%TODO: peut-etre a précisier
+The user should be able to iterate the analysis process on a precise dataset without having to wait for the same query to be done again.
 
 
 
@@ -609,8 +611,7 @@ any missing information if possible.\\
 Even if just a command line is expected for the final program it should have a
 easy learn curve and be easy to use.\\
 The data generated by the parser don't need to be human readable.\\
-%TODO: The program will have to be able to execute python scripts created by the user.
-%TODO: The data generated will have to be analyzable by the user in order to allow as much flexiblity as possible in the treatment of the data.
+%TODO: The game logs generated will have to be analyzeable by the user in order to allow as much flexiblity as possible in the treatment of the logs.
 
 
 %\chapter{Other Requirements}
