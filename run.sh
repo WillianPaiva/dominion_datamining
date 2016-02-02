@@ -4,7 +4,7 @@ git submodule update --init --recursive
 
 cd database/
 
-scons all
+scons all --disable-warnings-as-errors
 
 cd ../
 
