@@ -35,6 +35,7 @@ public class FileHandler {
         int overT = 0;
         int partT = 0;
         try{
+            System.out.println("Strating the Parser it can take a long time...");
             //creates a list with all compressed files
             File[] bzList = folderPath.listFiles();
             overT = bzList.length;
