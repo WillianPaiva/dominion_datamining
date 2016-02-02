@@ -19,9 +19,9 @@ public class App
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
         test.runParser();
-        String pass = "dominionDatabase";
-        MongoCredential credential = MongoCredential.createCredential("dominion", "project", pass.toCharArray());
-        MongoClient mongoClient = new MongoClient(new ServerAddress("151.80.32.75"),Arrays.asList(credential));
-        MongoDatabase db = mongoClient.getDatabase("project");
+        // String pass = "dominionDatabase";
+        // MongoCredential credential = MongoCredential.createCredential("dominion", "project", pass.toCharArray());
+        // MongoClient mongoClient = new MongoClient(new ServerAddress("151.80.32.75"),Arrays.asList(credential));
+        // MongoDatabase db = mongoClient.getDatabase("project");
     }
 }

@@ -1,5 +1,15 @@
 #!/bin/bash
 
+git submodule update --init --recursive
+
+cd database/
+
+scons all
+
+cd ../
+
+mkdir sampleLogs/temp
+
 
 mvn clean compile assembly:single
 

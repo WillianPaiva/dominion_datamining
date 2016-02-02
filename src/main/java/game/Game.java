@@ -1,5 +1,6 @@
 package game;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import game.player.Player;
@@ -10,6 +11,7 @@ public class Game {
     private ArrayList<String> cardsInSuply = new ArrayList<String>();
     private ArrayList<Player> players = new ArrayList<Player>();
     private HashMap<String,Integer> trash = new HashMap<String,Integer>();
+    private Date dateTime;
     private int gameNumber;
 
     public Game(){}
@@ -50,6 +52,16 @@ public class Game {
 
     public void insertTrash(int q, String c){
         trash.put(c,q);
+    }
+
+    public void insertDateTime(String s){
+        String[] date = s.split("-");
+        this.dateTime = new Date(Integer.parseInt(date[1].substring(0,3)),
+                                 Integer.parseInt(date[1].substring(4,5)),
+                                 Integer.parseInt(date[1].substring(6,7)),
+                                 Integer.parseInt(date[2].substring(0,1)),
+                                 Integer.parseInt(date[2].substring(2,3)),
+                                 Integer.parseInt(date[2].substring(4,5)));
     }
 
     public String toString(){
