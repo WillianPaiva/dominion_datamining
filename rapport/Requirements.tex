@@ -177,7 +177,7 @@ Following is a list of the expected functions to be available on the software.
     \begin{itemize}
     \item{Launch the log parsing}
     \item{Statistics requests}
-    \item{Strategy statistics requests}
+    \item{Game data mapping}
     \end{itemize}
   \item{\textbf{Data modeling:}}
     \begin{itemize}
@@ -224,11 +224,11 @@ Following is a list of the expected functions to be available on the software.
 \begin{itemize}
  \item \textbf{User :} The user will launch the parsing of the logs and demands analyses to be done
    on the stored data that will then be shown in the form of charts.\\
-   %TODO: The user's actions can be decomposed in two parts:
-   %\begin{itemize}
-   %\item Precomputation step: This action will be performed once at the beginning and will launch the parsing phase and the standard analyzing of the games (strategy recognition, elo calculation)
-   %\item User's data analyzing: This will be a loop in wich the user can ask for standard statistics display or create complex analyzing using python scripts and specific data queries. as long as the parsed data isn't erased or modified (new logs, new program, database deletion) this process can be repeated without having to reparse the data.
-   %\end{itemize}
+   The user's actions can be decomposed in two parts:
+   \begin{itemize}
+   \item Precomputation step: This action will be performed once at the beginning and will launch the parsing phase and the standard analyzing of the games (strategy recognition, elo calculation)
+   \item User's data analyzing: This will be a loop in wich the user can ask for standard statistics display or create complex analyzing using python scripts and specific data queries. as long as the parsed data isn't erased or modified (new logs, new program, database deletion) this process can be repeated without having to reparse the data.
+   \end{itemize}
 \end{itemize}
 \textbf{System Actors :}\\
 \begin{itemize}
@@ -324,16 +324,6 @@ some problems found at the moment that this SRS is being write are:
 % prefer to organize this section by use case, mode of operation, user class,
 % object class, functional hierarchy, or combinations of these, whatever makes the
 % most logical sense for your product.$>$
-% \textbf{the following image illustrate an overview of the use case of the software.}\\
-% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParsing}
-% \newpage
-% \textbf{this image shows with more details the use-case of the data analyzes and
-% data recovery.}\\
-% \\
-% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseDataMining}
-
-% \newpage
-% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{UseCaseParser}
 \section{User interface}
 The program user interface will be composed of a executable(dominionmining) that will be
 executed with certain parameters to execute the desired action.
@@ -349,32 +339,10 @@ Before the use of any features of the program , the user has to launch the parsi
   \item Once the previous step is done, the user can execute the parsing by
       typing : \textit{dominionmining parse (zlib/snappy)} if no compression is
       given the default compression is \textit{snappy}.
-    %TODO \item For testing purposes, in order to avoid having a 4 hours parsing step, the user can specify a percentage of the logs to be parsed. by specifing a value between 0 and 100. the parser will randomly select logs from the provided ones and parse them, creating a usable database for further testing.
+    \item For testing purposes, in order to avoid having a 4 hours parsing step, the user can specify a percentage of the logs to be parsed. by specifing a value between 0 and 100. the parser will randomly select logs from the provided ones and parse them, creating a usable database for further testing.
     \item once the parsing is done a message will be shown on the
       console (parsing done).
 \end{itemize}
-
-%TODO
-%\subsection{Game data mapping}
-%In order to allow the user to ask for specific statistics concerning a game, the program can be run in order to generate simplified game logs and then a python script will be applied to this log. This would allow more flexibility in the type of statistics displayable by the program.
-%\begin{itemize}
-%\item the program will be launched by using the following command: \textit{dominionmining data\_to\_query user\_script.py}
-% \item the python script will be applied to the generated result and return the statistics asked by the user.
-%\item The generated file containing the query results will have the following format:
-%\begin{itemize}
-%\item The name of the produced file is \textit{game.txt}
-%\item The simplified log will contain each action made by the player, one action per line(TODO: provide a list of actions and their name in the simplified log). List of actions and their format:
-%\begin{itemize}
-%\item Revealing a card: \textit{player\_x reveals card\_name}
-%\item Drawing cards: \textit{player\_x draws n cards}
-%\item Buying a card: \textit{player\_x buys card\_name}
-%\item Trashing cards: \textit{player\_x trashes n cards}
-%\item Puts a card: \textit{player\_x puts card\_name}
-%\item Gaining a card: \textit{player\_x gains card\_name}
-%\item Plays a card: \textit{player\_x plays card\_name}
-%\end{itemize}
-%\end{itemize}
-%\end{itemize}
 
 \subsection{Statistics requests}
 \subsubsection{Description and Priority}
@@ -388,6 +356,28 @@ future.\\
 
 The return of a statistic can be a chart displayed in a window or exported to a
 file. If its a single value, a name or a sentence it will be returned in the prompt.
+
+
+\subsection{Game data mapping}
+In order to allow the user to ask for specific statistics concerning a game, the program can be run in order to generate simplified game logs and then a python script will be applied to this log. This would allow more flexibility in the type of statistics displayable by the program.
+\begin{itemize}
+\item the program will be launched by using the following command: \textit{dominionmining data\_to\_query user\_script.py}
+ \item the python script will be applied to the generated result and return the statistics asked by the user.
+\item The generated file containing the query results will have the following format:
+\begin{itemize}
+\item The name of the produced file is \textit{game.txt}
+\item The simplified log will contain each action made by the player, one action per line(TODO: provide a list of actions and their name in the simplified log). List of actions and their format:
+\begin{itemize}
+\item Revealing a card: \textit{player\_x reveals card\_name}
+\item Drawing cards: \textit{player\_x draws n cards}
+\item Buying a card: \textit{player\_x buys card\_name}
+\item Trashing cards: \textit{player\_x trashes n cards}
+\item Puts a card: \textit{player\_x puts card\_name}
+\item Gaining a card: \textit{player\_x gains card\_name}
+\item Plays a card: \textit{player\_x plays card\_name}
+\end{itemize}
+\end{itemize}
+\end{itemize}
 
 \section{Data Modeling}
 
@@ -587,7 +577,6 @@ The program will recognize when the greening happens by detecting when victory c
 % functional requirements or features.$>$
 No specific performance requirement was made by the client. But for the analyzer
 a time of running should be less than an hour.\\
-%TODO: peut-etre a précisier
 The user should be able to iterate the analysis process on a precise dataset without having to wait for the same query to be done again.
 
 
@@ -611,7 +600,7 @@ any missing information if possible.\\
 Even if just a command line is expected for the final program it should have a
 easy learn curve and be easy to use.\\
 The data generated by the parser don't need to be human readable.\\
-%TODO: The game logs generated will have to be analyzeable by the user in order to allow as much flexiblity as possible in the treatment of the logs.
+The game logs generated will have to be analyzeable by the user in order to allow as much flexiblity as possible in the treatment of the logs.
 
 
 %\chapter{Other Requirements}
