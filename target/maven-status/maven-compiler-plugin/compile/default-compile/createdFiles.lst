@@ -1,8 +1,11 @@
-main/java/game/Turn.class
+game/Turn.class
+game/Play.class
+game/enumCards.class
+game/TurnsLog.class
 reader/ReadGameHead.class
 reader/FileHandler.class
 game/player/Player.class
-main/java/game/Play.class
+game/PlayerTurn.class
 game/Game.class
 universite/bordeaux/app/App.class
 reader/FileReader.class
