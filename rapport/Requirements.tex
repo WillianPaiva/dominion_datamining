@@ -188,8 +188,6 @@ Following is a list of the expected functions to be available on the software.
     \end{itemize}
   \item{\textbf{Data Storage:}}
     \begin{itemize}
-    \item{Create Database}
-    \item{Connect to Database}
     \item{Create Relational Database}
     \item{Connect to Relational Database}
     \item{Create document-oriented Database}
@@ -366,7 +364,7 @@ In order to allow the user to ask for specific statistics concerning a game, the
 \item The generated file containing the query results will have the following format:
 \begin{itemize}
 \item The name of the produced file is \textit{game.txt}
-\item The simplified log will contain each action made by the player, one action per line(TODO: provide a list of actions and their name in the simplified log). List of actions and their format:
+\item The simplified log will contain each action made by the player, one action per line. List of actions and their format:
 \begin{itemize}
 \item Revealing a card: \textit{player\_x reveals card\_name}
 \item Drawing cards: \textit{player\_x draws n cards}
@@ -554,7 +552,7 @@ given match (if any strategy was used) and generate statistics.\\
 The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
 More on \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
-In order to recognize the strategy coined Beyond Silver, the analyzer has to recognize when certain type of cards are bought, the list of these cards can be found on \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
+In order to recognize the strategy coined Beyond Silver, the analyzer has to recognize when certain type of cards are bought, the list of these cards can be found on. \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
 
 In order to recognize that the Penultimate Province Rule is respected (as explained on \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), the analyzer has to keep track of the amount of Victory Points of each player at every turn.
 
