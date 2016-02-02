@@ -2,6 +2,7 @@
 mkdir -p mongodb >/dev/null 2>&1
 mkdir -p mongoData
 mkdir -p mongoLog
+mkdir -p sampleLogs/temp
 
 if [ ! -f mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod ]; then
     echo "downloading mongodb"
@@ -14,7 +15,6 @@ RESULT=$?   # returns 0 if mongo eval succeeds
 if [ $RESULT -ne 0 ]; then
     echo "starting database engine"
     mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod --dbpath mongoData --quiet --fork --logpath mongoLog/mongod.log
-    mkdir sampleLogs/temp >/dev/null 2>&1
 else
     echo "mongodb already running!"
 fi
