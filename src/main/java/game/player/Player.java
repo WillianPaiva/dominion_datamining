@@ -1,6 +1,7 @@
 package game.player;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Player {
     private String pl ;
@@ -26,18 +27,30 @@ public class Player {
     public void insertVictoryCard(int n , String s){
         victoryCards.put(s,n);
     }
+    public HashMap<String,Integer> getVictoryCards(){
+        return this.victoryCards;
+    }
 
     public void insertDeck(int n , String s){
         deck.put(s,n);
+    }
+    public HashMap<String,Integer> getDeck(){
+        return this.deck;
     }
 
 
     public void setPoints(int n){
         this.points = n;
     }
+    public int getPoints(){
+        return this.points;
+    }
 
     public void setTurns(int t){
         this.turns = t;
+    }
+    public int getTurns(){
+        return this.turns;
     }
 
     public void insertOpening(String s){
@@ -46,6 +59,9 @@ public class Player {
 
     public void insertFirstHand(int n , String s){
         this.firstHand.put(s,n);
+    }
+    public HashMap<String,Integer> getFirstHand(){
+        return this.firstHand;
     }
 
     public String toString(){
