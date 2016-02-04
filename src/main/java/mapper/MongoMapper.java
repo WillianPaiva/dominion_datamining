@@ -6,39 +6,45 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 import game.Game;
 import game.player.Player;
+
 import java.util.logging.Logger;
 import java.util.logging.Level;
 public class MongoMapper {
-    MongoClient mongo = new MongoClient();
-    MongoDatabase db = mongo.getDatabase("game-logs");
+    private MongoClient mongo;
+    private MongoDatabase db ;
   public MongoMapper(){
       Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
+      mongo = new MongoClient();
+      db = mongo.getDatabase("game-logs");
   }
 
     public void insertTodb(Game g){
         Document temp = mappeGame(g);
         db.getCollection("logs").insertOne(temp);
+        ObjectId id = (ObjectId)temp.get("_id");
+        // System.out.println(id.toString());
     }
 
-    public Document mappeGame(Game g){
+    private Document mappeGame(Game g){
         return new Document("game-log",new Document()
                             .append("date", g.getDate().toString())
-                            .append("winners", asList(g.getWinners()))
-                            .append("cardsgonne",asList(g.getCardsGone()))
-                            .append("market",asList(g.getMarket()))
-                            .append("market",asList(g.getMarket()))
+                            .append("winners", g.getWinners())
+                            .append("cardsgonne",g.getCardsGone())
+                            .append("market",g.getMarket())
+                            .append("market",g.getMarket())
                             .append("trash",hashtodoc(g.getTrash()))
-                            .append("market",asList(g.getMarket()))
-                            .append("players",asList(players(g.getPlayers()))));
+                            .append("market",g.getMarket())
+                            .append("players",players(g.getPlayers())));
     }
 
-    public ArrayList<Document> players(ArrayList<Player> p){
+    private ArrayList<Document> players(ArrayList<Player> p){
         ArrayList<Document> temp = new ArrayList<Document>();
         for(Player x: p){
             temp.add(new Document()
@@ -54,7 +60,7 @@ public class MongoMapper {
         return temp;
     }
 
-    public Document hashtodoc(HashMap<String,Integer> map){
+    private Document hashtodoc(HashMap<String,Integer> map){
         Document temp = new Document();
         for(String x: map.keySet()){
             temp.append(x, map.get(x));
