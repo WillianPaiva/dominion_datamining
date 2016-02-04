@@ -13,7 +13,15 @@ import mapper.MongoMapper;
  *
  */
 public class FileHandler {
-
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
     private File folderPath ;
     private Game g;
     MongoMapper t = new MongoMapper();
@@ -38,7 +46,7 @@ public class FileHandler {
         int overT = 0;
         int partT = 0;
         try{
-            System.out.println("Strating the Parser it can take a long time...");
+            System.out.println(ANSI_CYAN + "Strating the Parser it can take a long time..." + ANSI_RESET);
             //creates a list with all compressed files
             File[] bzList = folderPath.listFiles();
             overT = bzList.length;
@@ -97,9 +105,9 @@ public class FileHandler {
         for(int x = 0 ; x < (partial/4); x++){
             part += "=";
         }
-        String progress = "\r overall [" + over +"] "+overall+"%  "+"partial [" + part +"] "+partial+"%";
-
-            System.out.print(progress);
+        String progress = "\r"+ANSI_BLUE+ "overall"+ANSI_RESET+" [" +ANSI_GREEN +  over + ANSI_RESET +"] "+overall+"%  "+ANSI_BLUE+"partial"+ANSI_RESET+" [" + ANSI_GREEN + part + ANSI_RESET +"] "+partial+"%";
+        System.out.print("\r                                                                                  ");
+        System.out.print(progress);
     }
 
 }
