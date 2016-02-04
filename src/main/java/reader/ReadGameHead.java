@@ -20,6 +20,10 @@ public class ReadGameHead {
     public ReadGameHead(FileReader r, Game g){
         this.game = g;
         this.reader = r ;
+        getGameOverall();
+        getPlayersData();
+        getPlayersFirstHand();
+        getTrash();
     }
 
 
@@ -34,7 +38,7 @@ public class ReadGameHead {
                 //get the game number
                 String title = doc.title();
                 String[] parts = title.split("#");
-                game.setGameNumber(Integer.parseInt(parts[1]));
+                // game.setGameNumber(Integer.parseInt(parts[1]));
 
                 //find the match winner
                 String[] win = doc.body().text().split("wins!");
