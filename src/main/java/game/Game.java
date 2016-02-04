@@ -2,7 +2,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
+import java.util.Map;
 import game.player.Player;
 
 public class Game {
@@ -12,17 +12,23 @@ public class Game {
     private ArrayList<Player> players = new ArrayList<Player>();
     private HashMap<String,Integer> trash = new HashMap<String,Integer>();
     private Date dateTime;
-    private int gameNumber;
 
     public Game(){}
 
     public void insertCardGone(String s){
         this.cardsGone.add(s);
     }
-
-
+    public ArrayList<String> getCardsGone(){
+        return this.cardsGone;
+    }
+    public Date getDate(){
+        return this.dateTime;
+    }
     public void insertCardsInSuply(String s){
         this.cardsInSuply.add(s);
+    }
+    public ArrayList<String> getMarket(){
+        return this.cardsInSuply;
     }
 
     public void insertPlayer(Player s){
@@ -37,7 +43,9 @@ public class Game {
         }
         return null;
     }
-
+    public ArrayList<Player> getPlayers(){
+        return this.players;
+    }
     public int getTotalPlayers(){
         return this.players.size();
     }
@@ -46,12 +54,15 @@ public class Game {
         this.winners.add(s);
     }
 
-    public void setGameNumber(int i){
-        this.gameNumber = i ;
+    public ArrayList<String> getWinners(){
+        return this.winners;
     }
 
     public void insertTrash(int q, String c){
         trash.put(c,q);
+    }
+    public HashMap<String,Integer> getTrash(){
+        return this.trash;
     }
 
     public void insertDateTime(String s){
@@ -65,7 +76,7 @@ public class Game {
     }
 
     public String toString(){
-        return winners.toString() + " " + gameNumber + " " + cardsGone.size() + " " + cardsInSuply.size() +" "+ players.toString()+" "+trash.toString();
+        return winners.toString() + " "  + cardsGone.size() + " " + cardsInSuply.size() +" "+ players.toString()+" "+trash.toString();
     }
 
 }
