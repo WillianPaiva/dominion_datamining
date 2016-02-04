@@ -1,1 +1,19 @@
 /bin/
+# Maven
+log/
+target/
+mongodb/
+mongoLog/
+mongoData/
+sampleLogs/temp/
+*.log
+*.toc
+*.aux
+*.el
+*.tgz
+*.log
+*.toc
+*.aux
+*.el
+*.tgz
+*.out
