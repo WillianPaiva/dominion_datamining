@@ -16,21 +16,21 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
-        Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
+        // Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-        JdbcDataSource ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:./test");
-        ds.setUser("sa");
-        ds.setPassword("sa");
-        Connection conn = ds.getConnection();
+        // JdbcDataSource ds = new JdbcDataSource();
+        // ds.setURL("jdbc:h2:./test");
+        // ds.setUser("sa");
+        // ds.setPassword("sa");
+        // Connection conn = ds.getConnection();
 
-        // test.runParser();
-        MongoClient mongoClient = new MongoClient();
+        test.runParser();
+        // MongoClient mongoClient = new MongoClient();
         // mongoClient.getDB("dominion")
-        MongoDatabase db = mongoClient.getDatabase("local");
-        for (String s : mongoClient.getDatabaseNames()) {
-            System.out.println(s);
-}
+//         MongoDatabase db = mongoClient.getDatabase("local");
+//         for (String s : mongoClient.getDatabaseNames()) {
+//             System.out.println(s);
+// }
     }
 }
