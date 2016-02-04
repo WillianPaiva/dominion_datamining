@@ -1,0 +1,26 @@
+{ "_id" : ObjectId("56b370882db5d81f5287cebb"),
+  "game-log" : {
+      "date" : "Tue Feb 01 00:02:00 CET 2101",
+      "winners" : [ [ "Noobular " ] ],
+      "cardsgonne" : [ [ "Provinces" ] ],
+      "market" : [ [ "Chapel", "Island", "Peddler", "Salvager", "Sea Hag", "Smugglers", "Steward", "Torturer", "Upgrade", "Wishing Well" ] ],
+      "trash" : { "Coppers" : 2, "Estate" : 1, "Curses" : 2, "Sea" : 1, "Smugglers" : 1 },
+      "players" : [ [
+          {
+              "name" : "Noobular",
+              "Elo" : 0,
+              "points" : 43,
+              "turns" : 19,
+              "victorycards" : { "Provinces" : 5, "Isls" : 5, "Estates" : 3 },
+              "deck" : { "Coppers" : 5, "Provinces" : 5, "Silver" : 1, "Wishing" : 1, "Estates" : 3, "Islands" : 5, "Steward" : 1, "Torturer" : 1, "Golds" : 3 }, "firsthand" : { "Coppers" : 3, "Estates" : 2 } },
+          {
+              "name" : "slemdog",
+              "Elo" : 0,
+              "points" : 26,
+              "turns" : 19,
+              "victorycards" : { "Provinces" : 3, "Isls" : 3, "Estates" : 2 },
+              "deck" : { "Coppers" : 7, "Provinces" : 3, "Upgrades" : 3, "Peddler" : 1, "Wishing" : 1, "Estates" : 2, "Islands" : 3, "Silvers" : 2, "Salvager" : 1, "Torturer" : 1, "Golds" : 3 }, "firsthand" : { "Coppers" : 3, "Estates" : 2 }
+          }
+      ] ]
+  }
+}
