@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
 import game.Game;
 
+import mapper.MongoMapper;
+
 
 /**
  * creates a object that holds the root folder with all compressed logs file
@@ -14,6 +16,7 @@ public class FileHandler {
 
     private File folderPath ;
     private Game g;
+    MongoMapper t = new MongoMapper();
 
 	/**
 	 *
@@ -68,6 +71,7 @@ public class FileHandler {
                             g.insertDateTime(log.getName());
                             FileReader f = new FileReader(log);
                             ReadGameHead r = new ReadGameHead(f , g);
+                            t.insertTodb(g);
                             f.close();
 
                         }
