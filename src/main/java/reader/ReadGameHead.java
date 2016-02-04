@@ -45,10 +45,10 @@ public class ReadGameHead {
                 if(win[0].contains("rejoice in their shared victory!")){
                     String[] winners = win[0].split("rejoice in their shared victory!")[0].split("and");
                     for(String x: winners){
-                        game.insertWinner(x);
+                        game.insertWinner(x.trim());
                     }
                 }else{
-                    game.insertWinner(win[0]);
+                    game.insertWinner(win[0].trim());
                 }
 
                 //jumps to the next line
