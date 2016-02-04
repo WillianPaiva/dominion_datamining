@@ -1,0 +1,64 @@
+package mapper;
+import static java.util.Arrays.asList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+import game.Game;
+import game.player.Player;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+public class MongoMapper {
+    MongoClient mongo = new MongoClient();
+    MongoDatabase db = mongo.getDatabase("game-logs");
+  public MongoMapper(){
+      Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
+  }
+
+    public void insertTodb(Game g){
+        Document temp = mappeGame(g);
+        db.getCollection("logs").insertOne(temp);
+    }
+
+    public Document mappeGame(Game g){
+        return new Document("game-log",new Document()
+                            .append("date", g.getDate().toString())
+                            .append("winners", asList(g.getWinners()))
+                            .append("cardsgonne",asList(g.getCardsGone()))
+                            .append("market",asList(g.getMarket()))
+                            .append("market",asList(g.getMarket()))
+                            .append("trash",hashtodoc(g.getTrash()))
+                            .append("market",asList(g.getMarket()))
+                            .append("players",asList(players(g.getPlayers()))));
+    }
+
+    public ArrayList<Document> players(ArrayList<Player> p){
+        ArrayList<Document> temp = new ArrayList<Document>();
+        for(Player x: p){
+            temp.add(new Document()
+                     .append("name",x.getPlayerName())
+                     .append("Elo",0)
+                     .append("points",x.getPoints())
+                     .append("turns",x.getTurns())
+                     .append("victorycards",hashtodoc(x.getVictoryCards()))
+                     .append("deck",hashtodoc(x.getDeck()))
+                     .append("firsthand",hashtodoc(x.getFirstHand()))
+                     );
+        }
+        return temp;
+    }
+
+    public Document hashtodoc(HashMap<String,Integer> map){
+        Document temp = new Document();
+        for(String x: map.keySet()){
+            temp.append(x, map.get(x));
+        }
+        return temp;
+    }
+  }
