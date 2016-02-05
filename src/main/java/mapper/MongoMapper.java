@@ -1,21 +1,15 @@
 package mapper;
-import static java.util.Arrays.asList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-
 import game.Game;
 import game.player.Player;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
 public class MongoMapper {
     private MongoClient mongo;
     private MongoDatabase db ;

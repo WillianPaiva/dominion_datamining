@@ -3,6 +3,7 @@ mkdir -p mongodb >/dev/null 2>&1
 mkdir -p mongoData
 mkdir -p mongoLog
 mkdir -p sampleLogs/temp
+mkdir -p h2data
 RED='\033[33;31m'
 NC='\033[0m'
 
@@ -24,4 +25,5 @@ fi
 echo -e "${RED}Compiling Dominion data mining${NC}"
 mvn -q clean compile assembly:single
 
+echo -e "${RED}Running Dominion datamining{NC}"
 java -jar target/dominion_datamining-1.0-SNAPSHOT-jar-with-dependencies.jar
