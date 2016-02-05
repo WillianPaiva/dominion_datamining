@@ -20,14 +20,16 @@ public class ReadGameHead {
     public ReadGameHead(FileReader r, Game g){
         this.game = g;
         this.reader = r ;
+    }
+
+    public void startParser(){
         getGameOverall();
         getPlayersData();
         getPlayersFirstHand();
         getTrash();
     }
 
-
-    public void getGameOverall(){
+    private void getGameOverall(){
         if(reader.getScan().hasNextLine()){
             //start the parsing of the game header
             if(reader.jumpline().contains("<title>")){
@@ -76,7 +78,7 @@ public class ReadGameHead {
     }
 
 
-    public void getPlayersData(){
+    private void getPlayersData(){
         //jump to the players section of the log
         if(reader.searchLineWithString("(.*)----------------------(.*)")!=null){
             this.doc = Jsoup.parse(reader.getLine());
@@ -183,7 +185,7 @@ public class ReadGameHead {
         reader.rewindFile();
     }
 
-    public void getTrash(){
+    private void getTrash(){
         //look for the line that describes the trash
         if(reader.searchLineWithString("trash: (.*)")!=null){
             this.doc = Jsoup.parse(reader.getLine());
@@ -211,7 +213,7 @@ public class ReadGameHead {
         reader.rewindFile();
     }
 
-    public void getPlayersFirstHand(){
+    private void getPlayersFirstHand(){
         //parse the first hand of each player on the match
         if(reader.searchLineWithString("(.*)'s first hand: (.*)")!=null){
             for(int x = 0 ; x < game.getTotalPlayers(); x++){

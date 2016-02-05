@@ -79,6 +79,7 @@ public class FileHandler {
                             g.insertDateTime(log.getName());
                             FileReader f = new FileReader(log);
                             ReadGameHead r = new ReadGameHead(f , g);
+                            r.startParser();
                             t.insertTodb(g);
                             f.close();
 
