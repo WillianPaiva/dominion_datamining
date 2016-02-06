@@ -1,8 +1,13 @@
 package reader;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.apache.commons.io.FileUtils;
+
 import game.Game;
+
 import mapper.MongoMapper;
 
 
@@ -21,8 +26,9 @@ public class FileHandler {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
     private File folderPath ;
-    private Game g;
-    MongoMapper t = new MongoMapper();
+    public static Queue <File> queue = new LinkedList<File>();
+    private int over = 0;
+    private int overT = 0;
 
 	/**
 	 *
@@ -39,72 +45,85 @@ public class FileHandler {
    *
 	 */
     public void runParser(){
-        int over = 0;
-        int part = 0;
-        int overT = 0;
-        int partT = 0;
-        try{
             System.out.println(ANSI_CYAN + "Strating the Parser it can take a long time..." + ANSI_RESET);
             //creates a list with all compressed files
             File[] bzList = folderPath.listFiles();
             overT = bzList.length;
             if(bzList != null){
                 for(File bz: bzList){
-                    over++;
-                    part = 0 ;
-                    //clean the temp folder
-                    FileUtils.cleanDirectory(new File(folderPath.getAbsoluteFile()+"/temp"));
-
-                    //decompress the bz2 file into the temp folder
-                    Process p = Runtime.getRuntime().exec(new String[]{"bash","-c","tar -jxf "+bz.getAbsoluteFile()+" -C "+folderPath.getAbsoluteFile()+"/temp"});
-
-                    //wait for tar to finishe
-                    p.waitFor();
-
-                    //creates a list with all files in the temp folder
-                    File dir = new File(folderPath.getAbsoluteFile()+"/temp");
-                    File[] htmlList = dir.listFiles();
-                    partT = htmlList.length;
-
-                    //iterates over all files in the temp folder
-                    if(htmlList != null){
-                        for(File log: htmlList){
-                            part++;
-                            float o = ((float)over/overT)*100;
-                            float pt = ((float)part/partT)*100;
-                            progressBar((int)Math.floor(o),(int)Math.floor(pt));
-                            g = new Game();
-                            g.insertDateTime(log.getName());
-                            FileReader f = new FileReader(log);
-                            ReadGameHead r = new ReadGameHead(f , g);
-                            r.startParser();
-                            t.insertTodb(g);
-                            f.close();
-
-                        }
-                    }else{
-                        System.out.println("no files in temp");
-                    }
-
+                    this.queue.offer(bz);
+                }
+                for(int x = 0; x < 5; x++ ){
+                    Thread t = new Thread(new Runnable(){
+                            public void run(){
+                                while(queue.peek() != null){
+                                    File t= queue.poll();
+                                    process(t);
+                                }
+                            }
+                        });
+                    t.start();
                 }
             }else{
                 System.out.println("wrong directory");
             }
-        } catch(IOException | InterruptedException e){
-            e.printStackTrace();
-        }
     }
-    private void progressBar( int overall, int partial){
+
+    private void process(File f){
+        MongoMapper t = new MongoMapper();
+        try{
+            String foldername = f.getName().replace(".tar.bz2","");
+            File folder = new File(folderPath.getAbsoluteFile()+"/"+foldername);
+            if(!folder.exists()){
+                folder.mkdir();
+            }
+
+            // FileUtils.cleanDirectory(new File(folderPath.getAbsoluteFile()+"/temp"));
+
+            //decompress the bz2 file into the temp folder
+            Process p = Runtime.getRuntime().exec(new String[]{"bash","-c","tar -jxf "+f.getAbsoluteFile()+" -C "+folder.getAbsoluteFile()});
+
+            //wait for tar to finishe
+            p.waitFor();
+
+            //creates a list with all files in the temp folder
+            File[] htmlList = folder.listFiles();
+
+            //iterates over all files in the temp folder
+            if(htmlList != null){
+                for(File log: htmlList){
+                    Game g = new Game();
+                    g.insertDateTime(log.getName());
+                    FileReader fr = new FileReader(log);
+                    ReadGameHead r = new ReadGameHead(fr , g);
+                    r.startParser();
+                    t.insertTodb(g);
+                    fr.close();
+                    progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
+
+                }
+            }else{
+                System.out.println("no files in temp");
+            }
+            FileUtils.deleteDirectory(folder);
+        }catch(IOException  | InterruptedException e){
+            System.out.println(e);
+        }
+        over++;
+    }
+
+
+    public void progressBar( int overall, String parsing){
         String over = "";
-        String part = "";
-        for(int x = 0 ; x < (overall/4); x++){
+        for(int x = 0 ; x < (overall/2); x++){
             over += "=";
         }
-
-        for(int x = 0 ; x < (partial/4); x++){
-            part += "=";
+        for(int x = 0 ; x < ((100-overall)/2); x++){
+            over += "_";
         }
-        String progress = "\r"+ANSI_BLUE+ "overall"+ANSI_RESET+" [" +ANSI_GREEN +  over + ANSI_RESET +"] "+overall+"%  "+ANSI_BLUE+"partial"+ANSI_RESET+" [" + ANSI_GREEN + part + ANSI_RESET +"] "+partial+"%";
+
+        String progress = "\r"+ANSI_BLUE+ "overall"+ANSI_RESET+" [" +ANSI_GREEN +  over + ANSI_RESET +"] "+overall+"%  "+ANSI_BLUE+"Parsing: "+ANSI_RESET+" [" + ANSI_GREEN + parsing + ANSI_RESET +"] ";
+
         System.out.print("\r                                                                                  ");
         System.out.print(progress);
     }

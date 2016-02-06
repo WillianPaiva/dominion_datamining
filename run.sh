@@ -1,9 +1,7 @@
 #!/bin/bash
-mkdir -p mongodb >/dev/null 2>&1
+mkdir -p mongodb 
 mkdir -p mongoData
 mkdir -p mongoLog
-mkdir -p sampleLogs/temp
-mkdir -p h2data
 RED='\033[33;31m'
 NC='\033[0m'
 
