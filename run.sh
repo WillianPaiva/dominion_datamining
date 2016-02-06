@@ -25,5 +25,5 @@ fi
 echo -e "${RED}Compiling Dominion data mining${NC}"
 mvn -q clean compile assembly:single
 
-echo -e "${RED}Running Dominion datamining{NC}"
+echo -e "${RED}Running Dominion datamining${NC}"
 java -jar target/dominion_datamining-1.0-SNAPSHOT-jar-with-dependencies.jar
