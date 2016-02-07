@@ -53,7 +53,7 @@ public class FileHandler {
                 for(File bz: bzList){
                     this.queue.offer(bz);
                 }
-                for(int x = 0; x < 5; x++ ){
+                for(int x = 0; x < 10; x++ ){
                     Thread t = new Thread(new Runnable(){
                             public void run(){
                                 while(queue.peek() != null){
@@ -97,7 +97,7 @@ public class FileHandler {
                     FileReader fr = new FileReader(log);
                     ReadGameHead r = new ReadGameHead(fr , g);
                     r.startParser();
-                    t.insertTodb(g);
+                    // t.insertTodb(g);
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
 
