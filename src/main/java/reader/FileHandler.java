@@ -97,7 +97,7 @@ public class FileHandler {
                     FileReader fr = new FileReader(log);
                     ReadGameHead r = new ReadGameHead(fr , g);
                     r.startParser();
-                    // t.insertTodb(g);
+                    t.insertTodb(g);
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
 
