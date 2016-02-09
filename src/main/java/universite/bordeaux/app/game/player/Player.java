@@ -11,6 +11,7 @@ public class Player {
     private HashMap<String,Integer> firstHand = new HashMap<String,Integer>();
     private int turns;
     private ArrayList<String> opening = new ArrayList<String>();
+    private int GameElo ;
 
     public Player(String pl){
         this.pl = pl ;
@@ -49,7 +50,22 @@ public class Player {
     public void setTurns(int t){
         this.turns = t;
     }
-    public int getTurns(){
+
+	/**
+	 * @return the gameElo
+	 */
+	public int getGameElo() {
+		return GameElo;
+	}
+
+	/**
+	 * @param gameElo the gameElo to set
+	 */
+	public void setGameElo(int gameElo) {
+		GameElo = gameElo;
+	}
+
+	public int getTurns(){
         return this.turns;
     }
 
