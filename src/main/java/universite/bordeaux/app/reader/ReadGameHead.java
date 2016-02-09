@@ -121,10 +121,8 @@ public class ReadGameHead {
 
                             //insert the victorycards on the player object
                             for(String x: victoryCards){
-                                while(x.charAt(0)==' '){
-                                    x = x.substring(1);
-                                }
-                                String[] cards = x.split(" ");
+                                x = x.trim();
+                                String[] cards = x.split(" ",3);
                                 int qty;
                                 try {
                                     qty = Integer.parseInt(cards[0]);
@@ -156,10 +154,8 @@ public class ReadGameHead {
                     if(!doc.text().contains("0 cards")){
                         String[] deck = doc.text().split("\\[[0-9]* cards\\]")[1].split(",");
                         for(String x: deck){
-                            while(x.charAt(0)==' '){
-                                x = x.substring(1);
-                            }
-                            String[] cards = x.split(" ");
+                            x = x.trim();
+                            String[] cards = x.split(" ",3);
                             int qty;
                             try {
                                 qty = Integer.parseInt(cards[0]);
@@ -193,10 +189,8 @@ public class ReadGameHead {
             if(!doc.text().contains("nothing")){
                 String[] trash = doc.text().replace("trash: ","").replace("and","").split(",");
                 for(String x: trash){
-                    while(x.charAt(0)==' '){
-                        x = x.substring(1);
-                    }
-                    String[] cards = x.split(" ");
+                    x = x.trim();
+                    String[] cards = x.split(" ",3);
                     int qty;
                     try {
                         qty = Integer.parseInt(cards[0]);
@@ -219,10 +213,8 @@ public class ReadGameHead {
                 this.doc = Jsoup.parse(reader.getLine());
                 String[] firstHand = doc.text().split("'s first hand: ");
                 for(String y: firstHand[1].replace(".)", "").split("and")){
-                    while(y.charAt(0)==' '){
-                        y = y.substring(1);
-                    }
-                    String[] cards = y.split(" ");
+                    y = y.trim();
+                    String[] cards = y.split(" ",3);
                     int qty;
                     try{
                         qty = Integer.parseInt(cards[0]);
