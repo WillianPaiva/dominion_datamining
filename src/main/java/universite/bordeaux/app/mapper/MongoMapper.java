@@ -3,27 +3,59 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
+
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.BasicDBList;
+
 import universite.bordeaux.app.game.Game;
 import universite.bordeaux.app.game.player.Player;
 
 public class MongoMapper {
     private MongoClient mongo;
     private MongoDatabase db ;
-  public MongoMapper(){
-      Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
-      mongo = new MongoClient();
-      db = mongo.getDatabase("game-logs");
-  }
+    ArrayList<String> games = new ArrayList<String>();
+
+    public MongoMapper(){
+        Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
+        mongo = new MongoClient();
+        db = mongo.getDatabase("game-logs");
+    }
+
 
     public void insertTodb(Game g){
         Document temp = mappeGame(g);
         db.getCollection("logs").insertOne(temp);
-        ObjectId id = (ObjectId)temp.get("_id");
-        // System.out.println(id.toString());
+        // Document t = temp.get("game-log",Document.class);
+        // ArrayList<String> d = t.get("market",ArrayList.class);
+        // System.out.println(d);
+        ObjectId id = (ObjectId)temp.get( "_id" );
+        for(Player p: g.getPlayers() ){
+            games.clear();
+            FindIterable<Document> iterable = db.getCollection("players").find(new Document("_id",p.getPlayerName()));
+            iterable.forEach(new Block<Document>() {
+                    @Override
+                    public void apply(final Document document) {
+                        ArrayList<String> b = document.get("games",ArrayList.class);
+                        games.addAll(b);
+                    }
+                });
+
+            games.add(id.toString());
+            if(games.size() > 1){
+                db.getCollection("players").updateOne(new Document("_id",p.getPlayerName()), new Document("$set",new Document("elo",0).append("games",games)));
+            }else{
+                db.getCollection("players").insertOne(new Document("_id", p.getPlayerName()).append("elo",0).append("games",games));
+            }
+        }
+    }
+    public FindIterable<Document> it(){
+       return db.getCollection("players").find(new Document("_id","o ze"));
     }
 
     private Document mappeGame(Game g){
@@ -43,7 +75,7 @@ public class MongoMapper {
         for(Player x: p){
             temp.add(new Document()
                      .append("name",x.getPlayerName())
-                     .append("Elo",0)
+                     .append("Elo",x.getGameElo())
                      .append("points",x.getPoints())
                      .append("turns",x.getTurns())
                      .append("victorycards",hashtodoc(x.getVictoryCards()))
@@ -61,4 +93,4 @@ public class MongoMapper {
         }
         return temp;
     }
-  }
+}
