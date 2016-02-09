@@ -1,6 +1,12 @@
 package universite.bordeaux.app.mapper;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +17,6 @@ import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.BasicDBList;
 
 import universite.bordeaux.app.game.Game;
 import universite.bordeaux.app.game.player.Player;
@@ -55,13 +60,26 @@ public class MongoMapper {
         }
     }
     public void generateElo(){
+        // 20101011 -- 20130315 -- 887
+
+        Date start = new Date();
+        DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.ENGLISH);
+        try{
+            start = format.parse("20101011T000000Z");
+        }catch(ParseException e){
+            System.out.println(e);
+        }
+        db.getCollection("logs").createIndex(new Document("game-log.date",1));
         FindIterable<Document> iterable = db.getCollection("logs").find().sort(new Document("game-log.date",1));
-        iterable.forEach(new Block<Document>() {
-                @Override
-                public void apply(final Document document) {
-                    System.out.println(document);
-                }
-            });
+            iterable.forEach(new Block<Document>() {
+                    int x = 0;
+                    @Override
+                    public void apply(final Document document) {
+                        System.out.print("\r"+x);
+                        x++;
+                    }
+                });
+
     }
 
     private Document mappeGame(Game g){
