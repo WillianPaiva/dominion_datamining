@@ -1,7 +1,12 @@
 package universite.bordeaux.app.game;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+
 import universite.bordeaux.app.game.player.Player;
 
 public class Game {
@@ -187,13 +192,14 @@ public class Game {
    * @param the name of the file (log)
 	 */
     public void insertDateTime(String s){
+        // game-20101015-000153-1034d2ce.html
         String[] date = s.split("-");
-        this.dateTime = new Date(Integer.parseInt(date[1].substring(0,3)),
-                                 Integer.parseInt(date[1].substring(4,5)),
-                                 Integer.parseInt(date[1].substring(6,7)),
-                                 Integer.parseInt(date[2].substring(0,1)),
-                                 Integer.parseInt(date[2].substring(2,3)),
-                                 Integer.parseInt(date[2].substring(4,5)));
+        DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.ENGLISH);
+        try{
+            this.dateTime = format.parse(date[1]+"T"+date[2]+"Z");
+        }catch(ParseException e){
+            System.out.println(e);
+                }
     }
 
     public String toString(){
