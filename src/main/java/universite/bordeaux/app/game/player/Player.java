@@ -11,7 +11,7 @@ public class Player {
     private HashMap<String,Integer> firstHand = new HashMap<String,Integer>();
     private int turns;
     private ArrayList<String> opening = new ArrayList<String>();
-    private int GameElo  = 0;
+    private int GameElo  = 1000;
 
     public Player(String pl){
         this.pl = pl ;
