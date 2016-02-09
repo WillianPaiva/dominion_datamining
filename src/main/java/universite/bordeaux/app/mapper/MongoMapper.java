@@ -48,19 +48,25 @@ public class MongoMapper {
 
             games.add(id.toString());
             if(games.size() > 1){
-                db.getCollection("players").updateOne(new Document("_id",p.getPlayerName()), new Document("$set",new Document("elo",0).append("games",games)));
+                db.getCollection("players").updateOne(new Document("_id",p.getPlayerName()), new Document("$set",new Document("elo",1000).append("games",games)));
             }else{
-                db.getCollection("players").insertOne(new Document("_id", p.getPlayerName()).append("elo",0).append("games",games));
+                db.getCollection("players").insertOne(new Document("_id", p.getPlayerName()).append("elo",1000).append("games",games));
             }
         }
     }
-    public FindIterable<Document> it(){
-       return db.getCollection("players").find(new Document("_id","o ze"));
+    public void generateElo(){
+        FindIterable<Document> iterable = db.getCollection("logs").find().sort(new Document("game-log.date",1));
+        iterable.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    System.out.println(document);
+                }
+            });
     }
 
     private Document mappeGame(Game g){
         return new Document("game-log",new Document()
-                            .append("date", g.getDate().toString())
+                            .append("date", g.getDate())
                             .append("winners", g.getWinners())
                             .append("cardsgonne",g.getCardsGone())
                             .append("market",g.getMarket())
