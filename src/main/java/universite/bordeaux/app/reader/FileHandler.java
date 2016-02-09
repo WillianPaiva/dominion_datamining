@@ -1,4 +1,5 @@
 package universite.bordeaux.app.reader;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -7,8 +8,8 @@ import java.util.Queue;
 import org.apache.commons.io.FileUtils;
 
 import universite.bordeaux.app.game.Game;
-
 import universite.bordeaux.app.mapper.MongoMapper;
+
 
 
 /**
@@ -26,15 +27,14 @@ public class FileHandler {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
     private File folderPath ;
-    public static Queue <File> queue = new LinkedList<File>();
+    public  Queue <File> queue = new LinkedList<File>();
     private int over = 0;
     private int overT = 0;
 
 	/**
 	 *
 	 *
-   * @param folderPath The file path of the root of the compressed logs
-	 */
+   */
     public FileHandler(File folderPath){
         this.folderPath = folderPath ;
     }
@@ -53,7 +53,7 @@ public class FileHandler {
                 for(File bz: bzList){
                     this.queue.offer(bz);
                 }
-                for(int x = 0; x < 10; x++ ){
+                for(int x = 0; x < 5; x++ ){
                     Thread t = new Thread(new Runnable(){
                             public void run(){
                                 while(queue.peek() != null){
@@ -78,8 +78,6 @@ public class FileHandler {
                 folder.mkdir();
             }
 
-            // FileUtils.cleanDirectory(new File(folderPath.getAbsoluteFile()+"/temp"));
-
             //decompress the bz2 file into the temp folder
             Process p = Runtime.getRuntime().exec(new String[]{"bash","-c","tar -jxf "+f.getAbsoluteFile()+" -C "+folder.getAbsoluteFile()});
 
@@ -97,7 +95,7 @@ public class FileHandler {
                     FileReader fr = new FileReader(log);
                     ReadGameHead r = new ReadGameHead(fr , g);
                     r.startParser();
-                    t.insertTodb(g);
+                    // t.insertTodb(g);
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
 
