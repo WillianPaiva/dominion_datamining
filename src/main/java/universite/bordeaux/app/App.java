@@ -1,7 +1,11 @@
 package universite.bordeaux.app;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileHandler;
 /**
@@ -14,6 +18,8 @@ public class App
     {
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-        test.runParser();
+        MongoMapper t = new MongoMapper();
+        t.generateElo();
+        // test.runParser();
     }
 }
