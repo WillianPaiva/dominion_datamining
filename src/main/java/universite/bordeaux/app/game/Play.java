@@ -1,7 +1,7 @@
-package game;
+package universite.bordeaux.app.game;
 import java.util.HashMap;
 
-import game.player.Player;
+import universite.bordeaux.app.game.player.Player;
 
 public class Play {
 

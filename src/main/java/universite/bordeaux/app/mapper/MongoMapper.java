@@ -1,4 +1,4 @@
-package mapper;
+package universite.bordeaux.app.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -7,8 +7,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import game.Game;
-import game.player.Player;
+import universite.bordeaux.app.game.Game;
+import universite.bordeaux.app.game.player.Player;
 
 public class MongoMapper {
     private MongoClient mongo;

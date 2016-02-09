@@ -1,4 +1,4 @@
-package reader;
+package universite.bordeaux.app.reader;
 import java.io.IOException;
 import java.io.File;
 import java.util.*;

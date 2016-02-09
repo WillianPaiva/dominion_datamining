@@ -1,4 +1,4 @@
-package reader;
+package universite.bordeaux.app.reader;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -6,9 +6,9 @@ import java.util.Queue;
 
 import org.apache.commons.io.FileUtils;
 
-import game.Game;
+import universite.bordeaux.app.game.Game;
 
-import mapper.MongoMapper;
+import universite.bordeaux.app.mapper.MongoMapper;
 
 
 /**

@@ -1,6 +1,6 @@
-package game;
+package universite.bordeaux.app.game;
 import java.util.ArrayList;
-import game.Turn;
+import universite.bordeaux.app.game.Turn;
 
 public class TurnsLog {
     private ArrayList<Turn> turns = new ArrayList<Turn>();

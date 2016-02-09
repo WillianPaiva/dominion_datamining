@@ -1,10 +1,10 @@
-package reader;
+package universite.bordeaux.app.reader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import game.Game;
-import game.player.Player;
+import universite.bordeaux.app.game.Game;
+import universite.bordeaux.app.game.player.Player;
 
 
 

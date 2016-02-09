@@ -1,9 +1,9 @@
-package game;
+package universite.bordeaux.app.game;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import game.player.Player;
+import universite.bordeaux.app.game.player.Player;
 
 public class Game {
     private ArrayList<String> winners = new ArrayList<String>();
@@ -12,7 +12,6 @@ public class Game {
     private ArrayList<Player> players = new ArrayList<Player>();
     private HashMap<String,Integer> trash = new HashMap<String,Integer>();
     private Date dateTime;
-
     public Game(){}
 
     public void insertCardGone(String s){

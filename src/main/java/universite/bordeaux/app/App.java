@@ -1,7 +1,7 @@
 package universite.bordeaux.app;
 
 import java.io.File;
-import reader.FileHandler;
+import universite.bordeaux.app.reader.FileHandler;
 /**
  * Hello world!
  *
