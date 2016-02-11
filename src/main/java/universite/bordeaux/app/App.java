@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileHandler;
 /**
