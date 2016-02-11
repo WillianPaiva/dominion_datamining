@@ -44,7 +44,7 @@ public class FileHandler {
    * iterates between all compressed logs and decompress parse and delete decompressed logs
    *
 	 */
-    public void runParser(){
+    public void runParser(int numThreads){
             System.out.println(ANSI_CYAN + "Strating the Parser it can take a long time..." + ANSI_RESET);
             //creates a list with all compressed files
             File[] bzList = folderPath.listFiles();
@@ -53,7 +53,7 @@ public class FileHandler {
                 for(File bz: bzList){
                     this.queue.offer(bz);
                 }
-                for(int x = 0; x < 5; x++ ){
+                for(int x = 0; x < numThreads; x++ ){
                     Thread t = new Thread(new Runnable(){
                             public void run(){
                                 while(queue.peek() != null){
@@ -90,11 +90,8 @@ public class FileHandler {
             //iterates over all files in the temp folder
             if(htmlList != null){
                 for(File log: htmlList){
-                    Game g = new Game();
-                    g.insertDateTime(log.getName());
                     FileReader fr = new FileReader(log);
-                    ReadGameHead r = new ReadGameHead(fr , g);
-                    r.startParser();
+                    Game g = new Game(fr);
                     t.insertTodb(g);
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
