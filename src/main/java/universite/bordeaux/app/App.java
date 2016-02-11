@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileHandler;
 /**
@@ -18,8 +17,6 @@ public class App
     {
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-        MongoMapper t = new MongoMapper();
-        t.generateElo();
-        // test.runParser();
+         test.runParser(10);
     }
 }

@@ -26,6 +26,9 @@ public class FileReader {
 		return scan;
 	}
 
+    public String getName(){
+        return this.log.getName();
+    }
 
 	/**
 	 *

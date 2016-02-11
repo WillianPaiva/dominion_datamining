@@ -8,23 +8,25 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.reader.FileReader;
+import universite.bordeaux.app.reader.ReadGameHead;
 
 public class Game {
 
     //list of winners
-    private ArrayList<String> winners = new ArrayList<String>();
+    private ArrayList<String> winners ;
 
     //list of cards which the pile has finished
-    private ArrayList<String> cardsGone = new ArrayList<String>();
+    private ArrayList<String> cardsGone ;
 
     //market cards
-    private ArrayList<String> cardsInSuply = new ArrayList<String>();
+    private ArrayList<String> market ;
 
     //list of players in the match
-    private ArrayList<Player> players = new ArrayList<Player>();
+    private ArrayList<Player> players ;
 
     //list of cards on the trash at the finish of the game
-    private HashMap<String,Integer> trash = new HashMap<String,Integer>();
+    private HashMap<String,Integer> trash ;
 
     //date and time in which the game was played
     private Date dateTime;
@@ -35,15 +37,13 @@ public class Game {
 	 *
 	 * @see Object#Game()
 	 */
-    public Game(){}
-
-	/**
-   * insert a card to the list of empty piles
-	 *
-   * @param card  the card to be inserted
-	 */
-    public void insertCardGone(String card){
-        this.cardsGone.add(card);
+    public Game(FileReader reader){
+        this.winners = ReadGameHead.getWinners(reader);
+        this.cardsGone = ReadGameHead.getCardsGone(reader);
+        this.market = ReadGameHead.getMarket(reader);
+        this.players = ReadGameHead.getPlayers(reader);
+        this.trash = ReadGameHead.getTrash(reader);
+        this.dateTime = setDateTime(reader.getName());
     }
 
 
@@ -67,16 +67,6 @@ public class Game {
     }
 
 
-	/**
-   * insert a card to the market list
-	 *
-   * @param card the card to be inserted
-	 */
-    public void insertCardsInSuply(String card){
-        this.cardsInSuply.add(card);
-    }
-
-
 
 	/**
 	 *
@@ -84,19 +74,8 @@ public class Game {
    * @return the market card list
 	 */
     public ArrayList<String> getMarket(){
-        return this.cardsInSuply;
+        return this.market;
     }
-
-
-	/**
-   * insert a player to the list of players
-	 *
-   * @param player the player to be inserted to the list
-	 */
-    public void insertPlayer(Player player){
-        this.players.add(player);
-    }
-
 
 
 
@@ -131,45 +110,10 @@ public class Game {
 	/**
 	 *
 	 *
-   * @return the number of players in the mach
-	 */
-    public int getTotalPlayers(){
-        return this.players.size();
-    }
-
-
-
-
-	/**
-   * insert a player name to the winner list
-	 *
-   * @param playerName
-	 */
-    public void insertWinner(String playerName){
-        this.winners.add(playerName);
-    }
-
-
-
-
-	/**
-	 *
-	 *
    * @return the list of name of the winners
 	 */
     public ArrayList<String> getWinners(){
         return this.winners;
-    }
-
-
-
-	/**
-   *insert a card to the list of cards on the trash
-   * @param quantity
-   * @param card
-	 */
-    public void insertTrash(int quantity, String card){
-        trash.put(card,quantity);
     }
 
 
@@ -191,19 +135,21 @@ public class Game {
 	 *
    * @param the name of the file (log)
 	 */
-    public void insertDateTime(String s){
+    private Date setDateTime(String s){
         // game-20101015-000153-1034d2ce.html
+        Date temp = new Date();
         String[] date = s.split("-");
         DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.ENGLISH);
         try{
-            this.dateTime = format.parse(date[1]+"T"+date[2]+"Z");
+            temp = format.parse(date[1]+"T"+date[2]+"Z");
         }catch(ParseException e){
             System.out.println(e);
                 }
+        return temp;
     }
 
     public String toString(){
-        return winners.toString() + " "  + cardsGone.size() + " " + cardsInSuply.size() +" "+ players.toString()+" "+trash.toString();
+        return winners.toString() + " "  + cardsGone.size() + " " + market.size() +" "+ players.toString()+" "+trash.toString();
     }
 
 }
