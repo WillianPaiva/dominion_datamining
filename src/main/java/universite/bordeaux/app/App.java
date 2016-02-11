@@ -17,8 +17,6 @@ public class App
     {
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-        MongoMapper t = new MongoMapper();
-        t.generateElo();
-        // test.runParser();
+         test.runParser(10);
     }
 }
