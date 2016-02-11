@@ -1,12 +1,12 @@
 package universite.bordeaux.app.mapper;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +18,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 
+import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.Game;
 import universite.bordeaux.app.game.player.Player;
 
@@ -25,6 +26,7 @@ public class MongoMapper {
     private MongoClient mongo;
     private MongoDatabase db ;
     ArrayList<String> games = new ArrayList<String>();
+    private int elo = 0;
 
     public MongoMapper(){
         Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
@@ -60,8 +62,6 @@ public class MongoMapper {
         }
     }
     public void generateElo(){
-        // 20101011 -- 20130315 -- 887
-
         Date start = new Date();
         DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.ENGLISH);
         try{
@@ -72,11 +72,31 @@ public class MongoMapper {
         db.getCollection("logs").createIndex(new Document("game-log.date",1));
         FindIterable<Document> iterable = db.getCollection("logs").find().sort(new Document("game-log.date",1));
             iterable.forEach(new Block<Document>() {
-                    int x = 0;
                     @Override
                     public void apply(final Document document) {
-                        System.out.print("\r"+x);
-                        x++;
+                        ArrayList<Document> playersDoc = document.get("game-log",Document.class).get("players",ArrayList.class);
+                        ArrayList<String> winners = document.get("game-log",Document.class).get("winners",ArrayList.class);
+                        HashMap<String,Integer> players = new HashMap<String,Integer>();
+
+                        for(Document doc: playersDoc){
+                            elo = 0;
+                            FindIterable<Document> it = db.getCollection("players").find(new Document("_id",doc.get("name",String.class)));
+                            it.forEach(new Block<Document>() {
+                                    @Override
+                                    public void apply(final Document dc) {
+                                        elo = dc.get("elo",Integer.class);
+                                    }
+                                });
+
+                            players.put(doc.get("name",String.class),elo);
+                                }
+                        HashMap<String,Integer> result = Elo.Calculate(winners, players);
+                        for (Map.Entry<String,Integer> entry : result.entrySet())
+                            {
+                                db.getCollection("players").updateOne(new Document("_id",entry.getKey()), new Document("$set",new Document("elo",entry.getValue())));
+                            }
+                        System.out.println(result);
+
                     }
                 });
 
