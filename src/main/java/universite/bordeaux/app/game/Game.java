@@ -3,15 +3,24 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
 
 public class Game {
+
+    private ObjectId id = null;
 
     //list of winners
     private ArrayList<String> winners ;
@@ -45,6 +54,86 @@ public class Game {
         this.trash = ReadGameHead.getTrash(reader);
         this.dateTime = setDateTime(reader.getName());
     }
+
+    public Game(Document doc){
+        this.winners = doc.get("winners",ArrayList.class);
+        this.cardsGone = doc.get("cardsgonne",ArrayList.class);
+        this.market = doc.get("market",ArrayList.class);
+        this.trash = doctohash(doc.get("trash",Document.class));
+        this.dateTime = doc.get("date",Date.class);
+        this.players = new ArrayList<Player>();
+        for(Object d: doc.get("players",ArrayList.class)){
+            players.add(new Player((Document)d));
+        }
+
+    }
+
+
+    public Document toDoc(){
+        return new Document()
+                            .append("date", this.dateTime)
+                            .append("winners", this.winners)
+                            .append("cardsgonne",this.cardsGone)
+                            .append("market",this.market)
+                            .append("trash",hashtodoc(this.trash))
+                            .append("players",players(this.players));
+    }
+    public void save(){
+        if(this.id == null){
+            this.id = MongoMapper.insertGame(this.toDoc());
+            PlayerSimple temp;
+            for(Player p: this.players){
+                temp = new PlayerSimple(p.getPlayerName());
+                temp.insertGame(this.id);
+                temp.save();
+            }
+        }else{
+            MongoMapper.updateGame(new Document("_id",this.id), new Document("$set",this.toDoc()));
+        }
+    }
+
+    private ArrayList<Document> players(ArrayList<Player> p){
+        ArrayList<Document> temp = new ArrayList<Document>();
+        for(Player x: p){
+            temp.add(x.toDoc());
+        }
+        return temp;
+    }
+
+
+    private HashMap<String,Integer> doctohash(Document doc){
+        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        for(Map.Entry<String,Object> x: doc.entrySet()){
+            temp.put(x.getKey(),(int)x.getValue());
+        }
+        return temp;
+
+    }
+    private Document hashtodoc(HashMap<String,Integer> map){
+        Document temp = new Document();
+        for(String x: map.keySet()){
+            temp.append(x, map.get(x));
+        }
+        return temp;
+    }
+
+    public void GenerateElo(){
+        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        PlayerSimple pl;
+        for(Player p: this.players){
+            pl = new PlayerSimple(p.getPlayerName());
+            temp.put(p.getPlayerName(), pl.getElo());
+        }
+        HashMap<String,Integer> result = Elo.Calculate(this.winners, temp);
+        for(Map.Entry<String,Integer> res: result.entrySet()){
+            pl = new PlayerSimple(res.getKey());
+            pl.setElo(res.getValue());
+            pl.save();
+            getPlayer(res.getKey()).setGameElo(res.getValue());
+        }
+        this.save();
+    }
+
 
 
 	/**
@@ -105,6 +194,14 @@ public class Game {
         return this.players;
     }
 
+
+
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
 
 	/**
