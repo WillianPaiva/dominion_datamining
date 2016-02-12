@@ -53,16 +53,24 @@ public class FileHandler {
                 for(File bz: bzList){
                     this.queue.offer(bz);
                 }
+                Thread[] t = new Thread[numThreads];
                 for(int x = 0; x < numThreads; x++ ){
-                    Thread t = new Thread(new Runnable(){
+                    t[x] = new Thread(new Runnable(){
                             public void run(){
                                 while(queue.peek() != null){
-                                    File t= queue.poll();
-                                    process(t);
+                                    File f= queue.poll();
+                                    process(f);
                                 }
                             }
                         });
-                    t.start();
+                    t[x].start();
+                }
+                for(Thread x: t){
+                    try{
+                        x.join();
+                    }catch(InterruptedException e){
+                        System.out.println(e);
+                    }
                 }
             }else{
                 System.out.println("wrong directory");
@@ -70,7 +78,6 @@ public class FileHandler {
     }
 
     private void process(File f){
-        MongoMapper t = new MongoMapper();
         try{
             String foldername = f.getName().replace(".tar.bz2","");
             File folder = new File(folderPath.getAbsoluteFile()+"/"+foldername);
@@ -92,11 +99,12 @@ public class FileHandler {
                 for(File log: htmlList){
                     FileReader fr = new FileReader(log);
                     Game g = new Game(fr);
-                    t.insertTodb(g);
+                    g.save();
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
 
                 }
+                progressBar(Math.round(((float)over/(float)overT)*100),"finidhed");
             }else{
                 System.out.println("no files in temp");
             }
