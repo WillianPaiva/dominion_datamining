@@ -2,6 +2,9 @@ package universite.bordeaux.app.game.player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.bson.Document;
 
 public class Player {
     private String pl ;
@@ -13,8 +16,50 @@ public class Player {
     private ArrayList<String> opening = new ArrayList<String>();
     private int GameElo  = 1000;
 
+
     public Player(String pl){
         this.pl = pl ;
+    }
+
+    public Player(Document doc){
+        this.pl = doc.get("name",String.class);
+        this.points = doc.get("points", Integer.class);
+        this.turns = doc.get("turns", Integer.class);
+        this.GameElo = doc.get("elo", Integer.class);
+        this.victoryCards = doctohash(doc.get("victorycards",Document.class));
+        this.deck = doctohash(doc.get("deck",Document.class));
+        this.firstHand = doctohash(doc.get("firsthand",Document.class));
+        this.opening = doc.get("opening",ArrayList.class);
+
+    }
+
+    public Document toDoc(){
+        return new Document()
+            .append("name",this.pl)
+            .append("elo", this.GameElo)
+            .append("points",this.points)
+            .append("turns",this.turns)
+            .append("victorycards",hashtodoc(this.victoryCards))
+            .append("deck",hashtodoc(this.deck))
+            .append("firsthand",hashtodoc(this.firstHand))
+            .append("opening",opening);
+    }
+
+    private HashMap<String,Integer> doctohash(Document doc){
+        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        for(Map.Entry<String,Object> x: doc.entrySet()){
+            temp.put(x.getKey(),(int)x.getValue());
+        }
+        return temp;
+
+    }
+
+    private Document hashtodoc(HashMap<String,Integer> map){
+        Document temp = new Document();
+        for(String x: map.keySet()){
+            temp.append(x, map.get(x));
+        }
+        return temp;
     }
 
     public String getPlayerName(){
