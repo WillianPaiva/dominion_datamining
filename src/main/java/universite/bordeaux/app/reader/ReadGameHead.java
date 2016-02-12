@@ -13,7 +13,7 @@ import universite.bordeaux.app.game.player.Player;
 
 
 
-public class ReadGameHead {
+public final class ReadGameHead {
 
     private ReadGameHead(){
     }
