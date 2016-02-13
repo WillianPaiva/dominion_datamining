@@ -21,6 +21,7 @@ else
 fi
 
 echo -e "${RED}Compiling Dominion data mining${NC}"
+mvn -q eclipse:clean eclipse:eclipse
 mvn -q clean compile assembly:single
 
 echo -e "${RED}Running Dominion datamining${NC}"
