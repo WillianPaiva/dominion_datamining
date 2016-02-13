@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
@@ -51,11 +52,25 @@ public final class MongoMapper {
         System.out.println("done");
 
     }
+    public static int getPlayerTotalGames(String player){
+        return db.getCollection("players").find(new Document("_id",player)).first().get("games",ArrayList.class).size();
+    }
 
     public static FindIterable<Document> getPlayerGames(String player){
         return db.getCollection("logs").find(new Document("players.name",player)).sort(new Document("date",1));
     }
 
+    public static ArrayList<String> getRank(int x){
+        final ArrayList<String> result = new ArrayList<String>();
+        FindIterable<Document> it = db.getCollection("players").find().sort(new Document("elo",-1)).limit(x);
+        it.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    result.add(document.get("_id",String.class));
+                }
+            });
+        return result;
+    }
     // public void insertTodb(Game g){
     //     for(Player p: g.getPlayers() ){
     //         games.clear();
