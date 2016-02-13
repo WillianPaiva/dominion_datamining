@@ -21,7 +21,7 @@ public class App
          test.runParser(5);
          EloGenerator.Generate();
 
-        Chart ch = new Chart("Elo curve", "Elo curve", "ELO", "DAY", "RomaNorgy");
+        Chart ch = new Chart("Elo curve", "Elo curve", "ELO", "DAY");
         ch.pack( );
         RefineryUtilities.centerFrameOnScreen( ch );
         ch.setVisible( true );
