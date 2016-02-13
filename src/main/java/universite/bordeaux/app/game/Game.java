@@ -62,6 +62,7 @@ public class Game {
         this.trash = doctohash(doc.get("trash",Document.class));
         this.dateTime = doc.get("date",Date.class);
         this.players = new ArrayList<Player>();
+        this.id = doc.get("_id",ObjectId.class);
         for(Object d: doc.get("players",ArrayList.class)){
             players.add(new Player((Document)d));
         }
