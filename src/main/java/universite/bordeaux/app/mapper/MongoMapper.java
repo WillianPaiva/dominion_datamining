@@ -46,10 +46,14 @@ public final class MongoMapper {
     }
 
     public static void createIndex(String index, String collection){
-        System.out.println(ANSI_PURPLE + "Generating index for "+ANSI_GREEN+collection+ANSI_PURPLE+" on the field "+ANSI_GREEN+index+ANSI_RESET);
+        System.out.println("\n"+ANSI_PURPLE + "Generating index for "+ANSI_GREEN+collection+ANSI_PURPLE+" on the field "+ANSI_GREEN+index+ANSI_RESET);
         db.getCollection(collection).createIndex(new Document(index,1));
         System.out.println("done");
 
+    }
+
+    public static FindIterable<Document> getPlayerGames(String player){
+        return db.getCollection("logs").find(new Document("players.name",player)).sort(new Document("date",1));
     }
 
     // public void insertTodb(Game g){
