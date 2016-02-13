@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.ui.RefineryUtilities;
-
+import universite.bordeaux.app.elo.EloGenerator;
 import universite.bordeaux.app.plotter.Chart;
 import universite.bordeaux.app.reader.FileHandler;
 /**
