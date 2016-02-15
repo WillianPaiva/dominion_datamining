@@ -33,12 +33,15 @@ public class PlayerSimple {
     public Document toDoc(){
         return new Document("_id",id).append("elo",elo).append("games", games);
     }
+    public Document toDocWithoutID(){
+        return new Document("elo",elo).append("games", games);
+    }
 
     public void save(){
         if(this.first == true){
             MongoMapper.insertPlayer(this.toDoc());
         }else{
-            MongoMapper.updatePlayer(new Document("_id",id), new Document("$set",this.toDoc()));
+            MongoMapper.updatePlayer(new Document("_id",id), new Document("$set",this.toDocWithoutID()));
         }
   }
 

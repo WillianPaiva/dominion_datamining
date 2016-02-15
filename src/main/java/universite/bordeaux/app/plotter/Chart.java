@@ -64,7 +64,7 @@ public class Chart extends ApplicationFrame {
                         test = ((float)x/(float)total)*100;
                         final Game g = new Game(document);
                         final Player p = g.getPlayer(player);
-                        temp.add((double) Math.round(test/5),(double)p.getGameElo());
+                        temp.add((double) x,(double)p.getGameElo());
                         x++;
                     }
                 });

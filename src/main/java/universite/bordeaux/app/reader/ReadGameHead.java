@@ -148,7 +148,12 @@ public final class ReadGameHead {
                         if(temp.contains("resigned")){
                             pl.setPoints(0);
                         }else{
-                            pl.setPoints(Integer.parseInt(temp));
+                            try{
+                                pl.setPoints(Integer.parseInt(temp));
+                            }catch(NumberFormatException e){
+                                pl.setPoints(0);
+                                System.out.println(reader.getName());
+                            }
                         }
 
                         //split the string to get all victory points cards
