@@ -110,6 +110,7 @@ public class Game {
         return temp;
 
     }
+
     private Document hashtodoc(HashMap<String,Integer> map){
         Document temp = new Document();
         for(String x: map.keySet()){
@@ -117,7 +118,7 @@ public class Game {
         }
         return temp;
     }
-
+ 
     public void GenerateElo(){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
         PlayerSimple pl;

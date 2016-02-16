@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.apache.commons.io.FileUtils;
+import universite.bordeaux.app.colors.ColorsTemplate;
 
 import universite.bordeaux.app.game.Game;
 import universite.bordeaux.app.mapper.MongoMapper;
@@ -17,15 +18,6 @@ import universite.bordeaux.app.mapper.MongoMapper;
  *
  */
 public class FileHandler {
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
     private File folderPath ;
     public  Queue <File> queue = new LinkedList<File>();
     private int over = 0;
@@ -45,7 +37,7 @@ public class FileHandler {
    *
 	 */
     public void runParser(int numThreads){
-            System.out.println(ANSI_CYAN + "Strating the Parser it can take a long time..." + ANSI_RESET);
+            System.out.println(ColorsTemplate.ANSI_CYAN + "Strating the Parser it can take a long time..." + ColorsTemplate.ANSI_RESET);
             //creates a list with all compressed files
             File[] bzList = folderPath.listFiles();
             overT = bzList.length;
@@ -125,7 +117,7 @@ public class FileHandler {
             over += "_";
         }
 
-        String progress = "\r"+ANSI_BLUE+ "overall"+ANSI_RESET+" [" +ANSI_GREEN +  over + ANSI_RESET +"] "+overall+"%  "+ANSI_BLUE+"Parsing: "+ANSI_RESET+" [" + ANSI_GREEN + parsing + ANSI_RESET +"] ";
+        String progress = "\r"+ColorsTemplate.ANSI_BLUE+ "overall"+ColorsTemplate.ANSI_RESET+" [" +ColorsTemplate.ANSI_GREEN +  over + ColorsTemplate.ANSI_RESET +"] "+overall+"%  "+ColorsTemplate.ANSI_BLUE+"Parsing: "+ColorsTemplate.ANSI_RESET+" [" + ColorsTemplate.ANSI_GREEN + parsing + ColorsTemplate.ANSI_RESET +"] ";
 
         System.out.print("\r                                                                                  ");
         System.out.print(progress);
