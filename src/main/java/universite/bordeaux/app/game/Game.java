@@ -47,12 +47,19 @@ public class Game implements GameItf{
    * @param reader the FileReader of the log
 	 */
     public Game(FileReader reader){
-        this.winners = ReadGameHead.getWinners(reader);
-        this.cardsGone = ReadGameHead.getCardsGone(reader);
-        this.market = ReadGameHead.getMarket(reader);
-        this.players = ReadGameHead.getPlayers(reader);
-        this.trash = ReadGameHead.getTrash(reader);
-        this.dateTime = setDateTime(reader.getName());
+        if (!reader.isEmpty()){
+            try{
+            this.winners = ReadGameHead.getWinners(reader);
+            this.cardsGone = ReadGameHead.getCardsGone(reader);
+            this.market = ReadGameHead.getMarket(reader);
+            this.players = ReadGameHead.getPlayers(reader);
+            this.trash = ReadGameHead.getTrash(reader);
+            this.dateTime = setDateTime(reader.getName());
+            }catch(Exception e ){
+                System.out.println(e.getMessage());
+                System.out.println(reader.getName());
+            }
+        }
     }
 
 	/**

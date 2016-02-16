@@ -27,7 +27,7 @@ public final class MongoMapper {
         db.getCollection("players").insertOne(player);
         }
         catch (MongoWriteException e){
-            System.out.println("player name is ridiculously long (wtf dude?): "+ player.get("_id",String.class));
+            System.out.println("player name is ridiculously long (wtf dude?)");
         }
     }
 

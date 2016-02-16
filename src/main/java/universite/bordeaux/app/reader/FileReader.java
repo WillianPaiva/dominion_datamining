@@ -91,4 +91,9 @@ public class FileReader {
             e.printStackTrace();
         }
     }
+    
+    public boolean isEmpty(){
+       this.rewindFile();
+       return !(this.scan.hasNext());
+    }
 }
