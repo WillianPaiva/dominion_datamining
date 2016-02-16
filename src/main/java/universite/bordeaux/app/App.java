@@ -18,8 +18,11 @@ public class App
         Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-         test.runParser(5);
-         EloGenerator.Generate();
+        test.runParser(5);
+
+        System.out.println("Starting the ELO callculation this can take a long time...")
+        EloGenerator.Generate();
+
 
         Chart ch = new Chart("Elo curve", "Elo curve", "ELO", "DAY");
         ch.pack( );
