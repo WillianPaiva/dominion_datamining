@@ -2,11 +2,13 @@ package universite.bordeaux.app.game.player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.bson.Document;
 
-public class Player {
+/**
+ *
+ */
+public class Player implements PlayerItf{
     private String pl ;
     private HashMap<String,Integer> victoryCards = new HashMap<String,Integer>();
     private int points;
