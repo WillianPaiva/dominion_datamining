@@ -45,7 +45,12 @@ public class FileReader {
    * @return next line
 	 */
     public String jumpline(){
+        try{
         this.line = this.scan.nextLine();
+        }
+        catch(NoSuchElementException e){
+        System.out.println("error with file: "+this.getName());
+        }
         return this.line;
     }
 

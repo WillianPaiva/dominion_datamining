@@ -6,12 +6,13 @@ import org.bson.types.ObjectId;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
 public final class MongoMapper {
-    private static MongoClient mongo = new MongoClient();
+    private static MongoClient mongo = new MongoClient("localhost", 27020);
     private static MongoDatabase db = mongo.getDatabase("game-logs");
 
     private MongoMapper(){
@@ -22,7 +23,12 @@ public final class MongoMapper {
         return (ObjectId)game.get( "_id" );
     }
     public static void insertPlayer(Document player){
+        try{
         db.getCollection("players").insertOne(player);
+        }
+        catch (MongoWriteException e){
+            System.out.println("player name is ridiculously long (wtf dude?): "+ player.get("_id",String.class));
+        }
     }
 
     public static void updateGame(Document game , Document up){

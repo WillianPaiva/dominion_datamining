@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.game.player.PlayerItf;
 
 
 
@@ -167,10 +168,10 @@ public final class ReadGameHead {
    * @param reader the FileReader object to be read
    * @return a list of Players parsed from the log
 	 */
-    public static ArrayList<Player> getPlayers(FileReader reader){
+    public static ArrayList<PlayerItf> getPlayers(FileReader reader){
         boolean start = true;
         Document doc;
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<PlayerItf> players = new ArrayList<PlayerItf>();
         //jump to the players section of the log
         if(reader.searchLineWithString("(.*)----------------------(.*)")!=null){
             doc = Jsoup.parse(reader.getLine());
@@ -183,7 +184,7 @@ public final class ReadGameHead {
                 while(!reader.getLine().contains("----------------------")){
 
                     //create the player
-                    Player pl;
+                    PlayerItf pl;
                     String name;
                     if(doc.select("b").text().contains("points")){
                         name = doc.select("b").text().split(":")[0];

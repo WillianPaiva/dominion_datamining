@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.game.player.PlayerItf;
 
 public interface GameItf {
     // Converts the Game object in the Document format, to use with mongodb server
@@ -18,8 +19,8 @@ public interface GameItf {
     public ArrayList<String> getCardsGone();
     public Date getDate();
     public ArrayList<String> getMarket();
-    public Player getPlayer(String playerName);
-    public ArrayList<Player> getPlayers();
+    public PlayerItf getPlayer(String playerName);
+    public ArrayList<PlayerItf> getPlayers();
     public ObjectId getId();
     public ArrayList<String> getWinners();
     public HashMap<String,Integer> getTrash();
