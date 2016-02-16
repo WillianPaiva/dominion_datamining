@@ -23,8 +23,7 @@ public class App
         System.out.println("Starting the ELO callculation this can take a long time...")
         EloGenerator.Generate();
 
-
-        Chart ch = new Chart("Elo curve", "Elo curve", "ELO", "DAY");
+        Chart ch = new Chart("Elo curve", "Elo curve", "number of games played", "Elo");
         ch.pack( );
         RefineryUtilities.centerFrameOnScreen( ch );
         ch.setVisible( true );

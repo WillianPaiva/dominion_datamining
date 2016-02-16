@@ -8,11 +8,9 @@ import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import universite.bordeaux.app.colors.ColorsTemplate;
 
 public final class MongoMapper {
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_GREEN = "\u001B[32m";
     private static MongoClient mongo = new MongoClient();
     private static MongoDatabase db = mongo.getDatabase("game-logs");
 
@@ -47,7 +45,7 @@ public final class MongoMapper {
     }
 
     public static void createIndex(String index, String collection){
-        System.out.println("\n"+ANSI_PURPLE + "Generating index for "+ANSI_GREEN+collection+ANSI_PURPLE+" on the field "+ANSI_GREEN+index+ANSI_RESET);
+        System.out.println("\n"+ColorsTemplate.ANSI_PURPLE + "Generating index for "+ColorsTemplate.ANSI_GREEN+collection+ColorsTemplate.ANSI_PURPLE+" on the field "+ColorsTemplate.ANSI_GREEN+index+ColorsTemplate.ANSI_RESET);
         db.getCollection(collection).createIndex(new Document(index,1));
         System.out.println("done");
 
