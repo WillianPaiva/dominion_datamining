@@ -18,7 +18,7 @@ public class App
         Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
-        test.runParser(5);
+        test.runParser(20);
 
         System.out.println("Starting the ELO callculation this can take a long time...");
         EloGenerator.Generate();

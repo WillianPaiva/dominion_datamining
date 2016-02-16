@@ -15,7 +15,7 @@ mongodb/mongodb-linux-x86_64-3.2.1/bin/mongo --eval "db.stats()" > /dev/null
 RESULT=$?   # returns 0 if mongo eval succeeds
 if [ $RESULT -ne 0 ]; then
     echo -e "${RED}starting database engine${NC}"
-    mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod --dbpath mongoData --quiet --fork --logpath mongoLog/mongod.log
+    mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod --port 27020 --dbpath mongoData --quiet --fork --logpath mongoLog/mongod.log
 else
     echo -e "${RED}mongodb already running!${NC}"
 fi

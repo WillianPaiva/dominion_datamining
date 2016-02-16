@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 
 import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.game.player.PlayerItf;
 import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
@@ -31,7 +32,7 @@ public class Game implements GameItf{
     private ArrayList<String> market ;
 
     //list of players in the match
-    private ArrayList<Player> players ;
+    private ArrayList<PlayerItf> players ;
 
     //list of cards on the trash at the finish of the game
     private HashMap<String,Integer> trash ;
@@ -65,7 +66,7 @@ public class Game implements GameItf{
         this.market = doc.get("market",ArrayList.class);
         this.trash = doctohash(doc.get("trash",Document.class));
         this.dateTime = doc.get("date",Date.class);
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<PlayerItf>();
         this.id = doc.get("_id",ObjectId.class);
         for(Object d: doc.get("players",ArrayList.class)){
             players.add(new Player((Document)d));
@@ -98,7 +99,7 @@ public class Game implements GameItf{
         if(this.id == null){
             this.id = MongoMapper.insertGame(this.toDoc());
             PlayerSimple temp;
-            for(Player p: this.players){
+            for(PlayerItf p: this.players){
                 temp = new PlayerSimple(p.getPlayerName());
                 temp.insertGame(this.id);
                 temp.save();
@@ -115,9 +116,9 @@ public class Game implements GameItf{
    * @param players list of to be converted
    * @return list of documents
 	 */
-    private ArrayList<Document> players(ArrayList<Player> p){
+    private ArrayList<Document> players(ArrayList<PlayerItf> p){
         ArrayList<Document> temp = new ArrayList<Document>();
-        for(Player x: p){
+        for(PlayerItf x: p){
             temp.add(x.toDoc());
         }
         return temp;
@@ -163,7 +164,7 @@ public class Game implements GameItf{
     public void GenerateElo(){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
         PlayerSimple pl;
-        for(Player p: this.players){
+        for(PlayerItf p: this.players){
             pl = new PlayerSimple(p.getPlayerName());
             temp.put(p.getPlayerName(), pl.getElo());
         }
@@ -217,8 +218,8 @@ public class Game implements GameItf{
    * @param playerName
    * @return player
 	 */
-    public Player getPlayer(String playerName){
-        for(Player x: players){
+    public PlayerItf getPlayer(String playerName){
+        for(PlayerItf x: players){
             if(x.getPlayerName().equals(playerName)){
                 return x;
             }
@@ -233,7 +234,7 @@ public class Game implements GameItf{
 	 *
    * @return the list of players
 	 */
-    public ArrayList<Player> getPlayers(){
+    public ArrayList<PlayerItf> getPlayers(){
         return this.players;
     }
 

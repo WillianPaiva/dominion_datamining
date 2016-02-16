@@ -17,7 +17,9 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import universite.bordeaux.app.game.Game;
+import universite.bordeaux.app.game.GameItf;
 import universite.bordeaux.app.game.player.Player;
+import universite.bordeaux.app.game.player.PlayerItf;
 import universite.bordeaux.app.mapper.MongoMapper;
 
 public class Chart extends ApplicationFrame {
@@ -62,8 +64,8 @@ public class Chart extends ApplicationFrame {
                     @Override
                     public void apply(final Document document) {
                         test = ((float)x/(float)total)*100;
-                        final Game g = new Game(document);
-                        final Player p = g.getPlayer(player);
+                        final GameItf g = new Game(document);
+                        final PlayerItf p = g.getPlayer(player);
                         temp.add((double) x,(double)p.getGameElo());
                         x++;
                     }

@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
 import universite.bordeaux.app.game.Game;
+import universite.bordeaux.app.game.GameItf;
 import universite.bordeaux.app.mapper.MongoMapper;
 
 
@@ -93,7 +94,7 @@ public class FileHandler {
             if(htmlList != null){
                 for(File log: htmlList){
                     FileReader fr = new FileReader(log);
-                    Game g = new Game(fr);
+                    GameItf g = new Game(fr);
                     g.save();
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());

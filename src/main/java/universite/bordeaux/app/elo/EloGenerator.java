@@ -6,6 +6,7 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import universite.bordeaux.app.game.Game;
+import universite.bordeaux.app.game.GameItf;
 import universite.bordeaux.app.mapper.MongoMapper;
 
 public final class EloGenerator {
@@ -32,7 +33,7 @@ public final class EloGenerator {
         it.forEach(new Block<Document>() {
                 @Override
                 public void apply(final Document document) {
-                    Game g = new Game(document);
+                    GameItf g = new Game(document);
                     g.GenerateElo();
                     part++;
                     progressBar(Math.round(((double)part/(double)total)*100),g.getId().toString());
