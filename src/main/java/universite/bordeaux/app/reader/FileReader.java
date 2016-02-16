@@ -53,7 +53,7 @@ public class FileReader {
    * search for the first line that contains a given string
 	 *
 	 * @param target
-   * @return line found or null
+	 * @return line found or null
 	 */
     public String searchLineWithString(String target){
         while(scan.hasNextLine()){

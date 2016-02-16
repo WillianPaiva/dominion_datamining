@@ -23,19 +23,18 @@ public class FileHandler {
     private int over = 0;
     private int overT = 0;
 
-	/**
-	 *
-	 *
-   */
+
+    /**
+     * @param folderPath path of the folder to use with the FileHandler
+     */
     public FileHandler(File folderPath){
         this.folderPath = folderPath ;
     }
 
-
-	/**
-   * iterates between all compressed logs and decompress parse and delete decompressed logs
-   *
-	 */
+    /**
+     * iterates between all compressed logs and decompress parse and delete decompressed logs
+     * @param numThreads number of threads to use for the parsing
+     */
     public void runParser(int numThreads){
             System.out.println(ColorsTemplate.ANSI_CYAN + "Strating the Parser it can take a long time..." + ColorsTemplate.ANSI_RESET);
             //creates a list with all compressed files
@@ -69,6 +68,10 @@ public class FileHandler {
             }
     }
 
+    /**
+     * parsing one file
+     * @param f File to be parsed
+     */
     private void process(File f){
         try{
             String foldername = f.getName().replace(".tar.bz2","");
@@ -108,7 +111,12 @@ public class FileHandler {
     }
 
 
-    public void progressBar( int overall, String parsing){
+    /**
+     * Displays a progress bar in the prompt, every time a file is parsed, this method is called and the bar progresses
+     * @param overall total number of files to be parsed
+     * @param fileName String containing the last parsed file
+     */
+    public void progressBar( int overall, String fileName){
         String over = "";
         for(int x = 0 ; x < (overall/2); x++){
             over += "=";
@@ -117,7 +125,7 @@ public class FileHandler {
             over += "_";
         }
 
-        String progress = "\r"+ColorsTemplate.ANSI_BLUE+ "overall"+ColorsTemplate.ANSI_RESET+" [" +ColorsTemplate.ANSI_GREEN +  over + ColorsTemplate.ANSI_RESET +"] "+overall+"%  "+ColorsTemplate.ANSI_BLUE+"Parsing: "+ColorsTemplate.ANSI_RESET+" [" + ColorsTemplate.ANSI_GREEN + parsing + ColorsTemplate.ANSI_RESET +"] ";
+        String progress = "\r"+ColorsTemplate.ANSI_BLUE+ "overall"+ColorsTemplate.ANSI_RESET+" [" +ColorsTemplate.ANSI_GREEN +  over + ColorsTemplate.ANSI_RESET +"] "+overall+"%  "+ColorsTemplate.ANSI_BLUE+"Parsing: "+ColorsTemplate.ANSI_RESET+" [" + ColorsTemplate.ANSI_GREEN + fileName + ColorsTemplate.ANSI_RESET +"] ";
 
         System.out.print("\r                                                                                  ");
         System.out.print(progress);
