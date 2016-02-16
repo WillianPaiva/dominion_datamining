@@ -42,9 +42,9 @@ public class Game {
 
 
 	/**
-	 * {@inheritDoc}
+   * create the object Game by reading the FileReader and parsing the log file
 	 *
-	 * @see Object#Game()
+   * @param reader the FileReader of the log
 	 */
     public Game(FileReader reader){
         this.winners = ReadGameHead.getWinners(reader);
@@ -55,6 +55,11 @@ public class Game {
         this.dateTime = setDateTime(reader.getName());
     }
 
+	/**
+   * create the object Game based on a Document
+	 *
+   * @param doc Document to be read and parsed to a Game object
+	 */
     public Game(Document doc){
         this.winners = doc.get("winners",ArrayList.class);
         this.cardsGone = doc.get("cardsgonne",ArrayList.class);
@@ -70,6 +75,11 @@ public class Game {
     }
 
 
+	/**
+   * parser the object Game to Document format
+	 *
+   * @return the Document representation of the object Game
+	 */
     public Document toDoc(){
         return new Document()
                             .append("date", this.dateTime)
@@ -79,6 +89,12 @@ public class Game {
                             .append("trash",hashtodoc(this.trash))
                             .append("players",players(this.players));
     }
+
+	/**
+   * save the object Game on the mongoDB database if the object doesn't exist.
+   * if object exists on the database it updates the object
+	 *
+	 */
     public void save(){
         if(this.id == null){
             this.id = MongoMapper.insertGame(this.toDoc());
@@ -93,6 +109,13 @@ public class Game {
         }
     }
 
+
+	/**
+   * creates an list Documents from a list of players
+	 *
+   * @param players list of to be converted
+   * @return list of documents
+	 */
     private ArrayList<Document> players(ArrayList<Player> p){
         ArrayList<Document> temp = new ArrayList<Document>();
         for(Player x: p){
@@ -102,6 +125,12 @@ public class Game {
     }
 
 
+	/**
+   * creates a map from a a document
+	 *
+   * @param doc document to be converted
+   * @return returns a map of with the documents data
+	 */
     private HashMap<String,Integer> doctohash(Document doc){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
         for(Map.Entry<String,Object> x: doc.entrySet()){
