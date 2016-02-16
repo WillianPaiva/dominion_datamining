@@ -6,10 +6,6 @@ import java.util.Map.Entry;
 
 import org.bson.Document;
 
-/**
- * @author ebayol
- *
- */
 public class Player {
     private String pl ;
     private HashMap<String,Integer> victoryCards = new HashMap<String,Integer>();

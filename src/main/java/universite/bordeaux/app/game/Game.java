@@ -3,7 +3,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -18,7 +17,7 @@ import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
 
-public class Game {
+public class Game implements GameItf{
 
     private ObjectId id = null;
 
