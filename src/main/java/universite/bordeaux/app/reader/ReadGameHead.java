@@ -13,12 +13,28 @@ import universite.bordeaux.app.game.player.Player;
 
 
 
+/**
+ * that is utility class to read a log file and parse its information on demand
+ *
+ *
+ */
 public final class ReadGameHead {
 
-    private ReadGameHead(){
-    }
+	/**
+	 * {@inheritDoc}
+   * not used
+	 * @see Object#ReadGameHead()
+	 */
+    private ReadGameHead(){}
 
 
+	/**
+   * parses the line:
+   * ex: <html><head><link rel="stylesheet" href="/dom/client.css"><title>Dominion Game #7082</title></head><body><pre>roku wins!
+   *
+   * @param reader the FileReader object to be readed.
+   * @return a list of winners present on the line
+	 */
     public static ArrayList<String> getWinners(FileReader reader){
         Document doc;
         ArrayList<String> wi = new ArrayList<String>();
@@ -47,6 +63,13 @@ public final class ReadGameHead {
         return wi;
     }
 
+	/**
+   * parses the line:
+   * ex:  All <span class=card-victory>Provinces</span> are gone.
+	 *
+   * @param reader the FileReader object to be read
+   * @return a list of cards present on the line parsed
+	 */
     public static ArrayList<String> getCardsGone(FileReader reader){
         Document doc;
         ArrayList<String> cardsGone = new ArrayList<String>();
@@ -64,6 +87,13 @@ public final class ReadGameHead {
         return cardsGone;
     }
 
+	/**
+   * parses the line:
+   * ex: trash: a <span class=card-treasure>Silver</span> and 4 <span class=card-treasure>Coppers</span>
+   *
+   * @param reader the FileReader object to be read
+   * @return a map with the cards and quantity of the trashed parsed
+	 */
     public static HashMap<String,Integer> getTrash(FileReader reader){
         Document doc;
         HashMap<String,Integer> tr = new HashMap<String,Integer>();
@@ -93,6 +123,13 @@ public final class ReadGameHead {
         return tr;
     }
 
+	/**
+   * parses the line:
+   * ex: cards in supply: <span cardname="Bureaucrat" class=card-none>Bureaucrat</span>, <span cardname="Contraband" class=card-treasure>Contraband</span>, <span cardname="Festival" class=card-none>Festival</span>, <span cardname="Mine" class=card-none>Mine</span>, <span cardname="Pearl Diver" class=card-none>Pearl Diver</span>, <span cardname="Quarry" class=card-treasure>Quarry</span>, <span cardname="Smugglers" class=card-none>Smugglers</span>, <span cardname="Spy" class=card-none>Spy</span>, <span cardname="Warehouse" class=card-none>Warehouse</span>, and <span cardname="Witch" class=card-none>Witch</span>
+   *
+   * @param reader the FileReader object to be read
+   * @return a list of cards presents on the line parsed
+	 */
     public static ArrayList<String> getMarket(FileReader reader){
         Document doc;
         ArrayList<String> market = new ArrayList<String>();
@@ -112,6 +149,24 @@ public final class ReadGameHead {
         return market;
     }
 
+	/**
+   * reads the following example portion of the log file:
+   *----------------------
+   *
+   *<b>roku: 33 points</b> (5 <span class=card-victory>Provinces</span>, 4 <span class=card-victory>Estates</span>, a <span class=card-victory>Duchy</span>, and 4 <span class=card-curse>Curses</span>); 25 turns
+   *opening: <span class=card-treasure>Quarry</span> / <span class=card-none>Warehouse</span>
+   *[41 cards] 3 <span class=card-none>Festivals</span>, 3 <span class=card-none>Pearl Divers</span>, 2 <span class=card-none>Warehouses</span>, 2 <span class=card-none>Witches</span>, 1 <span class=card-treasure>Quarry</span>, 7 <span class=card-treasure>Coppers</span>, 4 <span class=card-treasure>Silvers</span>, 5 <span class=card-treasure>Golds</span>, 4 <span class=card-victory>Estates</span>, 1 <span class=card-victory>Duchy</span>, 5 <span class=card-victory>Provinces</span>, 4 <span class=card-curse>Curses</span>
+   *
+   *<b>skeil: 15 points</b> (3 <span class=card-victory>Provinces</span>, 3 <span class=card-victory>Estates</span>, and 6 <span class=card-curse>Curses</span>); 25 turns
+   *    opening: <span class=card-treasure>Quarry</span> / <span class=card-treasure>Silver</span>
+   *    [47 cards] 9 <span class=card-none>Spies</span>, 7 <span class=card-none>Festivals</span>, 5 <span class=card-none>Witches</span>, 2 <span class=card-none>Pearl Divers</span>, 1 <span class=card-none>Mine</span>, 1 <span class=card-treasure>Quarry</span>, 1 <span class=card-none>Warehouse</span>, 3 <span class=card-treasure>Coppers</span>, 4 <span class=card-treasure>Silvers</span>, 2 <span class=card-treasure>Golds</span>, 3 <span class=card-victory>Estates</span>, 3 <span class=card-victory>Provinces</span>, 6 <span class=card-curse>Curses</span>
+   *
+   *----------------------
+   * and parses each player present on the log as a Player object
+   *
+   * @param reader the FileReader object to be read
+   * @return a list of Players parsed from the log
+	 */
     public static ArrayList<Player> getPlayers(FileReader reader){
         boolean start = true;
         Document doc;
