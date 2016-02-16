@@ -54,10 +54,19 @@ public final class ReadGameHead {
             if(win[0].contains("rejoice in their shared victory!")){
                 String[] winners = win[0].split("rejoice in their shared victory!")[0].split("and");
                 for(String x: winners){
-                    wi.add(x.trim());
+                    if(x.trim().length() > 30){
+                        wi.add(x.trim().substring(0, 29));
+                    }
+                    else{
+                        wi.add(x.trim());
+                    }
                 }
             }else{
-                wi.add(win[0].trim());
+                if(win[0].trim().length() > 30){
+                    wi.add(win[0].trim().substring(0,29));
+                }else{
+                    wi.add(win[0].trim());
+                }
             }
         }
         reader.rewindFile();
@@ -187,9 +196,17 @@ public final class ReadGameHead {
                     PlayerItf pl;
                     String name;
                     if(doc.select("b").text().contains("points")){
-                        name = doc.select("b").text().split(":")[0];
+                        if(doc.select("b").text().split(":")[0].length() > 30){
+                            name = doc.select("b").text().split(":")[0].substring(0,29);
+                        }else{
+                            name = doc.select("b").text().split(":")[0];
+                        }
                     }else{
-                        name = doc.select("b").text().replaceAll("^#[0-9]* ","");
+                        if(doc.select("b").text().replaceAll("^#[0-9]* ","").length() > 30){
+                            name = doc.select("b").text().replaceAll("^#[0-9]* ","").substring(0,29);
+                        }else{
+                            name = doc.select("b").text().replaceAll("^#[0-9]* ","");
+                        }
                     }
 
                     pl = new Player(name);
@@ -208,7 +225,6 @@ public final class ReadGameHead {
                                 pl.setPoints(Integer.parseInt(temp));
                             }catch(NumberFormatException e){
                                 pl.setPoints(0);
-                                System.out.println(reader.getName());
                             }
                         }
 
