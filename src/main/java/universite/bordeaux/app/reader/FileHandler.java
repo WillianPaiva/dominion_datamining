@@ -94,8 +94,10 @@ public class FileHandler {
             if(htmlList != null){
                 for(File log: htmlList){
                     FileReader fr = new FileReader(log);
-                    GameItf g = new Game(fr);
-                    g.save();
+                    if (!fr.isEmpty()){
+                        GameItf g = new Game(fr);
+                        g.save();
+                    }
                     fr.close();
                     progressBar(Math.round(((float)over/(float)overT)*100),log.getName());
 
