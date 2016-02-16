@@ -1,4 +1,5 @@
 package universite.bordeaux.app.game;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
 import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
 
@@ -57,8 +59,9 @@ public class Game implements GameItf{
             this.trash = ReadGameHead.getTrash(reader);
             this.dateTime = setDateTime(reader.getName());
             }catch(Exception e ){
-                System.out.println(e.getMessage());
-                System.out.println(reader.getName());
+                ErrorLogger.logError(e.getMessage()+"\n"+ reader.getName());
+                //System.out.println(e.getMessage());
+                //System.out.println(reader.getName());
                 this.flagFail = false;
             }
     }
