@@ -140,6 +140,12 @@ public class Game {
 
     }
 
+	/**
+   * creates a Document from a map
+	 *
+   * @param map the map to create the document
+   * @return Document with the map data
+	 */
     private Document hashtodoc(HashMap<String,Integer> map){
         Document temp = new Document();
         for(String x: map.keySet()){
@@ -147,7 +153,14 @@ public class Game {
         }
         return temp;
     }
- 
+
+
+
+	/**
+   * generates the elo for each player of the game
+   * and save to the database
+	 *
+	 */
     public void GenerateElo(){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
         PlayerSimple pl;
@@ -228,7 +241,7 @@ public class Game {
 
 
 	/**
-	 * @return the id
+   * @return the game ObjectId _id
 	 */
 	public ObjectId getId() {
 		return id;
