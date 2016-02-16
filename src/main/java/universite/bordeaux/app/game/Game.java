@@ -19,6 +19,8 @@ import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
 
 public class Game implements GameItf{
+    //if the log has errors, set this flag to false
+    private boolean flagFail=true; 
 
     private ObjectId id = null;
 
@@ -47,7 +49,6 @@ public class Game implements GameItf{
    * @param reader the FileReader of the log
 	 */
     public Game(FileReader reader){
-        if (!reader.isEmpty()){
             try{
             this.winners = ReadGameHead.getWinners(reader);
             this.cardsGone = ReadGameHead.getCardsGone(reader);
@@ -58,8 +59,8 @@ public class Game implements GameItf{
             }catch(Exception e ){
                 System.out.println(e.getMessage());
                 System.out.println(reader.getName());
+                this.flagFail = false;
             }
-        }
     }
 
 	/**
@@ -103,16 +104,18 @@ public class Game implements GameItf{
 	 *
 	 */
     public void save(){
-        if(this.id == null){
-            this.id = MongoMapper.insertGame(this.toDoc());
-            PlayerSimple temp;
-            for(PlayerItf p: this.players){
-                temp = new PlayerSimple(p.getPlayerName());
-                temp.insertGame(this.id);
-                temp.save();
+        if (flagFail){
+            if(this.id == null){
+                this.id = MongoMapper.insertGame(this.toDoc());
+                PlayerSimple temp;
+                for(PlayerItf p: this.players){
+                    temp = new PlayerSimple(p.getPlayerName());
+                    temp.insertGame(this.id);
+                    temp.save();
+                }
+            }else{
+                MongoMapper.updateGame(new Document("_id",this.id), new Document("$set",this.toDoc()));
             }
-        }else{
-            MongoMapper.updateGame(new Document("_id",this.id), new Document("$set",this.toDoc()));
         }
     }
 
