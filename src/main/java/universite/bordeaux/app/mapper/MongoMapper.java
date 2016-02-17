@@ -10,6 +10,7 @@ import com.mongodb.MongoWriteException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import universite.bordeaux.app.colors.ColorsTemplate;
+import universite.bordeaux.app.reader.ErrorLogger;
 
 public final class MongoMapper {
     private static MongoClient mongo = new MongoClient("localhost", 27020);
@@ -27,7 +28,8 @@ public final class MongoMapper {
         db.getCollection("players").insertOne(player);
         }
         catch (MongoWriteException e){
-            System.out.println("player name is ridiculously long (wtf dude?)");
+            ErrorLogger.getInstance().logError("player name is ridiculously long (wtf dude?)");
+            //System.out.println("player name is ridiculously long (wtf dude?)");
         }
     }
 

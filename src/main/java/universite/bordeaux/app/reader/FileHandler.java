@@ -61,7 +61,8 @@ public class FileHandler {
                     try{
                         x.join();
                     }catch(InterruptedException e){
-                        System.out.println(e);
+                        ErrorLogger.getInstance().logError(e.toString());
+                        //System.out.println(e);
                     }
                 }
             }else{
@@ -108,7 +109,8 @@ public class FileHandler {
             }
             FileUtils.deleteDirectory(folder);
         }catch(IOException  | InterruptedException e){
-            System.out.println(e);
+            ErrorLogger.getInstance().logError(e.toString());
+            //System.out.println(e);
         }
         over++;
     }

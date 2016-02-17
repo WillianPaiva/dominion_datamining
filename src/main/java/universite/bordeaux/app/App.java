@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.jfree.ui.RefineryUtilities;
 import universite.bordeaux.app.elo.EloGenerator;
 import universite.bordeaux.app.plotter.Chart;
+import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileHandler;
 /**
  * Hello world!
@@ -27,5 +28,6 @@ public class App
         ch.pack( );
         RefineryUtilities.centerFrameOnScreen( ch );
         ch.setVisible( true );
+        ErrorLogger.getInstance().closeLogger();
     }
 }

@@ -59,7 +59,7 @@ public class Game implements GameItf{
             this.trash = ReadGameHead.getTrash(reader);
             this.dateTime = setDateTime(reader.getName());
             }catch(Exception e ){
-                ErrorLogger.logError(e.getMessage()+"\n"+ reader.getName());
+                ErrorLogger.getInstance().logError(e.getMessage()+"\n"+ reader.getName());
                 //System.out.println(e.getMessage());
                 //System.out.println(reader.getName());
                 this.flagFail = false;

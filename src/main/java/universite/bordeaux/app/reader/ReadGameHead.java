@@ -54,16 +54,16 @@ public final class ReadGameHead {
             if(win[0].contains("rejoice in their shared victory!")){
                 String[] winners = win[0].split("rejoice in their shared victory!")[0].split("and");
                 for(String x: winners){
-                    if(x.trim().length() > 30){
-                        wi.add(x.trim().substring(0, 29));
+                    if(x.trim().length() > 15){
+                        wi.add(x.trim().substring(0, 14));
                     }
                     else{
                         wi.add(x.trim());
                     }
                 }
             }else{
-                if(win[0].trim().length() > 30){
-                    wi.add(win[0].trim().substring(0,29));
+                if(win[0].trim().length() > 15){
+                    wi.add(win[0].trim().substring(0,14));
                 }else{
                     wi.add(win[0].trim());
                 }
@@ -196,14 +196,14 @@ public final class ReadGameHead {
                     PlayerItf pl;
                     String name;
                     if(doc.select("b").text().contains("points")){
-                        if(doc.select("b").text().split(":")[0].length() > 30){
-                            name = doc.select("b").text().split(":")[0].substring(0,29);
+                        if(doc.select("b").text().split(":")[0].length() > 15){
+                            name = doc.select("b").text().split(":")[0].substring(0,14);
                         }else{
                             name = doc.select("b").text().split(":")[0];
                         }
                     }else{
-                        if(doc.select("b").text().replaceAll("^#[0-9]* ","").length() > 30){
-                            name = doc.select("b").text().replaceAll("^#[0-9]* ","").substring(0,29);
+                        if(doc.select("b").text().replaceAll("^#[0-9]* ","").length() > 15){
+                            name = doc.select("b").text().replaceAll("^#[0-9]* ","").substring(0,14);
                         }else{
                             name = doc.select("b").text().replaceAll("^#[0-9]* ","");
                         }
@@ -374,7 +374,7 @@ public final class ReadGameHead {
 
     //                     //set the player points
     //                     String[] p = firstBreak[0].split(":");
-    //                     String temp = p[p.length-1].replace(" ","");
+    //                     String temp = p[p.lengthnull-1].replace(" ","");
     //                     if(temp.contains("resigned")){
     //                         pl.setPoints(0);
     //                     }else{

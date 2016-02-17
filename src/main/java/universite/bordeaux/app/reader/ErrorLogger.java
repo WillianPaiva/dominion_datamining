@@ -16,17 +16,41 @@ import java.io.IOException;
  */
 public final class ErrorLogger {
     
+    private static FileWriter writer;
+    private static volatile ErrorLogger instance = null;
+    
     private ErrorLogger(){
-        
-    }
-    public static void logError(String exceptionMessage){
-        FileWriter writer;
-            try{
+        try{
             writer = new FileWriter(new File("errorLog.txt"));
-            writer.write(exceptionMessage+"\n");
-            writer.close();
+        }catch (IOException e){
+            System.err.println("couldn't create the errorLog.txt file");
+        }
+    }
+    
+    public final static ErrorLogger getInstance(){
+        if (ErrorLogger.instance == null){
+            synchronized (ErrorLogger.class){
+                if (ErrorLogger.instance == null){
+                    ErrorLogger.instance = new ErrorLogger();
+                }
+            }
+        }
+        return ErrorLogger.instance;
+    }
+    
+    public void logError(String exceptionMessage){
+        try{
+        this.writer.write(exceptionMessage+"\n");
         }catch(IOException e){
             System.err.println("cannot log error");
+        }
+    }
+    
+    public void closeLogger(){
+        try{
+            this.writer.close();
+        }catch (IOException e){
+            System.err.println("cannot close errorLog.txt");
         }
     }
 }
