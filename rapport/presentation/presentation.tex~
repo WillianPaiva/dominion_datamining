@@ -13,53 +13,25 @@
 \begin{document}
 \maketitle
 
-
 \begin{frame}
   \frametitle{Introduction}
-  \framesubtitle{Le but de projet}
-  Dominion DataMining est un programme qui se compose de trois parties principales:
+  test phrase
   \begin{itemize}
-  \item Modélisation des donéées
-  \item Stockage des données
-  \item Analyse des données
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Introduction}
-  \framesubtitle{Le contexte de projet}
-  
-  \begin{itemize}
-    \item Un serveur ouvert d'Octobre 2010 à Mars 2013
-    \item Un Wiki offre des conseils au niveau de stratégie
-    \item 12 Millions de logs à traiter (dont la taille générale est 13Go)
-  
+    \item Serveur ouvert de 2010 à 2013
+    \item 12 Millions de parties enrigistrées
+    \item Wiki regroupant des informations sur les stratégies
   \end{itemize}
 
 \end{frame}
+
 \begin{frame}
   \frametitle{Introduction}
-  \framesubtitle{Classe de l'utilisateur et caractéristiques}
- 
+  \framesubtitle{Travail demandé}
   \begin{itemize}
-    \item Acteurs physiques:
-     ~~\\
-     \textit{Utilisateur}
-      ~~\\
-    \item Acteurs de système:  
-      ~~\\
-     \textit{Parser}
-       ~~\\
-     \textit{Analyseur}
-      ~~\\
-     \textit{Base de données}
-      ~~\\
-     
+    \item 
   \end{itemize}
-
 \end{frame}
   
-
 \begin{frame}
   \frametitle{Fonctionnalités}
   \begin{itemize}
