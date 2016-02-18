@@ -1,0 +1,26 @@
+\documentclass{beamer}
+
+\usepackage{graphicx} % Required to insert images
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{verbatim}
+
+\begin{document}
+
+\title{Titre de la présentation}
+\maketitle
+
+\begin{frame} % premier transparent
+\frametitle{Titre du premier transparent}
+\framesubtitle{Et son sous-titre}
+
+Contenu du transparent.
+
+\end{frame}
+
+\begin{frame} % deuxième transparent
+…
+\end{frame}
+
+\end{document}
