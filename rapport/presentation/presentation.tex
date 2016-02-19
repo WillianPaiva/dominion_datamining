@@ -1,8 +1,9 @@
 \documentclass{beamer}
-
+\usepackage{amsmath}
 \usepackage{beamerthemesplit}
 \usepackage{graphicx} % Required to insert images
 \usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{verbatim}
@@ -124,7 +125,64 @@
 
 \begin{frame}
   \frametitle{Aspects techniques}
-…
+
+  \begin{itemize}
+  \item Technical choices
+  \item algorithms
+  \item bugs and problems
+  \end{itemize}
 \end{frame}
+
+% \begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=A nice heading]
+% \end{tcolorbox}
+
+\begin{frame}
+  \frametitle{Technical choices}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=The Core]
+  \begin{center}
+    \includegraphics[scale=0.30,keepaspectratio]{mongojava}
+    \end{center}
+\end{tcolorbox}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Algorithms}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Parser]
+  \begin{itemize}
+  \item a mix of jsoup + split
+  \item and a lot of regex search
+  \end{itemize}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Elo]
+  \[
+    {R_{x}} = {R_{x}} + 32 * (v - \frac{10^{{R_{x}}/400}}{\sum_{n=0}^{np} Rn})
+  \]
+v = 1 if player win and 0 if looses
+\end{tcolorbox}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Bugs and Problems}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=usernames]
+  \begin{itemize}
+    \item  cats and dogs living together
+    \item  gime all yo points
+      \item hi, gl, hf, yada, yada, yada.
+       \item (>\textasciicircum o \textasciicircum)> <(*o*)> <(\textasciicircum
+         o \textasciicircum<)
+  \end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Performance]
+  \begin{itemize}
+  \item compressed files
+  \item High disk usage
+  \end{itemize}
+\end{tcolorbox}
+\end{frame}
+
 
 \end{document}
