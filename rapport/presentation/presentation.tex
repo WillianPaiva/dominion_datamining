@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{verbatim}
+\usepackage{listings}
 
 \title{Dominion Datamining}
 \author{Khaoula TAGNAOUTI, Liliana LOPEZ, Willian VER VALEM, Elmer BAYOL}
@@ -14,30 +15,29 @@
 \begin{document}
 \maketitle
 
-
 \begin{frame}
   \frametitle{Introduction}
-  \framesubtitle{Le but de projet}
+  \framesubtitle{Le contexte du projet}
+  
+  \begin{itemize}
+  \item Un serveur ouvert d'Octobre 2010 à Mars 2013
+    \item 12 Millions de logs à traiter (dont la taille générale est 13Go)
+    \item Un Wiki offre des conseils au niveau de la stratégie
+  
+  \end{itemize}
+\end{frame}
+  
+  \begin{frame}
+  \frametitle{Introduction}
+  \framesubtitle{Le but du projet}
   Dominion DataMining est un programme qui se compose de trois parties principales:
   \begin{itemize}
-  \item Modélisation des donéées
+  \item Modélisation des donées
   \item Stockage des données
   \item Analyse des données
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Introduction}
-  \framesubtitle{Le contexte de projet}
-  
-  \begin{itemize}
-    \item Un serveur ouvert d'Octobre 2010 à Mars 2013
-    \item Un Wiki offre des conseils au niveau de stratégie
-    \item 12 Millions de logs à traiter (dont la taille générale est 13Go)
-  
-  \end{itemize}
-
-\end{frame}
 \begin{frame}
   \frametitle{Introduction}
   \framesubtitle{Classe de l'utilisateur et caractéristiques}
@@ -66,7 +66,7 @@
   \begin{itemize}
   \item Parser
   \item Stockage des données
-  \item calcul d'elo
+  \item Calcul d'elo
   \end{itemize}
 \end{frame}
 
@@ -88,6 +88,15 @@
   \item Stockage d'elo global pour chaque joueur
   \item Stockage de liste des parties d'un joueur
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fonctionnalités}
+  \framesubtitle{Stockage des données}
+  Exemple de structure stockée dans la base de données:\newline
+  \begin{center}
+    \includegraphics[scale=0.21,keepaspectratio]{code}
+  \end{center}
 \end{frame}
 
 \begin{frame}
@@ -127,9 +136,9 @@
   \frametitle{Aspects techniques}
 
   \begin{itemize}
-  \item Technical choices
-  \item algorithms
-  \item bugs and problems
+  \item Choix techniques
+  \item Algorithmes
+  \item Bugs et problèmes
   \end{itemize}
 \end{frame}
 
@@ -137,9 +146,10 @@
 % \end{tcolorbox}
 
 \begin{frame}
-  \frametitle{Technical choices}
-\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=The Core]
+  \frametitle{Choix techniques}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Choix d'implémentation]
   \begin{center}
+    \includegraphics[scale=0.30,keepaspectratio]{maven}\\
     \includegraphics[scale=0.30,keepaspectratio]{mongojava}
     \end{center}
 \end{tcolorbox}
@@ -147,25 +157,25 @@
 
 
 \begin{frame}
-  \frametitle{Algorithms}
+  \frametitle{Algorithmes}
 \begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Parser]
   \begin{itemize}
-  \item a mix of jsoup + split
-  \item and a lot of regex search
+  \item un mélange jsoup + split
+  \item et beaucoup de recherches regex
   \end{itemize}
 \end{tcolorbox}
 \begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Elo]
   \[
     {R_{x}} = {R_{x}} + 32 * (v - \frac{10^{{R_{x}}/400}}{\sum_{n=0}^{np} Rn})
   \]
-v = 1 if player win and 0 if looses
+v = 1 si le joueur gagne et 0 si il perd
 \end{tcolorbox}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Bugs and Problems}
-\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=usernames]
+  \frametitle{Bugs et Problèmes}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Noms d'utilisateur]
   \begin{itemize}
     \item  cats and dogs living together
     \item  gime all yo points
@@ -178,11 +188,17 @@ v = 1 if player win and 0 if looses
 
 \begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Performance]
   \begin{itemize}
-  \item compressed files
-  \item High disk usage
+  \item fichiers compressés
+  \item grosse utilisation du disque
   \end{itemize}
 \end{tcolorbox}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Questions}
+  \begin{center}
+    \includegraphics[scale=0.21,keepaspectratio]{qa}
+  \end{center}
+\end{frame}
 
 \end{document}
