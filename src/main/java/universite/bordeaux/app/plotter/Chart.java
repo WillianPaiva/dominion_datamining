@@ -57,17 +57,28 @@ public class Chart extends ApplicationFrame {
         for(final String player: players){
             temp = new XYSeries(player);
             FindIterable<Document> it = MongoMapper.getPlayerGames(player);
-            final int total = MongoMapper.getPlayerTotalGames(player);
             it.forEach(new Block<Document>() {
-                    int x = 0;
-                    float test;
+                    double x = 0;
+                    int t = 0;
+                    double counter =0;
+                    double fac = 50;
+
+
                     @Override
                     public void apply(final Document document) {
-                        test = ((float)x/(float)total)*100;
                         final GameItf g = new Game(document);
                         final PlayerItf p = g.getPlayer(player);
-                        temp.add((double) x,(double)p.getGameElo());
-                        x++;
+                        if(t < fac){
+                            t++;
+                            x += p.getGameElo();
+                        }else{
+                            temp.add(counter,x/fac);
+                            x = 0;
+                            t = 0;
+                            counter++;
+
+                        }
+
                     }
                 });
             dataset.addSeries(temp);

@@ -28,7 +28,7 @@ public final class EloGenerator {
 
     public static void Generate(){
         part =0;
-        MongoMapper.createIndex("date", "logs");
+        // MongoMapper.createIndex("date", "logs");
         FindIterable<Document> it = MongoMapper.findGamesByDate();
         it.forEach(new Block<Document>() {
                 @Override
