@@ -23,14 +23,9 @@ public final class MongoMapper {
         db.getCollection("logs").insertOne(game);
         return (ObjectId)game.get( "_id" );
     }
-    public static void insertPlayer(Document player){
-        try{
+    public static ObjectId insertPlayer(Document player){
         db.getCollection("players").insertOne(player);
-        }
-        catch (MongoWriteException e){
-            ErrorLogger.getInstance().logError("player name is ridiculously long (wtf dude?)");
-            //System.out.println("player name is ridiculously long (wtf dude?)");
-        }
+        return (ObjectId)player.get( "_id" );
     }
 
     public static void updateGame(Document game , Document up){
@@ -42,7 +37,7 @@ public final class MongoMapper {
     }
 
     public static FindIterable<Document> findPlayer(String player){
-        return db.getCollection("players").find(new Document("_id", player));
+        return db.getCollection("players").find(new Document("name", player));
     }
 
     public static FindIterable<Document> findGamesByDate(){
@@ -52,6 +47,12 @@ public final class MongoMapper {
         return db.getCollection("logs").count();
     }
 
+    public static void index(){
+        createIndex("date", "logs");
+        createIndex("players.name", "logs");
+        createIndex("players.elo", "logs");
+        createIndex("elo", "players");
+    }
     public static void createIndex(String index, String collection){
         System.out.println("\n"+ColorsTemplate.ANSI_PURPLE + "Generating index for "+ColorsTemplate.ANSI_GREEN+collection+ColorsTemplate.ANSI_PURPLE+" on the field "+ColorsTemplate.ANSI_GREEN+index+ColorsTemplate.ANSI_RESET);
         db.getCollection(collection).createIndex(new Document(index,1));

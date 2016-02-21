@@ -9,55 +9,42 @@ import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.mapper.MongoMapper;
 
 public class PlayerSimple {
-    private String id;
+    private ObjectId id;
+    private String name;
     private int elo;
-    private ArrayList<ObjectId> games;
-    private boolean first;
 
-    public PlayerSimple(String id){
-        Document doc = MongoMapper.findPlayer(id).first();
+    public PlayerSimple(String name){
+        Document doc = MongoMapper.findPlayer(name).first();
         if(doc != null){
-            this.id = doc.get("_id",String.class);
+            this.id = doc.get("_id",ObjectId.class);
+            this.name = doc.get("name",String.class);
             this.elo = doc.get("elo",Integer.class);
-            this.games = doc.get("games",ArrayList.class);
-            this.first = false;
         }else{
-            this.id = id;
+            this.name = name;
             this.elo = 1000;
-            this.games = new ArrayList<ObjectId>();
-            this.first = true;
         }
 
     }
 
     public Document toDoc(){
-        return new Document("_id",id).append("elo",elo).append("games", games);
-    }
-    public Document toDocWithoutID(){
-        return new Document("elo",elo).append("games", games);
+        return new Document("name",name).append("elo",elo);
     }
 
     public void save(){
-        if(this.first == true){
-            MongoMapper.insertPlayer(this.toDoc());
+        if(this.id == null){
+            this.id = MongoMapper.insertPlayer(this.toDoc());
         }else{
-            MongoMapper.updatePlayer(new Document("_id",id), new Document("$set",this.toDocWithoutID()));
+            MongoMapper.updatePlayer(new Document("_id",id), new Document("$set",this.toDoc()));
         }
   }
 
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+  public ObjectId getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the elo
@@ -73,15 +60,5 @@ public class PlayerSimple {
 		this.elo = elo;
 	}
 
-	/**
-	 * @return the games
-	 */
-	public ArrayList<ObjectId> getGames() {
-		return games;
-	}
-
-    public void insertGame(ObjectId g){
-        games.add(g);
-    }
 
 }

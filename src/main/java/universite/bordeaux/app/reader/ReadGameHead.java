@@ -54,19 +54,10 @@ public final class ReadGameHead {
             if(win[0].contains("rejoice in their shared victory!")){
                 String[] winners = win[0].split("rejoice in their shared victory!")[0].split("and");
                 for(String x: winners){
-                    if(x.trim().length() > 15){
-                        wi.add(x.trim().substring(0, 14));
-                    }
-                    else{
-                        wi.add(x.trim());
-                    }
+                    wi.add(x.trim());
                 }
             }else{
-                if(win[0].trim().length() > 15){
-                    wi.add(win[0].trim().substring(0,14));
-                }else{
-                    wi.add(win[0].trim());
-                }
+                wi.add(win[0].trim());
             }
         }
         reader.rewindFile();
@@ -196,17 +187,9 @@ public final class ReadGameHead {
                     PlayerItf pl;
                     String name;
                     if(doc.select("b").text().contains("points")){
-                        if(doc.select("b").text().split(":")[0].length() > 15){
-                            name = doc.select("b").text().split(":")[0].substring(0,14);
-                        }else{
-                            name = doc.select("b").text().split(":")[0];
-                        }
+                        name = doc.select("b").text().split(":")[0];
                     }else{
-                        if(doc.select("b").text().replaceAll("^#[0-9]* ","").length() > 15){
-                            name = doc.select("b").text().replaceAll("^#[0-9]* ","").substring(0,14);
-                        }else{
-                            name = doc.select("b").text().replaceAll("^#[0-9]* ","");
-                        }
+                        name = doc.select("b").text().replaceAll("^#[0-9]* ","");
                     }
 
                     pl = new Player(name);

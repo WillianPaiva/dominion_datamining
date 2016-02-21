@@ -113,7 +113,6 @@ public class Game implements GameItf{
                 PlayerSimple temp;
                 for(PlayerItf p: this.players){
                     temp = new PlayerSimple(p.getPlayerName());
-                    temp.insertGame(this.id);
                     temp.save();
                 }
             }else{
