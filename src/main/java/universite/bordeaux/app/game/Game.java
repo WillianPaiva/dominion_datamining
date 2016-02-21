@@ -44,6 +44,8 @@ public class Game implements GameItf{
     //date and time in which the game was played
     private Date dateTime;
 
+    private int eloGap = 0;
+
 
 	/**
    * create the object Game by reading the FileReader and parsing the log file
@@ -79,6 +81,7 @@ public class Game implements GameItf{
         this.dateTime = doc.get("date",Date.class);
         this.players = new ArrayList<PlayerItf>();
         this.id = doc.get("_id",ObjectId.class);
+        this.eloGap = doc.get("eloGap",Integer.class);
         for(Object d: doc.get("players",ArrayList.class)){
             players.add(new Player((Document)d));
         }
@@ -93,15 +96,16 @@ public class Game implements GameItf{
 	 */
     public Document toDoc(){
         return new Document()
-                            .append("date", this.dateTime)
-                            .append("winners", this.winners)
-                            .append("cardsgonne",this.cardsGone)
-                            .append("market",this.market)
-                            .append("trash",hashtodoc(this.trash))
-                            .append("players",players(this.players));
+            .append("date", this.dateTime)
+            .append("eloGap", this.eloGap)
+            .append("winners", this.winners)
+            .append("cardsgonne",this.cardsGone)
+            .append("market",this.market)
+            .append("trash",hashtodoc(this.trash))
+            .append("players",players(this.players));
     }
 
-	/**
+  /**
    * save the object Game on the mongoDB database if the object doesn't exist.
    * if object exists on the database it updates the object
 	 *
@@ -176,9 +180,17 @@ public class Game implements GameItf{
     public void GenerateElo(){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
         PlayerSimple pl;
+        int min = 99999999;
+        int max = -999999999;
         for(PlayerItf p: this.players){
             pl = new PlayerSimple(p.getPlayerName());
             temp.put(p.getPlayerName(), pl.getElo());
+            if(pl.getElo() < min){
+                min = pl.getElo();
+            }
+            if(pl.getElo() > max){
+                max = pl.getElo();
+            }
         }
         HashMap<String,Integer> result = Elo.Calculate(this.winners, temp);
         for(Map.Entry<String,Integer> res: result.entrySet()){
@@ -187,6 +199,7 @@ public class Game implements GameItf{
             pl.save();
             getPlayer(res.getKey()).setGameElo(res.getValue());
         }
+        this.eloGap = (max-min);
         this.save();
     }
 
@@ -299,6 +312,15 @@ public class Game implements GameItf{
             System.out.println(e);
                 }
         return temp;
+    }
+
+
+    public void setEloGap(int gap){
+        this.eloGap = gap;
+    }
+
+    public int getEloGap(){
+        return this.eloGap;
     }
 
     public String toString(){
