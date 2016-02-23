@@ -19,6 +19,7 @@ import universite.bordeaux.app.mapper.MongoMapper;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.ReadGameHead;
+import universite.bordeaux.app.reader.ReadGameLog;
 
 public class Game implements GameItf{
     //if the log has errors, set this flag to false
@@ -46,6 +47,8 @@ public class Game implements GameItf{
 
     private int eloGap = 0;
 
+    private ArrayList<Turn> log;
+
 
 	/**
    * create the object Game by reading the FileReader and parsing the log file
@@ -63,6 +66,11 @@ public class Game implements GameItf{
             }catch(Exception e ){
                 ErrorLogger.getInstance().logError("\n"+e.toString()+"\n"+ reader.getName());
                 this.flagFail = false;
+            }
+            try{
+            this.log = ReadGameLog.getGameLog(reader);
+            }catch(ArrayIndexOutOfBoundsException e){
+                System.out.println(reader.getName());
             }
     }
 
@@ -100,14 +108,23 @@ public class Game implements GameItf{
             .append("cardsgonne",this.cardsGone)
             .append("market",this.market)
             .append("trash",hashtodoc(this.trash))
-            .append("players",players(this.players));
+            .append("players",players(this.players))
+            .append("log", logToDoc());
+
     }
 
+    private ArrayList<Document> logToDoc(){
+        ArrayList<Document> temp = new ArrayList<Document>();
+        for(Turn t: log){
+            temp.add(t.toDoc());
+        }
+        return temp;
+    }
   /**
    * save the object Game on the mongoDB database if the object doesn't exist.
    * if object exists on the database it updates the object
 	 *
-	 */
+   */
     public void save(){
         if (flagFail){
             if(this.id == null){
