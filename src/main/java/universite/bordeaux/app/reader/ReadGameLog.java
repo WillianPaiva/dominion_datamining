@@ -51,8 +51,7 @@ public final class ReadGameLog {
                     finished = true;
                     break;
                 }else{
-                    HashMap<String,Integer> move = new HashMap<String,Integer>();
-                    if(!doc.text().matches("^\\.\\.\\.(.*)")){
+                    if(!doc.text().matches("^\\.\\.\\.(.*)") || !doc.text().contains("nothing") || !doc.text().contains("reshuffles.)")){
                         if(reader.getLine().matches("(.*) plays (a|an|[0-9]*) \\<span class(.*)")){
                             String cards = "";
                             if(!doc.text().matches("^\\.\\.\\.(.*)") && playername.contains("plays")){
@@ -61,43 +60,8 @@ public final class ReadGameLog {
                                 cards = doc.text().split(" plays ")[1].replaceAll("\\.","");
                             }
                             cards = cards.replace("again","").replace("a third time","");
-                            if(cards.contains(",")){
-                                cards = cards.replace("and","");
-                                String[] playedCards = cards.split(",");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }else{
-                                String[] playedCards = cards.split(" and ");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }
-                            String player = doc.text().split("plays")[0].trim();
-                            int level = 0;
-                            // if(player.matches("^\\.\\.\\.(.*)")){
-                            // player = player.substring(3).trim();
-                            // level++;
-                            // }
-                            t.insertMove(playername,level,"plays",move);
+                            t.insertMove(playername,0,"plays",getCards(cards));
+                            break;
 
                         }else if(reader.getLine().matches("(.*) buys (a|an|[0-9]*) \\<span class(.*)")){
                             String cards = "";
@@ -106,78 +70,20 @@ public final class ReadGameLog {
                             }else{
                                 cards = doc.text().split(" buys ")[1].replaceAll("\\.","");
                             }
-                            if(cards.contains(",")){
-                                cards = cards.replace("and","");
-                                String[] playedCards = cards.split(",");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }else{
-                                String[] playedCards = cards.split(" and ");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }
-                            String player = doc.text().split("buys")[0].trim();
-                            int level = 0;
-                            // if(player.matches("^\\.\\.\\.(.*)")){
-                            // player = player.substring(3).trim();
-                            // level++;
-                            // }
-                            t.insertMove(playername,level,"buys",move);
+                            t.insertMove(playername,0,"buys",getCards(cards));
+                            break;
+
                         } else if(reader.getLine().trim().matches("\\<span class\\=logonly\\>\\((.*) draws: (.*)" )){
                             String cards =  doc.text().trim().split(" draws: ")[1].replaceAll("\\.\\)", "");
-                            if(cards.contains(",")){
-                                cards = cards.replace("and","");
-                                String[] playedCards = cards.split(",");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }else{
-                                String[] playedCards = cards.split(" and ");
-                                for(String x: playedCards){
-                                    x = x.trim();
-                                    String[] card = x.split(" ",3);
-                                    int qty;
-                                    try {
-                                        qty = Integer.parseInt(card[0]);
-                                    } catch (NumberFormatException e) {
-                                        qty = 1;
-                                    }
-                                    String c = card[1];
-                                    move.put(c,qty);
-                                }
-                            }
-                            t.insertMove(playername,0,"draws",move);
+                            t.insertMove(playername,0,"draws",getCards(cards));
+                            break;
+
                         } else if(doc.text().matches("^... drawing (.*)")){
-                        } else if(doc.text().contains("gains")){
+                        } else if(reader.getLine().matches("(.*) gains (a|an|[0-9]*) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" gains ")[1].replaceAll("\\.", "");
+                            t.insertMove(playername,0,"gains",getCards(cards));
+                            break;
+
                         } else if(doc.text().contains("getting")){
                         } else if(doc.text().contains("trashes")){
                         }else if(doc.text().contains("putting")){
@@ -200,5 +106,40 @@ public final class ReadGameLog {
 
     private static String turnGetPlayer(String s){
         return s.trim().replaceAll("^—" ,"").trim().replaceAll("'s turn [0-9]*(.*)","").trim();
+    }
+
+    private static HashMap<String,Integer> getCards(String cards){
+        HashMap<String,Integer> move = new HashMap<String,Integer>();
+        if(cards.contains(",")){
+            cards = cards.replace("and","");
+            String[] playedCards = cards.split(",");
+            for(String x: playedCards){
+                x = x.trim();
+                String[] card = x.split(" ",3);
+                int qty;
+                try {
+                    qty = Integer.parseInt(card[0]);
+                } catch (NumberFormatException e) {
+                    qty = 1;
+                }
+                String c = card[1];
+                move.put(c,qty);
+            }
+        }else{
+            String[] playedCards = cards.split(" and ");
+            for(String x: playedCards){
+                x = x.trim();
+                String[] card = x.split(" ",3);
+                int qty;
+                try {
+                    qty = Integer.parseInt(card[0]);
+                } catch (NumberFormatException e) {
+                    qty = 1;
+                }
+                String c = card[1];
+                move.put(c,qty);
+            }
+        }
+        return move;
     }
 }
