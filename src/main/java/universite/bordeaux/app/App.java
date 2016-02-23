@@ -24,8 +24,8 @@ public class App
         FileHandler test = new FileHandler(child);
         test.runParser(10);
 
-        System.out.println("\n Starting the ELO callculation this can take a long time...");
-        EloGenerator.Generate();
+        // System.out.println("\n Starting the ELO callculation this can take a long time...");
+        // EloGenerator.Generate();
 
         // Chart ch = new Chart("Elo curve", "Elo curve", "number of games played", "Elo");
         // ch.pack( );
