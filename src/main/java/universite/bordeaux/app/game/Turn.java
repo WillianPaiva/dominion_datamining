@@ -53,8 +53,10 @@ public class Turn {
         }
         private ArrayList<Document> mapPlays(){
             ArrayList<Document> temp = new ArrayList<Document>();
-            for(Play p: plays){
-                temp.add(p.toDoc());
+            if(!plays.isEmpty()){
+                for(Play p: plays){
+                    temp.add(p.toDoc());
+                }
             }
             return temp;
         }
@@ -117,8 +119,10 @@ public class Turn {
 
     private ArrayList<Document> mapPlayerTurn(){
         ArrayList<Document> temp = new ArrayList<Document>();
-        for(PlayerTurn p: turns){
-            temp.add(p.toDoc());
+        if(!turns.isEmpty()){
+            for(PlayerTurn p: turns){
+                temp.add(p.toDoc());
+            }
         }
         return temp;
     }
