@@ -2,6 +2,8 @@ package universite.bordeaux.app.game;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bson.Document;
+
 public class Turn {
     private class Play {
         public String type ;
@@ -12,20 +14,55 @@ public class Turn {
             this.type = type ;
             this.move = move;
         }
+        public Document toDoc(){
+            return new Document("type",type)
+                .append("cards", hashtodoc(move))
+                .append("following",mapFollowing());
+        }
+
+        private ArrayList<Document> mapFollowing(){
+            ArrayList<Document> temp = new ArrayList<Document>();
+            if(!followingPlays.isEmpty()){
+                for(Play p: followingPlays){
+                    temp.add(p.toDoc());
+                }
+            }
+            return temp;
+        }
+
+        private Document hashtodoc(HashMap<String,Integer> map){
+            Document temp = new Document();
+            for(String x: map.keySet()){
+                temp.append(x, map.get(x));
+            }
+            return temp;
+        }
     }
 
     private class PlayerTurn {
         public String playerName ;
-        public ArrayList<Play> plays = new ArrayList<Play>();
+        public ArrayList<Play> plays;
 
         public PlayerTurn(String playerName ){
             this.playerName = playerName ;
+            this.plays = new ArrayList<Play>();
+        }
+
+        public Document toDoc(){
+            return new Document("name",playerName).append("plays", mapPlays());
+        }
+        private ArrayList<Document> mapPlays(){
+            ArrayList<Document> temp = new ArrayList<Document>();
+            for(Play p: plays){
+                temp.add(p.toDoc());
+            }
+            return temp;
         }
     }
 
 
 
-    private int number ;
+    public int number ;
     private ArrayList<PlayerTurn> turns = new ArrayList<PlayerTurn>();
 
 
@@ -45,7 +82,7 @@ public class Turn {
 
     public void insertMove(String playerName , int level,String type, HashMap<String,Integer> move){
         PlayerTurn playerturn = getPlayerTurn(playerName);
-        if(playerturn != null){
+        if(playerturn == null){
             playerturn = new PlayerTurn(playerName);
             playerturn.plays.add(new Play(type,move));
             this.turns.add(playerturn);
@@ -64,10 +101,25 @@ public class Turn {
         }else if(level == 1){
             play.followingPlays.add(insertPlay(level-1, type, move,  play));
         }else{
+            if(play.followingPlays.isEmpty()){
+                System.out.println("THIS SHIT IS EMPTY "+level);
+                return play;
+            }
             insertPlay(level-1, type, move, play.followingPlays.get(play.followingPlays.size() -1));
         }
         return play;
     }
 
 
+    public Document toDoc(){
+        return new Document("turn",this.number).append("playersMove",mapPlayerTurn());
+    }
+
+    private ArrayList<Document> mapPlayerTurn(){
+        ArrayList<Document> temp = new ArrayList<Document>();
+        for(PlayerTurn p: turns){
+            temp.add(p.toDoc());
+        }
+        return temp;
+    }
 }
