@@ -56,25 +56,27 @@ public class Game implements GameItf{
    * @param reader the FileReader of the log
 	 */
     public Game(FileReader reader){
-            try{
+        try{
             this.winners = ReadGameHead.getWinners(reader);
             this.cardsGone = ReadGameHead.getCardsGone(reader);
             this.market = ReadGameHead.getMarket(reader);
             this.players = ReadGameHead.getPlayers(reader);
             this.trash = ReadGameHead.getTrash(reader);
             this.dateTime = setDateTime(reader.getName());
-            }catch(Exception e ){
-                ErrorLogger.getInstance().logError("\n"+e.toString()+"\n"+ reader.getName());
-                this.flagFail = false;
-            }
-            try{
+        }catch(Exception e ){
+            ErrorLogger.getInstance().logError("\n"+e.toString()+"\n"+ reader.getName());
+            this.flagFail = false;
+        }
+        try{
             this.log = ReadGameLog.getGameLog(reader);
-            }catch(ArrayIndexOutOfBoundsException e){
-                System.out.println(reader.getName());
-            }
+        }catch(Exception e){
+            System.out.println(e.getStackTrace().toString());
+            System.out.println(reader.getName());
+            this.flagFail = false;
+        }
     }
 
-	/**
+  /**
    * create the object Game based on a Document
 	 *
    * @param doc Document to be read and parsed to a Game object
@@ -115,8 +117,10 @@ public class Game implements GameItf{
 
     private ArrayList<Document> logToDoc(){
         ArrayList<Document> temp = new ArrayList<Document>();
-        for(Turn t: log){
-            temp.add(t.toDoc());
+        if(!log.isEmpty()){
+            for(Turn t: log){
+                temp.add(t.toDoc());
+            }
         }
         return temp;
     }
