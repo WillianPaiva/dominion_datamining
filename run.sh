@@ -11,7 +11,7 @@ if [ ! -f mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod ]; then
     tar -zxf mongodb-linux-x86_64-3.2.1.tgz -C mongodb
 fi
 
-mongodb/mongodb-linux-x86_64-3.2.1/bin/mongo --eval "db.stats()" > /dev/null
+mongodb/mongodb-linux-x86_64-3.2.1/bin/mongo --port 27020 --eval "db.stats()" > /dev/null
 RESULT=$?   # returns 0 if mongo eval succeeds
 if [ $RESULT -ne 0 ]; then
     echo -e "${RED}starting database engine${NC}"
