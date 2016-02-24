@@ -51,8 +51,10 @@ public final class ReadGameLog {
                     finished = true;
                     break;
                 }else{
-                    if(!doc.text().matches("^\\.\\.\\.(.*)") || !doc.text().contains("nothing") || !doc.text().contains("reshuffles.)")){
-                        if(reader.getLine().matches("(.*) plays (a|an|[0-9]*) \\<span class(.*)")){
+                    if(!doc.text().contains("nothing") && !doc.text().contains("reshuffles.)")){
+
+                        //gets the plays move
+                        if(reader.getLine().matches("(.*) plays (a|the|an|[0-9]+) \\<span class(.*)")){
                             String cards = "";
                             if(!doc.text().matches("^\\.\\.\\.(.*)") && playername.contains("plays")){
                                 cards = doc.text().trim().replace(playername+" plays ","").replaceAll("\\.","");
@@ -60,36 +62,209 @@ public final class ReadGameLog {
                                 cards = doc.text().split(" plays ")[1].replaceAll("\\.","");
                             }
                             cards = cards.replace("again","").replace("a third time","");
-                            t.insertMove(playername,0,"plays",getCards(cards));
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"plays",getCards(cards));
                             break;
 
-                        }else if(reader.getLine().matches("(.*) buys (a|an|[0-9]*) \\<span class(.*)")){
+                            //gets the buys move
+                        }else if(reader.getLine().matches("(.*) buys (a|an|[0-9]+) \\<span class(.*)")){
                             String cards = "";
                             if(!doc.text().matches("^\\.\\.\\.(.*)") && playername.contains("buys")){
                                 cards = doc.text().trim().replace(playername+" buys ","").replaceAll("\\.","");
                             }else{
                                 cards = doc.text().split(" buys ")[1].replaceAll("\\.","");
                             }
-                            t.insertMove(playername,0,"buys",getCards(cards));
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"buys",getCards(cards));
                             break;
 
+                            //gets the draws on the finish of the turn
                         } else if(reader.getLine().trim().matches("\\<span class\\=logonly\\>\\((.*) draws: (.*)" )){
                             String cards =  doc.text().trim().split(" draws: ")[1].replaceAll("\\.\\)", "");
                             t.insertMove(playername,0,"draws",getCards(cards));
                             break;
 
-                        } else if(doc.text().matches("^... drawing (.*)")){
-                        } else if(reader.getLine().matches("(.*) gains (a|an|[0-9]*) \\<span class(.*)")){
-                            String cards =  doc.text().trim().split(" gains ")[1].replaceAll("\\.", "");
-                            t.insertMove(playername,0,"gains",getCards(cards));
+                            //gets the move that consists in draw and discard a same card
+                        } else if(reader.getLine().trim().matches("(.*) draws and discard (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" draws and discard ")[1].replaceAll("\\.", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"draws",getCards(cards));
+                            t.insertMove(playername,level,"discard",getCards(cards));
                             break;
 
-                        } else if(doc.text().contains("getting")){
-                        } else if(doc.text().contains("trashes")){
-                        }else if(doc.text().contains("putting")){
-                        }else if(doc.text().contains("revealing")){
-                        }else if(doc.text().contains("reveals")){
-                        }else if(doc.text().contains("trashing")){
+                            //gets the gains action
+                        } else if(reader.getLine().matches("(.*) gains (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" gains ")[1].replaceAll("\\.", "").replaceAll(" on top of the deck","").replaceAll(" on the deck", "").replaceAll(" to replace it", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"gains",getCards(cards));
+                            break;
+                            //gets the double action discards and gains
+                        } else if(reader.getLine().matches("(.*) discards (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" discards ")[1].replaceAll("\\.", "").replaceAll("on the deck","");
+                            if(cards.contains(" and gains ")){
+                                String[] actionList = cards.split(" and gains ");
+                                int level = 0;
+                                String countLevel = doc.text();
+                                while(countLevel.matches("\\.\\.\\.(.*)")){
+                                    countLevel = countLevel.substring(3);
+                                    level++;
+                                }
+                                t.insertMove(playername,level,"discards",getCards(actionList[0]));
+                                t.insertMove(playername,level,"gains",getCards(actionList[1]));
+                            }else{
+                                int level = 0;
+                                String countLevel = doc.text();
+                                while(countLevel.matches("\\.\\.\\.(.*)")){
+                                    countLevel = countLevel.substring(3);
+                                    level++;
+                                }
+                                t.insertMove(playername,level,"discards",getCards(cards));
+                            }
+                            break;
+                            //get trashes
+                        } else if(reader.getLine().matches("(.*) trashes (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" trashes ")[1].replaceAll("and gets (.*)\\.", "").replaceAll("\\.", "");
+                            if(cards.contains("gaining")){
+                                String[] actionList = cards.split(", gaining ");
+                                int level = 0;
+                                String countLevel = doc.text();
+                                while(countLevel.matches("\\.\\.\\.(.*)")){
+                                    countLevel = countLevel.substring(3);
+                                    level++;
+                                }
+                                t.insertMove(playername,level,"trashes",getCards(actionList[0]));
+                                t.insertMove(playername,level,"gains",getCards(actionList[1].replaceAll(" in hand","")));
+                            }else{
+                                int level = 0;
+                                String countLevel = doc.text();
+                                while(countLevel.matches("\\.\\.\\.(.*)")){
+                                    countLevel = countLevel.substring(3);
+                                    level++;
+                                }
+                                t.insertMove(playername,level,"trashes",getCards(cards));
+                            }
+                            break;
+                            // get reveals
+                        }else if(reader.getLine().matches("(.*) reveals (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" reveals ")[1].replaceAll("\\.", "");
+                            boolean trashes = false;
+                            if(cards.contains("and trashes it")){
+                                trashes = true;
+                                cards = cards.replaceAll("and trashes it","");
+                            }
+                            cards = cards.replaceAll(" and then ",",").replaceAll(", and ",",").replaceAll(" and ", ",");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"reveals",getCards(cards));
+                            if(trashes){
+                                t.insertMove(playername,level,"trashes",getCards(cards));
+                            }
+                            break;
+
+
+                            //get the trashing action
+                        }else if(reader.getLine().trim().matches("(.*) trashing (a|an|the|[0-9]+) \\<span class(.*)")){
+                            String cards =  reader.getLine().trim().split(" trashing ")[1].replaceAll("(\\</span\\>) (for|from).*\\.$", "$1");
+                            cards = Jsoup.parse(cards).text().replaceAll("\\.", "").replaceAll("the", "a");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"trashes",getCards(cards));
+                            break;
+
+                        }else if(reader.getLine().trim().matches("(.*) revealing (a|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" revealing ")[1].replaceAll("\\.", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            if(cards.contains(" and putting it in the hand")){
+                                cards = cards.replaceAll(" and putting it in the hand","");
+                                t.insertMove(playername,level,"revealing",getCards(cards));
+                                t.insertMove(playername,level,"putting",getCards(cards));
+                            }else{
+                                t.insertMove(playername,level,"revealing",getCards(cards));
+                            }
+                            break;
+                        }else if(reader.getLine().trim().matches("(.*) putting (a|the|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" putting ")[1].replaceAll("\\.", "").replaceAll("into the hand", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"putting",getCards(cards));
+                            break;
+                        }else if(reader.getLine().trim().matches("(.*) gaining (a|the|another|an|[0-9]+) \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" gaining ")[1].replaceAll("\\.", "").replaceAll("another", "a");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"gains",getCards(cards));
+                            break;
+                        }else if(reader.getLine().trim().matches("(.*) discarding (a|an|[0-9]+)+ \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" discarding ")[1].replaceAll("\\.", "").replaceAll("the ([0-9]+)", "$1").replaceAll("and the","a");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"discarding",getCards(cards));
+                            break;
+                        }else if(reader.getLine().trim().matches("(.*) playing (a|an|[0-9]+)+ \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" playing ")[1].replaceAll("\\.", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"playing",getCards(cards));
+                            break;
+                        }else if(reader.getLine().trim().matches("(.*) drawing (a|an|[0-9]+)+ \\<span class(.*)")){
+                            String cards =  doc.text().trim().split(" drawing ")[1].replaceAll("\\.", "").replaceAll("from the Black Market deck", "");
+                            int level = 0;
+                            String countLevel = doc.text();
+                            while(countLevel.matches("\\.\\.\\.(.*)")){
+                                countLevel = countLevel.substring(3);
+                                level++;
+                            }
+                            t.insertMove(playername,level,"draws",getCards(cards));
+                            break;
                         }
                     }
                 }
@@ -115,7 +290,7 @@ public final class ReadGameLog {
             String[] playedCards = cards.split(",");
             for(String x: playedCards){
                 x = x.trim();
-                String[] card = x.split(" ",3);
+                String[] card = x.split(" ",4);
                 int qty;
                 try {
                     qty = Integer.parseInt(card[0]);
@@ -129,7 +304,7 @@ public final class ReadGameLog {
             String[] playedCards = cards.split(" and ");
             for(String x: playedCards){
                 x = x.trim();
-                String[] card = x.split(" ",3);
+                String[] card = x.split(" ",4);
                 int qty;
                 try {
                     qty = Integer.parseInt(card[0]);
