@@ -15,9 +15,12 @@ public class Turn {
             this.move = move;
         }
         public Document toDoc(){
-            return new Document("type",type)
-                .append("cards", hashtodoc(move))
-                .append("following",mapFollowing());
+            Document temp = new Document("type",type)
+                .append("cards", hashtodoc(move));
+            if(!followingPlays.isEmpty()){
+                temp.append("following",mapFollowing());
+            }
+            return temp;
         }
 
         private ArrayList<Document> mapFollowing(){
@@ -101,11 +104,10 @@ public class Turn {
         if(level == 0){
             return new Play(type, move);
         }else if(level == 1){
-            play.followingPlays.add(insertPlay(level-1, type, move,  play));
+            play.followingPlays.add(new Play(type,move));
         }else{
             if(play.followingPlays.isEmpty()){
-                System.out.println("THIS SHIT IS EMPTY "+level);
-                return play;
+                play.followingPlays.add(new Play(type,move));
             }
             insertPlay(level-1, type, move, play.followingPlays.get(play.followingPlays.size() -1));
         }
