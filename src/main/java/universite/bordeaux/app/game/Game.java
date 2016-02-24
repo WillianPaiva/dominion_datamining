@@ -48,6 +48,7 @@ public class Game implements GameItf{
     private int eloGap = 0;
 
     private ArrayList<Turn> log;
+    private String filename;
 
 
 	/**
@@ -57,21 +58,16 @@ public class Game implements GameItf{
 	 */
     public Game(FileReader reader){
         try{
+            this.filename = reader.getName();
             this.winners = ReadGameHead.getWinners(reader);
             this.cardsGone = ReadGameHead.getCardsGone(reader);
             this.market = ReadGameHead.getMarket(reader);
             this.players = ReadGameHead.getPlayers(reader);
             this.trash = ReadGameHead.getTrash(reader);
             this.dateTime = setDateTime(reader.getName());
+            this.log = ReadGameLog.getGameLog(reader);
         }catch(Exception e ){
             ErrorLogger.getInstance().logError("\n"+e.toString()+"\n"+ reader.getName());
-            this.flagFail = false;
-        }
-        try{
-            this.log = ReadGameLog.getGameLog(reader);
-        }catch(Exception e){
-            System.out.println(e.getStackTrace().toString());
-            System.out.println(reader.getName());
             this.flagFail = false;
         }
     }
@@ -82,6 +78,7 @@ public class Game implements GameItf{
    * @param doc Document to be read and parsed to a Game object
 	 */
     public Game(Document doc){
+        this.filename = doc.get("filename",String.class);
         this.winners = doc.get("winners",ArrayList.class);
         this.cardsGone = doc.get("cardsgonne",ArrayList.class);
         this.market = doc.get("market",ArrayList.class);
@@ -105,6 +102,7 @@ public class Game implements GameItf{
     public Document toDoc(){
         return new Document()
             .append("date", this.dateTime)
+            .append("filename", this.filename)
             .append("eloGap", this.eloGap)
             .append("winners", this.winners)
             .append("cardsgonne",this.cardsGone)
