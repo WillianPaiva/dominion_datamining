@@ -1,0 +1,10 @@
+#!/bin/bash
+
+RED='\033[33;31m'
+NC='\033[0m'
+
+echo -e "${RED}Compiling Dominion data mining${NC}"
+mvn -q eclipse:clean eclipse:eclipse
+mvn -q clean compile assembly:single
+echo -e "${RED}Running Dominion datamining${NC}"
+java -jar target/dominion_datamining-1.0-SNAPSHOT-jar-with-dependencies.jar

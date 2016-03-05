@@ -1,0 +1,31 @@
+#!/bin/bash
+
+RED='\033[33;31m'
+NC='\033[0m'
+mkdir -p mongodb
+mkdir -p mongoData
+mkdir -p mongoLog
+
+mongodb/mongodb-linux-x86_64-3.2.1/bin/mongo --port 27020 --eval "db.stats()" > /dev/null
+
+RESULT=$?   # returns 0 if mongo eval succeeds
+if [ $RESULT -ne 0 ]; then
+
+    if [ ! -f mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod ]; then
+        echo -e "${RED}downloading mongodb${NC}"
+        curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.2.1.tgz
+        tar -zxf mongodb-linux-x86_64-3.2.1.tgz -C mongodb
+    fi
+
+    echo -e "${RED}starting database engine${NC}"
+
+    mongodb/mongodb-linux-x86_64-3.2.1/bin/mongod --port 27020 --dbpath mongoData --quiet --fork --logpath mongoLog/mongod.log
+
+else
+    echo -e "${RED}mongodb already running!${NC}"
+fi
+echo -e "${RED}Compiling Dominion data mining${NC}"
+mvn -q eclipse:clean eclipse:eclipse
+mvn -q clean compile assembly:single
+echo -e "${RED}Running Dominion datamining${NC}"
+java -jar target/dominion_datamining-1.0-SNAPSHOT-jar-with-dependencies.jar

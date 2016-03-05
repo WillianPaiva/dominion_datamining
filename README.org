@@ -5,7 +5,13 @@
 * Dominion Data mining
 
 ** dependencies
-   mongodb
-   java
-   maven
-   tar
+  - mongodb
+  - java 1.7
+  - maven
+  - tar
+*** mongoDB
+to rum the parser a running instance of *mongod* on port 27020 is required.
+in case of using a system wide installation just run the *execute* executable.
+else see run the *startMongo* executable which will create create a local installation of mongoDB
+inside the repository directory and execute the *mongod* on the good parameters.
+Or just use the *allInOne* executable which will take care of *mongo* and run the program.
