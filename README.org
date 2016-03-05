@@ -21,3 +21,7 @@ if no instance of *mongod* run the *startMongo* on the root folder of the reposi
 inside the repository directory and execute the *mongod* on the good parameters.
 then run the *execute* on the root folder of the repository.
 Or just use the *allInOne* executable which will take care of *mongo* and run the program.
+
+
+** the Database
+after the parser is finished the database cam be found inside the folder *mongoData*
