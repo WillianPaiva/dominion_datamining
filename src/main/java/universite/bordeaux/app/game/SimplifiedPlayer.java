@@ -1,16 +1,14 @@
 package universite.bordeaux.app.game;
 
-import java.util.ArrayList;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.mapper.MongoConection;
 
 public class SimplifiedPlayer {
     private ObjectId id;
-    private String name;
+    private final String name;
     private int elo;
 
     public SimplifiedPlayer(String name){

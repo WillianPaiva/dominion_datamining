@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
 
 public interface MatchItf {
@@ -24,5 +23,6 @@ public interface MatchItf {
     public ObjectId getId();
     public ArrayList<String> getWinners();
     public HashMap<String,Integer> getTrash();
+    @Override
     public String toString();
 }

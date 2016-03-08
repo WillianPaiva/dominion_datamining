@@ -40,7 +40,7 @@ public final class ErrorLogger {
     
     public void logError(String exceptionMessage){
         try{
-        this.writer.write(exceptionMessage+"\n");
+        ErrorLogger.writer.write(exceptionMessage+"\n");
         }catch(IOException e){
             System.err.println("cannot log error");
         }
@@ -48,7 +48,7 @@ public final class ErrorLogger {
     
     public void closeLogger(){
         try{
-            this.writer.close();
+            ErrorLogger.writer.close();
         }catch (IOException e){
             System.err.println("cannot close errorLog.txt");
         }

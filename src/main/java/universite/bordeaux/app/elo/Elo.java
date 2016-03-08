@@ -3,7 +3,6 @@ package universite.bordeaux.app.elo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.lang.Math;
 
 public final class Elo {
 
@@ -20,7 +19,7 @@ public final class Elo {
         double eloPool = 0;
 
         //calculates the total elo on the match (the eloPool)
-        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        HashMap<String,Integer> temp = new HashMap<>();
         for(Map.Entry<String,Integer> entry: players.entrySet()){
             eloPool += Math.pow(10,entry.getValue()/400);
         }

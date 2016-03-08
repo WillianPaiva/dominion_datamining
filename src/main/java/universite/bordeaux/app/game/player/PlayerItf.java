@@ -20,5 +20,6 @@ public interface PlayerItf{
     public void insertOpening(String s);
     public void insertFirstHand(int quantity , String cardName);
     public HashMap<String,Integer> getFirstHand();
+    @Override
     public String toString();
 }

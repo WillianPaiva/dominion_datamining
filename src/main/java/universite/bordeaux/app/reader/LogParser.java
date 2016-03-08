@@ -1,7 +1,6 @@
 package universite.bordeaux.app.reader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.jsoup.Jsoup;
@@ -19,7 +18,7 @@ public final class LogParser {
 
     public static ArrayList<GameTurn> getGameLog(FileReader reader){
         Document doc;
-        ArrayList<GameTurn> turns = new ArrayList<GameTurn>();
+        ArrayList<GameTurn> turns = new ArrayList<>();
         boolean finished = false;
         int last = 0;
         int turn = 1;
@@ -284,7 +283,7 @@ public final class LogParser {
     }
 
     private static HashMap<String,Integer> getCards(String cards){
-        HashMap<String,Integer> move = new HashMap<String,Integer>();
+        HashMap<String,Integer> move = new HashMap<>();
         if(cards.contains(",")){
             cards = cards.replace("and","");
             String[] playedCards = cards.split(",");

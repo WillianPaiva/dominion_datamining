@@ -12,7 +12,7 @@ import universite.bordeaux.app.game.MatchItf;
 
 public final class EloGenerator {
 
-    private static long total = MongoConection.count();
+    private static final long TOTAL = MongoConection.count();
     private static long part;
     private EloGenerator(){
 
@@ -27,7 +27,7 @@ public final class EloGenerator {
                     MatchItf g = new Match(document);
                     g.GenerateElo();
                     part++;
-                    progressBar(Math.round(((double)part/(double)total)*100),g.getId().toString());
+                    progressBar(Math.round(((double)part/(double)TOTAL)*100),g.getId().toString());
 
                 }
             });

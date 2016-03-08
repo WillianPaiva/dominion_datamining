@@ -1,5 +1,4 @@
 package universite.bordeaux.app.game;
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,7 +83,7 @@ public class Match implements MatchItf{
         this.market = doc.get("market",ArrayList.class);
         this.trash = doctohash(doc.get("trash",Document.class));
         this.dateTime = doc.get("date",Date.class);
-        this.players = new ArrayList<PlayerItf>();
+        this.players = new ArrayList<>();
         this.id = doc.get("_id",ObjectId.class);
         this.eloGap = doc.get("eloGap",Integer.class);
         for(Object d: doc.get("players",ArrayList.class)){
@@ -99,6 +98,7 @@ public class Match implements MatchItf{
 	 *
    * @return the Document representation of the object Game
 	 */
+    @Override
     public Document toDoc(){
         return new Document()
             .append("date", this.dateTime)
@@ -114,7 +114,7 @@ public class Match implements MatchItf{
     }
 
     private ArrayList<Document> logToDoc(){
-        ArrayList<Document> temp = new ArrayList<Document>();
+        ArrayList<Document> temp = new ArrayList<>();
         if(!log.isEmpty()){
             for(GameTurn t: log){
                 temp.add(t.toDoc());
@@ -127,6 +127,7 @@ public class Match implements MatchItf{
    * if object exists on the database it updates the object
 	 *
    */
+    @Override
     public void save(){
         if (flagFail){
             if(this.id == null){
@@ -150,7 +151,7 @@ public class Match implements MatchItf{
    * @return list of documents
 	 */
     private ArrayList<Document> players(ArrayList<PlayerItf> p){
-        ArrayList<Document> temp = new ArrayList<Document>();
+        ArrayList<Document> temp = new ArrayList<>();
         for(PlayerItf x: p){
             temp.add(x.toDoc());
         }
@@ -165,7 +166,7 @@ public class Match implements MatchItf{
    * @return returns a map of with the documents data
 	 */
     private HashMap<String,Integer> doctohash(Document doc){
-        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        HashMap<String,Integer> temp = new HashMap<>();
         for(Map.Entry<String,Object> x: doc.entrySet()){
             temp.put(x.getKey(),(int)x.getValue());
         }
@@ -194,8 +195,9 @@ public class Match implements MatchItf{
    * and save to the database
 	 *
 	 */
+    @Override
     public void GenerateElo(){
-        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        HashMap<String,Integer> temp = new HashMap<>();
         SimplifiedPlayer pl;
         int min = 99999999;
         int max = -999999999;
@@ -226,6 +228,7 @@ public class Match implements MatchItf{
    *
    * @return the list of empty piles
 	 */
+    @Override
     public ArrayList<String> getCardsGone(){
         return this.cardsGone;
     }
@@ -237,6 +240,7 @@ public class Match implements MatchItf{
 	 *
    * @return the date in which the game was played
 	 */
+    @Override
     public Date getDate(){
         return this.dateTime;
     }
@@ -248,6 +252,7 @@ public class Match implements MatchItf{
 	 *
    * @return the market card list
 	 */
+    @Override
     public ArrayList<String> getMarket(){
         return this.market;
     }
@@ -260,6 +265,7 @@ public class Match implements MatchItf{
    * @param playerName
    * @return player
 	 */
+    @Override
     public PlayerItf getPlayer(String playerName){
         for(PlayerItf x: players){
             if(x.getPlayerName().equals(playerName)){
@@ -276,6 +282,7 @@ public class Match implements MatchItf{
 	 *
    * @return the list of players
 	 */
+    @Override
     public ArrayList<PlayerItf> getPlayers(){
         return this.players;
     }
@@ -285,6 +292,7 @@ public class Match implements MatchItf{
 	/**
    * @return the game ObjectId _id
 	 */
+    @Override
 	public ObjectId getId() {
 		return id;
 	}
@@ -295,6 +303,7 @@ public class Match implements MatchItf{
 	 *
    * @return the list of name of the winners
 	 */
+    @Override
     public ArrayList<String> getWinners(){
         return this.winners;
     }
@@ -306,6 +315,7 @@ public class Match implements MatchItf{
 	 *
    * @return the list of cards on trash
 	 */
+    @Override
     public HashMap<String,Integer> getTrash(){
         return this.trash;
     }
@@ -340,6 +350,7 @@ public class Match implements MatchItf{
         return this.eloGap;
     }
 
+    @Override
     public String toString(){
         return winners.toString() + " "  + cardsGone.size() + " " + market.size() +" "+ players.toString()+" "+trash.toString();
     }

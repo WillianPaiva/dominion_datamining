@@ -10,12 +10,12 @@ import org.bson.Document;
  */
 public class Player implements PlayerItf{
     private String pl ;
-    private HashMap<String,Integer> victoryCards = new HashMap<String,Integer>();
+    private HashMap<String,Integer> victoryCards = new HashMap<>();
     private int points;
-    private HashMap<String,Integer> deck = new HashMap<String,Integer>();
-    private HashMap<String,Integer> firstHand = new HashMap<String,Integer>();
+    private HashMap<String,Integer> deck = new HashMap<>();
+    private HashMap<String,Integer> firstHand = new HashMap<>();
     private int turns;
-    private ArrayList<String> opening = new ArrayList<String>();
+    private ArrayList<String> opening = new ArrayList<>();
     private int GameElo  = 1000;
 
 
@@ -47,6 +47,7 @@ public class Player implements PlayerItf{
      * Creates a Document object containing the information of the Player object
      * @return Document object
      */
+    @Override
     public Document toDoc(){
         return new Document()
             .append("name",this.pl)
@@ -65,7 +66,7 @@ public class Player implements PlayerItf{
      * @return HashMap
      */
     private HashMap<String,Integer> doctohash(Document doc){
-        HashMap<String,Integer> temp = new HashMap<String,Integer>();
+        HashMap<String,Integer> temp = new HashMap<>();
         for(Map.Entry<String,Object> x: doc.entrySet()){
             temp.put(x.getKey(),(int)x.getValue());
         }
@@ -90,6 +91,7 @@ public class Player implements PlayerItf{
      * Returns the player name
      * @return String, player name
      */
+    @Override
     public String getPlayerName(){
         return this.pl;
     }
@@ -98,6 +100,7 @@ public class Player implements PlayerItf{
      * @param quantity Card quantity
      * @param cardName Card name
      */
+    @Override
     public void insertVictoryCard(int quantity , String cardName){
         victoryCards.put(cardName, quantity);
     }
@@ -105,6 +108,7 @@ public class Player implements PlayerItf{
      * return the cards used to count the victoy points such as Estate, Duchy, Province, Colony
      * @return HashMap with the cards and their amount
      */
+    @Override
     public HashMap<String,Integer> getVictoryCards(){
         return this.victoryCards;
     }
@@ -114,12 +118,14 @@ public class Player implements PlayerItf{
      * @param quantity number of cards of the same type
      * @param cardName name of the card
      */
+    @Override
     public void insertDeck(int quantity , String cardName){
         deck.put(cardName , quantity);
     }
     /**
      * @return The list of cards and their amount in a players deck (cards owned)
      */
+    @Override
     public HashMap<String,Integer> getDeck(){
         return this.deck;
     }
@@ -128,12 +134,14 @@ public class Player implements PlayerItf{
      * Sets a score for the player
      * @param points amount of points
      */
+    @Override
     public void setPoints(int points){
         this.points = points;
     }
     /**
      * @return A value containing the player's points
      */
+    @Override
     public int getPoints(){
         return this.points;
     }
@@ -141,6 +149,7 @@ public class Player implements PlayerItf{
     /**
      * @param turns the number of urns played by a player
      */
+    @Override
     public void setTurns(int turns){
         this.turns = turns;
     }
@@ -149,6 +158,7 @@ public class Player implements PlayerItf{
 /**
  * @return players elo
  */
+    @Override
     public int getGameElo() {
 
       return GameElo;
@@ -157,6 +167,7 @@ public class Player implements PlayerItf{
 	/**
 	 * @param gameElo the gameElo to set
 	 */
+    @Override
 	public void setGameElo(int gameElo) {
 		GameElo = gameElo;
 	}
@@ -164,6 +175,7 @@ public class Player implements PlayerItf{
 	/**
 	 * @return the turns played by a player
 	 */
+    @Override
 	public int getTurns(){
         return this.turns;
     }
@@ -171,6 +183,7 @@ public class Player implements PlayerItf{
     /**
      * @param s opening cards
      */
+    @Override
     public void insertOpening(String s){
         this.opening.add(s);
     }
@@ -180,16 +193,19 @@ public class Player implements PlayerItf{
      * @param quantity number of the specified cards
      * @param cardName a string with the name of the card
      */
+    @Override
     public void insertFirstHand(int quantity , String cardName){
         this.firstHand.put(cardName, quantity);
     }
     /**
      * @return a HashMap containing the first hand of the player (cards and amount)
      */
+    @Override
     public HashMap<String,Integer> getFirstHand(){
         return this.firstHand;
     }
 
+    @Override
     public String toString(){
         return "\n"+pl + " " + points + "\n " + deck.toString() + "\n" + victoryCards.toString() + "\n first hand: " + firstHand.toString();
     }

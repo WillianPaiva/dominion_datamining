@@ -6,15 +6,13 @@ import org.bson.types.ObjectId;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoWriteException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import universite.bordeaux.app.colors.ColorsTemplate;
-import universite.bordeaux.app.reader.ErrorLogger;
 
 public final class MongoConection {
-    private static MongoClient mongo = new MongoClient("localhost", 27020);
-    private static MongoDatabase db = mongo.getDatabase("game-logs");
+    private static final MongoClient mongo = new MongoClient("localhost", 27020);
+    private static final MongoDatabase db = mongo.getDatabase("game-logs");
 
     private MongoConection(){
     }
@@ -68,7 +66,7 @@ public final class MongoConection {
     }
 
     public static ArrayList<String> getRank(int x){
-        final ArrayList<String> result = new ArrayList<String>();
+        final ArrayList<String> result = new ArrayList<>();
         FindIterable<Document> it = db.getCollection("players").find().sort(new Document("elo",-1)).limit(x);
         it.forEach(new Block<Document>() {
                 @Override

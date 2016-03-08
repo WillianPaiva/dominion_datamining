@@ -9,7 +9,6 @@ import org.apache.commons.io.FileUtils;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
 import universite.bordeaux.app.game.Match;
-import universite.bordeaux.app.mapper.MongoConection;
 import universite.bordeaux.app.game.MatchItf;
 
 
@@ -19,8 +18,8 @@ import universite.bordeaux.app.game.MatchItf;
  *
  */
 public class FileHandler {
-    private File folderPath ;
-    public  Queue <File> queue = new LinkedList<File>();
+    private final File folderPath ;
+    public  Queue <File> queue = new LinkedList<>();
     private int over = 0;
     private int overT = 0;
 
@@ -48,6 +47,7 @@ public class FileHandler {
                 Thread[] t = new Thread[numThreads];
                 for(int x = 0; x < numThreads; x++ ){
                     t[x] = new Thread(new Runnable(){
+                            @Override
                             public void run(){
                                 while(queue.peek() != null){
                                     File f= queue.poll();
@@ -122,15 +122,15 @@ public class FileHandler {
      * @param fileName String containing the last parsed file
      */
     public void progressBar( int overall, String fileName){
-        String over = "";
+        String total = "";
         for(int x = 0 ; x < (overall/2); x++){
-            over += "=";
+            total += "=";
         }
         for(int x = 0 ; x < ((100-overall)/2); x++){
-            over += "_";
+            total += "_";
         }
 
-        String progress = "\r"+ColorsTemplate.ANSI_BLUE+ "overall"+ColorsTemplate.ANSI_RESET+" [" +ColorsTemplate.ANSI_GREEN +  over + ColorsTemplate.ANSI_RESET +"] "+overall+"%  "+ColorsTemplate.ANSI_BLUE+"Parsing: "+ColorsTemplate.ANSI_RESET+" [" + ColorsTemplate.ANSI_GREEN + fileName + ColorsTemplate.ANSI_RESET +"] ";
+        String progress = "\r"+ColorsTemplate.ANSI_BLUE+ "overall"+ColorsTemplate.ANSI_RESET+" [" +ColorsTemplate.ANSI_GREEN +  total + ColorsTemplate.ANSI_RESET +"] "+overall+"%  "+ColorsTemplate.ANSI_BLUE+"Parsing: "+ColorsTemplate.ANSI_RESET+" [" + ColorsTemplate.ANSI_GREEN + fileName + ColorsTemplate.ANSI_RESET +"] ";
 
         System.out.print("\r                                                                                  ");
         System.out.print(progress);

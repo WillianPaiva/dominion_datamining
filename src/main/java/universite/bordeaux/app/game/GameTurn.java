@@ -8,7 +8,7 @@ public class GameTurn {
     private class Play {
         public String type ;
         public HashMap<String,Integer> move;
-        public ArrayList<Play> followingPlays = new ArrayList<Play>();
+        public ArrayList<Play> followingPlays = new ArrayList<>();
 
         public Play(String type, HashMap<String,Integer> move){
             this.type = type ;
@@ -24,7 +24,7 @@ public class GameTurn {
         }
 
         private ArrayList<Document> mapFollowing(){
-            ArrayList<Document> temp = new ArrayList<Document>();
+            ArrayList<Document> temp = new ArrayList<>();
             if(!followingPlays.isEmpty()){
                 for(Play p: followingPlays){
                     temp.add(p.toDoc());
@@ -48,14 +48,14 @@ public class GameTurn {
 
         public PlayerTurn(String playerName ){
             this.playerName = playerName ;
-            this.plays = new ArrayList<Play>();
+            this.plays = new ArrayList<>();
         }
 
         public Document toDoc(){
             return new Document("name",playerName).append("plays", mapPlays());
         }
         private ArrayList<Document> mapPlays(){
-            ArrayList<Document> temp = new ArrayList<Document>();
+            ArrayList<Document> temp = new ArrayList<>();
             if(!plays.isEmpty()){
                 for(Play p: plays){
                     temp.add(p.toDoc());
@@ -68,7 +68,7 @@ public class GameTurn {
 
 
     public int number ;
-    private ArrayList<PlayerTurn> turns = new ArrayList<PlayerTurn>();
+    private final ArrayList<PlayerTurn> turns = new ArrayList<>();
 
 
 
@@ -78,7 +78,7 @@ public class GameTurn {
 
     private PlayerTurn getPlayerTurn(String playerName){
         for(PlayerTurn p: turns){
-            if(p.playerName == playerName){
+            if(p.playerName.equals(playerName)){
                 return p;
             }
         }
@@ -101,15 +101,17 @@ public class GameTurn {
     }
 
     private Play insertPlay(int level , String type, HashMap<String,Integer> move, Play play){
-        if(level == 0){
-            return new Play(type, move);
-        }else if(level == 1){
-            play.followingPlays.add(new Play(type,move));
-        }else{
-            if(play.followingPlays.isEmpty()){
+        switch (level) {
+            case 0:
+                return new Play(type, move);
+            case 1:
                 play.followingPlays.add(new Play(type,move));
-            }
-            insertPlay(level-1, type, move, play.followingPlays.get(play.followingPlays.size() -1));
+                break;
+            default:
+                if(play.followingPlays.isEmpty()){
+                    play.followingPlays.add(new Play(type,move));
+                }   insertPlay(level-1, type, move, play.followingPlays.get(play.followingPlays.size() -1));
+                break;
         }
         return play;
     }
@@ -120,7 +122,7 @@ public class GameTurn {
     }
 
     private ArrayList<Document> mapPlayerTurn(){
-        ArrayList<Document> temp = new ArrayList<Document>();
+        ArrayList<Document> temp = new ArrayList<>();
         if(!turns.isEmpty()){
             for(PlayerTurn p: turns){
                 temp.add(p.toDoc());

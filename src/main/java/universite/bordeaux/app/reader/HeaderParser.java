@@ -38,7 +38,7 @@ public final class HeaderParser {
 	 */
     public static ArrayList<String> getWinners(FileReader reader){
         Document doc;
-        ArrayList<String> wi = new ArrayList<String>();
+        ArrayList<String> wi = new ArrayList<>();
         if(reader.jumpline().contains("<title>")){
 
             //creates a document with the first line of the log
@@ -76,7 +76,7 @@ public final class HeaderParser {
 	 */
     public static ArrayList<String> getCardsGone(FileReader reader){
         Document doc;
-        ArrayList<String> cardsGone = new ArrayList<String>();
+        ArrayList<String> cardsGone = new ArrayList<>();
         if(reader.jumpline().contains("<title>")){
             //jumps to the next line
             doc = Jsoup.parse(reader.jumpline());
@@ -100,7 +100,7 @@ public final class HeaderParser {
 	 */
     public static HashMap<String,Integer> getTrash(FileReader reader){
         Document doc;
-        HashMap<String,Integer> tr = new HashMap<String,Integer>();
+        HashMap<String,Integer> tr = new HashMap<>();
         //look for the line that describes the trash
         if(reader.searchLineWithString("trash: (.*)")!=null){
             doc = Jsoup.parse(reader.getLine());
@@ -136,7 +136,7 @@ public final class HeaderParser {
 	 */
     public static ArrayList<String> getMarket(FileReader reader){
         Document doc;
-        ArrayList<String> market = new ArrayList<String>();
+        ArrayList<String> market = new ArrayList<>();
         if(reader.jumpline().contains("<title>")){
             //jumps 2 line
             reader.jumpline();
@@ -174,7 +174,7 @@ public final class HeaderParser {
     public static ArrayList<PlayerItf> getPlayers(FileReader reader){
         boolean start = true;
         Document doc;
-        ArrayList<PlayerItf> players = new ArrayList<PlayerItf>();
+        ArrayList<PlayerItf> players = new ArrayList<>();
         //jump to the players section of the log
         if(reader.searchLineWithString("(.*)----------------------(.*)")!=null){
             doc = Jsoup.parse(reader.getLine());
