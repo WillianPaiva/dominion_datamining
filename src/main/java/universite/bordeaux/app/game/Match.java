@@ -15,13 +15,13 @@ import org.bson.types.ObjectId;
 import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.mapper.MongoConection;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileReader;
-import universite.bordeaux.app.reader.ReadGameHead;
-import universite.bordeaux.app.reader.ReadGameLog;
+import universite.bordeaux.app.reader.HeaderParser;
+import universite.bordeaux.app.reader.LogParser;
 
-public class Game implements GameItf{
+public class Match implements MatchItf{
     //if the log has errors, set this flag to false
     private boolean flagFail=true; 
 
@@ -47,7 +47,7 @@ public class Game implements GameItf{
 
     private int eloGap = 0;
 
-    private ArrayList<Turn> log;
+    private ArrayList<GameTurn> log;
     private String filename;
 
 
@@ -56,16 +56,16 @@ public class Game implements GameItf{
 	 *
    * @param reader the FileReader of the log
 	 */
-    public Game(FileReader reader){
+    public Match(FileReader reader){
         try{
             this.filename = reader.getName();
-            this.winners = ReadGameHead.getWinners(reader);
-            this.cardsGone = ReadGameHead.getCardsGone(reader);
-            this.market = ReadGameHead.getMarket(reader);
-            this.players = ReadGameHead.getPlayers(reader);
-            this.trash = ReadGameHead.getTrash(reader);
+            this.winners = HeaderParser.getWinners(reader);
+            this.cardsGone = HeaderParser.getCardsGone(reader);
+            this.market = HeaderParser.getMarket(reader);
+            this.players = HeaderParser.getPlayers(reader);
+            this.trash = HeaderParser.getTrash(reader);
             this.dateTime = setDateTime(reader.getName());
-            this.log = ReadGameLog.getGameLog(reader);
+            this.log = LogParser.getGameLog(reader);
         }catch(Exception e ){
             ErrorLogger.getInstance().logError("\n"+e.toString()+"\n"+ reader.getName());
             this.flagFail = false;
@@ -77,7 +77,7 @@ public class Game implements GameItf{
 	 *
    * @param doc Document to be read and parsed to a Game object
 	 */
-    public Game(Document doc){
+    public Match(Document doc){
         this.filename = doc.get("filename",String.class);
         this.winners = doc.get("winners",ArrayList.class);
         this.cardsGone = doc.get("cardsgonne",ArrayList.class);
@@ -116,7 +116,7 @@ public class Game implements GameItf{
     private ArrayList<Document> logToDoc(){
         ArrayList<Document> temp = new ArrayList<Document>();
         if(!log.isEmpty()){
-            for(Turn t: log){
+            for(GameTurn t: log){
                 temp.add(t.toDoc());
             }
         }
@@ -130,14 +130,14 @@ public class Game implements GameItf{
     public void save(){
         if (flagFail){
             if(this.id == null){
-                this.id = MongoMapper.insertGame(this.toDoc());
-                PlayerSimple temp;
+                this.id = MongoConection.insertGame(this.toDoc());
+                SimplifiedPlayer temp;
                 for(PlayerItf p: this.players){
-                    temp = new PlayerSimple(p.getPlayerName());
+                    temp = new SimplifiedPlayer(p.getPlayerName());
                     temp.save();
                 }
             }else{
-                MongoMapper.updateGame(new Document("_id",this.id), new Document("$set",this.toDoc()));
+                MongoConection.updateGame(new Document("_id",this.id), new Document("$set",this.toDoc()));
             }
         }
     }
@@ -196,11 +196,11 @@ public class Game implements GameItf{
 	 */
     public void GenerateElo(){
         HashMap<String,Integer> temp = new HashMap<String,Integer>();
-        PlayerSimple pl;
+        SimplifiedPlayer pl;
         int min = 99999999;
         int max = -999999999;
         for(PlayerItf p: this.players){
-            pl = new PlayerSimple(p.getPlayerName());
+            pl = new SimplifiedPlayer(p.getPlayerName());
             temp.put(p.getPlayerName(), pl.getElo());
             if(pl.getElo() < min){
                 min = pl.getElo();
@@ -211,7 +211,7 @@ public class Game implements GameItf{
         }
         HashMap<String,Integer> result = Elo.Calculate(this.winners, temp);
         for(Map.Entry<String,Integer> res: result.entrySet()){
-            pl = new PlayerSimple(res.getKey());
+            pl = new SimplifiedPlayer(res.getKey());
             pl.setElo(res.getValue());
             pl.save();
             getPlayer(res.getKey()).setGameElo(res.getValue());

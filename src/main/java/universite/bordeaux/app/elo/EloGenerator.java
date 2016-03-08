@@ -6,13 +6,13 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import universite.bordeaux.app.colors.ColorsTemplate;
-import universite.bordeaux.app.game.Game;
-import universite.bordeaux.app.game.GameItf;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.game.Match;
+import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.game.MatchItf;
 
 public final class EloGenerator {
 
-    private static long total = MongoMapper.count();
+    private static long total = MongoConection.count();
     private static long part;
     private EloGenerator(){
 
@@ -20,11 +20,11 @@ public final class EloGenerator {
 
     public static void Generate(){
         part =0;
-        FindIterable<Document> it = MongoMapper.findGamesByDate();
+        FindIterable<Document> it = MongoConection.findGamesByDate();
         it.forEach(new Block<Document>() {
                 @Override
                 public void apply(final Document document) {
-                    GameItf g = new Game(document);
+                    MatchItf g = new Match(document);
                     g.GenerateElo();
                     part++;
                     progressBar(Math.round(((double)part/(double)total)*100),g.getId().toString());

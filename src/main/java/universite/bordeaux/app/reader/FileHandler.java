@@ -8,9 +8,9 @@ import java.util.Queue;
 import org.apache.commons.io.FileUtils;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
-import universite.bordeaux.app.game.Game;
-import universite.bordeaux.app.game.GameItf;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.game.Match;
+import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.game.MatchItf;
 
 
 
@@ -96,7 +96,7 @@ public class FileHandler {
                 for(File log: htmlList){
                     FileReader fr = new FileReader(log);
                     if (!fr.isEmpty()){
-                        GameItf g = new Game(fr);
+                        MatchItf g = new Match(fr);
                         g.save();
                     }
                     fr.close();

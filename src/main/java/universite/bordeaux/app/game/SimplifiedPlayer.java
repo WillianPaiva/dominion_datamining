@@ -6,15 +6,15 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import universite.bordeaux.app.game.player.Player;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.mapper.MongoConection;
 
-public class PlayerSimple {
+public class SimplifiedPlayer {
     private ObjectId id;
     private String name;
     private int elo;
 
-    public PlayerSimple(String name){
-        Document doc = MongoMapper.findPlayer(name).first();
+    public SimplifiedPlayer(String name){
+        Document doc = MongoConection.findPlayer(name).first();
         if(doc != null){
             this.id = doc.get("_id",ObjectId.class);
             this.name = doc.get("name",String.class);
@@ -32,9 +32,9 @@ public class PlayerSimple {
 
     public void save(){
         if(this.id == null){
-            this.id = MongoMapper.insertPlayer(this.toDoc());
+            this.id = MongoConection.insertPlayer(this.toDoc());
         }else{
-            MongoMapper.updatePlayer(new Document("_id",id), new Document("$set",this.toDoc()));
+            MongoConection.updatePlayer(new Document("_id",id), new Document("$set",this.toDoc()));
         }
   }
 

@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
 
-public interface GameItf {
+public interface MatchItf {
     // Converts the Game object in the Document format, to use with mongodb server
     public Document toDoc();
     // Saves the Game in the database

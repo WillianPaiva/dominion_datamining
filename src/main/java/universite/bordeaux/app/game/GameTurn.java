@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.bson.Document;
 
-public class Turn {
+public class GameTurn {
     private class Play {
         public String type ;
         public HashMap<String,Integer> move;
@@ -72,7 +72,7 @@ public class Turn {
 
 
 
-    public Turn(int number){
+    public GameTurn(int number){
         this.number = number ;
     }
 

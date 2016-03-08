@@ -16,11 +16,11 @@ import org.jfree.ui.ApplicationFrame;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
-import universite.bordeaux.app.game.Game;
-import universite.bordeaux.app.game.GameItf;
+import universite.bordeaux.app.game.Match;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.game.MatchItf;
 
 public class Chart extends ApplicationFrame {
     public XYSeries temp;
@@ -51,12 +51,12 @@ public class Chart extends ApplicationFrame {
 
     public XYDataset EloChart(){
         XYSeriesCollection dataset = new XYSeriesCollection();
-        final ArrayList<String> players = MongoMapper.getRank(5);
+        final ArrayList<String> players = MongoConection.getRank(5);
 
 
         for(final String player: players){
             temp = new XYSeries(player);
-            FindIterable<Document> it = MongoMapper.getPlayerGames(player);
+            FindIterable<Document> it = MongoConection.getPlayerGames(player);
             it.forEach(new Block<Document>() {
                     double x = 0;
                     int t = 0;
@@ -66,7 +66,7 @@ public class Chart extends ApplicationFrame {
 
                     @Override
                     public void apply(final Document document) {
-                        final GameItf g = new Game(document);
+                        final MatchItf g = new Match(document);
                         final PlayerItf p = g.getPlayer(player);
                         if(t < fac){
                             t++;

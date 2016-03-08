@@ -12,11 +12,11 @@ import com.mongodb.client.MongoDatabase;
 import universite.bordeaux.app.colors.ColorsTemplate;
 import universite.bordeaux.app.reader.ErrorLogger;
 
-public final class MongoMapper {
+public final class MongoConection {
     private static MongoClient mongo = new MongoClient("localhost", 27020);
     private static MongoDatabase db = mongo.getDatabase("game-logs");
 
-    private MongoMapper(){
+    private MongoConection(){
     }
 
     public static ObjectId insertGame(Document game){

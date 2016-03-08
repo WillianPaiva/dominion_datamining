@@ -19,14 +19,14 @@ import universite.bordeaux.app.game.player.PlayerItf;
  *
  *
  */
-public final class ReadGameHead {
+public final class HeaderParser {
 
 	/**
 	 * {@inheritDoc}
    * not used
 	 * @see Object#ReadGameHead()
 	 */
-    private ReadGameHead(){}
+    private HeaderParser(){}
 
 
 	/**

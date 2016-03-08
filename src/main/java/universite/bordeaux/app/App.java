@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.ui.RefineryUtilities;
 import universite.bordeaux.app.elo.EloGenerator;
-import universite.bordeaux.app.mapper.MongoMapper;
+import universite.bordeaux.app.mapper.MongoConection;
 import universite.bordeaux.app.plotter.Chart;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileHandler;
@@ -19,7 +19,7 @@ public class App
     {
 
         Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
-        MongoMapper.index();
+        MongoConection.index();
         File child = new File("sampleLogs/");
         FileHandler test = new FileHandler(child);
         test.runParser(10);

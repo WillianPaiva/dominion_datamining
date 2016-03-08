@@ -24,4 +24,4 @@ Or just use the *allInOne* executable which will take care of *mongo* and run th
 
 
 ** the Database
-after the parser is finished the database cam be found inside the folder *mongoData*
+after the parser is finished the database can be found inside the folder *mongoData*

@@ -7,23 +7,23 @@ import java.util.HashMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import universite.bordeaux.app.game.Turn;
+import universite.bordeaux.app.game.GameTurn;
 
 
-public final class ReadGameLog {
+public final class LogParser {
     /**
      * {@inheritDoc}
      * @see Object#ReadGameLog()
      */
-    private ReadGameLog(){}
+    private LogParser(){}
 
-    public static ArrayList<Turn> getGameLog(FileReader reader){
+    public static ArrayList<GameTurn> getGameLog(FileReader reader){
         Document doc;
-        ArrayList<Turn> turns = new ArrayList<Turn>();
+        ArrayList<GameTurn> turns = new ArrayList<GameTurn>();
         boolean finished = false;
         int last = 0;
         int turn = 1;
-        Turn t = new Turn(turn);
+        GameTurn t = new GameTurn(turn);
         String playername = "";
 
         //get the start of the game log
@@ -37,7 +37,7 @@ public final class ReadGameLog {
                 }
                 if(tempTurn > turn){
                     turn = tempTurn;
-                    t = new Turn(turn);
+                    t = new GameTurn(turn);
                 }
                 playername = turnGetPlayer(doc.text());
             }
