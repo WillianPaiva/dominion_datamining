@@ -1,10 +1,11 @@
 package universite.bordeaux.app.GameDataStructure;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public interface MatchItf {
     // Converts the Game object in the Document format, to use with mongodb server

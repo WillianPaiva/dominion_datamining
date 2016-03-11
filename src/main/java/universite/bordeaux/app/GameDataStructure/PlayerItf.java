@@ -1,8 +1,8 @@
 package universite.bordeaux.app.GameDataStructure;
 
-import java.util.HashMap;
-
 import org.bson.Document;
+
+import java.util.HashMap;
 
 public interface PlayerItf{
     public Document toDoc();

@@ -1,8 +1,9 @@
 package universite.bordeaux.app.GameDataStructure;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 /**
  *
  * @author Willian Ver Valen Paiva

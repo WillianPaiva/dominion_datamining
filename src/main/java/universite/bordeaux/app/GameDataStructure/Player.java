@@ -1,9 +1,10 @@
 package universite.bordeaux.app.GameDataStructure;
+
+import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.bson.Document;
 
 /**
  *

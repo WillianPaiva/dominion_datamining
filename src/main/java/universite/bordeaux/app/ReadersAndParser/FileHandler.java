@@ -1,15 +1,14 @@
 package universite.bordeaux.app.ReadersAndParser;
 
+import org.apache.commons.io.FileUtils;
+import universite.bordeaux.app.GameDataStructure.Match;
+import universite.bordeaux.app.GameDataStructure.MatchItf;
+import universite.bordeaux.app.colors.ColorsTemplate;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import org.apache.commons.io.FileUtils;
-import universite.bordeaux.app.colors.ColorsTemplate;
-
-import universite.bordeaux.app.GameDataStructure.Match;
-import universite.bordeaux.app.GameDataStructure.MatchItf;
 
 
 

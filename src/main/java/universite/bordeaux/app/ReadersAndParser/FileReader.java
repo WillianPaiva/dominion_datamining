@@ -1,7 +1,9 @@
 package universite.bordeaux.app.ReadersAndParser;
-import java.io.IOException;
+
 import java.io.File;
-import java.util.*;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 
 public class FileReader {

@@ -1,12 +1,11 @@
 package universite.bordeaux.app.ReadersAndParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
 import universite.bordeaux.app.GameDataStructure.GameTurn;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public final class LogParser {

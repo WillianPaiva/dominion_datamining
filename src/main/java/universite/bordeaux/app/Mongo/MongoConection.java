@@ -1,14 +1,14 @@
 package universite.bordeaux.app.Mongo;
-import java.util.ArrayList;
-
-import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import universite.bordeaux.app.colors.ColorsTemplate;
+
+import java.util.ArrayList;
 
 public final class MongoConection {
     private static final MongoClient mongo = new MongoClient("localhost", 27020);

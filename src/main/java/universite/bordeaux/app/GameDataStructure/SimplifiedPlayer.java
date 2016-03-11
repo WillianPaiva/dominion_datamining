@@ -3,7 +3,6 @@ package universite.bordeaux.app.GameDataStructure;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 import universite.bordeaux.app.Mongo.MongoConection;
 
 public class SimplifiedPlayer {

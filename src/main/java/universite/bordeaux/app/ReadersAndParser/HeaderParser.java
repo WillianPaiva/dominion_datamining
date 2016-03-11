@@ -1,14 +1,14 @@
 package universite.bordeaux.app.ReadersAndParser;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import universite.bordeaux.app.GameDataStructure.Player;
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 
