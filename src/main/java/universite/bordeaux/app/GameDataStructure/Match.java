@@ -15,10 +15,10 @@ import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
 import universite.bordeaux.app.Mongo.MongoConection;
-import universite.bordeaux.app.reader.ErrorLogger;
-import universite.bordeaux.app.reader.FileReader;
-import universite.bordeaux.app.reader.HeaderParser;
-import universite.bordeaux.app.reader.LogParser;
+import universite.bordeaux.app.ReadersAndParser.ErrorLogger;
+import universite.bordeaux.app.ReadersAndParser.FileReader;
+import universite.bordeaux.app.ReadersAndParser.HeaderParser;
+import universite.bordeaux.app.ReadersAndParser.LogParser;
 
 public class Match implements MatchItf{
     //if the log has errors, set this flag to false

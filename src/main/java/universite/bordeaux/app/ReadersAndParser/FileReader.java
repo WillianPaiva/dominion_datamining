@@ -1,4 +1,4 @@
-package universite.bordeaux.app.reader;
+package universite.bordeaux.app.ReadersAndParser;
 import java.io.IOException;
 import java.io.File;
 import java.util.*;

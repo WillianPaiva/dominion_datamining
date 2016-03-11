@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package universite.bordeaux.app.reader;
+package universite.bordeaux.app.ReadersAndParser;
 
 import java.io.File;
 import java.io.FileWriter;

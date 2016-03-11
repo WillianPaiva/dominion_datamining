@@ -1,4 +1,4 @@
-package universite.bordeaux.app.reader;
+package universite.bordeaux.app.ReadersAndParser;
 import java.util.ArrayList;
 import java.util.HashMap;
 
