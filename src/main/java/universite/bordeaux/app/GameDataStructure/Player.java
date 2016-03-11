@@ -1,4 +1,4 @@
-package universite.bordeaux.app.game.player;
+package universite.bordeaux.app.GameDataStructure;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

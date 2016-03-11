@@ -7,8 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import universite.bordeaux.app.game.player.Player;
-import universite.bordeaux.app.game.player.PlayerItf;
+import universite.bordeaux.app.GameDataStructure.Player;
+import universite.bordeaux.app.GameDataStructure.PlayerItf;
 
 
 

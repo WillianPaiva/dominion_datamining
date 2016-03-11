@@ -17,8 +17,8 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import universite.bordeaux.app.GameDataStructure.Match;
-import universite.bordeaux.app.game.player.Player;
-import universite.bordeaux.app.game.player.PlayerItf;
+import universite.bordeaux.app.GameDataStructure.Player;
+import universite.bordeaux.app.GameDataStructure.PlayerItf;
 import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.GameDataStructure.MatchItf;
 
