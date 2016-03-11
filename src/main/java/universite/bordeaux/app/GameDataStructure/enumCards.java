@@ -1,4 +1,4 @@
-package universite.bordeaux.app.game;
+package universite.bordeaux.app.GameDataStructure;
 //each card has an associated number (card names don't have uppercase and spaces)
 public enum enumCards {
 	cellar(1),

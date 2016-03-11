@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import universite.bordeaux.app.game.GameTurn;
+import universite.bordeaux.app.GameDataStructure.GameTurn;
 
 
 public final class LogParser {

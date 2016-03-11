@@ -1,4 +1,4 @@
-package universite.bordeaux.app.game;
+package universite.bordeaux.app.GameDataStructure;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

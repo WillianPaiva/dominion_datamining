@@ -8,8 +8,8 @@ import java.util.Queue;
 import org.apache.commons.io.FileUtils;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
-import universite.bordeaux.app.game.Match;
-import universite.bordeaux.app.game.MatchItf;
+import universite.bordeaux.app.GameDataStructure.Match;
+import universite.bordeaux.app.GameDataStructure.MatchItf;
 
 
 

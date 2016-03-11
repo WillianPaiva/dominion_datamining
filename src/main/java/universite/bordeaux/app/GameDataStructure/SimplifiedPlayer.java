@@ -1,4 +1,4 @@
-package universite.bordeaux.app.game;
+package universite.bordeaux.app.GameDataStructure;
 
 
 import org.bson.Document;

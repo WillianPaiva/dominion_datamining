@@ -6,9 +6,9 @@ import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
 import universite.bordeaux.app.colors.ColorsTemplate;
-import universite.bordeaux.app.game.Match;
+import universite.bordeaux.app.GameDataStructure.Match;
 import universite.bordeaux.app.Mongo.MongoConection;
-import universite.bordeaux.app.game.MatchItf;
+import universite.bordeaux.app.GameDataStructure.MatchItf;
 
 public final class EloGenerator {
 
