@@ -6,28 +6,43 @@ import java.util.logging.Logger;
 import universite.bordeaux.app.mapper.MongoConection;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileHandler;
+
 /**
- * Hello world!
  *
+ * @author Willian Ver Valen Paiva
  */
-public class App 
-{
-    public static void main( String[] args ) throws Exception
-    {
+public class App {
+   /**
+    *
+    * @param args
+    * @throws Exception
+    */
+    public static void main(String[] args) throws Exception{
+        int numberOfThreads = 10;
+        if (args.length > 0) {
+            try {
+                numberOfThreads = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.err.println(args[0] + " must be an integer.");
+                System.exit(1);
+            }
+        }
 
-        Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.OFF);
-        MongoConection.index();
+        //set mongoDB logger of as it pollute the output
+        Logger.getLogger("org.mongodb.driver").setLevel(Level.OFF);
+
+        //create useful indexes for the database
+        MongoConection.createIndexes();
+
+        //specify the directory with the compressed logs
         File child = new File("sampleLogs/");
-        FileHandler test = new FileHandler(child);
-        test.runParser(10);
 
-        // System.out.println("\n Starting the ELO callculation this can take a long time...");
-        // EloGenerator.Generate();
+        //create the FileHandler on the logs and run the parser
+        FileHandler fr = new FileHandler(child);
+        fr.runParser(numberOfThreads);
 
-        // Chart ch = new Chart("Elo curve", "Elo curve", "number of games played", "Elo");
-        // ch.pack( );
-        // RefineryUtilities.centerFrameOnScreen( ch );
-        // ch.setVisible( true );
+        //close the file used to log error logs in case it was
+        //open during the execution of the program
         ErrorLogger.getInstance().closeLogger();
     }
 }
