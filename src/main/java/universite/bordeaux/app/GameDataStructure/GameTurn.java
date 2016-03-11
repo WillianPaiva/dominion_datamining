@@ -141,7 +141,7 @@ public class GameTurn {
      * create a new turn.
      * @param nb the number of the turn to be create.
      */
-    GameTurn(final int nb) {
+    public GameTurn(final int nb) {
         this.number = nb;
     }
 
