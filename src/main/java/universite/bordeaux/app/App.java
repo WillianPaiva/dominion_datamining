@@ -3,7 +3,7 @@ package universite.bordeaux.app;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileHandler;
 

@@ -4,7 +4,7 @@ package universite.bordeaux.app.game;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.Mongo.MongoConection;
 
 public class SimplifiedPlayer {
     private ObjectId id;

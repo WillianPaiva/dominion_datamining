@@ -14,7 +14,7 @@ import org.bson.types.ObjectId;
 import universite.bordeaux.app.elo.Elo;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
-import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.reader.ErrorLogger;
 import universite.bordeaux.app.reader.FileReader;
 import universite.bordeaux.app.reader.HeaderParser;

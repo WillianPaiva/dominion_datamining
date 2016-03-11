@@ -1,4 +1,4 @@
-package universite.bordeaux.app.mapper;
+package universite.bordeaux.app.Mongo;
 import java.util.ArrayList;
 
 import org.bson.Document;
@@ -45,7 +45,7 @@ public final class MongoConection {
         return db.getCollection("logs").count();
     }
 
-    public static void index(){
+    public static void createIndexes(){
         createIndex("date", "logs");
         createIndex("players.name", "logs");
         createIndex("players.elo", "logs");

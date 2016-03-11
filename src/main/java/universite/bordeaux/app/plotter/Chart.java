@@ -19,7 +19,7 @@ import com.mongodb.client.FindIterable;
 import universite.bordeaux.app.game.Match;
 import universite.bordeaux.app.game.player.Player;
 import universite.bordeaux.app.game.player.PlayerItf;
-import universite.bordeaux.app.mapper.MongoConection;
+import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.game.MatchItf;
 
 public class Chart extends ApplicationFrame {
