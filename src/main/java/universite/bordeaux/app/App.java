@@ -3,21 +3,21 @@ package universite.bordeaux.app;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.ReadersAndParser.ErrorLogger;
 import universite.bordeaux.app.ReadersAndParser.FileHandler;
 
 /**
- *
+ * main class of the program responsible to launch the parser on the logs.
  * @author Willian Ver Valen Paiva
  */
 public class App {
-   /**
-    *
-    * @param args
-    * @throws Exception
+    /**
+    *main function.
+    * @param args expected to have the number of threads
     */
-    public static void main(String[] args) throws Exception{
+    public static void main(final String[] args) {
         int numberOfThreads = 10;
         if (args.length > 0) {
             try {
