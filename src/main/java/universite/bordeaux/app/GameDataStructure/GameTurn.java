@@ -4,6 +4,8 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author Willian Ver Valen Paiva
@@ -167,7 +169,7 @@ public class GameTurn {
      * @param type the type of move made.
      * @param cards the list of cards and quantity used on the move.
      */
-    public void insertMove(final String playerName,
+    public final void insertMove(final String playerName,
                            final int level,
                            final String type,
                            final HashMap<String, Integer> cards) {
@@ -214,8 +216,8 @@ public class GameTurn {
                 insertFollowingPlay(level - 1,
                         type,
                         cards,
-                        play.followingPlays.get(play.followingPlays.size()
-                                - 1));
+                        play.followingPlays.get(
+                                play.followingPlays.size() - 1));
                 break;
         }
         return play;
@@ -226,7 +228,7 @@ public class GameTurn {
      * creates the document version of the object GameTurn.
      * @return a Document.
      */
-    public Document toDoc() {
+    public final Document toDoc() {
         return new Document("turn", this.number)
                 .append("playersMove", mapPlayerTurn());
     }
@@ -238,9 +240,8 @@ public class GameTurn {
     private ArrayList<Document> mapPlayerTurn() {
         ArrayList<Document> temp = new ArrayList<>();
         if (!turns.isEmpty()) {
-            for (PlayerTurn p: turns) {
-                temp.add(p.toDoc());
-            }
+            temp.addAll(turns.stream().map(PlayerTurn::toDoc)
+                    .collect(Collectors.toList()));
         }
         return temp;
     }
