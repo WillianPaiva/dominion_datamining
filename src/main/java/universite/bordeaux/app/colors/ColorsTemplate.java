@@ -36,7 +36,7 @@ public final class ColorsTemplate {
     /**
      * set the color output to purple.
      */
-    public static final String ANSI_PURPLE = "\u001B[3k5m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
     /**
      * set the color output to cyan.
      */
