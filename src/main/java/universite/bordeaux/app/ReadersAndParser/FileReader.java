@@ -6,66 +6,81 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
+/**
+ * class to make essy the manipulation of the file descriptor.
+ * @author Willian Ver Valen Paiva
+ */
 public class FileReader {
+    /**
+     * the Scanner .
+     */
     private Scanner scan;
+    /**
+     * the logfile oppened on this file reader.
+     */
     private File log;
+
+    /**
+     * value on the line that the file descriptor is point .
+     */
     private String line;
 
-    public FileReader(File file){
-        this.log = file;
-        try{
-            scan = new Scanner(file);
-        }catch(IOException e){
+    /**
+     * constructor.
+     * @param logFile file to be used
+     */
+    public FileReader(final File logFile) {
+        this.log = logFile;
+        try {
+            scan = new Scanner(logFile);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-	/**
-	 * @return the scan
-	 */
-	public Scanner getScan() {
-		return scan;
-	}
-
-    public String getName(){
+    /**
+     * get the file name.
+     * @return a string with the tfile name
+     */
+    public final String getName() {
         return this.log.getName();
     }
 
-	/**
-	 *
-	 *
-   * @return the actual line of the file
-	 */
-    public String getLine(){
+    /**
+     *
+     *
+     * @return the actual line of the file
+     */
+    public final String getLine() {
         return this.line;
     }
 
-	/**
-   * moves the pointer to the next line
-   *
-   * @return next line
-	 */
-    public String jumpline(){
-        try{
+    /**
+     * moves the pointer to the next line.
+     *
+     * @return next line
+     */
+    public final String jumpline() {
+        try {
         this.line = this.scan.nextLine();
-        }
-        catch(NoSuchElementException e){
-        System.out.println("error with file: "+this.getName());
+        } catch (NoSuchElementException e) {
+            System.out.println("error with file: "
+                    + this.getName());
         }
         return this.line;
     }
 
-	/**
-   * search for the first line that contains a given string
-	 *
-	 * @param target
-	 * @return line found or null
-	 */
-    public String searchLineWithString(String target){
-        while(scan.hasNextLine()){
+    /**
+     * search for the first line that contains a given string.
+     *
+     * @param target a regex string to be searched.
+     * @return line found or null
+     */
+    public final String searchLineWithString(final String target) {
+        while (scan.hasNextLine()) {
             this.line = this.scan.nextLine();
-            if(line.matches(target)){
+            if (line.matches(target)) {
                 return this.line;
             }
         }
@@ -73,28 +88,32 @@ public class FileReader {
     }
 
 
-	/**
-   * close the scanner
-	 *
-	 */
-    public void close(){
+    /**
+     * close the scanner.
+     *
+     */
+    public final void close() {
         scan.close();
     }
 
-	/**
-   * returns the pointer to the first line of the file;
-	 *
-	 */
-    public void rewindFile(){
+    /**
+     * returns the pointer to the first line of the file.
+     *
+     */
+    public final void rewindFile() {
         scan.close();
-        try{
+        try {
             scan = new Scanner(this.log);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public boolean isEmpty(){
+
+    /**
+     * get if file is empty.
+     * @return true if the file is empty
+     */
+    public final boolean isEmpty() {
        this.rewindFile();
        return !(this.scan.hasNext());
     }
