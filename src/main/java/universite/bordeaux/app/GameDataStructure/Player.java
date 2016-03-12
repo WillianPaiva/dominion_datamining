@@ -7,94 +7,140 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * player implementation .
+ * @author Willian Ver Valen Paiva
  */
-public class Player implements PlayerItf{
-    private String pl ;
-    private HashMap<String,Integer> victoryCards = new HashMap<>();
+public class Player implements PlayerItf {
+    /**
+     * base elo.
+     */
+    public static final int BASE_ELO = 1000;
+    /**
+     * the player name.
+     */
+    private String playerName;
+    /**
+     * map of the player victory cards.
+     */
+    private HashMap<String, Integer> victoryCards;
+    /**
+     * the player amount of points.
+     */
     private int points;
-    private HashMap<String,Integer> deck = new HashMap<>();
-    private HashMap<String,Integer> firstHand = new HashMap<>();
+    /**
+     * map of cards on the player deck.
+     */
+    private HashMap<String, Integer> deck;
+    /**
+     * map with the player first hand cards.
+     */
+    private HashMap<String, Integer> firstHand;
+    /**
+     * total number of turns.
+     */
     private int turns;
-    private ArrayList<String> opening = new ArrayList<>();
-    private int GameElo  = 1000;
+    /**
+     * opening cards of a player.
+     */
+    private ArrayList<String> opening;
+
+    /**
+     * the Elo of the player at the finish of this match
+     * it is initiate a 1000 as the base Elo value.
+     */
+    private int gameElo = BASE_ELO;
+    /**
+     * the strategy used by the player.
+     */
+    private String strategy = "unknown";
 
 
     /**
-     * Creates and returns the Player object based on a string (player name)
-     * @param pl
+     * Creates and returns the Player object based on a string (player name).
+     * @param name the player name
      */
-    public Player(String pl){
-        this.pl = pl ;
+    public Player(final String name) {
+        this.playerName = name;
+        victoryCards = new HashMap<>();
+        deck = new HashMap<>();
+        firstHand = new HashMap<>();
+        opening = new ArrayList<>();
     }
 
     /**
-     * Loads player data from a Document object
-     * @param doc
+     * creates a player by loading the data from a Document object.
+     * @param doc the Document to load
      */
-    public Player(Document doc){
-        this.pl = doc.get("name",String.class);
+    public Player(final Document doc) {
+        this.playerName = doc.get("name", String.class);
         this.points = doc.get("points", Integer.class);
+        this.strategy = doc.get("points", String.class);
         this.turns = doc.get("turns", Integer.class);
-        this.GameElo = doc.get("elo", Integer.class);
-        this.victoryCards = doctohash(doc.get("victorycards",Document.class));
-        this.deck = doctohash(doc.get("deck",Document.class));
-        this.firstHand = doctohash(doc.get("firsthand",Document.class));
-        this.opening = doc.get("opening",ArrayList.class);
+        this.gameElo = doc.get("elo", Integer.class);
+        victoryCards = new HashMap<>();
+        this.victoryCards = docToHash(doc.get("victorycards", Document.class));
+        deck = new HashMap<>();
+        this.deck = docToHash(doc.get("deck", Document.class));
+        firstHand = new HashMap<>();
+        this.firstHand = docToHash(doc.get("firsthand", Document.class));
+        opening = new ArrayList<>();
+        this.opening = doc.get("opening", ArrayList.class);
 
     }
 
     /**
-     * Creates a Document object containing the information of the Player object
+     * Creates a Document object containing the information of
+     * the Player object.
      * @return Document object
      */
     @Override
-    public Document toDoc(){
+    public final Document toDoc() {
         return new Document()
-            .append("name",this.pl)
-            .append("elo", this.GameElo)
-            .append("points",this.points)
-            .append("turns",this.turns)
-            .append("victorycards",hashtodoc(this.victoryCards))
-            .append("deck",hashtodoc(this.deck))
-            .append("firsthand",hashtodoc(this.firstHand))
-            .append("opening",opening);
+                .append("name", this.playerName)
+                .append("elo", this.gameElo)
+                .append("points", this.points)
+                .append("strategy", this.strategy)
+                .append("turns", this.turns)
+                .append("victorycards", hashToDoc(this.victoryCards))
+                .append("deck", hashToDoc(this.deck))
+                .append("firsthand", hashToDoc(this.firstHand))
+                .append("opening", opening);
     }
 
     /**
-     * converts Document to HashMap
-     * @param doc
+     * converts Document to HashMap.
+     * @param doc Document to convert.
      * @return HashMap
      */
-    private HashMap<String,Integer> doctohash(Document doc){
-        HashMap<String,Integer> temp = new HashMap<>();
-        for(Map.Entry<String,Object> x: doc.entrySet()){
-            temp.put(x.getKey(),(int)x.getValue());
+    private HashMap<String, Integer> docToHash(final Document doc) {
+        HashMap<String, Integer> temp = new HashMap<>();
+        for (Map.Entry<String, Object> x: doc.entrySet()) {
+            temp.put(x.getKey(), (int) x.getValue());
         }
         return temp;
 
     }
 
     /**
-     * Converts HashMap to Document
-     * @param map
+     * Converts HashMap to Document.
+     * @param map the hashmap to be converted
      * @return Document
      */
-    private Document hashtodoc(HashMap<String,Integer> map){
+    private Document hashToDoc(final HashMap<String, Integer> map) {
         Document temp = new Document();
-        for(String x: map.keySet()){
+        for (String x: map.keySet()) {
             temp.append(x, map.get(x));
         }
         return temp;
     }
 
     /**
-     * Returns the player name
+     * Returns the player name.
      * @return String, player name
      */
     @Override
-    public String getPlayerName(){
-        return this.pl;
+    public final String getPlayerName() {
+        return this.playerName;
     }
 
     /**
@@ -102,112 +148,69 @@ public class Player implements PlayerItf{
      * @param cardName Card name
      */
     @Override
-    public void insertVictoryCard(int quantity , String cardName){
+    public final void insertVictoryCard(final int quantity,
+                                        final String cardName) {
         victoryCards.put(cardName, quantity);
-    }
-    /**
-     * return the cards used to count the victoy points such as Estate, Duchy, Province, Colony
-     * @return HashMap with the cards and their amount
-     */
-    @Override
-    public HashMap<String,Integer> getVictoryCards(){
-        return this.victoryCards;
     }
 
     /**
-     * adds a card to the players deck
+     * adds a card to the players deck.
      * @param quantity number of cards of the same type
      * @param cardName name of the card
      */
     @Override
-    public void insertDeck(int quantity , String cardName){
-        deck.put(cardName , quantity);
+    public final void insertDeck(final int quantity,
+                                 final String cardName) {
+        deck.put(cardName, quantity);
     }
     /**
-     * @return The list of cards and their amount in a players deck (cards owned)
+     * Sets a score for the player.
+     * @param pts amount of points
      */
     @Override
-    public HashMap<String,Integer> getDeck(){
-        return this.deck;
-    }
-
-    /**
-     * Sets a score for the player
-     * @param points amount of points
-     */
-    @Override
-    public void setPoints(int points){
-        this.points = points;
+    public final void setPoints(final int pts) {
+        this.points = pts;
     }
     /**
-     * @return A value containing the player's points
+     * @param trs the number of turns played by a player.
      */
     @Override
-    public int getPoints(){
-        return this.points;
-    }
-
-    /**
-     * @param turns the number of urns played by a player
-     */
-    @Override
-    public void setTurns(int turns){
-        this.turns = turns;
+    public final void setTurns(final int trs) {
+        this.turns = trs;
     }
 
 
-/**
- * @return players elo
- */
-    @Override
-    public int getGameElo() {
-
-      return GameElo;
-	}
-
-	/**
-	 * @param gameElo the gameElo to set
-	 */
-    @Override
-	public void setGameElo(int gameElo) {
-		GameElo = gameElo;
-	}
-
-	/**
-	 * @return the turns played by a player
-	 */
-    @Override
-	public int getTurns(){
-        return this.turns;
-    }
 
     /**
      * @param s opening cards
      */
     @Override
-    public void insertOpening(String s){
+    public final void insertOpening(final String s) {
         this.opening.add(s);
     }
 
     /**
-     * puts a card and it's amount in the first hand of the player
+     * puts a card and it's amount in the first hand of the player.
      * @param quantity number of the specified cards
      * @param cardName a string with the name of the card
      */
     @Override
-    public void insertFirstHand(int quantity , String cardName){
+    public final void insertFirstHand(final int quantity,
+                                      final String cardName) {
         this.firstHand.put(cardName, quantity);
-    }
-    /**
-     * @return a HashMap containing the first hand of the player (cards and amount)
-     */
-    @Override
-    public HashMap<String,Integer> getFirstHand(){
-        return this.firstHand;
     }
 
     @Override
-    public String toString(){
-        return "\n"+pl + " " + points + "\n " + deck.toString() + "\n" + victoryCards.toString() + "\n first hand: " + firstHand.toString();
+    public final String toString() {
+        return "\n"
+                + playerName
+                + " "
+                + points
+                + "\n "
+                + deck.toString()
+                + "\n"
+                + victoryCards.toString()
+                + "\n first hand: "
+                + firstHand.toString();
     }
 }
