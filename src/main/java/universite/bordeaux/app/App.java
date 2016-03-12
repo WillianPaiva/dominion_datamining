@@ -14,11 +14,15 @@ import java.util.logging.Logger;
  */
 public class App {
     /**
+     * default number of threads to use.
+     */
+    public static final int NUMBER_OF_THREADS = 4;
+    /**
     *main function.
     * @param args expected to have the number of threads
     */
     public static void main(final String[] args) {
-        int numberOfThreads = 10;
+        int numberOfThreads = NUMBER_OF_THREADS;
         if (args.length > 0) {
             try {
                 numberOfThreads = Integer.parseInt(args[0]);
