@@ -25,7 +25,7 @@ public class FileHandler {
     /**
      * constant to 100 to calculate the progress bar.
      */
-    public static final int HUNDRED = 0;
+    public static final int HUNDRED = 100;
 
     /**
      * the File with the path of the folder with the logs.
@@ -193,6 +193,8 @@ public class FileHandler {
         for (int x = 0; x < ((HUNDRED - overall) / 2); x++) {
             total += "_";
         }
+
+
 
         String progress = "\r"
                 + ColorsTemplate.ANSI_BLUE
