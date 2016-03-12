@@ -1,6 +1,5 @@
 package universite.bordeaux.app.Mongo;
 
-import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
@@ -8,133 +7,122 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
-import java.util.ArrayList;
 
+/**
+ * a utility class used to hold useful methods to insert and querry
+ * the database.
+ * the aim of this class is to centralize the database utilities.
+ * @author Willian Ver Valen Paiva
+ */
 public final class MongoConection {
-    private static final MongoClient mongo = new MongoClient("localhost", 27020);
-    private static final MongoDatabase db = mongo.getDatabase("game-logs");
+    /**
+     * the port number.
+     */
+    public static final int PORT = 27020;
+    /**
+     * the mongodb client.
+     */
+    private static final MongoClient MONGO_CLIENT;
 
-    private MongoConection(){
-    }
-
-    public static ObjectId insertGame(Document game){
-        db.getCollection("logs").insertOne(game);
-        return (ObjectId)game.get( "_id" );
-    }
-    public static ObjectId insertPlayer(Document player){
-        db.getCollection("players").insertOne(player);
-        return (ObjectId)player.get( "_id" );
+    static {
+        MONGO_CLIENT = new MongoClient("localhost", PORT);
     }
 
-    public static void updateGame(Document game , Document up){
-        db.getCollection("logs").updateOne(game,up);
+    /**
+     * the mongodb database reference.
+     */
+    private static final MongoDatabase MONGO_DATABASE;
+
+    static {
+        MONGO_DATABASE = MONGO_CLIENT.getDatabase("game-logs");
     }
 
-    public static void updatePlayer(Document player, Document up){
-        db.getCollection("players").updateOne(player,up);
+    /**
+     * set the constructor private.
+     */
+    private MongoConection() {
     }
 
-    public static FindIterable<Document> findPlayer(String player){
-        return db.getCollection("players").find(new Document("name", player));
+    /**
+     * insert a Match into the database.
+     * @param match the document to insert into de database.
+     * @return the id of the new entrance.
+     */
+    public static ObjectId insertMatch(final Document match) {
+        MONGO_DATABASE.getCollection("logs").insertOne(match);
+        return (ObjectId) match.get("_id");
     }
 
-    public static FindIterable<Document> findGamesByDate(){
-        return db.getCollection("logs").find().sort(new Document("date",1));
-    }
-    public static long count(){
-        return db.getCollection("logs").count();
+    /**
+     * insert a player into the database.
+     * @param player the document to insert.
+     * @return the id of the new entrance.
+     */
+    public static ObjectId insertPlayer(final Document player) {
+        MONGO_DATABASE.getCollection("players").insertOne(player);
+        return (ObjectId) player.get("_id");
     }
 
-    public static void createIndexes(){
+    /**
+     * update a match in the database.
+     * @param match the match to be updated.
+     * @param up the changes to be made.
+     */
+    public static void updateMatch(final Document match, final Document up) {
+        MONGO_DATABASE.getCollection("logs").updateOne(match, up);
+    }
+
+    /**
+     * update a player in the database.
+     * @param player the player to be updated.
+     * @param up the changes to be made.
+     */
+    public static void updatePlayer(final Document player, final Document up) {
+        MONGO_DATABASE.getCollection("players").updateOne(player, up);
+    }
+
+    /**
+     * find a player in the database.
+     * @param player player name
+     * @return the FindIterable of the search.
+     */
+    public static FindIterable<Document> findPlayer(final String player) {
+        return MONGO_DATABASE.getCollection("players")
+                .find(new Document("name", player));
+    }
+
+
+    /**
+     * create useful indexes.
+     */
+    public static void createIndexes() {
         createIndex("date", "logs");
         createIndex("players.name", "logs");
         createIndex("players.elo", "logs");
         createIndex("elo", "players");
     }
-    public static void createIndex(String index, String collection){
-        System.out.println("\n"+ColorsTemplate.ANSI_PURPLE + "Generating index for "+ColorsTemplate.ANSI_GREEN+collection+ColorsTemplate.ANSI_PURPLE+" on the field "+ColorsTemplate.ANSI_GREEN+index+ColorsTemplate.ANSI_RESET);
-        db.getCollection(collection).createIndex(new Document(index,1));
+
+    /**
+     * create a index into the database.
+     * @param index field to create a index.
+     * @param collection the collection name to create the index.
+     */
+    public static void createIndex(final String index,
+                                   final String collection) {
+        System.out.println("\n"
+                + ColorsTemplate.ANSI_PURPLE
+                + "Generating index for "
+                + ColorsTemplate.ANSI_GREEN
+                + collection
+                + ColorsTemplate.ANSI_PURPLE
+                + " on the field "
+                + ColorsTemplate.ANSI_GREEN
+                + index
+                + ColorsTemplate.ANSI_RESET);
+        MONGO_DATABASE.getCollection(collection)
+                .createIndex(new Document(index, 1));
         System.out.println("done");
 
     }
-    public static int getPlayerTotalGames(String player){
-        return db.getCollection("players").find(new Document("_id",player)).first().get("games",ArrayList.class).size();
-    }
-
-    public static FindIterable<Document> getPlayerGames(String player){
-        return db.getCollection("logs").find(new Document("players.name",player)).sort(new Document("date",1));
-    }
-
-    public static ArrayList<String> getRank(int x){
-        final ArrayList<String> result = new ArrayList<>();
-        FindIterable<Document> it = db.getCollection("players").find().sort(new Document("elo",-1)).limit(x);
-        it.forEach(new Block<Document>() {
-                @Override
-                public void apply(final Document document) {
-                    result.add(document.get("_id",String.class));
-                }
-            });
-        return result;
-    }
-    // public void insertTodb(Game g){
-    //     for(Player p: g.getPlayers() ){
-    //         games.clear();
-    //         FindIterable<Document> iterable = db.getCollection("players").find(new Document("_id",p.getPlayerName()));
-    //         iterable.forEach(new Block<Document>()
-    //                 @Override
-    //                 public void apply(final Document document) {
-    //                     ArrayList<String> b = document.get("games",ArrayList.class);
-    //                     games.addAll(b);
-    //                 }
-    //             });
-
-    //         games.add(id.toString());
-    //         if(games.size() > 1){
-    //             db.getCollection("players").updateOne(new Document("_id",p.getPlayerName()), new Document("$set",new Document("elo",1000).append("games",games)));
-    //         }else{
-    //             db.getCollection("players").insertOne(new Document("_id", p.getPlayerName()).append("elo",1000).append("games",games));
-    //         }
-    //     }
-    // }
-    // public void generateElo(){
-    //     Date start = new Date();
-    //     DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'", Locale.ENGLISH);
-    //     try{
-    //         start = format.parse("20101011T000000Z");
-    //     }catch(ParseException e){
-    //         System.out.println(e);
-    //     }
-    //     db.getCollection("logs").createIndex(new Document("game-log.date",1));
-    //     FindIterable<Document> iterable = db.getCollection("logs").find().sort(new Document("game-log.date",1));
-    //         iterable.forEach(new Block<Document>() {
-    //                 @Override
-    //                 public void apply(final Document document) {
-    //                     ArrayList<Document> playersDoc = document.get("game-log",Document.class).get("players",ArrayList.class);
-    //                     ArrayList<String> winners = document.get("game-log",Document.class).get("winners",ArrayList.class);
-    //                     HashMap<String,Integer> players = new HashMap<String,Integer>();
-
-    //                     for(Document doc: playersDoc){
-    //                         elo = 0;
-    //                         FindIterable<Document> it = db.getCollection("players").find(new Document("_id",doc.get("name",String.class)));
-    //                         it.forEach(new Block<Document>() {
-    //                                 @Override
-    //                                 public void apply(final Document dc) {
-    //                                     elo = dc.get("elo",Integer.class);
-    //                                 }
-    //                             });
-
-    //                         players.put(doc.get("name",String.class),elo);
-    //                             }
-    //                     HashMap<String,Integer> result = Elo.Calculate(winners, players);
-    //                     for (Map.Entry<String,Integer> entry : result.entrySet())
-    //                         {
-    //                             db.getCollection("players").updateOne(new Document("_id",entry.getKey()), new Document("$set",new Document("elo",entry.getValue())));
-    //                         }
-    //                     System.out.println(result);
-
-    //                 }
-    //             });
-
-    // }
 
 }
