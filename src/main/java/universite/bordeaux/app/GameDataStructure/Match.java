@@ -39,12 +39,12 @@ public class Match implements MatchItf {
     private ArrayList<String> winners;
 
     /**
-     * list of crads which the pile has finished.
+     * list of cards which the pile has finished.
      */
     private ArrayList<String> cardsGone;
 
     /**
-     * list of cards availeble on the market.
+     * list of cards available on the market.
      */
     private ArrayList<String> market;
 
@@ -64,7 +64,7 @@ public class Match implements MatchItf {
     private Date dateTime;
 
     /**
-     * the diference between the highest and lowest elo in the match.
+     * the deference between the highest and lowest elo in the match.
      */
     private int eloGap = 0;
 
@@ -76,7 +76,7 @@ public class Match implements MatchItf {
 
     /**
      * the name of the file that was parsed.
-     * (useful for debuging)
+     * (useful for debugging)
      */
     private String filename;
 
@@ -168,14 +168,14 @@ public class Match implements MatchItf {
     public final void save() {
         if (flagFail) {
             if (this.id == null) {
-                this.id = MongoConection.insertGame(this.toDoc());
+                this.id = MongoConection.insertMatch(this.toDoc());
                 SimplifiedPlayer temp;
                 for (PlayerItf p: this.players) {
                     temp = new SimplifiedPlayer(p.getPlayerName());
                     temp.save();
                 }
             } else {
-                MongoConection.updateGame(new Document("_id", this.id),
+                MongoConection.updateMatch(new Document("_id", this.id),
                         new Document("$set", this.toDoc()));
             }
         }
