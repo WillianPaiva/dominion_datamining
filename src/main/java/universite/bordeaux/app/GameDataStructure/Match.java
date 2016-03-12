@@ -3,7 +3,7 @@ package universite.bordeaux.app.GameDataStructure;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import universite.bordeaux.app.Mongo.MongoConection;
-import universite.bordeaux.app.ReadersAndParser.ErrorLogger;
+import universite.bordeaux.app.Logging.ErrorLogger;
 import universite.bordeaux.app.ReadersAndParser.FileReader;
 import universite.bordeaux.app.ReadersAndParser.HeaderParser;
 import universite.bordeaux.app.ReadersAndParser.LogParser;

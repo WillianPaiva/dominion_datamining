@@ -60,7 +60,7 @@ public class FileHandler {
                     try{
                         x.join();
                     }catch(InterruptedException e){
-                        ErrorLogger.getInstance().logError(e.toString());
+                        universite.bordeaux.app.Logging.ErrorLogger.getInstance().logError(e.toString());
                         //System.out.println(e);
                     }
                 }
@@ -108,7 +108,7 @@ public class FileHandler {
             }
             FileUtils.deleteDirectory(folder);
         }catch(IOException  | InterruptedException e){
-            ErrorLogger.getInstance().logError(e.toString());
+            universite.bordeaux.app.Logging.ErrorLogger.getInstance().logError(e.toString());
             //System.out.println(e);
         }
         over++;

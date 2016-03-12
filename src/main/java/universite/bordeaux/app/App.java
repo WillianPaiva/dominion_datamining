@@ -1,7 +1,7 @@
 package universite.bordeaux.app;
 
 import universite.bordeaux.app.Mongo.MongoConection;
-import universite.bordeaux.app.ReadersAndParser.ErrorLogger;
+import universite.bordeaux.app.Logging.ErrorLogger;
 import universite.bordeaux.app.ReadersAndParser.FileHandler;
 
 import java.io.File;
