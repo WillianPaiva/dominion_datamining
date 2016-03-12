@@ -5,57 +5,67 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import universite.bordeaux.app.Mongo.MongoConection;
 
+/**
+ * this class is a simplified version of player
+ * that is designed to hold his global elo and a list
+ * of all played games.
+ * @author Willian Ver Valen Paiva
+ */
 public class SimplifiedPlayer {
+    /**
+     * base elo constant.
+     */
+    public static final int BASE_ELO = 1000;
+    /**
+     * the player id.
+     */
     private ObjectId id;
+    /**
+     * the player name.
+     */
     private final String name;
+    /**
+     * player global elo.
+     */
     private int elo;
 
-    public SimplifiedPlayer(String name){
-        Document doc = MongoConection.findPlayer(name).first();
-        if(doc != null){
-            this.id = doc.get("_id",ObjectId.class);
-            this.name = doc.get("name",String.class);
-            this.elo = doc.get("elo",Integer.class);
-        }else{
-            this.name = name;
-            this.elo = 1000;
+
+    /**
+     * constructor.
+     * @param nm the player name.
+     */
+    public SimplifiedPlayer(final String nm) {
+        Document doc = MongoConection.findPlayer(nm).first();
+        if (doc != null) {
+            this.id = doc.get("_id", ObjectId.class);
+            this.name = doc.get("name", String.class);
+            this.elo = doc.get("elo", Integer.class);
+        } else {
+            this.name = nm;
+            this.elo = BASE_ELO;
         }
 
     }
 
-    public Document toDoc(){
-        return new Document("name",name).append("elo",elo);
+    /**
+     *  creates a Document version of the simplified player.
+     * @return a Document
+     */
+    public final Document toDoc() {
+        return new Document("name", name).append("elo", elo);
     }
 
-    public void save(){
-        if(this.id == null){
+    /**
+     * save the simplified player into the database.
+     */
+    public final void save() {
+        if (this.id == null) {
             this.id = MongoConection.insertPlayer(this.toDoc());
-        }else{
-            MongoConection.updatePlayer(new Document("_id",id), new Document("$set",this.toDoc()));
+        } else {
+            MongoConection.updatePlayer(new Document("_id", id),
+                    new Document("$set", this.toDoc()));
         }
   }
-
-	/**
-	 * @return the id
-	 */
-  public ObjectId getId() {
-		return id;
-	}
-
-
-	/**
-	 * @return the elo
-	 */
-	public int getElo() {
-		return elo;
-	}
-
-	/**
-	 * @param elo the elo to set
-	 */
-	public void setElo(int elo) {
-		this.elo = elo;
-	}
 
 
 }
