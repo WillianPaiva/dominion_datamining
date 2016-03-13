@@ -1,4 +1,5 @@
 from MongoInterface import *
+import Player
 import math
 
 class Match:
