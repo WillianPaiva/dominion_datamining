@@ -25,6 +25,10 @@ public final class LogParser {
      * @param reader the fileReader with the log to be parsed
      * @return a list of gameTurn
      */
+
+    /*
+     *TODO this method is over bloated and cam be re-factorized to smaller and better functions
+     */
     public static ArrayList<GameTurn> getGameLog(final FileReader reader) {
         Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
