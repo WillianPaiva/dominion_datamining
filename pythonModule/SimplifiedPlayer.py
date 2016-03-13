@@ -8,6 +8,6 @@ class SimplifiedPlayer:
 
     def save(self):
         """update the player on the database"""
-        document = {"name":name,
-                    "elo":elo}
+        document = {"name":self.name,
+                    "elo":self.elo}
         updatePlayer(id,document)
