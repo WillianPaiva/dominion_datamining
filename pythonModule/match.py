@@ -1,4 +1,4 @@
-from MongoInterface import updateLog, getPlayer
+from MongoInterface import *
 import math
 
 class Match:
@@ -53,7 +53,6 @@ class Match:
     def genereteElo(self):
         """generate the ELO of the match"""
         playersOldElo = {}
-        playersNewElo = {}
         eloPool = 0
 
         #collect the base data to calculate the elo
@@ -72,4 +71,5 @@ class Match:
                 newElo= oldElo + (
                     (ELO_FACTOR * (0 - (math.pow(10,oldElo/ELO_PONDERATION) / eloPool ))))
 
-            playerNewElo[player["name"]] = newElo
+            updatePlayer(player["id"],{"elo":newElo})
+            player["Elo"] = newElo
