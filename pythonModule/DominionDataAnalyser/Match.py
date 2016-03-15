@@ -1,6 +1,5 @@
-from MongoInterface import *
-import Player
-import math
+from DominionDataAnalyser.MongoInterface import *
+import DominionDataAnalyser.Player
 
 class Match:
     ELO_FACTOR = 32
@@ -8,37 +7,37 @@ class Match:
     def __init__(self, document):
 
         #the log id on the mongoDB database.
-        id = document["_id"]
+        self.id = document["_id"]
 
         #list of the winners .
-        winners = document["winners"]
+        self.winners = document["winners"]
 
         #list of empty piles on the game.
-        cardsGonne = document["cardsgonne"]
+        self.cardsGonne = document["cardsgonne"]
 
         #list of cards available on the game.
-        market = document["market"]
+        self.market = document["market"]
 
         #list of all the players on the match.
-        players = document["players"]
+        self.players = document["players"]
 
         #list of cards on the trash.
-        trash = document["trash"]
+        self.trash = document["trash"]
 
         #date and time of the game.
-        dateTime = document["date"]
+        self.dateTime = document["date"]
 
         #the difference between the highest and lowest ELO in the match.
-        eloGap = document["eloGap"]
+        self.eloGap = document["eloGap"]
 
         #the step by step of all moves done in the game.
-        log = document["log"]
+        self.log = document["log"]
 
         #the name of the parsed file.
-        fileName = document["filename"]
+        self.fileName = document["filename"]
 
 
-    def save(self):
+    def toDoc(self):
         """save the object into the database"""
         document = {"date":self.dateTime,
                     "filename":self.fileName,
@@ -49,7 +48,7 @@ class Match:
                     "trash":self.trash,
                     "players":self.players,
                     "log":self.log}
-        updateLog(self.id,document)
+        return document
 
     def genereteElo(self):
         """generate the ELO of the match"""
