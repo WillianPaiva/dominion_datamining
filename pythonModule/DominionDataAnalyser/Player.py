@@ -16,7 +16,7 @@ class Player:
 
         self.turns = document["turns"]
         #list of cards on the player deck
-        self.deck = document[deck]
+        self.deck = document["deck"]
         #cards that the player got in the first hand
         self.firsthand = document["firsthand"]
 
