@@ -3,25 +3,25 @@ class Player:
     def __init__(self,document):
 
         BASE_ELO = 1000
-        playerName = document["name"]
+        self.playerName = document["name"]
 
         #list of victory cards on with quantity
-        victoryCards= document["victorycards"]
+        self.victoryCards= document["victorycards"]
 
-        elo = document["elo"]
+        self.elo = document["elo"]
 
-        points = document["points"]
+        self.points = document["points"]
 
-        strategy = document["strategy"]
+        self.strategy = document["strategy"]
 
-        turns = document["turns"]
+        self.turns = document["turns"]
         #list of cards on the player deck
-        deck = document[deck]
+        self.deck = document["deck"]
         #cards that the player got in the first hand
-        firsthand = document["firsthand"]
+        self.firsthand = document["firsthand"]
 
         #TODO find out what the hell is this information on the log!!!
-        opening = document["opening"]
+        self.opening = document["opening"]
 
 
     def toDoc(self):
