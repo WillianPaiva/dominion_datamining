@@ -1,5 +1,5 @@
 from DominionDataAnalyser.MongoInterface import *
-import DominionDataAnalyser.Player
+from DominionDataAnalyser.Player import *
 
 class Match:
     ELO_FACTOR = 32
