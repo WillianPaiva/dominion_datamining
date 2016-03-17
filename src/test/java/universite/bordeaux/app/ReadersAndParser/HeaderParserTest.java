@@ -7,6 +7,8 @@ import junit.framework.TestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.bson.Document;
+
 public class HeaderParserTest extends TestCase {
 	protected FileReader fr1;
 	protected FileReader fr2;
@@ -39,7 +41,8 @@ public class HeaderParserTest extends TestCase {
 	//modifier html pour ajouter 2 winners
     public void testTwoWinners(){
     	ArrayList<String> wins = HeaderParser.getWinners(fr2);
-		assertTrue(wins.size()>0);
+    	//System.out.println(wins);
+		assertTrue(wins.size()>1); // il valide bcp de text fixe
     }
     
     public void testCardsGoneNotNull(){
@@ -50,12 +53,13 @@ public class HeaderParserTest extends TestCase {
     //modifier un log pour ajourter 2 cardsGone
 	public void testCardsGoneSize(){
 		assertEquals(HeaderParser.getCardsGone(fr1).size(), 1);
-		assertEquals(HeaderParser.getCardsGone(fr2).size(), 1);
+		assertEquals(HeaderParser.getCardsGone(fr2).size(), 3);
 	}
     
 	public void testNameCardsGone(){
 		assertEquals(HeaderParser.getCardsGone(fr1).get(0), "Provinces");
-		assertEquals(HeaderParser.getCardsGone(fr2).get(0), "Colonies");
+		assertEquals(HeaderParser.getCardsGone(fr2).get(0), "Develop");
+		assertEquals(HeaderParser.getCardsGone(fr2).get(2), "Expand");
 	}
 	
 	public void testTrashNotNull(){
@@ -89,7 +93,154 @@ public class HeaderParserTest extends TestCase {
 		assertEquals(HeaderParser.getMarket(fr1).get(10), "Talisman");
 	}
 	
-	//add test de player
+	public void testPlayerNotNull(){
+		assertNotNull(HeaderParser.getPlayers(fr1));
+		assertNotNull(HeaderParser.getPlayers(fr2));
+	}
+	
+	public void testPlayerSize(){
+		assertEquals(HeaderParser.getPlayers(fr1).size(), 1);
+		assertEquals(HeaderParser.getPlayers(fr2).size(), 2);
+	}
+	
+	public void testPlayerNames(){
+		assertEquals(HeaderParser.getPlayers(fr1).get(0).getPlayerName(), "guest2");
+		assertEquals(HeaderParser.getPlayers(fr2).get(1).getPlayerName(), "SN4X0R");
+	}
+	
+	public void testPlayerPoints(){
+		assertEquals(HeaderParser.getPlayers(fr1).get(0).toDoc().get("points"), 58);
+		assertEquals(HeaderParser.getPlayers(fr2).get(0).toDoc().get("points"), 84);
+		assertEquals(HeaderParser.getPlayers(fr2).get(1).toDoc().get("points"), 39);		
+	}
+	
+	public void testPlayerTurns(){
+		assertEquals(HeaderParser.getPlayers(fr1).get(0).toDoc().get("turns"), 26);
+		assertEquals(HeaderParser.getPlayers(fr2).get(0).toDoc().get("turns"), 
+				     HeaderParser.getPlayers(fr2).get(1).toDoc().get("turns"));
+	}
+	
+	public void testPlayerVictoryCardsNotNull(){
+		assertNotNull(HeaderParser.getPlayers(fr1).get(0).toDoc().get("victorycards"));
+		
+		assertNotNull(HeaderParser.getPlayers(fr2).get(0).toDoc().get("victorycards"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(1).toDoc().get("victorycards"));
+	}
+	
+	public void testPlayerVictoryCardsInfo(){
+		Document docPlayer = (Document) HeaderParser.getPlayers(fr1).get(0).toDoc().get("victorycards");
+		
+		assertEquals(docPlayer.get("Provinces"), 8);
+		assertEquals(docPlayer.get("Duchies"), 2); //5
+		assertEquals(docPlayer.get("Farmlands"), 2); //Erreur, il a change le nom a Farmls
+		
+		assertEquals(docPlayer.size(), 3);
+	    
+	}
+	
+	public void testPlayerVictoryCardsInfo2(){
+		Document docPlayer1 = (Document) HeaderParser.getPlayers(fr2).get(0).toDoc().get("victorycards");
+
+		assertEquals(docPlayer1.get("Colonies"), 6); //10
+		assertEquals(docPlayer1.get("Provinces"), 3); //8 
+		assertEquals(docPlayer1.get("Estate"), 1); //2
+		assertEquals(docPlayer1.size(), 3);  //Erreur, il a ajoute le 4eme element sur un nom bizarre 
+		
+		//Document{{Provinces=3, Colonies=6, Estate=1, ▼=5}}
+	}
+	
+	public void testPlayerVictoryCardsInfo3(){
+		Document docPlayer2 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("victorycards");
+        
+		assertEquals(docPlayer2.get("Colonies"), 2); //10
+		assertEquals(docPlayer2.get("Province"), 1); //8 
+		assertEquals(docPlayer2.get("Duchies"), 2); //2
+		assertEquals(docPlayer2.size(), 3); //Erreur, il a ajoute le 4eme element sur un nom bizarre 
+		
+		//Document{{Duchies=2, Colonies=2, ▼=7, Province=1}}
+	}
+	
+	public void testPlayerOpeningNotNull(){
+		assertNotNull(HeaderParser.getPlayers(fr1).get(0).toDoc().get("opening"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(0).toDoc().get("opening"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(1).toDoc().get("opening"));
+	}
+	
+	public void testPlayerOpeningSize(){
+		ArrayList<String> openingPlayer1 = (ArrayList<String>)HeaderParser.getPlayers(fr1).get(0).toDoc().get("opening");
+		ArrayList<String> openingPlayer2 = (ArrayList<String>)HeaderParser.getPlayers(fr2).get(0).toDoc().get("opening");
+		ArrayList<String> openingPlayer3 = (ArrayList<String>)HeaderParser.getPlayers(fr2).get(1).toDoc().get("opening");
+				
+		assertEquals(openingPlayer1.size(), 2);
+		assertEquals(openingPlayer2.size(), 2);
+		assertEquals(openingPlayer3.size(), 2);
+	}
+	
+	public void testPlayerOpeningInfo(){
+		ArrayList<String> openingPlayer1 = (ArrayList<String>) HeaderParser.getPlayers(fr1).get(0).toDoc().get("opening");
+		ArrayList<String> openingPlayer2 = (ArrayList<String>)HeaderParser.getPlayers(fr2).get(0).toDoc().get("opening");
+		
+        assertEquals(openingPlayer1.get(1), "Moneylender");
+        assertEquals(openingPlayer2.get(1), "Jack of All Trades");
+	}
+	
+	public void testPlayerDeckNotNull(){
+		assertNotNull(HeaderParser.getPlayers(fr1).get(0).toDoc().get("deck"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(0).toDoc().get("deck"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(1).toDoc().get("deck"));
+	}
+	
+	public void testPlayerDeckSize(){
+		Document deckPlayer1 = (Document) HeaderParser.getPlayers(fr1).get(0).toDoc().get("deck");
+		Document deckPlayer2 = (Document) HeaderParser.getPlayers(fr2).get(0).toDoc().get("deck");
+		Document deckPlayer3 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("deck");
+		
+		assertEquals(deckPlayer1.size(), 7);
+		assertEquals(deckPlayer2.size(), 12); //erreur, il est vide
+		assertEquals(deckPlayer3.size(), 13);
+	}
+	
+	public void testPlayerDeckNames(){
+		Document deckPlayer1 = (Document) HeaderParser.getPlayers(fr1).get(0).toDoc().get("deck");
+		Document deckPlayer3 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("deck");
+		
+		
+		assertEquals(deckPlayer1.get("Provinces"), 8);
+		assertEquals(deckPlayer3.get("Bazaars"), 7);
+		assertEquals(deckPlayer3.get("Colonies"), 2);
+		
+		assertEquals(deckPlayer3.get("Trade Routes"), 2); //erreur, il coupe le nom Trade
+		assertEquals(deckPlayer1.get("Fishing Villages"), 2);  //erreur, il coupe le nom Fishing
+			
+	}
+	
+	public void testPlayerFirstHandNotNull(){
+		assertNotNull(HeaderParser.getPlayers(fr1).get(0).toDoc().get("firsthand"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(0).toDoc().get("firsthand"));
+		assertNotNull(HeaderParser.getPlayers(fr2).get(1).toDoc().get("firsthand"));
+	}
+	
+	public void testPlayerFirstHandSize(){
+		Document d1 = (Document) HeaderParser.getPlayers(fr1).get(0).toDoc().get("firsthand");
+		Document d2 = (Document) HeaderParser.getPlayers(fr2).get(0).toDoc().get("firsthand");
+		Document d3 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("firsthand");
+		
+		assertEquals(d1.size(), 2);
+		assertEquals(d2.size(), 2);
+		assertEquals(d3.size(), 2);
+	}
+	
+	public void testPlayerFirstHandName(){
+		Document d1 = (Document) HeaderParser.getPlayers(fr1).get(0).toDoc().get("firsthand");
+		Document d2 = (Document) HeaderParser.getPlayers(fr2).get(0).toDoc().get("firsthand");
+		Document d3 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("firsthand");
+		
+		assertEquals(d1.get("Estates"), 3);
+		assertEquals(d2.get("Coppers"), 3);
+		assertEquals(d3.get("Estate"), 1);
+	}
+	
+	
 	//add test de erreur
 	
     public static Test suite(){
