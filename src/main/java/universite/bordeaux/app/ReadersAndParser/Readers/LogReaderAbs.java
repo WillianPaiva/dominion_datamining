@@ -236,7 +236,7 @@ public abstract class LogReaderAbs implements LogReader {
     //    name = doc.select("b").text().split(":")[0];
     // } else {
 //TODO java doc
-    private PlayerItf createPlayer(org.jsoup.nodes.Document doc){
+    private PlayerItf createPlayer(org.jsoup.nodes.Document doc) {
         String name = doc.select("b")
                 .text()
                 .replaceAll("^#[0-9]* ", "");
@@ -267,8 +267,8 @@ public abstract class LogReaderAbs implements LogReader {
 
 
 
-    private HashMap<String,Integer> getCards( String[] cardsToParse) {
-        HashMap<String,Integer> cards = new HashMap<>();
+    private HashMap<String, Integer> getCards(final String[] cardsToParse) {
+        HashMap<String, Integer> cards = new HashMap<>();
         for (String x : cardsToParse) {
 
             x = x.trim();
