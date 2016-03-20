@@ -1,5 +1,7 @@
 package universite.bordeaux.app.GameDataStructure;
 
+import java.util.HashMap;
+
 import org.bson.Document;
 
 
@@ -26,6 +28,12 @@ public interface PlayerItf {
      * @param cardName card name.
      */
     void insertVictoryCard(final int quantity, final String cardName);
+    
+    /**
+     * set victoryCard
+     * @param victoryCard
+     */
+    void setVictoryCard(final HashMap<String, Integer> victoryCard);
 
     /**
      * insert a card on players deck.
@@ -33,6 +41,11 @@ public interface PlayerItf {
      * @param cardName card name
      */
     void insertDeck(final int quantity, final String cardName);
+    
+    /**
+     * @param deck
+     */
+    void setDeck(final HashMap<String, Integer> deck);
 
     /**
      * set player points.
@@ -59,6 +72,11 @@ public interface PlayerItf {
      * @param cardName card name.
      */
     void insertFirstHand(final int quantity, final String cardName);
+    
+    /**
+     * @param firstHand HashMap<String, Integer>
+     */
+    void setFirstHand(final HashMap<String, Integer> firstHand);
 
     @Override
     String toString();

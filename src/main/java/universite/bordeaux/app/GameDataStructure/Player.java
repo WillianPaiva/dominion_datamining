@@ -153,6 +153,13 @@ public class Player implements PlayerItf {
         victoryCards.put(cardName, quantity);
     }
 
+    
+    /** 
+     * @param victoryCard HashMap<String, Integer>
+     */
+    public final void setVictoryCard(final HashMap<String, Integer> victoryCard){
+    	this.victoryCards = victoryCard;
+    }
     /**
      * adds a card to the players deck.
      * @param quantity number of cards of the same type
@@ -162,6 +169,13 @@ public class Player implements PlayerItf {
     public final void insertDeck(final int quantity,
                                  final String cardName) {
         deck.put(cardName, quantity);
+    }
+    
+    /** 
+     * @param deck HashMap<String, Integer>
+     */
+    public final void setDeck(final HashMap<String, Integer> deck){
+    	this.deck = deck;
     }
     /**
      * Sets a score for the player.
@@ -198,6 +212,10 @@ public class Player implements PlayerItf {
     public final void insertFirstHand(final int quantity,
                                       final String cardName) {
         this.firstHand.put(cardName, quantity);
+    }
+    
+    public final void setFirstHand(final HashMap<String, Integer> firstHand){
+    	this.firstHand = firstHand;
     }
 
     @Override
