@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package universite.bordeaux.app.ReadersAndParser;
+package universite.bordeaux.app.ReadersAndParser.Readers;
 
 import javax.print.Doc;
 
