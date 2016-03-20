@@ -2,6 +2,8 @@ package universite.bordeaux.app.ReadersAndParser;
 
 import java.io.File;
 
+import universite.bordeaux.app.ReadersAndParser.Readers.LogReader;
+
 
 public final class LogReaderFactory{
 	
