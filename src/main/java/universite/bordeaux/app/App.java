@@ -2,7 +2,7 @@ package universite.bordeaux.app;
 
 import universite.bordeaux.app.Mongo.MongoConection;
 import universite.bordeaux.app.Logging.ErrorLogger;
-import universite.bordeaux.app.ReadersAndParser.FileHandler;
+import universite.bordeaux.app.ReadersAndParser.LogHandler;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class App {
         File child = new File("sampleLogs/");
 
         //create the FileHandler on the logs and run the parser
-        FileHandler fr = new FileHandler(child);
+        LogHandler fr = new LogHandler(child);
         fr.runParser(numberOfThreads);
 
         //close the file used to log error logs in case it was

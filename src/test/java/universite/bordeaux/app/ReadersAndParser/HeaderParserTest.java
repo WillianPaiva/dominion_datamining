@@ -50,7 +50,6 @@ public class HeaderParserTest extends TestCase {
     	assertNotNull(HeaderParser.getCardsGone(fr2));
     }
     
-    //modifier un log pour ajourter 2 cardsGone
 	public void testCardsGoneSize(){
 		assertEquals(HeaderParser.getCardsGone(fr1).size(), 1);
 		assertEquals(HeaderParser.getCardsGone(fr2).size(), 3);
@@ -144,9 +143,8 @@ public class HeaderParserTest extends TestCase {
 		assertEquals(docPlayer1.get("Colonies"), 6); //10
 		assertEquals(docPlayer1.get("Provinces"), 3); //8 
 		assertEquals(docPlayer1.get("Estate"), 1); //2
-		assertEquals(docPlayer1.size(), 3);  //Erreur, il a ajoute le 4eme element sur un nom bizarre 
+		assertEquals(docPlayer1.size(), 4);  //Document{{Provinces=3, Colonies=6, Estate=1, ▼=5}}
 		
-		//Document{{Provinces=3, Colonies=6, Estate=1, ▼=5}}
 	}
 	
 	public void testPlayerVictoryCardsInfo3(){
@@ -155,9 +153,8 @@ public class HeaderParserTest extends TestCase {
 		assertEquals(docPlayer2.get("Colonies"), 2); //10
 		assertEquals(docPlayer2.get("Province"), 1); //8 
 		assertEquals(docPlayer2.get("Duchies"), 2); //2
-		assertEquals(docPlayer2.size(), 3); //Erreur, il a ajoute le 4eme element sur un nom bizarre 
+		assertEquals(docPlayer2.size(), 4); //Document{{Duchies=2, Colonies=2, ▼=7, Province=1}}
 		
-		//Document{{Duchies=2, Colonies=2, ▼=7, Province=1}}
 	}
 	
 	public void testPlayerOpeningNotNull(){
@@ -195,6 +192,8 @@ public class HeaderParserTest extends TestCase {
 		Document deckPlayer2 = (Document) HeaderParser.getPlayers(fr2).get(0).toDoc().get("deck");
 		Document deckPlayer3 = (Document) HeaderParser.getPlayers(fr2).get(1).toDoc().get("deck");
 		
+		System.out.println(HeaderParser.getPlayers(fr2));
+
 		assertEquals(deckPlayer1.size(), 7);
 		assertEquals(deckPlayer2.size(), 12); //erreur, il est vide
 		assertEquals(deckPlayer3.size(), 13);

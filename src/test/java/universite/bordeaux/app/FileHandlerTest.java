@@ -5,7 +5,7 @@ import java.io.File;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import universite.bordeaux.app.ReadersAndParser.FileHandler;
+import universite.bordeaux.app.ReadersAndParser.LogHandler;
 
 public class FileHandlerTest extends TestCase{
 	
@@ -18,7 +18,7 @@ public class FileHandlerTest extends TestCase{
 	}
 	
 	public void testFileHandlerOpening(){
-		FileHandler handler = new FileHandler(new File("testFolder"));
+		LogHandler handler = new LogHandler(new File("testFolder"));
 		assert (handler != null);
 	}
 }

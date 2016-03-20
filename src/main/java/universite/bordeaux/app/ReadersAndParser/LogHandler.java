@@ -16,7 +16,7 @@ import java.util.Queue;
  * creates a object that holds the root folder with all compressed logs file.
  *
  */
-public class FileHandler {
+public class LogHandler {
 
     /**
      * starting value for the progrees bar.
@@ -51,7 +51,7 @@ public class FileHandler {
     /**
      * @param folder path of the folder to use with the FileHandler
      */
-    public FileHandler(final File folder) {
+    public LogHandler(final File folder) {
         this.folderPath = folder;
     }
 
