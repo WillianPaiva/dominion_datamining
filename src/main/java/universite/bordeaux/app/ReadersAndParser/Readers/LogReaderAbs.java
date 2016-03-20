@@ -97,7 +97,7 @@ public abstract class LogReaderAbs implements LogReader {
      */
     private Document getTrash() {
         org.jsoup.nodes.Document doc;
-        HashMap<String, Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = null;
         //look for the line that describes the trash
         if (this.log.searchLineWithString("trash: (.*)") != null) {
             doc = Jsoup.parse(this.log.getLine());
@@ -108,18 +108,7 @@ public abstract class LogReaderAbs implements LogReader {
                         .replace("trash: ", "")
                         .replace("and", "")
                         .split(",");
-                for (String x: trash) {
-                    x = x.trim();
-                    String[] cards = x.split(" ", SEARCH_TRESEHOLD);
-                    int qty;
-                    try {
-                        qty = Integer.parseInt(cards[0]);
-                    } catch (NumberFormatException e) {
-                        qty = 1;
-                    }
-                    String card = cards[1];
-                    result.put(card, qty);
-                }
+                result = getCards(trash);
             }
         }
         //return the file pointer to the beginning of the file
@@ -200,19 +189,8 @@ public abstract class LogReaderAbs implements LogReader {
                                 .replace("and", "");
                         if (!list.contains("nothing")) {
                             String[] victoryCards = list.split(",");
+                            pl.setVictoryCard(getCards(victoryCards));
                             //insert the victorycards on the player object
-                            for (String x: victoryCards) {
-                                x = x.trim();
-                                String[] cards = x.split(" ", SEARCH_TRESEHOLD);
-                                int qty;
-                                try {
-                                    qty = Integer.parseInt(cards[0]);
-                                } catch (NumberFormatException e) {
-                                    qty = 1;
-                                }
-                                String card = cards[1];
-                                pl.insertVictoryCard(qty, card);
-                            }
                         }
                         //get the turns
                         pl.setTurns(Integer.parseInt(firstBreak[1]
@@ -234,18 +212,7 @@ public abstract class LogReaderAbs implements LogReader {
                         String[] deck = doc.text()
                                 .split("\\[[0-9]* cards\\]")[1]
                                 .split(",");
-                        for (String x: deck) {
-                            x = x.trim();
-                            String[] cards = x.split(" ", SEARCH_TRESEHOLD);
-                            int qty;
-                            try {
-                                qty = Integer.parseInt(cards[0]);
-                            } catch (NumberFormatException e) {
-                                qty = 1;
-                            }
-                            String card = cards[1];
-                            pl.insertDeck(qty, card);
-                        }
+                        pl.setDeck(getCards(deck));
                     }
                     players.add(pl);
                     //jumps 1 line
@@ -256,7 +223,7 @@ public abstract class LogReaderAbs implements LogReader {
 
         }
         //return the file pointer to the beginning of the file
-        getFirstHand(players, doc);
+        getFirstHand(players);
         return new Document("players", players.stream()
                 .map(PlayerItf::toDoc)
                 .collect(Collectors
@@ -276,29 +243,20 @@ public abstract class LogReaderAbs implements LogReader {
         return new Player(name);
     }
 
-    private void getFirstHand(ArrayList<PlayerItf> players, org.jsoup.nodes.Document doc) {
+    private void getFirstHand(ArrayList<PlayerItf> players) {
+        org.jsoup.nodes.Document doc;
         this.log.rewindFile();
         if (this.log.searchLineWithString("(.*)'s first hand: (.*)")
                 != null) {
             for (int x = 0; x < players.size(); x++) {
                 doc = Jsoup.parse(this.log.getLine());
                 String[] firstHand = doc.text().split("'s first hand: ");
-                for (String y : firstHand[1].replace(".)", "").split("and")) {
-                    y = y.trim();
-                    String[] cards = y.split(" ", SEARCH_TRESEHOLD);
-                    int qty;
-                    try {
-                        qty = Integer.parseInt(cards[0]);
-                    } catch (NumberFormatException e) {
-                        qty = 1;
-                    }
-                    String card = cards[1];
-                    for (PlayerItf pla : players) {
-                        if (pla.getPlayerName()
-                                .equals(firstHand[0]
-                                        .substring(1))) {
-                            pla.insertFirstHand(qty, card);
-                        }
+
+                for (PlayerItf pla : players) {
+                    if (pla.getPlayerName()
+                            .equals(firstHand[0]
+                                    .substring(1))) {
+                        pla.setFirstHand(getCards(firstHand[1].replace(".)", "").split("and")));
                     }
                 }
                 this.log.searchLineWithString("(.*)'s first hand: (.*)");
@@ -309,8 +267,8 @@ public abstract class LogReaderAbs implements LogReader {
 
 
 
-    private void getCards(HashMap<String,Integer> cards , String[] cardsToParse) {
-
+    private HashMap<String,Integer> getCards( String[] cardsToParse) {
+        HashMap<String,Integer> cards = new HashMap<>();
         for (String x : cardsToParse) {
 
             x = x.trim();
@@ -318,13 +276,14 @@ public abstract class LogReaderAbs implements LogReader {
             String[] temp = x.split(" ", SEARCH_TRESEHOLD);
             int qty;
             try {
-                qty = Integer.parseInt(cards[0]);
+                qty = Integer.parseInt(temp[0]);
             } catch (NumberFormatException e) {
                 qty = 1;
             }
             String card = temp[1];
             cards.put(card, qty);
         }
+        return cards;
     }
 
 
