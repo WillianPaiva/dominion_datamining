@@ -330,9 +330,9 @@ public abstract class LogReaderAbs implements LogReader {
         return move;
     }
 
-    
+
     private Document getGameLog() {
-    	org.jsoup.nodes.Document doc;
+      org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
         boolean finished = false;
         int last = 0;
@@ -371,20 +371,20 @@ public abstract class LogReaderAbs implements LogReader {
                             && !doc.text().contains("reshuffles.)")) {
 
                         //gets the plays move
-                        if (LogElements.existPlaysMove(this.log.getLine())){
+                        if (LogElements.isPlaysMove(this.log.getLine())){
                             String cards = "";
-                            if (!doc.text().matches("^\\.\\.\\.(.*)")
-                                    && playername.contains("plays")) {
-                                cards = doc.text()
-                                        .trim()
-                                        .replace(playername
-                                                + " plays ", "")
-                                        .replaceAll("\\.", "");
-                            } else {
-                                cards = doc.text()
-                                        .split(" plays ")[1]
-                                        .replaceAll("\\.", "");
-                            }
+                            //TODO
+                            // if (playername.contains("plays")) {
+                            //     cards = doc.text()
+                            //             .trim()
+                            //             .replace(playername
+                            //                     + " plays ", "")
+                            //             .replaceAll("\\.", "");
+                            // } else {
+                            cards = doc.text()
+                                .split(" plays ")[1]
+                                .replaceAll("\\.", "");
+                            // }
                             cards = cards.replace("again", "")
                                     .replace("a third time", "");
                             int level = 0;
@@ -396,10 +396,10 @@ public abstract class LogReaderAbs implements LogReader {
                             }
                             String[] playedCards;
                             if (cards.contains(",")) {
-                            	cards = cards.replace("and", "");
-                            	playedCards = cards.split(",");
+                              cards = cards.replace("and", "");
+                              playedCards = cards.split(",");
                             }else{
-                            	playedCards = cards.split(" and ");
+                              playedCards = cards.split(" and ");
                             }
                             t.insertMove(playername,
                                     level,
@@ -408,19 +408,19 @@ public abstract class LogReaderAbs implements LogReader {
                             break;
 
                             //gets the buys move
-                        } else if (LogElements.existBuysMove(this.log.getLine())) {
+                        } else if (LogElements.isBuysMove(this.log.getLine())) {
                             String cards = "";
-                            if (!doc.text().matches("^\\.\\.\\.(.*)")
-                                    && playername.contains("buys")) {
-                                cards = doc.text()
-                                        .trim()
-                                        .replace(playername + " buys ", "")
-                                        .replaceAll("\\.", "");
-                            } else {
+                            //TODO
+                            // if (playername.contains("buys")) {
+                            //     cards = doc.text()
+                            //             .trim()
+                            //             .replace(playername + " buys ", "")
+                            //             .replaceAll("\\.", "");
+                            // } else {
                                 cards = doc.text()
                                         .split(" buys ")[1]
                                         .replaceAll("\\.", "");
-                            }
+                            // }
                             int level = 0;
                             String countLevel = doc.text();
                             while (countLevel.matches("\\.\\.\\.(.*)")) {
@@ -435,7 +435,7 @@ public abstract class LogReaderAbs implements LogReader {
                             break;
 
                             //gets the draws on the finish of the turn
-                        } else if (LogElements.existDrawsOnFinishTurn(this.log.getLine())) {
+                        } else if (LogElements.isDrawsLastAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" draws: ")[1]
@@ -448,7 +448,7 @@ public abstract class LogReaderAbs implements LogReader {
 
                             //gets the move that consists
                             // in draw and discard a same card
-                        } else if (LogElements.existMoveDrawDiscardCard(this.log.getLine())) {
+                        } else if (LogElements.isMoveDrawDiscardCard(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" draws and discard ")[1]
@@ -471,7 +471,7 @@ public abstract class LogReaderAbs implements LogReader {
                             break;
 
                             //gets the gains action
-                        } else if (LogElements.existGainsAction(this.log.getLine())) {
+                        } else if (LogElements.isGainsAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" gains ")[1]
@@ -492,7 +492,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     getCards(cards));
                             break;
                             //gets the double action discards and gains
-                        } else if (LogElements.existActionDiscardsAndGains(this.log.getLine())) {
+                        } else if (LogElements.isActionDiscardsAndGains(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" discards ")[1]
@@ -531,7 +531,7 @@ public abstract class LogReaderAbs implements LogReader {
                             }
                             break;
                             //get trashes
-                        } else if (LogElements.existTrashes(this.log.getLine())) {
+                        } else if (LogElements.isTrashes(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" trashes ")[1]
@@ -570,7 +570,7 @@ public abstract class LogReaderAbs implements LogReader {
                             }
                             break;
                             // get reveals
-                        } else if (LogElements.existReveals(this.log.getLine())) {
+                        } else if (LogElements.isReveals(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" reveals ")[1]
@@ -605,7 +605,7 @@ public abstract class LogReaderAbs implements LogReader {
 
 
                             //get the trashing action
-                        } else if (LogElements.existTrashingAction(this.log.getLine())) {
+                        } else if (LogElements.isTrashingAction(this.log.getLine())) {
                             String cards =  this.log
                                     .getLine()
                                     .trim()
@@ -629,7 +629,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     getCards(cards));
                             break;
 
-                        } else if (LogElements.existRevealingAction(this.log.getLine())) {
+                        } else if (LogElements.isRevealingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" revealing ")[1]
@@ -659,7 +659,7 @@ public abstract class LogReaderAbs implements LogReader {
                                         getCards(cards));
                             }
                             break;
-                        } else if (LogElements.existPuttingAction(this.log.getLine())) {
+                        } else if (LogElements.isPuttingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" putting ")[1]
@@ -677,7 +677,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     "putting",
                                     getCards(cards));
                             break;
-                        } else if (LogElements.existGainingAction(this.log.getLine())) {
+                        } else if (LogElements.isGainingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" gaining ")[1]
@@ -695,7 +695,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     "gains",
                                     getCards(cards));
                             break;
-                        } else if (LogElements.existDiscardingAction(this.log.getLine())) {
+                        } else if (LogElements.isDiscardingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" discarding ")[1]
@@ -714,7 +714,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     "discarding",
                                     getCards(cards));
                             break;
-                        } else if (LogElements.existPlayingAction(this.log.getLine())) {
+                        } else if (LogElements.isPlayingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" playing ")[1]
@@ -731,7 +731,7 @@ public abstract class LogReaderAbs implements LogReader {
                                     "playing",
                                     getCards(cards));
                             break;
-                        } else if (LogElements.existDrawingAction(this.log.getLine())) {
+                        } else if (LogElements.isDrawingAction(this.log.getLine())) {
                             String cards =  doc.text()
                                     .trim()
                                     .split(" drawing ")[1]
@@ -765,6 +765,8 @@ public abstract class LogReaderAbs implements LogReader {
         return new Document("log",turns);
     }
 
+
+
     /**
      * get the player name from the string.
      * @param s string
@@ -790,5 +792,5 @@ public abstract class LogReaderAbs implements LogReader {
         }
         return temp;
     }
-    
+
 }
