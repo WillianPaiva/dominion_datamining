@@ -32,7 +32,7 @@ public final class LogElements {
                             + " \\<span class(.*)");
     }
 
-    public static boolean existTrashes(final String line) {
+    public static boolean isTrashes(final String line) {
         return line.matches("(.*) trashes (a|an|[0-9]+)"
                             + " \\<span class(.*)");
     }
@@ -79,4 +79,26 @@ public final class LogElements {
         return line.trim().matches("(.*) drawing (a|an|[0-9]+)+ "
                                   + " \\<span class(.*)");
     }
+
+    public ActionTypes type(final String line){
+        if (isPlaysMove(line)) {return ActionTypes.PLAYS;}
+        else if (isBuysMove(line)) {return ActionTypes.BUYS;}
+        else if (isDrawsLastAction(line)) {return ActionTypes.DRAWS_LAST_ACTION;}
+        else if (isMoveDrawDiscardCard(line)) {return ActionTypes.DRAWS_DISCARD;}
+        else if (isGainsAction(line)) {return ActionTypes.GAINS;}
+        else if (isActionDiscardsAndGains(line)) {return ActionTypes.DISCARD_AND_GAINS;}
+        else if (isTrashes(line)) {return ActionTypes.TRASHES;}
+        else if (isReveals(line)) {return ActionTypes.REVEALS;}
+        else if (isTrashingAction(line)) {return ActionTypes.TRASHING;}
+        else if (isRevealingAction(line)) {return ActionTypes.REVEALING;}
+        else if (isPuttingAction(line)) {return ActionTypes.PUTTING;}
+        else if (isGainingAction(line)) {return ActionTypes.GAINING;}
+        else if (isDiscardingAction(line)) {return ActionTypes.DISCARDING;}
+        else if (isPlayingAction(line)) {return ActionTypes.PLAYING;}
+        else if (isDrawingAction(line)) {return ActionTypes.DRAWING;}
+        else {return ActionTypes.NOT_DEFINED;}
+    }
+
+
+
 }
