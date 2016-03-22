@@ -330,6 +330,16 @@ public abstract class LogReaderAbs implements LogReader {
         return move;
     }
 
+    private int countLevel(String line) {
+        int level = 0;
+        String countLevel = line;
+        while (countLevel.matches("\\.\\.\\.(.*)")) {
+            countLevel = countLevel
+                .substring(SUBSTRING_CONST);
+            level++;
+        }
+        return level;
+    }
 
     private Document getGameLog() {
       org.jsoup.nodes.Document doc;
