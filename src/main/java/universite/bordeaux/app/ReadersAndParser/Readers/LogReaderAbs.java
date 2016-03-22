@@ -471,6 +471,15 @@ public abstract class LogReaderAbs implements LogReader {
             .replaceAll("another", "a");
         return getCards(cards);
     }
+
+
+    private HashMap<String,Integer> getCardsForPlayingMove(org.jsoup.nodes.Document doc) {
+        String cards =  doc.text()
+            .trim()
+            .split(" playing ")[1]
+            .replaceAll("\\.", "");
+        return getCards(cards);
+    }
     private Document getGameLog() {
       org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
