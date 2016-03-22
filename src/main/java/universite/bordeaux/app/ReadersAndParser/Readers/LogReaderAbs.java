@@ -413,6 +413,28 @@ public abstract class LogReaderAbs implements LogReader {
         }
         return result;
     }
+
+
+    private Collection<HashMap<String,Integer>> getCardsForRevealMove(org.jsoup.nodes.Document doc) {
+        Collection<HashMap<String,Integer>> result = new ArrayList<>();
+        String cards = doc.text().trim().split(" reveals ")[1].replaceAll("\\.", "");
+        boolean trashes = false;
+        if (cards.contains("and trashes it")) {
+            trashes = true;
+            cards = cards.replaceAll("and trashes it", "");
+        }
+        cards = cards
+            .replaceAll(" and then ", ",")
+            .replaceAll(", and ", ",")
+            .replaceAll(" and ", ",");
+        result.add(getCards(cards));
+        if (trashes) {
+            result.add(getCards(cards));
+        }
+        return result;
+
+    }
+
     private Document getGameLog() {
       org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
