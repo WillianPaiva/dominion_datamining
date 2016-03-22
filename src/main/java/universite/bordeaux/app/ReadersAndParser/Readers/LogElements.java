@@ -80,7 +80,7 @@ public final class LogElements {
                                   + " \\<span class(.*)");
     }
 
-    public ActionTypes type(final String line){
+    public static ActionTypes type(final String line){
         if (isPlaysMove(line)) {return ActionTypes.PLAYS;}
         else if (isBuysMove(line)) {return ActionTypes.BUYS;}
         else if (isDrawsLastAction(line)) {return ActionTypes.DRAWS_LAST_ACTION;}
@@ -98,7 +98,4 @@ public final class LogElements {
         else if (isDrawingAction(line)) {return ActionTypes.DRAWING;}
         else {return ActionTypes.NOT_DEFINED;}
     }
-
-
-
 }
