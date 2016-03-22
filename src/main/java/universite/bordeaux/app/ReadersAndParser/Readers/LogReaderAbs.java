@@ -394,6 +394,25 @@ public abstract class LogReaderAbs implements LogReader {
             .replaceAll(" to replace it", "");
         return getCards(cards);
     }
+
+    private Collection<Map<String,Integer>> getCardsForDiscardAndGainMove(org.jsoup.nodes.Document doc) {
+        Collection<Map<String,Integer>> result = new ArrayList<>();
+        String cards =  doc.text()
+            .trim()
+            .split(" discards ")[1]
+            .replaceAll("\\.", "")
+            .replaceAll("on the deck", "");
+
+        if (cards.contains(" and gains ")) {
+            String[] actionList;
+            actionList = cards.split(" and gains ");
+            result.add(getCards(actionList[0]));
+            result.add(getCards(actionList[1]));
+        } else {
+            result.add(getCards(cards));
+        }
+        return result;
+    }
     private Document getGameLog() {
       org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
