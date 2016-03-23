@@ -3,6 +3,8 @@ package universite.bordeaux.app.ReadersAndParser;
 import org.apache.commons.io.FileUtils;
 import universite.bordeaux.app.GameDataStructure.Match;
 import universite.bordeaux.app.GameDataStructure.MatchItf;
+import universite.bordeaux.app.Mongo.MongoConection;
+import universite.bordeaux.app.ReadersAndParser.Readers.LogReader;
 import universite.bordeaux.app.colors.ColorsTemplate;
 
 import java.io.File;
@@ -150,12 +152,9 @@ public class LogHandler {
             //iterates over all files in the temp folder
             if (htmlList != null) {
                 for (File log: htmlList) {
-                    FileReader fr = new FileReader(log);
-                    if (!fr.isEmpty()) {
-                        MatchItf g = new Match(fr);
-                        g.save();
-                    }
-                    fr.close();
+                    LogReader temp = LogReaderFactory.createrReader(log);
+                    MongoConection.insertMatch(temp.getDoc());
+                    temp.close();
                     progressBar(Math.round(((float) filesParsed
                                     / (float) totalFilesToBeParsed)
                                     * HUNDRED),
