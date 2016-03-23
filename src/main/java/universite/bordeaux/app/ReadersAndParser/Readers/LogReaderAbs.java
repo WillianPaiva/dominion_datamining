@@ -34,6 +34,8 @@ public abstract class LogReaderAbs {
 
     public LogReaderAbs(final String fileLog) {
         this.log = new FileReader(new File(fileLog));
+    public LogReaderAbs(final File fileLog) {
+        this.log = new FileReader(fileLog);
     }
 
     /**
