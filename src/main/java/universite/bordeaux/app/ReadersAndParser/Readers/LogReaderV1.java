@@ -12,4 +12,10 @@ public class LogReaderV1 extends LogReaderAbs implements LogReader{
     this.version = 1;
 	}
 
+	@Override
+	public Document getDoc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
