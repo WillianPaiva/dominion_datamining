@@ -770,4 +770,22 @@ public abstract class LogReaderAbs {
         }
         return temp;
     }
+
+    protected Document toDoc() {
+        return new Document()
+            .append("date", this.getDateTime())
+            .append("filename", this.log.getName())
+            .append("eloGap", 0)
+            .append("winners", this.getWinners())
+            .append("cardsgonne", this.getCardsGone())
+            .append("market", this.getMarket())
+            .append("trash", this.getTrash())
+            .append("players", this.getPlayers())
+            .append("log",this.getGameLog());
+    }
+
+    public void close(){
+        log.close();
+    }
+
 }
