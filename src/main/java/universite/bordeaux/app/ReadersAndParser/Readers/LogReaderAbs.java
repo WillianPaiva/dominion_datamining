@@ -32,8 +32,6 @@ public abstract class LogReaderAbs {
     protected int version;
     protected FileReader log;
 
-    public LogReaderAbs(final String fileLog) {
-        this.log = new FileReader(new File(fileLog));
     public LogReaderAbs(final File fileLog) {
         this.log = new FileReader(fileLog);
     }
@@ -43,7 +41,7 @@ public abstract class LogReaderAbs {
      *
      * @return a list of winners present on the line
      */
-    protected Document getWinners() {
+    protected ArrayList<String> getWinners() {
         org.jsoup.nodes.Document doc;
 
         ArrayList<String> result = new ArrayList<>();
@@ -68,7 +66,7 @@ public abstract class LogReaderAbs {
             }
         }
         this.log.rewindFile();
-        return new Document("winners",result);
+        return result;
     }
 
     /**
@@ -77,7 +75,7 @@ public abstract class LogReaderAbs {
      * and look for the list of cards that are listed as gonne.
      * @return a list of cards present on the line parsed
      */
-    protected Document getCardsGone() {
+    protected ArrayList<String> getCardsGone() {
         org.jsoup.nodes.Document  doc;
         ArrayList<String> cardsGone = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -91,7 +89,7 @@ public abstract class LogReaderAbs {
             }
         }
         this.log.rewindFile();
-        return new Document("cardsgone",cardsGone);
+        return cardsGone;
     }
 
     /**
@@ -100,7 +98,7 @@ public abstract class LogReaderAbs {
      * and parse a list of cards that are in the trash.
      * @return a map with the cards and quantity of the trashed parsed
      */
-    protected Document getTrash() {
+    protected HashMap<String, Integer> getTrash() {
         org.jsoup.nodes.Document doc;
         HashMap<String, Integer> result = null;
         //look for the line that describes the trash
@@ -118,14 +116,14 @@ public abstract class LogReaderAbs {
         }
         //return the file pointer to the beginning of the file
         this.log.rewindFile();
-        return new Document("trash",hashToDoc(result));
+        return result;
     }
 
     /**
      * get all the cards that are in the (cards in suply) list.
      * @return a list of cards presents on the line parsed
      */
-    protected Document getMarket() {
+    protected ArrayList<String> getMarket() {
         org.jsoup.nodes.Document doc;
         ArrayList<String> market = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -142,7 +140,7 @@ public abstract class LogReaderAbs {
             }
         }
         this.log.rewindFile();
-        return new Document("market", market);
+        return market;
     }
 
     /**
@@ -151,7 +149,7 @@ public abstract class LogReaderAbs {
      *
      * @return a list of Players parsed from the log
      */
-    protected Document getPlayers() {
+    protected ArrayList<Document> getPlayers() {
         boolean start = true;
 
         org.jsoup.nodes.Document doc;
@@ -228,15 +226,11 @@ public abstract class LogReaderAbs {
         }
         //return the file pointer to the beginning of the file
         getFirstHand(players);
-        return new Document("players", players.stream()
-                            .map(PlayerItf::toDoc)
-                            .collect(Collectors
-                                     .toCollection(ArrayList::new)));
+        return players.stream().map(PlayerItf::toDoc)
+            .collect(Collectors
+                     .toCollection(ArrayList::new));
     }
 
-    //if (doc.select("b").text().contains("points")) {
-    //    name = doc.select("b").text().split(":")[0];
-    // } else {
     //TODO java doc
     protected PlayerItf createPlayer(org.jsoup.nodes.Document doc) {
         String name = doc.select("b")
@@ -496,7 +490,8 @@ public abstract class LogReaderAbs {
             result.add(getCards(cards));
         }
         return result;
-    }
+
+}
 
     protected HashMap<String,Integer> getCardsForDiscardingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
@@ -518,9 +513,8 @@ public abstract class LogReaderAbs {
         return getCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForTrashingMove(org.jsoup.nodes.Document doc) {
-        String cards =  doc.data()
-            .trim()
+    protected HashMap<String,Integer> getCardsForTrashingMove(String doc) {
+        String cards =  doc.trim()
             .split(" trashing ")[1]
             .replaceAll("(\\</span\\>)"
                         + " (for|from).*\\.$", "$1");
@@ -531,7 +525,7 @@ public abstract class LogReaderAbs {
         return getCards(cards);
     }
 
-    protected Document getGameLog() {
+    protected ArrayList<Document> getGameLog() {
         org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
         boolean finished = false;
@@ -662,7 +656,7 @@ public abstract class LogReaderAbs {
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
                                             "trash",
-                                            getCardsForTrashingMove(doc));
+                                            getCardsForTrashingMove(log.getLine()));
                                 break;
                             case REVEALS:
                                 Collection<HashMap<String,Integer>> revealCards = getCardsForRevealMove(doc);
@@ -729,7 +723,9 @@ public abstract class LogReaderAbs {
 
         }
         this.log.rewindFile();
-        return new Document("log",turns);
+
+        return turns.stream().map(GameTurn::toDoc)
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 
     protected Date getDateTime(){
