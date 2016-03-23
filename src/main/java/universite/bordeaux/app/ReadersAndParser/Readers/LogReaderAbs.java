@@ -1,9 +1,14 @@
 package universite.bordeaux.app.ReadersAndParser.Readers;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -21,27 +26,22 @@ import universite.bordeaux.app.ReadersAndParser.FileReader;
 /**
  *
  */
-public abstract class LogReaderAbs implements LogReader {
+public abstract class LogReaderAbs {
     public static final int SEARCH_TRESEHOLD = 2;
     public static final int SUBSTRING_CONST = 3;
-    private int version;
-    private FileReader log;
+    protected int version;
+    protected FileReader log;
 
     public LogReaderAbs(final String fileLog) {
         this.log = new FileReader(new File(fileLog));
     }
-
-    public Document GetDoc() {
-        return null;
-    }
-
 
     /**
      * parses the first line and grab the list of winners.
      *
      * @return a list of winners present on the line
      */
-    private Document getWinners() {
+    protected Document getWinners() {
         org.jsoup.nodes.Document doc;
 
         ArrayList<String> result = new ArrayList<>();
@@ -53,7 +53,8 @@ public abstract class LogReaderAbs implements LogReader {
             //find the match winner
             String[] win = doc.body().text().split("wins!");
             if (win[0].contains("rejoice in their shared victory!")) {
-                String[] winners = win[0].split("rejoice in their shared victory!")[0].split("and");
+                String[] winners = win[0]
+                    .split("rejoice in their shared victory!")[0].split("and");
                 for (String x: winners) {
                     result.add(x.trim());
                 }
@@ -74,7 +75,7 @@ public abstract class LogReaderAbs implements LogReader {
      * and look for the list of cards that are listed as gonne.
      * @return a list of cards present on the line parsed
      */
-    private Document getCardsGone() {
+    protected Document getCardsGone() {
         org.jsoup.nodes.Document  doc;
         ArrayList<String> cardsGone = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -91,14 +92,13 @@ public abstract class LogReaderAbs implements LogReader {
         return new Document("cardsgone",cardsGone);
     }
 
-
     /**
      * parses the line:
      * ex: trash: a <span class=card-treasure>Silver</span>
      * and parse a list of cards that are in the trash.
      * @return a map with the cards and quantity of the trashed parsed
      */
-    private Document getTrash() {
+    protected Document getTrash() {
         org.jsoup.nodes.Document doc;
         HashMap<String, Integer> result = null;
         //look for the line that describes the trash
@@ -119,12 +119,11 @@ public abstract class LogReaderAbs implements LogReader {
         return new Document("trash",hashToDoc(result));
     }
 
-
     /**
      * get all the cards that are in the (cards in suply) list.
      * @return a list of cards presents on the line parsed
      */
-    private Document getMarket() {
+    protected Document getMarket() {
         org.jsoup.nodes.Document doc;
         ArrayList<String> market = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -144,14 +143,13 @@ public abstract class LogReaderAbs implements LogReader {
         return new Document("market", market);
     }
 
-
     /**
      * reads the player section of the log
      * and parses each player present on the log as a Player object.
      *
      * @return a list of Players parsed from the log
      */
-    private Document getPlayers() {
+    protected Document getPlayers() {
         boolean start = true;
 
         org.jsoup.nodes.Document doc;
@@ -192,7 +190,8 @@ public abstract class LogReaderAbs implements LogReader {
                             .replace("and", "");
                         if (!list.contains("nothing")) {
                             String[] victoryCards = list.split(",");
-                            pl.setVictoryCard(getCards(victoryCards, SEARCH_TRESEHOLD));
+                            pl.setVictoryCard(getCards(victoryCards,
+                                                       SEARCH_TRESEHOLD));
                             //insert the victorycards on the player object
                         }
                         //get the turns
@@ -237,14 +236,14 @@ public abstract class LogReaderAbs implements LogReader {
     //    name = doc.select("b").text().split(":")[0];
     // } else {
     //TODO java doc
-    private PlayerItf createPlayer(org.jsoup.nodes.Document doc) {
+    protected PlayerItf createPlayer(org.jsoup.nodes.Document doc) {
         String name = doc.select("b")
             .text()
             .replaceAll("^#[0-9]* ", "");
         return new Player(name);
     }
 
-    private void getFirstHand(ArrayList<PlayerItf> players) {
+    protected void getFirstHand(ArrayList<PlayerItf> players) {
         org.jsoup.nodes.Document doc;
         this.log.rewindFile();
         if (this.log.searchLineWithString("(.*)'s first hand: (.*)")
@@ -257,7 +256,10 @@ public abstract class LogReaderAbs implements LogReader {
                     if (pla.getPlayerName()
                         .equals(firstHand[0]
                                 .substring(1))) {
-                        pla.setFirstHand(getCards(firstHand[1].replace(".)", "").split("and"),SEARCH_TRESEHOLD));
+                        pla.setFirstHand(getCards(firstHand[1]
+                                                  .replace(".)", "")
+                                                  .split("and")
+                                                  ,SEARCH_TRESEHOLD));
                     }
                 }
                 this.log.searchLineWithString("(.*)'s first hand: (.*)");
@@ -266,7 +268,7 @@ public abstract class LogReaderAbs implements LogReader {
         this.log.rewindFile();
     }
 
-    private HashMap<String, Integer> getCards(final String[] cardsToParse,
+    protected HashMap<String, Integer> getCards(final String[] cardsToParse,
                                               final int  limit) {
         HashMap<String, Integer> cards = new HashMap<>();
         for (String x : cardsToParse) {
@@ -285,12 +287,13 @@ public abstract class LogReaderAbs implements LogReader {
         }
         return cards;
     }
+
     /**
      * gets a string and return a hash map with the cards and quantity.
      * @param cards string
      * @return hashmap
      */
-    private static HashMap<String, Integer> getCards(String cards) {
+    protected static HashMap<String, Integer> getCards(String cards) {
         HashMap<String, Integer> move = new HashMap<>();
         if (cards.contains(",")) {
             cards = cards.replace("and", "");
@@ -325,7 +328,7 @@ public abstract class LogReaderAbs implements LogReader {
         return move;
     }
 
-    private int countLevel(String line) {
+    protected int countLevel(String line) {
         int level = 0;
         String countLevel = line;
         while (countLevel.matches("\\.\\.\\.(.*)")) {
@@ -336,7 +339,7 @@ public abstract class LogReaderAbs implements LogReader {
         return level;
     }
 
-    private HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc) {
         String cards = "";
         //TODO
         // if (playername.contains("buys")) {
@@ -350,7 +353,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc) {
         String cards = "";
         //TODO
         // if (playername.contains("plays")) {
@@ -366,18 +369,21 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForDrawsMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForDrawsMove(org.jsoup.nodes.Document doc) {
         String cards = doc.text().trim().split(" draws: ")[1]
             .replaceAll("\\.\\)", "");
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForDrawsAndDiscardMove(org.jsoup.nodes.Document doc) {
-        String cards = doc.text().trim().split(" draws and discard ")[1].replaceAll("\\.", "");
+    protected HashMap<String,Integer> getCardsForDrawsAndDiscardMove(org.jsoup.nodes.Document doc) {
+        String cards = doc.text()
+            .trim()
+            .split(" draws and discard ")[1]
+            .replaceAll("\\.", "");
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForGainsMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForGainsMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" gains ")[1]
@@ -388,7 +394,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private Collection<HashMap<String,Integer>> getCardsForDiscardAndGainMove(org.jsoup.nodes.Document doc) {
+    protected Collection<HashMap<String,Integer>> getCardsForDiscardAndGainMove(org.jsoup.nodes.Document doc) {
         Collection<HashMap<String,Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
@@ -407,10 +413,12 @@ public abstract class LogReaderAbs implements LogReader {
         return result;
     }
 
-
-    private Collection<HashMap<String,Integer>> getCardsForRevealMove(org.jsoup.nodes.Document doc) {
+    protected Collection<HashMap<String,Integer>> getCardsForRevealMove(org.jsoup.nodes.Document doc) {
         Collection<HashMap<String,Integer>> result = new ArrayList<>();
-        String cards = doc.text().trim().split(" reveals ")[1].replaceAll("\\.", "");
+        String cards = doc.text()
+            .trim()
+            .split(" reveals ")[1]
+            .replaceAll("\\.", "");
         boolean trashes = false;
         if (cards.contains("and trashes it")) {
             trashes = true;
@@ -428,7 +436,7 @@ public abstract class LogReaderAbs implements LogReader {
 
     }
 
-    private Collection<HashMap<String,Integer>> getCardsForTrashMove(org.jsoup.nodes.Document doc) {
+    protected Collection<HashMap<String,Integer>> getCardsForTrashMove(org.jsoup.nodes.Document doc) {
         Collection<HashMap<String,Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
@@ -445,9 +453,7 @@ public abstract class LogReaderAbs implements LogReader {
         return result;
     }
 
-
-
-    private HashMap<String,Integer> getCardsForPuttingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForPuttingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" putting ")[1]
@@ -456,7 +462,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForGainingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForGainingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" gaining ")[1]
@@ -465,8 +471,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-
-    private HashMap<String,Integer> getCardsForPlayingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForPlayingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" playing ")[1]
@@ -474,7 +479,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private Collection<HashMap<String,Integer>> getCardsForRevealingMove(org.jsoup.nodes.Document doc) {
+    protected Collection<HashMap<String,Integer>> getCardsForRevealingMove(org.jsoup.nodes.Document doc) {
         Collection<HashMap<String,Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
@@ -491,8 +496,7 @@ public abstract class LogReaderAbs implements LogReader {
         return result;
     }
 
-
-    private HashMap<String,Integer> getCardsForDiscardingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForDiscardingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" discarding ")[1]
@@ -502,8 +506,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-
-    private HashMap<String,Integer> getCardsForDrawingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForDrawingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" drawing ")[1]
@@ -513,7 +516,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-    private HashMap<String,Integer> getCardsForTrashingMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForTrashingMove(org.jsoup.nodes.Document doc) {
         String cards =  doc.data()
             .trim()
             .split(" trashing ")[1]
@@ -526,8 +529,7 @@ public abstract class LogReaderAbs implements LogReader {
         return getCards(cards);
     }
 
-
-    private Document getGameLog() {
+    protected Document getGameLog() {
         org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
         boolean finished = false;
@@ -728,14 +730,25 @@ public abstract class LogReaderAbs implements LogReader {
         return new Document("log",turns);
     }
 
-
+    protected Date getDateTime(){
+        Date temp = new Date();
+        String[] date = this.log.getName().split("-");
+        DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'",
+                                                 Locale.ENGLISH);
+        try {
+            temp = format.parse(date[1] + "T" + date[2] + "Z");
+        } catch (ParseException e) {
+            System.out.println(e);
+        }
+        return temp;
+    }
 
     /**
      * get the player name from the string.
      * @param s string
      * @return string player name
      */
-    private static String turnGetPlayer(final String s) {
+    protected static String turnGetPlayer(final String s) {
         return s.trim()
             .replaceAll("^—", "")
             .trim()
@@ -745,15 +758,14 @@ public abstract class LogReaderAbs implements LogReader {
     /**
      * creates a Document from a map.
      *
-     * @param map the map to create the document
+     * @param map lhe map to create the document
      * @return Document with the map data
      */
-    private Document hashToDoc(final HashMap<String, Integer> map) {
+    protected Document hashToDoc(final HashMap<String, Integer> map) {
         Document temp = new Document();
         for (String x: map.keySet()) {
             temp.append(x, map.get(x));
         }
         return temp;
     }
-
 }
