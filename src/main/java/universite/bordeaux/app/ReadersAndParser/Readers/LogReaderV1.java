@@ -1,19 +1,15 @@
 package universite.bordeaux.app.ReadersAndParser.Readers;
 
-import javax.print.Doc;
+import org.bson.Document;
 
-public class LogReaderV1 extends LogReaderAbs{
+public class LogReaderV1 extends LogReaderAbs implements LogReader{
 
-	/** 
+  /**
 	 * @param fileLog name of the log file
 	 */
 	public LogReaderV1(String fileLog) {
-		super(fileLog);
-	}
-
-	@Override
-	public Doc getDoc() {
-		return null;
+    super(fileLog);
+    this.version = 1;
 	}
 
 }
