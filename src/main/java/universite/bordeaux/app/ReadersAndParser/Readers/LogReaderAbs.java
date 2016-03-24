@@ -16,6 +16,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import universite.bordeaux.app.Constant.ConstantLog;
 import universite.bordeaux.app.GameDataStructure.GameTurn;
 import universite.bordeaux.app.GameDataStructure.Player;
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
@@ -32,6 +33,9 @@ public abstract class LogReaderAbs {
     protected int version;
     protected FileReader log;
 
+    /**
+     * @param fileLog constructor the class
+     */
     public LogReaderAbs(final File fileLog) {
         this.log = new FileReader(fileLog);
     }
@@ -285,42 +289,20 @@ public abstract class LogReaderAbs {
     }
 
     /**
-     * gets a string and return a hash map with the cards and quantity.
+     * obtains a string and return a hash map with the cards and quantity.
      * @param cards string
      * @return hashmap
      */
-    protected static HashMap<String, Integer> getCards(String cards) {
-        HashMap<String, Integer> move = new HashMap<>();
+    protected HashMap<String, Integer> obtainCards(String cards) {
+        HashMap<String, Integer> move;
+        String[] playedCards;
         if (cards.contains(",")) {
             cards = cards.replace("and", "");
-            String[] playedCards = cards.split(",");
-            for (String x: playedCards) {
-                x = x.trim();
-                String[] card = x.split(" ", 4);
-                int qty;
-                try {
-                    qty = Integer.parseInt(card[0]);
-                } catch (NumberFormatException e) {
-                    qty = 1;
-                }
-                String c = card[1];
-                move.put(c, qty);
-            }
+            playedCards = cards.split(",");       
         } else {
-            String[] playedCards = cards.split(" and ");
-            for (String x: playedCards) {
-                x = x.trim();
-                String[] card = x.split(" ", 4);
-                int qty;
-                try {
-                    qty = Integer.parseInt(card[0]);
-                } catch (NumberFormatException e) {
-                    qty = 1;
-                }
-                String c = card[1];
-                move.put(c, qty);
-            }
+            playedCards = cards.split(" and ");
         }
+        move = this.getCards(playedCards, 4);
         return move;
     }
 
@@ -346,7 +328,7 @@ public abstract class LogReaderAbs {
         // } else {
         cards = doc.text().split(" buys ")[1].replaceAll("\\.", "");
 
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc) {
@@ -362,13 +344,13 @@ public abstract class LogReaderAbs {
 
         cards = cards.replace("again", "") .replace("a third time", "");
 
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForDrawsMove(org.jsoup.nodes.Document doc) {
         String cards = doc.text().trim().split(" draws: ")[1]
             .replaceAll("\\.\\)", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForDrawsAndDiscardMove(org.jsoup.nodes.Document doc) {
@@ -376,7 +358,7 @@ public abstract class LogReaderAbs {
             .trim()
             .split(" draws and discard ")[1]
             .replaceAll("\\.", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForGainsMove(org.jsoup.nodes.Document doc) {
@@ -387,7 +369,7 @@ public abstract class LogReaderAbs {
             .replaceAll(" on top of the deck", "")
             .replaceAll(" on the deck", "")
             .replaceAll(" to replace it", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected Collection<HashMap<String,Integer>> getCardsForDiscardAndGainMove(org.jsoup.nodes.Document doc) {
@@ -401,10 +383,10 @@ public abstract class LogReaderAbs {
         if (cards.contains(" and gains ")) {
             String[] actionList;
             actionList = cards.split(" and gains ");
-            result.add(getCards(actionList[0]));
-            result.add(getCards(actionList[1]));
+            result.add(obtainCards(actionList[0]));
+            result.add(obtainCards(actionList[1]));
         } else {
-            result.add(getCards(cards));
+            result.add(obtainCards(cards));
         }
         return result;
     }
@@ -424,9 +406,9 @@ public abstract class LogReaderAbs {
             .replaceAll(" and then ", ",")
             .replaceAll(", and ", ",")
             .replaceAll(" and ", ",");
-        result.add(getCards(cards));
+        result.add(obtainCards(cards));
         if (trashes) {
-            result.add(getCards(cards));
+            result.add(obtainCards(cards));
         }
         return result;
 
@@ -441,10 +423,10 @@ public abstract class LogReaderAbs {
             .replaceAll("\\.", "");
         if (cards.contains("gaining")) {
             String[] actionList = cards.split(", gaining ");
-            result.add(getCards(actionList[0]));
-            result.add(getCards(actionList[1].replaceAll(" in hand", "")));
+            result.add(obtainCards(actionList[0]));
+            result.add(obtainCards(actionList[1].replaceAll(" in hand", "")));
         } else {
-            result.add(getCards(cards));
+            result.add(obtainCards(cards));
         }
         return result;
     }
@@ -455,7 +437,7 @@ public abstract class LogReaderAbs {
             .split(" putting ")[1]
             .replaceAll("\\.", "")
             .replaceAll("into the hand", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForGainingMove(org.jsoup.nodes.Document doc) {
@@ -464,7 +446,7 @@ public abstract class LogReaderAbs {
             .split(" gaining ")[1]
             .replaceAll("\\.", "")
             .replaceAll("another", "a");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForPlayingMove(org.jsoup.nodes.Document doc) {
@@ -472,7 +454,7 @@ public abstract class LogReaderAbs {
             .trim()
             .split(" playing ")[1]
             .replaceAll("\\.", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected Collection<HashMap<String,Integer>> getCardsForRevealingMove(org.jsoup.nodes.Document doc) {
@@ -484,10 +466,10 @@ public abstract class LogReaderAbs {
         if (cards.contains(" and putting it in the hand")) {
             cards = cards.replaceAll(" and putting "
                                      + "it in the hand", "");
-            result.add(getCards(cards));
-            result.add(getCards(cards));
+            result.add(obtainCards(cards));
+            result.add(obtainCards(cards));
         } else {
-            result.add(getCards(cards));
+            result.add(obtainCards(cards));
         }
         return result;
 
@@ -500,7 +482,7 @@ public abstract class LogReaderAbs {
             .replaceAll("\\.", "")
             .replaceAll("the ([0-9]+)", "$1")
             .replaceAll("and the", "a");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForDrawingMove(org.jsoup.nodes.Document doc) {
@@ -510,7 +492,7 @@ public abstract class LogReaderAbs {
             .replaceAll("\\.", "")
             .replaceAll("from the Black"
                         + " Market deck", "");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected HashMap<String,Integer> getCardsForTrashingMove(String doc) {
@@ -522,7 +504,7 @@ public abstract class LogReaderAbs {
             .text()
             .replaceAll("\\.", "")
             .replaceAll("the", "a");
-        return getCards(cards);
+        return obtainCards(cards);
     }
 
     protected ArrayList<Document> getGameLog() {
@@ -567,53 +549,53 @@ public abstract class LogReaderAbs {
                             case PLAYS:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "plays",
+                                            ConstantLog.PLAYS,
                                             getCardsForPlaysMove(doc));
                                 break;
                             case PLAYING:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "playing",
+                                            ConstantLog.PLAYS,
                                             getCardsForPlayingMove(doc));
                                 break;
                             case BUYS:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "buys",
+                                            ConstantLog.BUYS,
                                             getCardsForBuysMove(doc));
                                 break;
                             case DRAWS_LAST_ACTION:
                                 t.insertMove(playername,
                                             0,
-                                            "draws",
+                                            ConstantLog.DRAWS,
                                             getCardsForDrawsMove(doc));
                                 break;
                             case DRAWS_DISCARD:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "draws",
+                                            ConstantLog.DRAWS,
                                             getCardsForDrawsAndDiscardMove(doc));
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "discard",
+                                            ConstantLog.DISCARD,
                                             getCardsForDrawsAndDiscardMove(doc));
                                 break;
                             case DRAWING:
                                 t.insertMove(playername,
                                             0,
-                                            "drawing",
+                                            ConstantLog.DRAWS,
                                             getCardsForDrawingMove(doc));
                                 break;
                             case GAINS:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "gains",
+                                            ConstantLog.GAINS,
                                             getCardsForGainsMove(doc));
                                 break;
                             case GAINING:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "gaining",
+                                            ConstantLog.GAINS,
                                             getCardsForGainingMove(doc));
                                 break;
                             case DISCARD_AND_GAINS:
@@ -621,16 +603,16 @@ public abstract class LogReaderAbs {
                                 if (discCards.size() > 1 ){
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "discard",
+                                                ConstantLog.DISCARD,
                                                 (HashMap) discCards.toArray()[0]);
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "gain",
+                                                ConstantLog.GAINS,
                                                 (HashMap) discCards.toArray()[1]);
                                 }else{
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "discard",
+                                                ConstantLog.DISCARD,
                                                 (HashMap) discCards.toArray()[0]);
                                 }
                                 break;
@@ -639,23 +621,23 @@ public abstract class LogReaderAbs {
                                 if (trashCards.size() > 1 ){
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "trash",
+                                                ConstantLog.TRASH,
                                                 (HashMap) trashCards.toArray()[0]);
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "gain",
+                                                ConstantLog.GAINS,
                                                 (HashMap) trashCards.toArray()[1]);
                                 }else{
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "trash",
+                                                ConstantLog.TRASH,
                                                 (HashMap) trashCards.toArray()[0]);
                                 }
                                 break;
                             case TRASHING:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "trash",
+                                            ConstantLog.TRASH,
                                             getCardsForTrashingMove(log.getLine()));
                                 break;
                             case REVEALS:
@@ -663,16 +645,16 @@ public abstract class LogReaderAbs {
                                 if (revealCards.size() > 1 ){
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "reveal",
+                                                ConstantLog.REVEAL,
                                                 (HashMap) revealCards.toArray()[0]);
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "trash",
+                                                ConstantLog.TRASH,
                                                 (HashMap) revealCards.toArray()[1]);
                                 }else{
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "reveal",
+                                                ConstantLog.REVEAL,
                                                 (HashMap) revealCards.toArray()[0]);
                                 }
 
@@ -682,29 +664,29 @@ public abstract class LogReaderAbs {
                                 if (revealingCards.size() > 1 ){
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "reavealing",
+                                                ConstantLog.REVEAL,
                                                 (HashMap) revealingCards.toArray()[0]);
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "putting",
+                                                ConstantLog.PUTTING,
                                                 (HashMap) revealingCards.toArray()[1]);
                                 }else{
                                     t.insertMove(playername,
                                                 countLevel(doc.text()),
-                                                "reavealing",
+                                                ConstantLog.REVEAL,
                                                 (HashMap) revealingCards.toArray()[0]);
                                 }
                                 break;
                             case PUTTING:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "putting",
+                                            ConstantLog.PUTTING,
                                             getCardsForPuttingMove(doc));
                                 break;
                             case DISCARDING:
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
-                                            "discarding",
+                                            ConstantLog.DISCARD,
                                             getCardsForDiscardingMove(doc));
                                 break;
                             case NOT_DEFINED:
@@ -769,15 +751,15 @@ public abstract class LogReaderAbs {
 
     protected Document toDoc() {
         return new Document()
-            .append("date", this.getDateTime())
-            .append("filename", this.log.getName())
-            .append("eloGap", 0)
-            .append("winners", this.getWinners())
-            .append("cardsgonne", this.getCardsGone())
-            .append("market", this.getMarket())
-            .append("trash", this.getTrash())
-            .append("players", this.getPlayers())
-            .append("log",this.getGameLog());
+            .append(ConstantLog.DATE, this.getDateTime())
+            .append(ConstantLog.FILENAME, this.log.getName())
+            .append(ConstantLog.ELOGAP, 0)
+            .append(ConstantLog.WINNERS, this.getWinners())
+            .append(ConstantLog.CARDSGONNE, this.getCardsGone())
+            .append(ConstantLog.MARKET, this.getMarket())
+            .append(ConstantLog.TRASH, this.getTrash())
+            .append(ConstantLog.PLAYERS, this.getPlayers())
+            .append(ConstantLog.LOG, this.getGameLog());
     }
 
     public void close(){
