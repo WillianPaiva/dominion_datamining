@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -298,7 +299,7 @@ public abstract class LogReaderAbs {
         String[] playedCards;
         if (cards.contains(",")) {
             cards = cards.replace("and", "");
-            playedCards = cards.split(",");       
+            playedCards = cards.split(",");
         } else {
             playedCards = cards.split(" and ");
         }
@@ -549,7 +550,7 @@ public abstract class LogReaderAbs {
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
                                             ConstantLog.PLAYS,
-                                            getCardsForPlaysMove(doc));
+                                             getCardsForPlaysMove(doc,playername));
                                 break;
                             case PLAYING:
                                 t.insertMove(playername,
@@ -561,7 +562,7 @@ public abstract class LogReaderAbs {
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
                                             ConstantLog.BUYS,
-                                            getCardsForBuysMove(doc));
+                                             getCardsForBuysMove(doc,playername));
                                 break;
                             case DRAWS_LAST_ACTION:
                                 t.insertMove(playername,
