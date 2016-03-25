@@ -522,8 +522,8 @@ public abstract class LogReaderAbs {
             if (doc.text().matches("(.*)'s turn [0-9]+(.*)")) {
                 int tempTurn = 0;
                 if (!doc.text().contains("(possessed by")) {
-                    tempTurn = Integer.parseInt(doc.text()
-                                                .split("'s turn")[1]
+                    String[] tn = doc.text().split("'s turn");
+                    tempTurn = Integer.parseInt(tn[tn.length -1]
                                                 .replaceAll("[^0-9]+", ""));
                 }
                 if (tempTurn > turn) {
