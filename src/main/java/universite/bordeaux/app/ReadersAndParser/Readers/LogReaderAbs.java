@@ -195,21 +195,28 @@ public abstract class LogReaderAbs {
                                 pl.setPoints(0);
                             }
                         }
+
                         //split the string to get all victory points cards
-                        String list = firstBreak[1].split(";")[0];
-                        list = list.substring(2, list.length() - 1)
-                            .replace("and", "");
-                        if (!list.contains("nothing")) {
-                            String[] victoryCards = list.split(",");
-                            pl.setVictoryCard(getCards(victoryCards,
-                                                       SEARCH_TRESEHOLD));
-                            //insert the victorycards on the player object
+                        if(!doc.text().contains("resigned")){
+                            String list = firstBreak[1].split(";")[0];
+                            list = list.substring(2, list.length() - 1)
+                                .replace("and", "");
+                            if (!list.contains("nothing")) {
+                                String[] victoryCards = list.split(",");
+                                pl.setVictoryCard(getCards(victoryCards,
+                                                           SEARCH_TRESEHOLD));
+                                //insert the victorycards on the player object
+                            }
+                            pl.setTurns(Integer.parseInt(firstBreak[1]
+                                                         .split(";")[1]
+                                                         .replace(" turns", "")
+                                                         .replace(" ", "")));
+                        }else{
+                            pl.setTurns(Integer.parseInt(doc.text()
+                                                         .split(";")[1]
+                                                         .replace(" turns", "")
+                                                         .replace(" ", "")));
                         }
-                        //get the turns
-                        pl.setTurns(Integer.parseInt(firstBreak[1]
-                                                     .split(";")[1]
-                                                     .replace(" turns", "")
-                                                     .replace(" ", "")));
                     }
                     //get next line
                     doc = Jsoup.parse(this.log.jumpline());
