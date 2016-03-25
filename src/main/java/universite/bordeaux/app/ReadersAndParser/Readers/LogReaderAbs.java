@@ -356,7 +356,7 @@ public abstract class LogReaderAbs {
             cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
         }
 
-            cards = cards.replace("again", "") .replace("a third time", "");
+        cards = cards.replace("again", "") .replace("a third time", "");
         return obtainCards(cards);
     }
 
@@ -414,6 +414,8 @@ public abstract class LogReaderAbs {
         if (cards.contains("and trashes it")) {
             trashes = true;
             cards = cards.replaceAll("and trashes it", "");
+        }else if(cards.contains("giving")){
+            cards = cards.split("giving")[0].replaceAll(",","");
         }
         cards = cards
             .replaceAll(" and then ", ",")
