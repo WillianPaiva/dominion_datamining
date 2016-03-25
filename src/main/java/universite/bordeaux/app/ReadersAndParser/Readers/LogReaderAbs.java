@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -298,7 +299,7 @@ public abstract class LogReaderAbs {
         String[] playedCards;
         if (cards.contains(",")) {
             cards = cards.replace("and", "");
-            playedCards = cards.split(",");       
+            playedCards = cards.split(",");
         } else {
             playedCards = cards.split(" and ");
         }
@@ -317,33 +318,32 @@ public abstract class LogReaderAbs {
         return level;
     }
 
-    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc, String playername) {
         String cards = "";
-        //TODO
-        // if (playername.contains("buys")) {
-        //     cards = doc.text()
-        //             .trim()
-        //             .replace(playername + " buys ", "")
-        //             .replaceAll("\\.", "");
-        // } else {
-        cards = doc.text().split(" buys ")[1].replaceAll("\\.", "");
-
+        if (playername.contains("buys") && doc.text().contains(playername)) {
+            cards = doc.text()
+                .trim()
+                .replace(playername + " buys ", "")
+                .replaceAll("\\.", "");
+        } else {
+            cards = doc.text().split(" buys ")[1].replaceAll("\\.", "");
+        }
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc, String playername) {
         String cards = "";
-        //TODO
-        // if (playername.contains("plays")) {
-        //     cards = doc.text()
-        //             .trim()
-        //             .replace(playername
-        //                     + " plays ", "")
-        //             .replaceAll("\\.", "");
-        cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
+        if (playername.contains("plays") && doc.text().contains(playername)) {
+            cards = doc.text()
+                .trim()
+                .replace(playername
+                         + " plays ", "")
+                .replaceAll("\\.", "");
+        }else{
+            cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
+        }
 
-        cards = cards.replace("again", "") .replace("a third time", "");
-
+            cards = cards.replace("again", "") .replace("a third time", "");
         return obtainCards(cards);
     }
 
@@ -523,8 +523,8 @@ public abstract class LogReaderAbs {
             if (doc.text().matches("(.*)'s turn [0-9]+(.*)")) {
                 int tempTurn = 0;
                 if (!doc.text().contains("(possessed by")) {
-                    tempTurn = Integer.parseInt(doc.text()
-                                                .split("'s turn")[1]
+                    String[] tn = doc.text().split("'s turn");
+                    tempTurn = Integer.parseInt(tn[tn.length -1]
                                                 .replaceAll("[^0-9]+", ""));
                 }
                 if (tempTurn > turn) {
@@ -550,7 +550,7 @@ public abstract class LogReaderAbs {
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
                                             ConstantLog.PLAYS,
-                                            getCardsForPlaysMove(doc));
+                                             getCardsForPlaysMove(doc,playername));
                                 break;
                             case PLAYING:
                                 t.insertMove(playername,
@@ -562,7 +562,7 @@ public abstract class LogReaderAbs {
                                 t.insertMove(playername,
                                             countLevel(doc.text()),
                                             ConstantLog.BUYS,
-                                            getCardsForBuysMove(doc));
+                                             getCardsForBuysMove(doc,playername));
                                 break;
                             case DRAWS_LAST_ACTION:
                                 t.insertMove(playername,

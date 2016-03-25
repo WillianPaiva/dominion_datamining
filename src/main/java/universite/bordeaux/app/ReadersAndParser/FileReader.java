@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
+import universite.bordeaux.app.Logging.ErrorLogger;
+
 /**
  * class to make essy the manipulation of the file descriptor.
  * @author Willian Ver Valen Paiva
@@ -34,7 +36,7 @@ public class FileReader {
         try {
             scan = new Scanner(logFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            ErrorLogger.getInstance().logError("file not found" + log.getName());
         }
     }
 
@@ -65,8 +67,7 @@ public class FileReader {
         try {
         this.line = this.scan.nextLine();
         } catch (NoSuchElementException e) {
-            System.out.println("error with file: "
-                    + this.getName());
+            ErrorLogger.getInstance().logError("bad Log format" + log.getName());
         }
         return this.line;
     }
