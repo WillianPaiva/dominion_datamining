@@ -88,12 +88,12 @@ Ce document a pour but de clarifier et de décrire aussi précisément que possi
 \begin{itemize}
   \item \textbf{Modélisation des donnée} \- Responsable à lire et à remodeler les données à stocker.
   \item \textbf{Stockage de données} \- Stocke les données analysées.
-  \item \textbf{Analyse des données} \- Responsable pour interroger la base de données et de générer des statistiques lisibles par l'homme et des graphes tracés.
+  \item \textbf{Analyse des données} \- Responsable pour interroger la base de données et recevoir et faire les traitements des requêtes de l'utilisateur.
 
 \end{itemize}
 
 
- \section{Public visé et suggestions de lecturePublic visé et suggestions de lecture}
+ \section{Public visé et suggestions de lecture}
 
 Ce document est destiné à tout utilisateur, développeur, testeur, chef de projet ou de la documentation écrivain qui a besoin de comprendre l'architecture de base du système et de ses spécifications.\\
 Voici les utilisations potentielles pour chacun des types de lecteurs:\\
@@ -107,13 +107,12 @@ Voici les utilisations potentielles pour chacun des types de lecteurs:\\
 \end{itemize}
 
 \section{Project Scope}
-  Le jeu de cartes\textit{Dominion} a été exécuté sur un serveur à partir d'Octobre 2010 au Mars 2013. Les parties jouées sur ce serveur ont été enregistrés dans des \textit{logs} qui gardent la trace de toutes les actions des joueurs; Ces \textit{logs} ont été mis à la disposition du public. Mais certaines informations par rapport aux décisions prises par les joueurs n’ont pas été enregistrées.
-
-  \newline Un wiki sur le jeu a été créé, il offre des conseils d'experts dans la prise de décision au cours du jeu: il offre principalement des conseils au niveau de la stratégie. Le but de ce projet, présenté par Yvan Le Borgne, chercheur au Labri, est de traiter des \textit{logs} (plus de 12 millions de jeux) afin de répondre à plusieurs questions. Il consiste principalement à comparer les données recueillies à l'information du wiki afin de valider l'utilité des idées et des informations données par des experts. Nous allons au moins créer des outils de validation offrant suffisamment d'efficacité.
+  Le jeu de cartes\textit{Dominion} a été exécuté sur un serveur à partir d'Octobre 2010 au Mars 2013. Les parties jouées sur ce serveur ont été enregistrés dans des \textit{logs} qui gardent la trace de toutes les actions des joueurs; Ces \textit{logs} ont été mis à la disposition du public. Mais certaines informations par rapport aux décisions prises par les joueurs n’ont pas été enregistrées.\\
+ Un wiki sur le jeu a été créé, il offre des conseils d'experts dans la prise de décision au cours du jeu: il offre principalement des conseils au niveau de la stratégie. Le but de ce projet, présenté par Yvan Le Borgne, chercheur au Labri, est de traiter des \textit{logs} (plus de 12 millions de jeux) afin de répondre à plusieurs questions. Il consiste principalement à comparer les données recueillies à l'information du wiki afin de valider l'utilité des idées et des informations données par des experts. Nous allons au moins créer des outils de validation offrant suffisamment d'efficacité.
   
 Afin d'Atteindre cet objectif, le but du projet est de créer une base de données contenant tous les jeux joués et de produire une analyse basée sur ces informations.
 
-  Pour ce faire, notre programme devra d'abord extraire les données de  \textit{log} Pour ce faire, notre programme devra d'abord extraire les données du journal, car ils sont trop volumineux et trop compliqué à utiliser directement (structure non-standard).
+  Pour ce faire, notre programme devra d'abord extraire les données de  \textit{log} Pour ce faire, notre programme devra d'abord extraire les données du log, car ils sont trop volumineux et trop compliqué à utiliser directement (structure non-standard).
 
  Nous aurons à mettre en place des structures de données qui nous permettent d'avoir un meilleur stockage de données. Un moyen simple pour représenter ces données sera offert à l'utilisateur.
 
@@ -131,28 +130,27 @@ Afin d'Atteindre cet objectif, le but du projet est de créer une base de donné
 
 Voici une liste des fonctions devraient être disponibles sur le logiciel.
 \begin{itemize}
-\item{\textbf{Interface utilisateur:}}
 
-    \begin{itemize}
-    \item{Lancement de  journal analysé}
-    \item{Statistiques demandés}
-    \item{Mappage des données de jeu}
-    \end{itemize}
+%\item{\textbf{Interface utilisateur:}}
+
+ %   \begin{itemize}
+  %  \item{Lancement de log analysé}
+   % \item{Statistiques demandés}
+    %\item{Mappage des données de jeu}
+    %\end{itemize}
   \item{\textbf{modélisation des données:}}
     \begin{itemize}
-    \item{décompression de journal}
+    \item{décompression de log}
     \item{parsing}
     \item{creattion de game-log}
     \item{envoie de game-log data}
     \end{itemize}
   \item{\textbf{Stockage de données:}}
     \begin{itemize}
-    \item{Créer une base de données relationnelle}
-    \item{Se connecter à la base de données relationnelle}
-    \item{Créer orientée une base de données orientée document}
+    \item{Créer une base de données orientée document}
     \item{Se connecter à la base de données orientée document}
     \item{Compression}
-    \item{cherger le game-log}
+   % \item{charger le game-log}
     \item{Enregistrer le game-log}
     \end{itemize}
   \item{\textbf{Analyse des données:}}
@@ -174,8 +172,8 @@ Voici une liste des fonctions devraient être disponibles sur le logiciel.
  \item \textbf{Utilisateur:} L'utilisateur lance l'analyse des logs et des demandes des analyses à faire sur les données stockées qui seront ensuite représentées sous forme de graphes.\\
    Les actions de l'utilisateur peuvent être décomposées en deux parties:
    \begin{itemize}
-   \item Étape de pré-calcul: Cette action sera réalisée une fois au début et lancera la phase de l'analyse et de l'analyse classique des jeux(Reconnaissance de la stratégie, le calcul elo).
-   \item Les données de l'analyse de l'utilisateur: Ce sera une boucle dans laquelle l'utilisateur peut demander de l'affichage des statistiques standard ou créer analyse complexe en utilisant des scripts python et des requêtes de données spécifiques. Aussi longtemps que les données analysées ne sont pas effacées ou modifiées (nouveaux journaux, nouveau programme, base de données de suppression) ce processus peut être répété sans avoir à analyser les données.
+   \item Étape de pré-calcul: %Cette action sera réalisée une fois au début et lancera la phase de l'analyse et de l'analyse classique des jeux(Reconnaissance de la stratégie, le calcul elo).
+   \item Les données de l'analyse de l'utilisateur: une librairie en python sera offerte à l'utilisateur, pour qu'il puisse demander l'affichage des statistiques standard ou créer analyse complexe en utilisant des scripts python et des requêtes de données spécifiques. 
    \end{itemize}
 \end{itemize}
 
@@ -183,10 +181,9 @@ Voici une liste des fonctions devraient être disponibles sur le logiciel.
 \begin{itemize}
  \item \textbf{Parser :} le parser est le système qui a accès en écriture à la base de données et est responsable pour stocker les données analysées sur la base de données.
 
- \item \textbf{Analyzer :} l'nalyseur est le système qui va interroger la base de données pour recueillir des données pour l'analyse, et sera en mesure de créer des requêtes persistantes.
+ \item \textbf{Analyzer :} l'analyseur est le système qui va interroger la base de données pour recueillir des données pour l'analyse, et sera en mesure de créer des requêtes persistantes.
 
-   \item \textbf{Base de données: } La base de données stocke les données extraites des journaux et répondre aux requêtes des autres parties du programme.
-\end{itemize}
+   \item \textbf{Base de données: } La base de données stocke les données extraites des logs et répondre aux requêtes des autres parties du programme.
 \end{itemize}
 
 \textit{Le logiciel à développer est destiné à un usage personnel, il n'y a donc pas d'accès privilégié, l'utilisateur aura accès à l'intégralité du code et des données.}
@@ -195,21 +192,21 @@ Cette section présente un aperçu des problèmes possibles qui peuvent limiter 
 \begin{itemize}
 \item Le logiciel sera développé pour le système d'exploitation Linux et aucune autre plate-forme n’est nécessaire.
 \item Le logiciel doit fonctionner sur le matériel trouvé sur de simples ordinateurs personnels.
-\item Les données à analyser est considérablement grande (400Gb) et le client ne seront pas fournir un serveur de travailler avec les données non compressées ce qui peut avoir un impact sur les performances du logiciel.
+\item Les données à analyser est considérablement grande (400Gb) et le client ne sera pas fournir un serveur de travailler avec les données non compressées ce qui peut avoir un impact sur les performances du logiciel.
 
 \item Les \textit{Logs} fournis par le client ne sont pas un format standard et qui peut retarder le temps de développer l'analyseur, que les problèmes qu'il peut soulevé au cours du développement ne sont pas connus pour le moment.
 \end{itemize}
 
 \chapter{Les Logs}
 \subsection{Description des données}
-Les données qui ont été fournies par le client sont compressées en format tar.bz2, un fichier pour chaque jour de journal, la taille totale des données compressée est 13 Go.\\
+Les données qui ont été fournies par le client sont compressées en format tar.bz2, un fichier pour chaque jour de log, la taille totale des données compressée est 13 Go.\\
 Les données décompressé fait un total de 400 Go.\\
 Chaque \textit{Log} est au format \textit{HTML}.\\
 un \textit{Log} doit contenir:
 \begin{itemize}
-  \item{\textbf{entête}} contenant le numéro de jeu et un gagnant.
+  \item{\textbf{entête}} contenant le numéro de jeu et les noms des gagnants.
   \item{\textbf{résumé de  match}} contient les cartes utilisées sur le match et comment le match a fini.
-  \item{\textbf{résumé de joueur}} contient  les cartes de victoire de chaque joueur, le pont et points.
+  \item{\textbf{résumé de joueur}} contient  les cartes de victoire de chaque joueur, les% points.
   \item{\textbf{game log}} cette partie contient tous les mouvements détaillés faites par les joueurs pendant le match.
 
 \end{itemize}
@@ -219,32 +216,32 @@ Les \textit{Logs} pprésentent des incohérences de données qui peut être prob
 
 \begin{itemize}
   \item \textbf{Numéro de log}\\
-   La numérotation des journaux ne sont pas uniques ce qui implique que ne peuvent pas être utilisées pour identifier un journal.
+   La numérotation des logs ne sont pas uniques ce qui implique que ne peuvent pas être utilisées pour identifier un log.
   \item \textbf{Noms d'utilisateur}\\
-    Les journaux montrent qu'aucune restriction n’a été faite sur les noms d'utilisateur du jeu et quelques noms d'utilisateur ont des mots clés et des caractères spéciaux qui peuvent entrer en conflit avec l'analyseur.
+    Les logs montrent qu'aucune restriction n’a été faite sur les noms d'utilisateur du jeu et quelques noms d'utilisateur ont des mots clés et des caractères spéciaux qui peuvent entrer en conflit avec l'analyseur.
    \item \textbf{Données manquantes}\\
     Certains des logs lui manque une partie des données (comme: l'en-tête, la reprise des utilisateurs $\ldots$).
    \item \textbf{Format de log}\\
-    Cette syntaxe est utilisée pour écrire les journaux qui ne sont pas compatibles et présentent une certaine différence entre les journaux.
+    Cette syntaxe est utilisée pour écrire les logs qui ne sont pas compatibles et présentent une certaine différence entre les logs.
     \item \textbf{Compression de données}\\
      Comme les données sont compressées et l'équipement fourni à travailler sur le projet ne peut pas gérer les données non compressées, le projet va travailler avec des données compressées, et après un premier indice de référence, 4 heures a été nécessaire pour décompresser.
 \end{itemize}
 
 \chapter{Besoins fonctionnelles}
-
+\iffalse
 \section{Interface utilisateur}
-% Interface utilisateur
+  Interface utilisateur
 L'interface utilisateur du programme sera composé d'un exécutable (minière de domination) qui sera exécuté avec certains paramètres pour exécuter l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
 
 \includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}\\
 Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
-\subsection{Lancement de l'analyse du journal}
+\subsection{Lancement de l'analyse du log}
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
-  \item L'utilisateur devra placer tous les journaux compressés (fichiers tar.bz2) pour être analysées dans un dossier spécifique.
+  \item L'utilisateur devra placer tous les logs compressés (fichiers tar.bz2) pour être analysées dans un dossier spécifique.
   \item si aucune compression est donnée la compression par défaut est \textit{snappy}.
-    \item Pour des fins de test, afin d'éviter d'avoir un 4 heures étape d'analyse, l'utilisateur peut spécifier un pourcentage des journaux pour être analysée. en spécifiant une valeur comprise entre 0 et 100. l'analyseur choisira au hasard les journaux de ceux qui sont prévus et les analyser, en créant une base de données utilisable pour des tests supplémentaires.
+    \item Pour des fins de test, afin d'éviter d'avoir un 4 heures étape d'analyse, l'utilisateur peut spécifier un pourcentage des logs pour être analysée. en spécifiant une valeur comprise entre 0 et 100. l'analyseur choisira au hasard les logs de ceux qui sont prévus et les analyser, en créant une base de données utilisable pour des tests supplémentaires.
     \item Une fois que l'analyse est effectuée un message sera affiché sur la console (traitement de fait).
 
 \end{itemize}
@@ -261,14 +258,14 @@ Le retour d'une statistique peut être un graphique affiché dans une fenêtre o
 
 \subsection{Mappage des données de jeu}
 
-Afin de permettre à l'utilisateur de demander des statistiques spécifiques concernant un jeu, le programme peut être exécuté afin de générer des journaux de jeu simplifiées et un script python sera appliqué à ce journal. Cela permettrait une plus grande flexibilité dans le type de statistiques affichables par le programme.
+Afin de permettre à l'utilisateur de demander des statistiques spécifiques concernant un jeu, le programme peut être exécuté afin de générer des logs de jeu simplifiées et un script python sera appliqué à ce log. Cela permettrait une plus grande flexibilité dans le type de statistiques affichables par le programme.
 \begin{itemize}
 \item Le programme sera lancé en utilisant la commande suivante: \textit{dominionmining data\_to\_query user\_script.py}
  \item Le script python sera appliquée au résultat généré et retourner les statistiques demandées par l'utilisateur.
 \item Le fichier généré contenant les résultats de la requête aura le format suivant:
 \begin{itemize}
 \item Le nom du fichier produit est \textit{game.txt}
-\item Le journal simplifié contiendra chaque action effectuée par le joueur, une action par ligne. Liste des actions et leur format:
+\item Le log simplifié contiendra chaque action effectuée par le joueur, une action par ligne. Liste des actions et leur format:
 \begin{itemize}
 \item Révéler une carte: \textit{joueur\_x révèle carte\_nom}
 \item Piocher des cartes: \textit{joueur\_x jete n cartes}
@@ -281,7 +278,7 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
 \end{itemize}
 \end{itemize}
 \end{itemize}
-
+\fi
 \section{Modélisation des données}
 
 \subsection{Décompression des logs}
@@ -290,17 +287,16 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
 \begin{itemize}
   \item Les fichiers tar.bz2 seront stockés dans un dossier.
   \item Le programme va  décompresser un fichier spécifié à partir de ce dossier dans un dossier temporaire.
-  \item Le programme va  supprimer les journaux décompressés  à la demande par l'analyseur.
+  \item Le programme va  supprimer les logs décompressés  à la demande par l'analyseur.
 \end{itemize}
 
 \subsection{Parser}
 
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
-À condition que les problèmes révélés par les journaux (comme: l'incohérence de la syntaxe) une utilisation d'un analyseur fait avec des outils comme \textit{YACC et Lex} est déconseillée.
-Pour qu'un analyseur se fera en utilisant le déjà présent \textit{HTML} et les mots clés présents sur les journaux.\\
-L'analyseur est chargé de lire les logs et la collecte de l'information importante sans perdre la structure du log.\\
-Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce diagramme (certaines données à déterminer que toutes les possibilités de l'intérieur d'un journal n’ont pas encore été révélées):\\
+L'analyseur va prendre les logs sous format \textit{HTML} et va identifier les mots clés présents sur ces logs.\\
+L'analyseur est chargé de lire les logs et collecter l'information importante sans perdre la structure du log.\\
+Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce diagramme (certaines données à déterminer que toutes les possibilités de l'intérieur d'un log n’ont pas encore été révélées):\\
 \includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
 
 \begin{itemize}
@@ -309,36 +305,19 @@ Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce
 \item Cartes Gone: liste des cartes qui ont été entièrement acquises à la fin de la partie.
 \item Player Name: Nom du joueur.
 \item Victory points: nombre de points à la fin de la partie.
-\item Player cards: Liste des cartes achetées par le joueur avec le montant qu'ils ont acheté.
+\item Player cards: la liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
 \item Victory cards: Liste des cartes de victoire le joueur avec le acheté.
 \item Trash: Liste des cartes qui sont jetés à la fin de la partie.
-\item Game Moves: Chaque action en fonction de ce point correspond à une action effectuée pendant le tour d'un joueur.
+\item Game Moves: la liste des actions effectuées pendant chaque tour d'un joueur.
 \end{itemize}
-Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur lance le processus d'analyse\\
+Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme d'analyse\\
 
 \subsection{Créer game-log}
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
-Cette fonctionnalité est la création d'une structure de données où les données du journal seront rénovées.
+Cette fonctionnalité est la création d'une structure de données où les données du log seront rénovées.
 Voici est une représentation graphique d'une vue d'ensemble de la structure de données:\\
 \includegraphics[scale=0.5,keepaspectratio]{game-log}
-
-\subsection{Envoyer des données de game-log}
-\subsubsection{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-Le programme va envoyer la structure de données journal de jeu à la partie du projet de base de données.
-\section{Stockage des données}
-
-\subsection{Se connecter à la base de données relationnelle}
-\subsubsection{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-\includegraphics[keepaspectratio]{SQL}
-\begin{itemize}
-\item Le programme sera capable d'envoyer des données reliées au joueur (par exemple: ID, Nom, Elo,  parties jouées par le joueur)
-\item Le programme sera capable d'envoyer des requêtes à la base de données relatives à chaque élément de données stockées.
-\item La base de données relationnelle va envoyer les résultats des demandes effectuées  par le programme.
-\end{itemize}
-
 
 \subsection{Créer une base de données orientée document }
 
@@ -346,12 +325,11 @@ Le programme va envoyer la structure de données journal de jeu à la partie du 
 \textbf{Niveau de priorité = haute}\\
 Ce module sera responsable pour créer la base de données orientée document, contenant des données au format JSON.
 \subsection{Se connecter à la base de données orientée document }
-\subsubsection{Description and Priority}
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
 \item La base de données orientée document sera en charge des échanges à travers un socket spécifique.
-\item La base de données orientée document recevra les journaux de jeu au format JSON.
+\item La base de données orientée document recevra les logs de jeu au format JSON.
 \item La base de données orientée document recevra les demandes du programme relatif à chaque élément de données qu'il contient.
 \item La base de données orientée document enverra les résultats des demandes effectuées par le programme.
 \end{itemize}
@@ -364,23 +342,17 @@ Ce module sera responsable pour créer la base de données orientée document, c
 La base de données orientée document contiendra la plupart des données et un certain niveau de compression devra être appliquée.
 La base de données qu’on va utiliser est focalisé pour le moment sur mongodb, et il offre 2 niveaux de compression \textit{Zlib} et \textit{Snappy}.
 Au cours du développement du \textit{Snappy} sera utilisé car il offre une meilleure performance.
-Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du journal.
+Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du log.
 
 \subsection{Sauvegarder game-log}
 
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
-\item La base de données orientée document permet de convertir la structure journal de jeu dans un document au format JSON.
+\item La base de données orientée document permet de convertir la structure log de jeu dans un document au format JSON.
 \item Les données fournies au format JSON seront stockées dans la base de données.
 \end{itemize}
-
-\subsection{Charger game-log}
-\subsubsection{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-Lorsque vous demandez un journal de jeu, la base de données va charger le journal au format JSON dans une structure de données de journal de jeu identique à celui décrit dans la section de la modélisation des données.
-S'il manque des informations dans le document JSON, le champ correspondant sera laissé vide.
-
+%partie de python à discuter
 \section{Analyse des données}
 \subsection{Recueillir des données}
 \subsubsection{Description et priorité}
@@ -390,20 +362,20 @@ S'il manque des informations dans le document JSON, le champ correspondant sera 
 \item L'analyseur de données va convertir les résultats de la requête dans un format utilisable par le module de traçage.
 \item Si les données sont simples à lire (par exemple: un numéro, un nom, une phrase), l'analyseur de données sera tout simplement envoyer le résultat au format texte.
 \item La dernière requête sera mémorisée avec son résultat afin de gagner du temps si la prochaine requête faite par l'utilisateur est le même.
-\item Si l'utilisateur souhaite appliquer un script python de journaux de jeu, le programme demandera les journaux de jeu et les mettre dans un fichier texte, ce fichier contiendra chaque action faite par chaque joueur et le script sera appliqué à ce fichier.
+\item Si l'utilisateur souhaite appliquer un script python de logs de jeu, le programme demandera les logs de jeu et les mettre dans un fichier texte, ce fichier contiendra chaque action faite par chaque joueur et le script sera appliqué à ce fichier.
 \end{itemize}
 
 \subsection{restorer game-log}
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
-Cette fonction est responsable pour restaurer l'information manquante sur les journaux analysés, en utilisant la déduction basique sur la base des données obtenues par le log.\\
+Cette fonction est responsable pour restaurer l'information manquante sur les logs analysés, en utilisant la déduction basique sur la base des données obtenues par le log.\\
 En cas d'un en-tête du jeu manquant ou partie manquante:
   \begin{itemize}
 \item Gagnants / cartes de victoire / points de victoire manquant: le programme peut garder la trace des cartes détenues par les joueurs pendant le jeu afin de savoir combien de cartes victoire qu'ils ont à la fin de la partie.
 \item Market manquant: Le programme peut garder la trace des cartes achetées au cours du jeu afin de reconstituer partiellement ou totalement les cartes disponibles sur Market.
 \item Cartes Gone: Comme avec les données manquantes de Market, le programme permet de garder une trace de cartes achetées et compter la quantité achetée pour chaque carte, si le montant maximum de cartes est acheté, la carte a disparu à la fin de la partie.
-\item Nom du joueur manquant: le jeu se déplace partie d'un journal assure également le suivi des noms des joueurs, le programme sera tout simplement de les restaurer dans l'en-tête.
+\item Nom du joueur manquant: le jeu se déplace partie d'un log assure également le suivi des noms des joueurs, le programme sera tout simplement de les restaurer dans l'en-tête.
 \item Cartes de joueur: le programme permet de garder une trace des actions effectuées au cours du jeu par rapport aux cartes de joueurs et les ajouter dans cette liste.
   \end{itemize}
 
@@ -462,13 +434,13 @@ L'utilisateur doit être capable de parcourir le processus d'analyse sur un ense
 
 \section{Fiabilité}
 
-Le client demande que le nombre maximum de journaux doivent être analysé, que les données fournies ont des incohérences et quelques journaux ne seront pas possibles d'analyser.\\
-L'analyseur devra analyser 100% des données présentes sur le journal et restaure toute information manquante si possible.\\
+Le client demande que le nombre maximum de log doivent être analysé, que les données fournies ont des incohérences et quelques logs ne seront pas possibles d'analyser.\\
+L'analyseur devra analyser 100% des données présentes sur le log et restaure toute information manquante si possible.\\
 \section{Attributs de qualité de logiciels}
 
 Même si seulement une ligne de commande est prévue pour le programme final, elle devrait avoir une courbe facile à apprendre et être facile à utiliser.\\
 Les données générées par l'analyseur n’ont pas besoin à être lisible par l'homme.\\
-Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des journaux.
+Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
 
 
