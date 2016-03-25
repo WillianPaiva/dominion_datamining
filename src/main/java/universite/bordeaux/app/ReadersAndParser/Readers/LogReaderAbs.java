@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.io.IOException;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -421,7 +420,7 @@ public abstract class LogReaderAbs {
             .replaceAll(" and then ", ",")
             .replaceAll(", and ", ",")
             .replaceAll(" and ", ",");
-        result.add(obtainCards(cards));
+            result.add(obtainCards(cards));
         if (trashes) {
             result.add(obtainCards(cards));
         }
@@ -535,7 +534,7 @@ public abstract class LogReaderAbs {
         doc = Jsoup.parse(this.log.searchLineWithString("(.*)'s turn 1(.*)"));
 
         while (!finished) {
-            if (doc.text().matches("(.*)'s turn [0-9]+(.*)")) {
+            if (doc.text().matches("(.*)'s turn [0-9]*(.*)")) {
                 int tempTurn = 0;
                 if (!doc.text().contains("(possessed by")) {
                     String[] tn = doc.text().split("'s turn");
@@ -546,6 +545,7 @@ public abstract class LogReaderAbs {
                     turn = tempTurn;
                     t = new GameTurn(turn);
                 }
+
                 playername = turnGetPlayer(doc.text());
             }
             doc = Jsoup.parse(this.log.jumpline());
@@ -746,7 +746,6 @@ public abstract class LogReaderAbs {
     protected static String turnGetPlayer(final String s) {
         return s.trim()
             .replaceAll("^—", "")
-            .trim()
             .replaceAll("'s turn [0-9]*(.*)", "").trim();
     }
 
