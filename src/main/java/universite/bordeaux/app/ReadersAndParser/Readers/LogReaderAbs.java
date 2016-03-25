@@ -317,17 +317,16 @@ public abstract class LogReaderAbs {
         return level;
     }
 
-    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc, String playername) {
         String cards = "";
-        //TODO
-        // if (playername.contains("buys")) {
-        //     cards = doc.text()
-        //             .trim()
-        //             .replace(playername + " buys ", "")
-        //             .replaceAll("\\.", "");
-        // } else {
-        cards = doc.text().split(" buys ")[1].replaceAll("\\.", "");
-
+        if (playername.contains("buys") && doc.text().contains(playername)) {
+            cards = doc.text()
+                .trim()
+                .replace(playername + " buys ", "")
+                .replaceAll("\\.", "");
+        } else {
+            cards = doc.text().split(" buys ")[1].replaceAll("\\.", "");
+        }
         return obtainCards(cards);
     }
 
