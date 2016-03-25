@@ -176,7 +176,13 @@ public abstract class LogReaderAbs {
                     PlayerItf pl = createPlayer(doc);
                     //break the string into 2 parts to find the points
                     if (doc.text().contains("points")) {
-                        String[] firstBreak = doc.text().split("points");
+                        String[] firstBreak;
+                        if(pl.getPlayerName().contains("points")){
+                            firstBreak = doc.text().replaceAll(pl.getPlayerName(),"playername").split("points");
+                        }else{
+                            firstBreak = doc.text().split("points");
+                        }
+
                         //set the player points
                         String[] p = firstBreak[0].split(":");
                         String temp = p[p.length - 1].replace(" ", "");
