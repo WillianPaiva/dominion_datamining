@@ -330,19 +330,19 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc) {
+    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc, String playername) {
         String cards = "";
-        //TODO
-        // if (playername.contains("plays")) {
-        //     cards = doc.text()
-        //             .trim()
-        //             .replace(playername
-        //                     + " plays ", "")
-        //             .replaceAll("\\.", "");
-        cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
+        if (playername.contains("plays") && doc.text().contains(playername)) {
+            cards = doc.text()
+                .trim()
+                .replace(playername
+                         + " plays ", "")
+                .replaceAll("\\.", "");
+        }else{
+            cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
+        }
 
-        cards = cards.replace("again", "") .replace("a third time", "");
-
+            cards = cards.replace("again", "") .replace("a third time", "");
         return obtainCards(cards);
     }
 
