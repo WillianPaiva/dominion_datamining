@@ -1,16 +1,16 @@
 package universite.bordeaux.app.ReadersAndParser;
 
-import org.apache.commons.io.FileUtils;
-import universite.bordeaux.app.GameDataStructure.Match;
-import universite.bordeaux.app.GameDataStructure.MatchItf;
-import universite.bordeaux.app.Mongo.MongoConection;
-import universite.bordeaux.app.ReadersAndParser.Readers.LogReader;
-import universite.bordeaux.app.colors.ColorsTemplate;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import org.apache.commons.io.FileUtils;
+
+import universite.bordeaux.app.Mongo.MongoConection;
+import universite.bordeaux.app.ReadersAndParser.Readers.LogReader;
+import universite.bordeaux.app.colors.ColorsTemplate;
+import universite.bordeaux.app.Logging.ErrorLogger;
 
 
 
@@ -153,7 +153,11 @@ public class LogHandler {
             if (htmlList != null) {
                 for (File log: htmlList) {
                     LogReader temp = LogReaderFactory.createrReader(log);
-                    MongoConection.insertMatch(temp.getDoc());
+                    try {
+                        MongoConection.insertMatch(temp.getDoc());
+                    } catch (UnsupportedOperationException e) {
+                        ErrorLogger.getInstance().logError("bad Log format" + log.getName());
+                    }
                     temp.close();
                     progressBar(Math.round(((float) filesParsed
                                     / (float) totalFilesToBeParsed)
