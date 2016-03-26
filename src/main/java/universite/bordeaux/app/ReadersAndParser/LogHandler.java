@@ -152,13 +152,16 @@ public class LogHandler {
             //iterates over all files in the temp folder
             if (htmlList != null) {
                 for (File log: htmlList) {
+                    LogReader temp = null;
                     try {
-                        LogReader temp = LogReaderFactory.createrReader(log);
+                        temp = LogReaderFactory.createrReader(log);
                         MongoConection.insertMatch(temp.getDoc());
                     } catch (UnsupportedOperationException e) {
                         ErrorLogger.getInstance().logError("bad Log format" + log.getName());
                     }
-                    temp.close();
+                    if (temp != null){
+                        temp.close();
+                    }
                     progressBar(Math.round(((float) filesParsed
                                     / (float) totalFilesToBeParsed)
                                     * HUNDRED),
