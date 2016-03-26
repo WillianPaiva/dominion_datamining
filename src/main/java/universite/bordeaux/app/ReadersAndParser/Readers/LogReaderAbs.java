@@ -20,6 +20,7 @@ import universite.bordeaux.app.Constant.ConstantLog;
 import universite.bordeaux.app.GameDataStructure.GameTurn;
 import universite.bordeaux.app.GameDataStructure.Player;
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
+import universite.bordeaux.app.ReadersAndParser.CheckCard;
 import universite.bordeaux.app.ReadersAndParser.FileReader;
 
 
@@ -89,7 +90,10 @@ public abstract class LogReaderAbs {
             //finds how the game finished by getting the empty piles
             Elements links = doc.select("span");
             for (Element link : links) {
-                cardsGone.add(link.text());
+                String temp = CheckCard.verifyCard(link.text());
+                if (temp != null){
+                    cardsGone.add(temp);
+                }
             }
         }
         this.log.rewindFile();
@@ -140,7 +144,10 @@ public abstract class LogReaderAbs {
             //get all the cards available on market
             Elements links = doc.select("span");
             for (Element link : links) {
-                market.add(link.text());
+                String temp = CheckCard.verifyCard(link.text());
+                if(temp != null){
+                    market.add(temp);
+                }
             }
         }
         this.log.rewindFile();
@@ -222,7 +229,10 @@ public abstract class LogReaderAbs {
                     //get opening cards
                     Elements links = doc.select("span");
                     for (Element link : links) {
-                        pl.insertOpening(link.text());
+                        String temp = CheckCard.verifyCard(link.text());
+                        if (temp != null){
+                            pl.insertOpening(temp);
+                        }
                     }
                     //next line
                     doc = Jsoup.parse(this.log.jumpline());
@@ -295,8 +305,10 @@ public abstract class LogReaderAbs {
             } catch (NumberFormatException e) {
                 qty = 1;
             }
-            String card = temp[1];
-            cards.put(card, qty);
+            String card = CheckCard.verifyCard(temp[1]);
+            if(card != null){
+                cards.put(card, qty);
+            }
         }
         return cards;
     }
