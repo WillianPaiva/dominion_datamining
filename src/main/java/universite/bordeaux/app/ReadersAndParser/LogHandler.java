@@ -156,8 +156,8 @@ public class LogHandler {
                     if (temp != null){
                         try {
                             MongoConection.insertMatch(temp.getDoc());
-                        } catch (UnsupportedOperationException e) {
-                            ErrorLogger.getInstance().logError("bad Log format" + log.getName());
+                        } catch (Exception e) {
+                            ErrorLogger.getInstance().logError("bad Log format" + log.getName() + "   " + e.toString());
                         }
                         temp.close();
                     }
