@@ -64,8 +64,8 @@ public class LogHandler {
      */
     public final void runParser(final int numThreads) {
         System.out.println(ColorsTemplate.ANSI_CYAN
-                + "Strating the Parser it can take a long time..."
-                + ColorsTemplate.ANSI_RESET);
+                           + "Strating the Parser it can take a long time..."
+                           + ColorsTemplate.ANSI_RESET);
 
         //creates a list with all compressed files
         File[] bzList = folderPath.listFiles();
@@ -78,11 +78,11 @@ public class LogHandler {
             Thread[] t = new Thread[numThreads];
             for (int x = 0; x < numThreads; x++) {
                 t[x] = new Thread(() -> {
-                    while (queue.peek() != null) {
-                        File f = queue.poll();
-                        process(f);
-                    }
-                });
+                        while (queue.peek() != null) {
+                            File f = queue.poll();
+                            process(f);
+                        }
+                    });
                 t[x].start();
             }
             for (Thread x: t) {
@@ -90,7 +90,7 @@ public class LogHandler {
                     x.join();
                 } catch (InterruptedException e) {
                     universite.bordeaux.app.Logging.ErrorLogger.getInstance()
-                            .logError(e.toString());
+                        .logError(e.toString());
                     //System.out.println(e);
                 }
             }
@@ -118,8 +118,8 @@ public class LogHandler {
             String foldername = f.getName().replace(".tar.bz2", "");
 
             File folder = new File(folderPath.getAbsoluteFile()
-                    + "/"
-                    + foldername);
+                                   + "/"
+                                   + foldername);
 
             if (!folder.exists()) {
                 folder.mkdir();
@@ -130,11 +130,11 @@ public class LogHandler {
 
             try {
                 p = Runtime.getRuntime().exec(new String[]{"bash",
-                        "-c",
-                        "tar -jxf "
-                                + f.getAbsoluteFile()
-                                + " -C "
-                                + folder.getAbsoluteFile()});
+                                                           "-c",
+                                                           "tar -jxf "
+                                                           + f.getAbsoluteFile()
+                                                           + " -C "
+                                                           + folder.getAbsoluteFile()});
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -162,22 +162,22 @@ public class LogHandler {
                         temp.close();
                     }
                     progressBar(Math.round(((float) filesParsed
-                                    / (float) totalFilesToBeParsed)
-                                    * HUNDRED),
-                            log.getName());
+                                            / (float) totalFilesToBeParsed)
+                                           * HUNDRED),
+                                log.getName());
 
                 }
                 progressBar(Math.round(((float) filesParsed
-                                / (float) totalFilesToBeParsed)
-                                * HUNDRED),
-                        "finished");
+                                        / (float) totalFilesToBeParsed)
+                                       * HUNDRED),
+                            "finished");
             } else {
                 System.out.println("no files in temp");
             }
             FileUtils.deleteDirectory(folder);
         } catch (IOException e) {
             universite.bordeaux.app.Logging.ErrorLogger
-                    .getInstance().logError(e.toString());
+                .getInstance().logError(e.toString());
         }
         filesParsed++;
     }
@@ -202,29 +202,29 @@ public class LogHandler {
 
 
         String progress = "\r"
-                + ColorsTemplate.ANSI_BLUE
-                + "overall"
-                + ColorsTemplate.ANSI_RESET
-                + " ["
-                + ColorsTemplate.ANSI_GREEN
-                + total
-                + ColorsTemplate.ANSI_RESET
-                + "] "
-                + overall
-                + "%  "
-                + ColorsTemplate.ANSI_BLUE
-                + "Parsing: "
-                + ColorsTemplate.ANSI_RESET
-                + " ["
-                + ColorsTemplate.ANSI_GREEN
-                + fileName
-                + ColorsTemplate.ANSI_RESET
-                + "] ";
+            + ColorsTemplate.ANSI_BLUE
+            + "overall"
+            + ColorsTemplate.ANSI_RESET
+            + " ["
+            + ColorsTemplate.ANSI_GREEN
+            + total
+            + ColorsTemplate.ANSI_RESET
+            + "] "
+            + overall
+            + "%  "
+            + ColorsTemplate.ANSI_BLUE
+            + "Parsing: "
+            + ColorsTemplate.ANSI_RESET
+            + " ["
+            + ColorsTemplate.ANSI_GREEN
+            + fileName
+            + ColorsTemplate.ANSI_RESET
+            + "] ";
 
         System.out.print("\r                       "
-                + "                              "
-                + "                              "
-                + "                              ");
+                         + "                              "
+                         + "                              "
+                         + "                              ");
         System.out.print(progress);
     }
 
