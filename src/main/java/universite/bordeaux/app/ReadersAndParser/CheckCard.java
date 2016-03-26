@@ -1,4 +1,3 @@
-
 package universite.bordeaux.app.ReadersAndParser;
 
 import java.util.ArrayList;
