@@ -29,10 +29,26 @@ import universite.bordeaux.app.ReadersAndParser.FileReader;
  *
  */
 public abstract class LogReaderAbs {
+    /**
+     * constant to hold the index to split a line to get the number of cards.
+     */
     public static final int SEARCH_TRESEHOLD = 2;
+
+    /**
+     * number of dots uset to indicate the subaction level.
+     */
     public static final int SUBSTRING_CONST = 3;
+
+    /**
+     * holds the version of the parser.
+     */
     protected int version;
+
+    /**
+     * the file reader with the log data.
+     */
     protected FileReader log;
+    private org.jsoup.nodes.Document doc;
 
     /**
      * @param fileLog constructor the class
@@ -46,7 +62,7 @@ public abstract class LogReaderAbs {
      *
      * @return a list of winners present on the line
      */
-    protected ArrayList<String> getWinners() {
+    protected final ArrayList<String> getWinners() {
         org.jsoup.nodes.Document doc;
 
         ArrayList<String> result = new ArrayList<>();
@@ -80,7 +96,7 @@ public abstract class LogReaderAbs {
      * and look for the list of cards that are listed as gonne.
      * @return a list of cards present on the line parsed
      */
-    protected ArrayList<String> getCardsGone() {
+    protected final ArrayList<String> getCardsGone() {
         org.jsoup.nodes.Document  doc;
         ArrayList<String> cardsGone = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -91,7 +107,7 @@ public abstract class LogReaderAbs {
             Elements links = doc.select("span");
             for (Element link : links) {
                 String temp = CheckCard.verifyCard(link.text());
-                if (temp != null){
+                if (temp != null) {
                     cardsGone.add(temp);
                 }
             }
@@ -106,7 +122,7 @@ public abstract class LogReaderAbs {
      * and parse a list of cards that are in the trash.
      * @return a map with the cards and quantity of the trashed parsed
      */
-    protected HashMap<String, Integer> getTrash() {
+    protected final HashMap<String, Integer> getTrash() {
         org.jsoup.nodes.Document doc;
         HashMap<String, Integer> result = null;
         //look for the line that describes the trash
@@ -131,7 +147,7 @@ public abstract class LogReaderAbs {
      * get all the cards that are in the (cards in suply) list.
      * @return a list of cards presents on the line parsed
      */
-    protected ArrayList<String> getMarket() {
+    protected final ArrayList<String> getMarket() {
         org.jsoup.nodes.Document doc;
         ArrayList<String> market = new ArrayList<>();
         if (this.log.jumpline().contains("<title>")) {
@@ -145,7 +161,7 @@ public abstract class LogReaderAbs {
             Elements links = doc.select("span");
             for (Element link : links) {
                 String temp = CheckCard.verifyCard(link.text());
-                if(temp != null){
+                if(temp != null) {
                     market.add(temp);
                 }
             }
@@ -160,7 +176,7 @@ public abstract class LogReaderAbs {
      *
      * @return a list of Players parsed from the log
      */
-    protected ArrayList<Document> getPlayers() {
+    protected final ArrayList<Document> getPlayers() {
         boolean start = true;
 
         org.jsoup.nodes.Document doc;
@@ -183,9 +199,11 @@ public abstract class LogReaderAbs {
                     //break the string into 2 parts to find the points
                     if (doc.text().contains("points")) {
                         String[] firstBreak;
-                        if(pl.getPlayerName().contains("points")){
-                            firstBreak = doc.text().replaceAll(pl.getPlayerName(),"playername").split("points");
-                        }else{
+                        if(pl.getPlayerName().contains("points")) {
+                            firstBreak = doc.text()
+                                .replaceAll(pl.getPlayerName(),
+                                            "playername").split("points");
+                        } else {
                             firstBreak = doc.text().split("points");
                         }
 
@@ -203,7 +221,7 @@ public abstract class LogReaderAbs {
                         }
 
                         //split the string to get all victory points cards
-                        if(!doc.text().contains("resigned")){
+                        if (!doc.text().contains("resigned")) {
                             String list = firstBreak[1].split(";")[0];
                             list = list.substring(2, list.length() - 1)
                                 .replace("and", "");
@@ -217,7 +235,7 @@ public abstract class LogReaderAbs {
                                                          .split(";")[1]
                                                          .replace(" turns", "")
                                                          .replace(" ", "")));
-                        }else{
+                        } else {
                             pl.setTurns(Integer.parseInt(doc.text()
                                                          .split(";")[1]
                                                          .replace(" turns", "")
@@ -230,7 +248,7 @@ public abstract class LogReaderAbs {
                     Elements links = doc.select("span");
                     for (Element link : links) {
                         String temp = CheckCard.verifyCard(link.text());
-                        if (temp != null){
+                        if (temp != null) {
                             pl.insertOpening(temp);
                         }
                     }
@@ -259,15 +277,24 @@ public abstract class LogReaderAbs {
                      .toCollection(ArrayList::new));
     }
 
-    //TODO java doc
-    protected PlayerItf createPlayer(org.jsoup.nodes.Document doc) {
+    /**
+     * @param doc jsoup Docment to be parsed .
+     * @return the new object player
+     */
+    protected PlayerItf createPlayer(final org.jsoup.nodes.Document doc) {
+        this.doc = doc;
         String name = doc.select("b")
             .text()
             .replaceAll("^#[0-9]* ", "");
         return new Player(name);
     }
 
-    protected void getFirstHand(ArrayList<PlayerItf> players) {
+    /**
+     * gets the first hand for each player on the match.
+     * @param players the players to be parsed.
+     *
+     */
+    protected final void getFirstHand(ArrayList<PlayerItf> players) {
         org.jsoup.nodes.Document doc;
         this.log.rewindFile();
         if (this.log.searchLineWithString("(.*)'s first hand: (.*)")
@@ -282,8 +309,8 @@ public abstract class LogReaderAbs {
                                 .substring(1))) {
                         pla.setFirstHand(getCards(firstHand[1]
                                                   .replace(".)", "")
-                                                  .split("and")
-                                                  ,SEARCH_TRESEHOLD));
+                                                  .split("and"),
+                                                  SEARCH_TRESEHOLD));
                     }
                 }
                 this.log.searchLineWithString("(.*)'s first hand: (.*)");
@@ -292,8 +319,13 @@ public abstract class LogReaderAbs {
         this.log.rewindFile();
     }
 
-    protected HashMap<String, Integer> getCards(final String[] cardsToParse,
-                                              final int  limit) {
+    /**
+     * @param cardsToParse list of string with the cards to be parsed .
+     * @param limit the character index for the number and card name
+     * @return a HashMap with cards and quantities
+     */
+    protected final HashMap<String, Integer> getCards(final String[] cardsToParse,
+                                                      final int  limit) {
         HashMap<String, Integer> cards = new HashMap<>();
         for (String x : cardsToParse) {
 
@@ -307,7 +339,7 @@ public abstract class LogReaderAbs {
                 qty = 1;
             }
             String card = CheckCard.verifyCard(temp[1]);
-            if(card != null){
+            if (card != null) {
                 cards.put(card, qty);
             }
         }
@@ -319,7 +351,7 @@ public abstract class LogReaderAbs {
      * @param cards string
      * @return hashmap
      */
-    protected HashMap<String, Integer> obtainCards(String cards) {
+    protected final HashMap<String, Integer> obtainCards(String cards) {
         HashMap<String, Integer> move;
         String[] playedCards;
         if (cards.contains(",")) {
@@ -332,7 +364,12 @@ public abstract class LogReaderAbs {
         return move;
     }
 
-    protected int countLevel(String line) {
+    /**
+     * counts the depth of the sub action.
+     * @param line line to count
+     * @return a int with the depth value
+     */
+    protected final int countLevel(final String line) {
         int level = 0;
         String countLevel = line;
         while (countLevel.matches("\\.\\.\\.(.*)")) {
@@ -343,7 +380,15 @@ public abstract class LogReaderAbs {
         return level;
     }
 
-    protected HashMap<String, Integer> getCardsForBuysMove(org.jsoup.nodes.Document doc, String playername) {
+    /**
+     *  parses the line to get the cards played on the buys move.
+     * @param doc line to be parsed
+     * @param playername the player that is playing the actual turn
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForBuysMove(final org.jsoup.nodes.Document doc,
+                            final String playername) {
         String cards = "";
         if (playername.contains("buys") && doc.text().contains(playername)) {
             cards = doc.text()
@@ -356,7 +401,15 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForPlaysMove(org.jsoup.nodes.Document doc, String playername) {
+    /**
+     *  parses the line to get the cards played on the plays move.
+     * @param doc line to be parsed
+     * @param playername the player that is playing the actual turn
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForPlaysMove(final org.jsoup.nodes.Document doc,
+                             final String playername) {
         String cards = "";
         if (playername.contains("plays") && doc.text().contains(playername)) {
             cards = doc.text()
@@ -364,7 +417,7 @@ public abstract class LogReaderAbs {
                 .replace(playername
                          + " plays ", "")
                 .replaceAll("\\.", "");
-        }else{
+        } else {
             cards = doc.text() .split(" plays ")[1] .replaceAll("\\.", "");
         }
 
@@ -372,13 +425,25 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForDrawsMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the draws move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForDrawsMove(final org.jsoup.nodes.Document doc) {
         String cards = doc.text().trim().split(" draws: ")[1]
             .replaceAll("\\.\\)", "");
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForDrawsAndDiscardMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the draws and discard move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForDrawsAndDiscardMove(final org.jsoup.nodes.Document doc) {
         String cards = doc.text()
             .trim()
             .split(" draws and discard ")[1]
@@ -386,7 +451,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForGainsMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the gains move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForGainsMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" gains ")[1]
@@ -397,8 +468,14 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected Collection<HashMap<String,Integer>> getCardsForDiscardAndGainMove(org.jsoup.nodes.Document doc) {
-        Collection<HashMap<String,Integer>> result = new ArrayList<>();
+    /**
+     *  parses the line to get the cards played on the discard and gain move.
+     * @param doc line to be parsed
+     * @return a collection of map with the cards and amounts
+     */
+    protected final Collection<HashMap<String, Integer>>
+        getCardsForDiscardAndGainMove(final org.jsoup.nodes.Document doc) {
+        Collection<HashMap<String, Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
             .split(" discards ")[1]
@@ -416,8 +493,14 @@ public abstract class LogReaderAbs {
         return result;
     }
 
-    protected Collection<HashMap<String,Integer>> getCardsForRevealMove(org.jsoup.nodes.Document doc) {
-        Collection<HashMap<String,Integer>> result = new ArrayList<>();
+    /**
+     *  parses the line to get the cards played on the reveals move.
+     * @param doc line to be parsed
+     * @return a collection of map with the cards and amounts
+     */
+    protected final Collection<HashMap<String, Integer>>
+        getCardsForRevealMove(final org.jsoup.nodes.Document doc) {
+        Collection<HashMap<String, Integer>> result = new ArrayList<>();
         String cards = doc.text()
             .trim()
             .split(" reveals ")[1]
@@ -426,14 +509,14 @@ public abstract class LogReaderAbs {
         if (cards.contains("and trashes it")) {
             trashes = true;
             cards = cards.replaceAll("and trashes it", "");
-        }else if(cards.contains("giving")){
+        } else if (cards.contains("giving")) {
             cards = cards.split("giving")[0].replaceAll(",","");
         }
         cards = cards
             .replaceAll(" and then ", ",")
             .replaceAll(", and ", ",")
             .replaceAll(" and ", ",");
-            result.add(obtainCards(cards));
+        result.add(obtainCards(cards));
         if (trashes) {
             result.add(obtainCards(cards));
         }
@@ -441,8 +524,14 @@ public abstract class LogReaderAbs {
 
     }
 
-    protected Collection<HashMap<String,Integer>> getCardsForTrashMove(org.jsoup.nodes.Document doc) {
-        Collection<HashMap<String,Integer>> result = new ArrayList<>();
+    /**
+     *  parses the line to get the cards played on the trash move.
+     * @param doc line to be parsed
+     * @return a collection of map with the cards and amounts
+     */
+    protected final Collection<HashMap<String, Integer>>
+        getCardsForTrashMove(final org.jsoup.nodes.Document doc) {
+        Collection<HashMap<String, Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
             .split(" trashes ")[1]
@@ -458,7 +547,13 @@ public abstract class LogReaderAbs {
         return result;
     }
 
-    protected HashMap<String,Integer> getCardsForPuttingMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the putting move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForPuttingMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" putting ")[1]
@@ -467,7 +562,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForGainingMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the gaining move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForGainingMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" gaining ")[1]
@@ -476,7 +577,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForPlayingMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the playing move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForPlayingMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" playing ")[1]
@@ -484,8 +591,14 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected Collection<HashMap<String,Integer>> getCardsForRevealingMove(org.jsoup.nodes.Document doc) {
-        Collection<HashMap<String,Integer>> result = new ArrayList<>();
+    /**
+     *  parses the line to get the cards played on the revealing move.
+     * @param doc line to be parsed
+     * @return a collection of map with the cards and amounts
+     */
+    protected final Collection<HashMap<String, Integer>>
+        getCardsForRevealingMove(final org.jsoup.nodes.Document doc) {
+        Collection<HashMap<String, Integer>> result = new ArrayList<>();
         String cards =  doc.text()
             .trim()
             .split(" revealing ")[1]
@@ -500,9 +613,15 @@ public abstract class LogReaderAbs {
         }
         return result;
 
-}
+    }
 
-    protected HashMap<String,Integer> getCardsForDiscardingMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the discarding move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForDiscardingMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" discarding ")[1]
@@ -512,7 +631,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForDrawingMove(org.jsoup.nodes.Document doc) {
+    /**
+     *  parses the line to get the cards played on the drawing move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForDrawingMove(final org.jsoup.nodes.Document doc) {
         String cards =  doc.text()
             .trim()
             .split(" drawing ")[1]
@@ -522,7 +647,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected HashMap<String,Integer> getCardsForTrashingMove(String doc) {
+    /**
+     *  parses the line to get the cards played on the trashing move.
+     * @param doc line to be parsed
+     * @return a map with the cards and amounts
+     */
+    protected final HashMap<String, Integer>
+        getCardsForTrashingMove(final String doc) {
         String cards =  doc.trim()
             .split(" trashing ")[1]
             .replaceAll("(\\</span\\>)"
@@ -534,7 +665,13 @@ public abstract class LogReaderAbs {
         return obtainCards(cards);
     }
 
-    protected ArrayList<Document> getGameLog() {
+
+    /**
+     * reponsible to recognize and iterate over all turns of a log and call the proper
+     * function to treat the action made.
+     * @return a list of Documents representing the turns.
+     */
+    protected final ArrayList<Document> getGameLog() {
         org.jsoup.nodes.Document doc;
         ArrayList<GameTurn> turns = new ArrayList<>();
         boolean finished = false;
@@ -545,14 +682,14 @@ public abstract class LogReaderAbs {
 
         //get the start of the game log
         String logBegin = this.log.searchLineWithString("(.*)'s turn 1(.*)");
-        if (logBegin == null){
+        if (logBegin == null) {
             throw new UnsupportedOperationException();
         }
         doc = Jsoup.parse(logBegin);
-
         while (!finished) {
             if (doc.text().matches("(.*)'s turn [0-9]*(.*)")) {
                 int tempTurn = 0;
+                //if a turn is possessed by another player this turn has no number in the log
                 if (!doc.text().contains("(possessed by")) {
                     String[] tn = doc.text().split("'s turn");
                     tempTurn = Integer.parseInt(tn[tn.length -1]
@@ -578,153 +715,171 @@ public abstract class LogReaderAbs {
                     if (!doc.text().contains("nothing")
                         && !doc.text().contains("reshuffles.)")) {
                         switch (LogElements.type(this.log.getLine())) {
-                            case PLAYS:
+                        case PLAYS:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.PLAYS,
+                                         getCardsForPlaysMove(doc,
+                                                              playername));
+                            break;
+                        case PLAYING:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.PLAYS,
+                                         getCardsForPlayingMove(doc));
+                            break;
+                        case BUYS:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.BUYS,
+                                         getCardsForBuysMove(doc,
+                                                             playername));
+                            break;
+                        case DRAWS_LAST_ACTION:
+                            t.insertMove(playername,
+                                         0,
+                                         ConstantLog.DRAWS,
+                                         getCardsForDrawsMove(doc));
+                            break;
+                        case DRAWS_DISCARD:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.DRAWS,
+                                         getCardsForDrawsAndDiscardMove(doc));
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.DISCARD,
+                                         getCardsForDrawsAndDiscardMove(doc));
+                            break;
+                        case DRAWING:
+                            t.insertMove(playername,
+                                         0,
+                                         ConstantLog.DRAWS,
+                                         getCardsForDrawingMove(doc));
+                            break;
+                        case GAINS:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.GAINS,
+                                         getCardsForGainsMove(doc));
+                            break;
+                        case GAINING:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.GAINS,
+                                         getCardsForGainingMove(doc));
+                            break;
+                        case DISCARD_AND_GAINS:
+                            Collection<HashMap<String, Integer>> discCards;
+                            discCards = getCardsForDiscardAndGainMove(doc);
+                            if (discCards.size() > 1) {
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.PLAYS,
-                                             getCardsForPlaysMove(doc,playername));
-                                break;
-                            case PLAYING:
+                                             countLevel(doc.text()),
+                                             ConstantLog.DISCARD,
+                                             (HashMap) discCards
+                                             .toArray()[0]);
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.PLAYS,
-                                            getCardsForPlayingMove(doc));
-                                break;
-                            case BUYS:
+                                             countLevel(doc.text()),
+                                             ConstantLog.GAINS,
+                                             (HashMap) discCards
+                                             .toArray()[1]);
+                            } else {
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.BUYS,
-                                             getCardsForBuysMove(doc,playername));
-                                break;
-                            case DRAWS_LAST_ACTION:
+                                             countLevel(doc.text()),
+                                             ConstantLog.DISCARD,
+                                             (HashMap) discCards
+                                             .toArray()[0]);
+                            }
+                            break;
+                        case TRASHES:
+                            Collection<HashMap<String, Integer>> trashCards;
+                            trashCards = getCardsForTrashMove(doc);
+                            if (trashCards.size() > 1) {
                                 t.insertMove(playername,
-                                            0,
-                                            ConstantLog.DRAWS,
-                                            getCardsForDrawsMove(doc));
-                                break;
-                            case DRAWS_DISCARD:
+                                             countLevel(doc.text()),
+                                             ConstantLog.TRASH,
+                                             (HashMap) trashCards
+                                             .toArray()[0]);
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.DRAWS,
-                                            getCardsForDrawsAndDiscardMove(doc));
+                                             countLevel(doc.text()),
+                                             ConstantLog.GAINS,
+                                             (HashMap) trashCards
+                                             .toArray()[1]);
+                            } else {
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.DISCARD,
-                                            getCardsForDrawsAndDiscardMove(doc));
-                                break;
-                            case DRAWING:
+                                             countLevel(doc.text()),
+                                             ConstantLog.TRASH,
+                                             (HashMap) trashCards
+                                             .toArray()[0]);
+                            }
+                            break;
+                        case TRASHING:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.TRASH,
+                                         getCardsForTrashingMove(log.getLine()));
+                            break;
+                        case REVEALS:
+                            Collection<HashMap<String, Integer>> revealCards;
+                            revealCards = getCardsForRevealMove(doc);
+                            if (revealCards.size() > 1) {
                                 t.insertMove(playername,
-                                            0,
-                                            ConstantLog.DRAWS,
-                                            getCardsForDrawingMove(doc));
-                                break;
-                            case GAINS:
+                                             countLevel(doc.text()),
+                                             ConstantLog.REVEAL,
+                                             (HashMap) revealCards
+                                             .toArray()[0]);
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.GAINS,
-                                            getCardsForGainsMove(doc));
-                                break;
-                            case GAINING:
+                                             countLevel(doc.text()),
+                                             ConstantLog.TRASH,
+                                             (HashMap) revealCards
+                                             .toArray()[1]);
+                            } else {
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.GAINS,
-                                            getCardsForGainingMove(doc));
-                                break;
-                            case DISCARD_AND_GAINS:
-                                Collection<HashMap<String,Integer>> discCards = getCardsForDiscardAndGainMove(doc);
-                                if (discCards.size() > 1 ){
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.DISCARD,
-                                                (HashMap) discCards.toArray()[0]);
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.GAINS,
-                                                (HashMap) discCards.toArray()[1]);
-                                }else{
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.DISCARD,
-                                                (HashMap) discCards.toArray()[0]);
-                                }
-                                break;
-                            case TRASHES:
-                                Collection<HashMap<String,Integer>> trashCards = getCardsForTrashMove(doc);
-                                if (trashCards.size() > 1 ){
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.TRASH,
-                                                (HashMap) trashCards.toArray()[0]);
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.GAINS,
-                                                (HashMap) trashCards.toArray()[1]);
-                                }else{
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.TRASH,
-                                                (HashMap) trashCards.toArray()[0]);
-                                }
-                                break;
-                            case TRASHING:
-                                t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.TRASH,
-                                            getCardsForTrashingMove(log.getLine()));
-                                break;
-                            case REVEALS:
-                                Collection<HashMap<String,Integer>> revealCards = getCardsForRevealMove(doc);
-                                if (revealCards.size() > 1 ){
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.REVEAL,
-                                                (HashMap) revealCards.toArray()[0]);
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.TRASH,
-                                                (HashMap) revealCards.toArray()[1]);
-                                }else{
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.REVEAL,
-                                                (HashMap) revealCards.toArray()[0]);
-                                }
+                                             countLevel(doc.text()),
+                                             ConstantLog.REVEAL,
+                                             (HashMap) revealCards
+                                             .toArray()[0]);
+                            }
 
-                                break;
-                            case REVEALING:
-                                Collection<HashMap<String,Integer>> revealingCards = getCardsForRevealingMove(doc);
-                                if (revealingCards.size() > 1 ){
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.REVEAL,
-                                                (HashMap) revealingCards.toArray()[0]);
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.PUTTING,
-                                                (HashMap) revealingCards.toArray()[1]);
-                                }else{
-                                    t.insertMove(playername,
-                                                countLevel(doc.text()),
-                                                ConstantLog.REVEAL,
-                                                (HashMap) revealingCards.toArray()[0]);
-                                }
-                                break;
-                            case PUTTING:
+                            break;
+                        case REVEALING:
+                            Collection<HashMap<String, Integer>> revealingCards;
+                            revealingCards = getCardsForRevealingMove(doc);
+                            if (revealingCards.size() > 1) {
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.PUTTING,
-                                            getCardsForPuttingMove(doc));
-                                break;
-                            case DISCARDING:
+                                             countLevel(doc.text()),
+                                             ConstantLog.REVEAL,
+                                             (HashMap) revealingCards
+                                             .toArray()[0]);
                                 t.insertMove(playername,
-                                            countLevel(doc.text()),
-                                            ConstantLog.DISCARD,
-                                            getCardsForDiscardingMove(doc));
-                                break;
-                            case NOT_DEFINED:
-                                break;
-                            default:
-                                break;
+                                             countLevel(doc.text()),
+                                             ConstantLog.PUTTING,
+                                             (HashMap) revealingCards
+                                             .toArray()[1]);
+                            } else {
+                                t.insertMove(playername,
+                                             countLevel(doc.text()),
+                                             ConstantLog.REVEAL,
+                                             (HashMap) revealingCards
+                                             .toArray()[0]);
+                            }
+                            break;
+                        case PUTTING:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.PUTTING,
+                                         getCardsForPuttingMove(doc));
+                            break;
+                        case DISCARDING:
+                            t.insertMove(playername,
+                                         countLevel(doc.text()),
+                                         ConstantLog.DISCARD,
+                                         getCardsForDiscardingMove(doc));
+                            break;
+                        case NOT_DEFINED:
+                            break;
+                        default:
+                            break;
                         }
                     }
                 }
@@ -742,7 +897,11 @@ public abstract class LogReaderAbs {
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    protected Date getDateTime(){
+    /**
+     * reads the name of the file and extracts the date.
+     * @return the date and time of the game
+     */
+    protected final Date getDateTime() {
         Date temp = new Date();
         String[] date = this.log.getName().split("-");
         DateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'",
@@ -772,7 +931,7 @@ public abstract class LogReaderAbs {
      * @param map lhe map to create the document
      * @return Document with the map data
      */
-    protected Document hashToDoc(final HashMap<String, Integer> map) {
+    protected final Document hashToDoc(final HashMap<String, Integer> map) {
         Document temp = new Document();
         for (String x: map.keySet()) {
             temp.append(x, map.get(x));
@@ -780,7 +939,11 @@ public abstract class LogReaderAbs {
         return temp;
     }
 
-    protected Document toDoc() {
+    /**
+     * generates a Document compatible with mongodb based on the log.
+     * @return a Document
+     */
+    protected final Document toDoc() {
         return new Document()
             .append(ConstantLog.DATE, this.getDateTime())
             .append(ConstantLog.FILENAME, this.log.getName())
@@ -788,12 +951,15 @@ public abstract class LogReaderAbs {
             .append(ConstantLog.WINNERS, this.getWinners())
             .append(ConstantLog.CARDSGONNE, this.getCardsGone())
             .append(ConstantLog.MARKET, this.getMarket())
-            .append(ConstantLog.TRASH, this.getTrash())
+            .append(ConstantLog.TRASH, hashToDoc(this.getTrash()))
             .append(ConstantLog.PLAYERS, this.getPlayers())
             .append(ConstantLog.LOG, this.getGameLog());
     }
 
-    public void close(){
+    /**
+     * closes the file descriptor.
+     */
+    public final void close(){
         log.close();
     }
 
