@@ -152,8 +152,8 @@ public class LogHandler {
             //iterates over all files in the temp folder
             if (htmlList != null) {
                 for (File log: htmlList) {
-                    LogReader temp = LogReaderFactory.createrReader(log);
                     try {
+                        LogReader temp = LogReaderFactory.createrReader(log);
                         MongoConection.insertMatch(temp.getDoc());
                     } catch (UnsupportedOperationException e) {
                         ErrorLogger.getInstance().logError("bad Log format" + log.getName());
