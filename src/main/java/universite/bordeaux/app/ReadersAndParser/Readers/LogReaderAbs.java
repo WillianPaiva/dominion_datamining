@@ -253,6 +253,7 @@ public abstract class LogReaderAbs {
         }
         //return the file pointer to the beginning of the file
         getFirstHand(players);
+        this.log.rewindFile();
         return players.stream().map(PlayerItf::toDoc)
             .collect(Collectors
                      .toCollection(ArrayList::new));
@@ -543,7 +544,11 @@ public abstract class LogReaderAbs {
         String playername = "";
 
         //get the start of the game log
-        doc = Jsoup.parse(this.log.searchLineWithString("(.*)'s turn 1(.*)"));
+        String logBegin = this.log.searchLineWithString("(.*)'s turn 1(.*)");
+        if (logBegin == null){
+            throw new UnsupportedOperationException();
+        }
+        doc = Jsoup.parse(logBegin);
 
         while (!finished) {
             if (doc.text().matches("(.*)'s turn [0-9]*(.*)")) {
