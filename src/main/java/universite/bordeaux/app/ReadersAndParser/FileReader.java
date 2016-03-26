@@ -85,7 +85,7 @@ public class FileReader {
                 return this.line;
             }
         }
-        throw new UnsupportedOperationException();
+        return null;
     }
 
 

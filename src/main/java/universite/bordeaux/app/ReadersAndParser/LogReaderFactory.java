@@ -17,15 +17,21 @@ public final class LogReaderFactory{
   }
 
   public static LogReader createrReader(File log){
-    FileReader fr = new FileReader(log);
-    fr.searchLineWithString("(.*)----------------------(.*)");
-    fr.jumpline();
-    Document doc = Jsoup.parse(fr.jumpline());
-    if (doc.select("b").text().contains("points")) {
-        return new LogReaderV2(log);
-    } else {
-        return new LogReaderV1(log);
-    }
+
+      FileReader fr = new FileReader(log);
+      if (fr.searchLineWithString("(.*)----------------------(.*)") == null){
+          return null;
+      }
+      fr.jumpline();
+      Document doc = Jsoup.parse(fr.jumpline());
+      fr.close();
+
+      if (doc.select("b").text().contains("points")) {
+          return new LogReaderV2(log);
+      } else {
+          return new LogReaderV1(log);
+      }
+
   }
 
 
