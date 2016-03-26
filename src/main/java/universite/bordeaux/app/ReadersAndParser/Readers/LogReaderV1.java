@@ -4,17 +4,21 @@ import java.io.File;
 
 import org.bson.Document;
 
-public class LogReaderV1 extends LogReaderAbs implements LogReader{
+public class LogReaderV1 extends LogReaderAbs implements LogReader {
 
-  /**
-	 * @param fileLog name of the log file
-	 */
-  public LogReaderV1(File fileLog) {
-    super(fileLog);
-    this.version = 1;
-	}
+    /**
+     * @param fileLog name of the log file
+     */
+    public LogReaderV1(File fileLog) {
+        super(fileLog);
+        this.version = 1;
+    }
 
-    public Document getDoc(){
+    /**
+     * generates a Document compatible with mongodb based on the log.
+     * @return a Document
+     */
+    public final Document getDoc(){
         return this.toDoc().append("version", this.version);
     }
 }
