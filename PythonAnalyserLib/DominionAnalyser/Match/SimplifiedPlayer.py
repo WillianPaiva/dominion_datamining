@@ -1,13 +1,25 @@
-from DominionDataAnalyser.MongoInterface import *
+from DominionAnalyser.Mongo.MongoInterface import MongoInterface
+
 
 class SimplifiedPlayer:
-    def __init__(self,document):
-        self.id = document["_id"]
-        self.name = document["name"]
-        self.elo = document["elo"]
+    def __init__(self, document):
+        self.id = document.get('id')
+        self.name = document.get('name')
+        self.elo = document.get('elo')
 
-    def save(self):
-        """update the player on the database"""
-        document = {"name":self.name,
-                    "elo":self.elo}
-        updatePlayer(self.id,document)
+    def save(self, update):
+        """insert or update the player on the database
+
+        this function will search the database on the players collection
+        and see if player exists if it already exists and 'update' is true it
+        will update the player data on the database else it does nothing,
+        and if player don't exists it saves the new player
+        """
+        db = MongoInterface()
+        player = db.get_player(self.name)
+        document = {"name": self.name, "elo": self.elo}
+
+        if player != None and update is True:
+            db.update_player(player["_id"], document)
+        else:
+            db.insert_player(document)

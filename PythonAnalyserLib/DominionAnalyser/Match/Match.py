@@ -1,75 +1,45 @@
-from DominionDataAnalyser.MongoInterface import *
-from DominionDataAnalyser.Player import *
-
 class Match:
-    ELO_FACTOR = 32
-    ELO_PONDERATION = 400
     def __init__(self, document):
 
         #the log id on the mongoDB database.
-        self.id = document["_id"]
+        self.ident = document.get('_id')
 
         #list of the winners .
-        self.winners = document["winners"]
+        self.winners = document.get('winners')
 
         #list of empty piles on the game.
-        self.cardsGonne = document["cardsgonne"]
+        self.cardsGonne = document.get('cardsgonne')
 
         #list of cards available on the game.
-        self.market = document["market"]
+        self.market = document.get('market')
 
         #list of all the players on the match.
-        self.players = document["players"]
+        self.players = document.get('players')
 
         #list of cards on the trash.
-        self.trash = document["trash"]
+        self.trash = document.get('trash')
 
         #date and time of the game.
-        self.dateTime = document["date"]
+        self.dateTime = document.get('date')
 
         #the difference between the highest and lowest ELO in the match.
-        self.eloGap = document["eloGap"]
+        self.eloGap = document.get('eloGap')
 
         #the step by step of all moves done in the game.
-        self.log = document["log"]
+        self.log = document.get('log')
 
         #the name of the parsed file.
-        self.fileName = document["filename"]
-
+        self.fileName = document.get('filename')
 
     def toDoc(self):
         """save the object into the database"""
-        document = {"date":self.dateTime,
-                    "filename":self.fileName,
-                    "eloGap":self.eloGap,
-                    "winners":self.winners,
-                    "cardsgonne":self.cardsGonne,
-                    "market":self.market,
-                    "trash":self.trash,
-                    "players":self.players,
-                    "log":self.log}
+        document = {"date": self.dateTime,
+                    "filename": self.fileName,
+                    "eloGap": self.eloGap,
+                    "winners": self.winners,
+                    "cardsgonne": self.cardsGonne,
+                    "market": self.market,
+                    "trash": self.trash,
+                    "players": self.players,
+                    "log": self.log}
         return document
-
-    def genereteElo(self):
-        """generate the ELO of the match"""
-        playersOldElo = {}
-        eloPool = 0
-
-        #collect the base data to calculate the elo
-        for player in self.players:
-            temp = getPlayer(player["name"])["elo"]
-            playerOldElo[player["name"]] = temp
-            eloPool  += temp
-
-        #calculate each players elo
-        for player in self.players:
-            oldElo =playersOldElo[player["name"]]
-            if player["name"] in winners:
-                newElo= oldElo + (
-                    (ELO_FACTOR * (1 - (math.pow(10,oldElo/ELO_PONDERATION) / eloPool ))) / len(self.winners))
-            else:
-                newElo= oldElo + (
-                    (ELO_FACTOR * (0 - (math.pow(10,oldElo/ELO_PONDERATION) / eloPool ))))
-
-            updatePlayer(player["id"],{"elo":newElo})
-            player["Elo"] = newElo

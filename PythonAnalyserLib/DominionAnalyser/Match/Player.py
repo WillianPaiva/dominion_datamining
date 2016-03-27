@@ -1,39 +1,35 @@
-
 class Player:
-    def __init__(self,document):
+    def __init__(self, document):
 
-        BASE_ELO = 1000
-        self.playerName = document["name"]
+        self.playerName = document.get('name')
 
         #list of victory cards on with quantity
-        self.victoryCards= document["victorycards"]
+        self.victoryCards = document.get('victorycards')
 
-        self.elo = document["elo"]
+        self.elo = document.get('elo')
 
-        self.points = document["points"]
+        self.points = document.get('points')
 
-        self.strategy = document["strategy"]
+        self.strategy = document.get('strategy')
 
-        self.turns = document["turns"]
+        self.turns = document.get('turns')
         #list of cards on the player deck
-        self.deck = document["deck"]
+        self.deck = document.get('deck')
         #cards that the player got in the first hand
-        self.firsthand = document["firsthand"]
+        self.firsthand = document.get('firsthand')
 
         #TODO find out what the hell is this information on the log!!!
-        self.opening = document["opening"]
-
+        self.opening = document.get('opening')
 
     def toDoc(self):
         """return the document version of this object"""
-        document = {"name":self.playerName,
-                    "elo":self.elo,
-                    "points":self.points,
-                    "stratgy":self.strategy,
-                    "turns":self.turns,
-                    "victorycards":self.victoryCards,
-                    "deck":self.deck,
-                    "firsthand":self.firsthand,
-                    "opening":self.opening
-        }
+        document = {"name": self.playerName,
+                    "elo": self.elo,
+                    "points": self.points,
+                    "stratgy": self.strategy,
+                    "turns": self.turns,
+                    "victorycards": self.victoryCards,
+                    "deck": self.deck,
+                    "firsthand": self.firsthand,
+                    "opening": self.opening}
         return document
