@@ -1,4 +1,4 @@
-from DominionAnalyser.Mongo.MongoInterface import MongoInterface
+from DominionAnalyser.Mongo import MongoInterface
 
 
 class SimplifiedPlayer:
@@ -7,7 +7,7 @@ class SimplifiedPlayer:
         self.name = document.get('name')
         self.elo = document.get('elo')
 
-    def save(self, update):
+    def save(self):
         """insert or update the player on the database
 
         this function will search the database on the players collection
@@ -15,11 +15,10 @@ class SimplifiedPlayer:
         will update the player data on the database else it does nothing,
         and if player don't exists it saves the new player
         """
-        db = MongoInterface()
-        player = db.get_player(self.name)
+        player = MongoInterface.get_player(self.name)
         document = {"name": self.name, "elo": self.elo}
 
-        if player != None and update is True:
-            db.update_player(player["_id"], document)
+        if player is None:
+            MongoInterface.insert_player(document)
         else:
-            db.insert_player(document)
+            MongoInterface.update_player(player["_id"], document)

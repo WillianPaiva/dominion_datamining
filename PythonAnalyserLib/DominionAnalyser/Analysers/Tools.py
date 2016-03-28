@@ -1,7 +1,7 @@
-from DominionAnalyser.Mongo.MongoInterface import MongoInterface
 from DominionAnalyser.Match.Match import Match
 from DominionAnalyser.Match.Player import Player
 from DominionAnalyser.Match.SimplifiedPlayer import SimplifiedPlayer
+from DominionAnalyser.Mongo import MongoInterface
 import pyprind
 import math
 
@@ -28,19 +28,21 @@ def elo_calculator(match):
     ELO_PONDERATION = 400
 
     game = Match(match)
-    database = MongoInterface()
     playersOldElo = {}
     eloPool = 0
     #collect the base data to calculate the elo
-    for pl in game.players:
-        player = Player(pl)
-        temp = database.get_player(player.playerName)["elo"]
+    for player in game.players:
+        temp = MongoInterface.get_player(player.playerName).get('elo')
         playersOldElo[player.playerName] = temp
         eloPool += temp
-        #calculate each players elo
-    for pl in game.players:
-        player = Player(pl)
+    #calculate each players elo
+    for player in game.players:
+
+        splayer = SimplifiedPlayer(MongoInterface.get_player(
+            player.playerName))
+
         oldElo = playersOldElo[player.playerName]
+
         if player.playerName in game.winners:
             newElo = oldElo + ((ELO_FACTOR * (1 - (math.pow(
                 10, oldElo / ELO_PONDERATION) / eloPool))) / len(game.winners))
@@ -49,14 +51,16 @@ def elo_calculator(match):
                 (ELO_FACTOR *
                  (0 - (math.pow(10, oldElo / ELO_PONDERATION) / eloPool))))
 
-            database.update_player(player["id"], {"elo": newElo})
-            player["Elo"] = newElo
+        splayer.elo = newElo
+        splayer.save()
+        player.elo = newElo
+    MongoInterface.update_log(game.ident, game.toDoc())
+    return newElo
 
 
 def generate_elo():
-    database = MongoInterface()
     apply_function_to_query(elo_calculator,
-                            database.logs_col.find().sort("date"))
+                            MongoInterface.logs_col.find().sort("date"))
 
 
 def generate_simplified_player(match):
@@ -64,10 +68,23 @@ def generate_simplified_player(match):
     for pl in game.players:
         player = Player(pl)
         splayer = SimplifiedPlayer({"name": player.playerName, "elo": 1000})
-        splayer.save(False)
+        splayer.save()
 
 
 def generate_player_table():
-    database = MongoInterface()
     apply_function_to_query(generate_simplified_player,
-                            database.logs_col.find())
+                            MongoInterface.logs_col.find())
+
+
+def get_player_elo_data(playerName, match):
+    game = Match(match)
+    return game.get_player(playerName).elo
+
+
+def genereate_player_elo_curve(playerName):
+    player_curve = []
+    apply_function_to_query(
+        lambda x: player_curve.append(get_player_elo_data(playerName, x)),
+        MongoInterface.logs_col.find({"players.name": playerName}).sort(
+            "date"))
+    return player_curve

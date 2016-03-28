@@ -330,15 +330,15 @@ public abstract class LogReaderAbs {
         for (String x : cardsToParse) {
 
             x = x.trim();
-
-            String[] temp = x.split(" ", limit);
+            String nb = x.substring(0,x.indexOf(' '));
+            String card = x.substring(x.indexOf(' ')+1);
             int qty;
             try {
-                qty = Integer.parseInt(temp[0]);
+                qty = Integer.parseInt(nb);
             } catch (NumberFormatException e) {
                 qty = 1;
             }
-            String card = CheckCard.verifyCard(temp[1]);
+            card = CheckCard.verifyCard(card);
             if (card != null) {
                 cards.put(card, qty);
             }

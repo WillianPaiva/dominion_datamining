@@ -1,3 +1,6 @@
+from DominionAnalyser.Match.Player import Player
+
+
 class Match:
     def __init__(self, document):
 
@@ -14,7 +17,7 @@ class Match:
         self.market = document.get('market')
 
         #list of all the players on the match.
-        self.players = document.get('players')
+        self.players = [Player(p) for p in document.get('players')]
 
         #list of cards on the trash.
         self.trash = document.get('trash')
@@ -31,6 +34,11 @@ class Match:
         #the name of the parsed file.
         self.fileName = document.get('filename')
 
+    def get_player(self, player_name):
+        for p in self.players:
+            if p.playerName == player_name:
+                return p
+
     def toDoc(self):
         """save the object into the database"""
         document = {"date": self.dateTime,
@@ -40,6 +48,6 @@ class Match:
                     "cardsgonne": self.cardsGonne,
                     "market": self.market,
                     "trash": self.trash,
-                    "players": self.players,
+                    "players": [p.toDoc() for p in self.players],
                     "log": self.log}
         return document
