@@ -28,19 +28,21 @@ def elo_calculator(match):
     ELO_PONDERATION = 400
 
     game = Match(match)
-    database = MongoInterface()
     playersOldElo = {}
     eloPool = 0
     #collect the base data to calculate the elo
-    for pl in game.players:
-        player = Player(pl)
-        temp = database.get_player(player.playerName)["elo"]
+    for player in game.players:
+        temp = MongoInterface.get_player(player.playerName).get('elo')
         playersOldElo[player.playerName] = temp
         eloPool += temp
-        #calculate each players elo
-    for pl in game.players:
-        player = Player(pl)
+    #calculate each players elo
+    for player in game.players:
+
+        splayer = SimplifiedPlayer(MongoInterface.get_player(
+            player.playerName))
+
         oldElo = playersOldElo[player.playerName]
+
         if player.playerName in game.winners:
             newElo = oldElo + ((ELO_FACTOR * (1 - (math.pow(
                 10, oldElo / ELO_PONDERATION) / eloPool))) / len(game.winners))
@@ -49,8 +51,11 @@ def elo_calculator(match):
                 (ELO_FACTOR *
                  (0 - (math.pow(10, oldElo / ELO_PONDERATION) / eloPool))))
 
-            database.update_player(player["id"], {"elo": newElo})
-            player["Elo"] = newElo
+        splayer.elo = newElo
+        splayer.save()
+        player.elo = newElo
+    MongoInterface.update_log(game.ident, game.toDoc())
+    return newElo
 
 
 def generate_elo():
