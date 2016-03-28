@@ -14,7 +14,7 @@ class Match:
         self.market = document.get('market')
 
         #list of all the players on the match.
-        self.players = document.get('players')
+        self.players = [Player(p) for p in document.get('players')]
 
         #list of cards on the trash.
         self.trash = document.get('trash')
