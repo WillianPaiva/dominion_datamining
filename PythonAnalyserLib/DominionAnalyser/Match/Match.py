@@ -31,6 +31,11 @@ class Match:
         #the name of the parsed file.
         self.fileName = document.get('filename')
 
+    def get_player(self, player_name):
+        for p in self.players:
+            if p.playerName == player_name:
+                return p
+
     def toDoc(self):
         """save the object into the database"""
         document = {"date": self.dateTime,
