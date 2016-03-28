@@ -64,7 +64,7 @@ def generate_simplified_player(match):
     for pl in game.players:
         player = Player(pl)
         splayer = SimplifiedPlayer({"name": player.playerName, "elo": 1000})
-        splayer.save(False)
+        splayer.save()
 
 
 def generate_player_table():
