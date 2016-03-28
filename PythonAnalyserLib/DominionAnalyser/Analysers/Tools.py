@@ -16,7 +16,7 @@ def apply_function_to_query(function, query):
     n = query.count()
     progress_bar = pyprind.ProgBar(n, monitor=True, width=70)
     for match in query:
-        test = function(match)
+        function(match)
         progress_bar.update(item_id=match.get("_id"), force_flush=True)
     print(progress_bar)
 
@@ -74,3 +74,17 @@ def generate_simplified_player(match):
 def generate_player_table():
     apply_function_to_query(generate_simplified_player,
                             MongoInterface.logs_col.find())
+
+
+def get_player_elo_data(playerName, match):
+    game = Match(match)
+    return game.get_player(playerName).elo
+
+
+def genereate_player_elo_curve(playerName):
+    player_curve = []
+    apply_function_to_query(
+        lambda x: player_curve.append(get_player_elo_data(playerName, x)),
+        MongoInterface.logs_col.find({"players.name": playerName}).sort(
+            "date"))
+    return player_curve
