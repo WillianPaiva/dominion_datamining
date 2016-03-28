@@ -1,3 +1,6 @@
+from DominionAnalyser.Match.Player import Player
+
+
 class Match:
     def __init__(self, document):
 
@@ -45,6 +48,6 @@ class Match:
                     "cardsgonne": self.cardsGonne,
                     "market": self.market,
                     "trash": self.trash,
-                    "players": self.players,
+                    "players": [p.toDoc() for p in self.players],
                     "log": self.log}
         return document
