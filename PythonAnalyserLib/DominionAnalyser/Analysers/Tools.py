@@ -1,7 +1,7 @@
-from DominionAnalyser.Mongo.MongoInterface import MongoInterface
 from DominionAnalyser.Match.Match import Match
 from DominionAnalyser.Match.Player import Player
 from DominionAnalyser.Match.SimplifiedPlayer import SimplifiedPlayer
+from DominionAnalyser.Mongo import MongoInterface
 import pyprind
 import math
 
@@ -16,7 +16,7 @@ def apply_function_to_query(function, query):
     n = query.count()
     progress_bar = pyprind.ProgBar(n, monitor=True, width=70)
     for match in query:
-        function(match)
+        test = function(match)
         progress_bar.update(item_id=match.get("_id"), force_flush=True)
     print(progress_bar)
 
@@ -59,9 +59,8 @@ def elo_calculator(match):
 
 
 def generate_elo():
-    database = MongoInterface()
     apply_function_to_query(elo_calculator,
-                            database.logs_col.find().sort("date"))
+                            MongoInterface.logs_col.find().sort("date"))
 
 
 def generate_simplified_player(match):
@@ -73,6 +72,5 @@ def generate_simplified_player(match):
 
 
 def generate_player_table():
-    database = MongoInterface()
     apply_function_to_query(generate_simplified_player,
-                            database.logs_col.find())
+                            MongoInterface.logs_col.find())
