@@ -932,10 +932,12 @@ public abstract class LogReaderAbs {
      * @return Document with the map data
      */
     protected final Document hashToDoc(final HashMap<String, Integer> map) {
-        Document temp = new Document();
-        for (String x: map.keySet()) {
-            temp.append(x, map.get(x));
-        }
+    	Document temp = new Document();
+    	if(map != null ) {      
+	        for (String x: map.keySet()) {
+	            temp.append(x, map.get(x));
+	        }
+    	}
         return temp;
     }
 
