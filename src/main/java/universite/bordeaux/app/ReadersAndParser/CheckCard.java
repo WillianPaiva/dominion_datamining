@@ -8,9 +8,11 @@ public final class CheckCard {
 
     private CheckCard(){}
     public static String verifyCard(String card){
-        String result = card.trim().replaceAll("\\s+","").toLowerCase();
+        String result = card.trim().replaceAll("\\s+","")
+            .replaceAll("'","").toLowerCase();
         ArrayList<String> cardList = new ArrayList<>(Arrays.asList("cellar",
                                                                    "chapel",
+                                                                   "envoy",
                                                                    "moat",
                                                                    "chancellor",
                                                                    "village",

@@ -48,13 +48,13 @@
 \begin{flushright}
     \rule{16cm}{5pt}\vskip1cm
     \begin{bfseries}
-        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
+        \Huge{SPECIFICATION DES BESOINS\\ DE PROGRAMME }\\
         \vspace{1.9cm}
-        for\\
+        pour\\
         \vspace{1.9cm}
         Dominion Logs Datamining\\
         \vspace{1.9cm}
-        Prepared by \\ VER VALEM Willian \\ BAYOL Elmer \\ LOPEZ-FARFAN M. Liliana
+        Réalisé par \\ VER VALEM Willian \\ BAYOL Elmer \\ LOPEZ-FARFAN M. Liliana
         \\ TAGNAOUTI Khaoula\\
         \vspace{1.9cm}
         \today\\
@@ -86,9 +86,9 @@ Ce document a pour but de clarifier et de décrire aussi précisément que possi
 \textit{Dominion DataMining} est un programme qui se compose de 3 parties:
 
 \begin{itemize}
-  \item \textbf{Modélisation des donnée} \- Responsable à lire et à remodeler les données à stocker.
-  \item \textbf{Stockage de données} \- Stocke les données analysées.
-  \item \textbf{Analyse des données} \- Responsable pour interroger la base de données et recevoir et faire les traitements des requêtes de l'utilisateur.
+  \item \textbf{Modélisation des donnée:} \- responsable à lire et à remodeler les données à stocker.
+  \item \textbf{Stockage de données:} \- stocke les données analysées.
+  \item \textbf{Analyse des données:} \- responsable pour interroger la base de données et recevoir et faire les traitements des requêtes de l'utilisateur.
 
 \end{itemize}
 
@@ -99,36 +99,30 @@ Ce document est destiné à tout utilisateur, développeur, testeur, chef de pro
 Voici les utilisations potentielles pour chacun des types de lecteurs:\\
 \begin{itemize}
 
-\item \textbf{Développeur: }Le développeur qui veut lire, changer, modifier ou ajouter de nouveaux besoins dans le programme existant, doit tout d'abord consulter ce document et mettre à jour les besoins en manière appropriée afin de ne pas détruire leur signification réelle et de transmettre les informations correctement aux prochaines phases du processus de développement.\\
+\item \textbf{Développeur: }le développeur qui veut lire, changer, modifier ou ajouter de nouveaux besoins dans le programme existant, doit tout d'abord consulter ce document et mettre à jour les besoins en manière appropriée afin de ne pas détruire leur signification réelle et de transmettre les informations correctement aux prochaines phases du processus de développement.\\
 
-\item \textbf{Utilisateur: }L'utilisateur de ce programme en revue les schémas et les spécifications présentées dans ce document et détermine si le logiciel a toutes les besoins appropriés et si le développeur du logiciel a mis en œuvre tous.\\
+\item \textbf{Utilisateur: }l'utilisateur de ce programme en revue les schémas et les spécifications présentées dans ce document et détermine si le logiciel a toutes les besoins appropriés et si le développeur du logiciel a mis en œuvre tous.\\
 
-\item \textbf{Testeur: }Le testeur a besoin de ce document pour vérifier que les besoins initiaux de ce programme correspondent actuellement  au programme exécutable correctement.\\
+\item \textbf{Testeur: }le testeur a besoin de ce document pour vérifier que les besoins initiaux de ce programme correspondent actuellement  au programme exécutable correctement.\\
 \end{itemize}
 
-\section{Project Scope}
-  Le jeu de cartes\textit{Dominion} a été exécuté sur un serveur à partir d'Octobre 2010 au Mars 2013. Les parties jouées sur ce serveur ont été enregistrés dans des \textit{logs} qui gardent la trace de toutes les actions des joueurs; Ces \textit{logs} ont été mis à la disposition du public. Mais certaines informations par rapport aux décisions prises par les joueurs n’ont pas été enregistrées.\\
+\section{Contexte du projet}
+  Le jeu de cartes\textit{Dominion} a été exécuté sur un serveur à partir d'Octobre 2010 au Mars 2013. Les parties jouées sur ce serveur ont été enregistrés dans des \textit{logs} qui gardent la trace de toutes les actions des joueurs;ces \textit{logs} ont été mis à la disposition du public. Mais certaines informations par rapport aux décisions prises par les joueurs n’ont pas été enregistrées.\\
  Un wiki sur le jeu a été créé, il offre des conseils d'experts dans la prise de décision au cours du jeu: il offre principalement des conseils au niveau de la stratégie. Le but de ce projet, présenté par Yvan Le Borgne, chercheur au Labri, est de traiter des \textit{logs} (plus de 12 millions de jeux) afin de répondre à plusieurs questions. Il consiste principalement à comparer les données recueillies à l'information du wiki afin de valider l'utilité des idées et des informations données par des experts. Nous allons au moins créer des outils de validation offrant suffisamment d'efficacité.
   
-Afin d'Atteindre cet objectif, le but du projet est de créer une base de données contenant tous les jeux joués et de produire une analyse basée sur ces informations.
+Afin d'Atteindre cet objectif, le but du projet est de créer une base de données contenant tous les jeux joués et de produire une analyse basée sur ces informations.Pour ce faire, notre programme devra d'abord extraire les données de  \textit{log} Pour ce faire, notre programme devra d'abord extraire les données du log, car ils sont trop volumineux et trop compliqué à utiliser directement (structure non-standard).Nous aurons à mettre en place des structures de données qui nous permettent d'avoir un meilleur stockage de données. Un moyen simple pour représenter ces données sera offert à l'utilisateur.
 
-  Pour ce faire, notre programme devra d'abord extraire les données de  \textit{log} Pour ce faire, notre programme devra d'abord extraire les données du log, car ils sont trop volumineux et trop compliqué à utiliser directement (structure non-standard).
-
- Nous aurons à mettre en place des structures de données qui nous permettent d'avoir un meilleur stockage de données. Un moyen simple pour représenter ces données sera offert à l'utilisateur.
-
-  Certaines informations sont également manquantes dans les \textit{logs}(par exemple: les cartes tirées au cours d'un tour). Nous allons essayer de trouver une méthode pour reconstruire cette information et l'ajouter à l'information existante.
-
-  Nous allons également essayer d'optimiser les opérations effectuées par l'analyse de données en trouvant un équilibre entre la mémorisation des demandes et le recalcule.
+  Certaines informations sont également manquantes dans les \textit{logs}(par exemple: les cartes tirées au cours d'un tour). Nous allons essayer de trouver une méthode pour reconstruire cette information et l'ajouter à l'information existante.Nous allons également essayer d'optimiser les opérations effectuées par l'analyse de données en trouvant un équilibre entre la mémorisation des demandes et le recalcule.
 
   Enfin, nous devrons décider quelle stratégie est utilisée avec chaque jeu, ou même reconnaître les changements de stratégie lors d'un match. Nous pourrions aussi reconnaître qui a appliqué une première stratégie (qui l'a \textit{inventé}). Si nous pouvons détecter assez  stratégie liée aux données, nous pouvons également détecter le processus d'apprentissage d'habitude des joueurs.
 
 
-\chapter{Overall Description}
+\chapter{Description globale}
 
 
-\section{Product Functions}
+\section{Fonctions de produit}
 
-Voici une liste des fonctions devraient être disponibles sur le logiciel.
+Voici une liste des fonctions devraient être disponibles sur le logiciel:
 \begin{itemize}
 
 %\item{\textbf{Interface utilisateur:}}
@@ -138,12 +132,12 @@ Voici une liste des fonctions devraient être disponibles sur le logiciel.
    % \item{Statistiques demandés}
     %\item{Mappage des données de jeu}
     %\end{itemize}
-  \item{\textbf{modélisation des données:}}
+  \item{\textbf{Modélisation des données:}}
     \begin{itemize}
-    \item{décompression de log}
-    \item{parsing}
-    \item{creattion de game-log}
-    \item{envoie de game-log data}
+    \item{Décompression de log}
+    \item{Parsing}
+    \item{Creattion de game-log}
+    \item{Envoie de game-log data}
     \end{itemize}
   \item{\textbf{Stockage de données:}}
     \begin{itemize}
@@ -156,7 +150,7 @@ Voici une liste des fonctions devraient être disponibles sur le logiciel.
   \item{\textbf{Analyse des données:}}
     \begin{itemize}
       \item{Recueillir les données}
-      \item{restorer le game-log}
+      \item{Restorer le game-log}
       \item{Plotting}
       \item{Calculer \textit{\textbf{ELO}}}
       \item{Reconnaître les stratégies}
@@ -169,7 +163,7 @@ Voici une liste des fonctions devraient être disponibles sur le logiciel.
 \textbf{Acteurs physiques:}\\
 
 \begin{itemize}
- \item \textbf{Utilisateur:} L'utilisateur lance l'analyse des logs et des demandes des analyses à faire sur les données stockées qui seront ensuite représentées sous forme de graphes.\\
+ \item \textbf{Utilisateur:} l'utilisateur lance l'analyse des logs et des demandes des analyses à faire sur les données stockées qui seront ensuite représentées sous forme de graphes.\\
    Les actions de l'utilisateur peuvent être décomposées en deux parties:
    \begin{itemize}
    \item Étape de pré-calcul: %Cette action sera réalisée une fois au début et lancera la phase de l'analyse et de l'analyse classique des jeux(Reconnaissance de la stratégie, le calcul elo).
@@ -197,17 +191,17 @@ Cette section présente un aperçu des problèmes possibles qui peuvent limiter 
 \item Les \textit{Logs} fournis par le client ne sont pas un format standard et qui peut retarder le temps de développer l'analyseur, que les problèmes qu'il peut soulevé au cours du développement ne sont pas connus pour le moment.
 \end{itemize}
 
-\chapter{Les Logs}
+\chapter{Les logs}
 \subsection{Description des données}
 Les données qui ont été fournies par le client sont compressées en format tar.bz2, un fichier pour chaque jour de log, la taille totale des données compressée est 13 Go.\\
 Les données décompressé fait un total de 400 Go.\\
 Chaque \textit{Log} est au format \textit{HTML}.\\
 un \textit{Log} doit contenir:
 \begin{itemize}
-  \item{\textbf{entête}} contenant le numéro de jeu et les noms des gagnants.
-  \item{\textbf{résumé de  match}} contient les cartes utilisées sur le match et comment le match a fini.
-  \item{\textbf{résumé de joueur}} contient  les cartes de victoire de chaque joueur, les% points.
-  \item{\textbf{game log}} cette partie contient tous les mouvements détaillés faites par les joueurs pendant le match.
+  \item{\textbf{entête:}} contient le numéro de jeu et les noms des gagnants.
+  \item{\textbf{résumé de  match:}} contient les cartes utilisées sur le match et comment le match a fini.
+  \item{\textbf{résumé de joueur:}} contient  les cartes de victoire de chaque joueur,le deck et les points.
+  \item{\textbf{game log:}} cette partie contient tous les mouvements détaillés faites par les joueurs pendant le match.
 
 \end{itemize}
 
@@ -300,15 +294,15 @@ Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce
 \includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
 
 \begin{itemize}
-\item Winners: La liste des gagnants du jeu, il peut être un gagnant ou plusieurs, les gagnants si elles sont liées.
-\item Market: La liste des 10 cartes disponibles pour être acheté par les joueurs.
+\item Winners: liste des gagnants du jeu, il peut être un gagnant ou plusieurs, les gagnants si elles sont liées.
+\item Market: liste des 10 cartes disponibles pour être acheté par les joueurs.
 \item Cartes Gone: liste des cartes qui ont été entièrement acquises à la fin de la partie.
 \item Player Name: Nom du joueur.
 \item Victory points: nombre de points à la fin de la partie.
-\item Player cards: la liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
-\item Victory cards: Liste des cartes de victoire le joueur avec le acheté.
-\item Trash: Liste des cartes qui sont jetés à la fin de la partie.
-\item Game Moves: la liste des actions effectuées pendant chaque tour d'un joueur.
+\item Player cards: liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
+\item Victory cards: liste des cartes de victoire le joueur avec le acheté.
+\item Trash: liste des cartes qui sont jetés à la fin de la partie.
+\item Game Moves: liste des actions effectuées pendant chaque tour d'un joueur.
 \end{itemize}
 Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme d'analyse\\
 
@@ -316,7 +310,7 @@ Le parser doit lire chaque élément montré dans le graphique précédent en ta
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 Cette fonctionnalité est la création d'une structure de données où les données du log seront rénovées.
-Voici est une représentation graphique d'une vue d'ensemble de la structure de données:\\
+Voici une représentation graphique d'une vue d'ensemble de la structure de données:\\
 \includegraphics[scale=0.5,keepaspectratio]{game-log}
 
 \subsection{Créer une base de données orientée document }
@@ -426,7 +420,7 @@ L'analyseur doit être capable de reconnaître le moment de \textit{\textbf{gree
 En savoir plus à propos de \textit{\textbf{greening}} sur \url{http://wiki.dominionstrategy.com/index.php/Greening}.\\
 Le programme va reconnaître quand greening arrive en détectant lorsque les cartes de victoire commencent à être achetées.
 
-\chapter{Nonfunctional Requirements}
+\chapter{Besoins non fonctionnelles }
 \section{Besoins de performance}
 
 Aucun besoin de performance spécifique n’a été faite par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
@@ -443,9 +437,31 @@ Les données générées par l'analyseur n’ont pas besoin à être lisible par
 Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
 
+\chapter{Architecture et description du logiciel}
 
-%\section{Appendix C: To Be Determined List}
-% $<$Collect a numbered list of the TBD (to be determined) references that remain
-% in the SRS so they can be tracked to closure.$>$
+\section{Structure des classes}
 
+
+\includegraphics[scale=0.45,keepaspectratio]{nouvelleArch}\\
+
+
+\chapter{Fonctionnement et tests}
+\section{Fonctionnement de programme}
+\section{Test}
+\chapter{Bibliographie}
+\iffalse
+\documentclass[12pt]{article}
+\usepackage{inputenc}
+\usepackage[french]{babel}
+\bibliographystyle{biblio}
+\begin{document}
+  \section{Elements bibliographiques}
+   \begin{itemize}
+     \item L'article \cite{Chom56} est le plus important...
+     \item Le livre \cite{Kan93} a une importantance...
+   \end{itemize}
+
+\bibliography{biblio}
+\end{document}
+\fi
 \end{document}
