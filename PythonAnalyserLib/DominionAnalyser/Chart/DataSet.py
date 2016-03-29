@@ -2,12 +2,12 @@ class DataSet:
 
     def __init__(self):
 
-        dataSetDictionary = dict()
+        self.dataSetDictionary = dict()
 
     def addEntry(self, keyName, values):
 
-        if !(keyName == ""):
-            if !self.dataSetDictionary.has_key(keyName):
+        if not(keyName == ""):
+            if not(self.dataSetDictionary.has_key(keyName)):
                 self.dataSetDictionary[keyName] = values
             else:
                 self.dataSetDictionary[keyName].append(values)
