@@ -5,6 +5,13 @@ import java.io.File;
 import org.bson.Document;
 
 public class LogReaderV1 extends LogReaderAbs implements LogReader {
+	
+	 /** 
+	 * @see universite.bordeaux.app.ReadersAndParser.Readers.LogReader#getVersion()
+	 */
+	public int getVersion() {
+		 return this.version;
+	 }
 
     /**
      * @param fileLog name of the log file

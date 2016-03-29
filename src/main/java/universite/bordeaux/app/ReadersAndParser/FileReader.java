@@ -67,7 +67,7 @@ public class FileReader {
         try {
         this.line = this.scan.nextLine();
         } catch (NoSuchElementException e) {
-            ErrorLogger.getInstance().logError("bad Log format" + log.getName());
+            ErrorLogger.getInstance().logError("jumpline bad Log format " + log.getName());
         }
         return this.line;
     }

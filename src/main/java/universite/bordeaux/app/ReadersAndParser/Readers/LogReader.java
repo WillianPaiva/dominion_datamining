@@ -8,6 +8,7 @@ public interface LogReader {
      *
      * @return object Document having information logs
      */
-    public Document getDoc();
+    public int getVersion();
+	public Document getDoc();
     public void close();
 }

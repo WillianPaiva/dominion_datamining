@@ -8,7 +8,14 @@ import universite.bordeaux.app.GameDataStructure.Player;
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
 
 public class LogReaderV2 extends LogReaderAbs implements LogReader {
-
+	
+	/** 
+	 * @see universite.bordeaux.app.ReadersAndParser.Readers.LogReader#getVersion()
+	 */
+	public int getVersion() {
+		 return this.version;
+	 }
+	
     /**
      * @param fileLog name of the log file
      */

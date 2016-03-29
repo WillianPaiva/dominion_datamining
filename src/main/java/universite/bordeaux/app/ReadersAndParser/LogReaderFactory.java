@@ -25,7 +25,6 @@ public final class LogReaderFactory{
       fr.jumpline();
       Document doc = Jsoup.parse(fr.jumpline());
       fr.close();
-
       if (doc.select("b").text().contains("points")) {
           return new LogReaderV2(log);
       } else {

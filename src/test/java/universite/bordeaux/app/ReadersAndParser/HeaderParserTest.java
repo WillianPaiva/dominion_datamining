@@ -28,7 +28,7 @@ public class HeaderParserTest extends TestCase {
 	public void testFileNotEmpty(){
 		assertTrue(!fr2.isEmpty());
 	}
-	
+	/*
 	public void testWinnnersNotNull(){
 		assertNotNull(HeaderParser.getWinners(fr1));
 	}
@@ -238,7 +238,7 @@ public class HeaderParserTest extends TestCase {
 		assertEquals(d2.get("Coppers"), 3);
 		assertEquals(d3.get("Estate"), 1);
 	}
-	
+	*/
 	
 	//add test de erreur
 	

@@ -3,6 +3,8 @@ package universite.bordeaux.app.GameDataStructure;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+
+import universite.bordeaux.app.Constant.ConstantLog;
 import universite.bordeaux.app.Mongo.MongoConection;
 
 /**
@@ -37,9 +39,9 @@ public class SimplifiedPlayer {
     public SimplifiedPlayer(final String nm) {
         Document doc = MongoConection.findPlayer(nm).first();
         if (doc != null) {
-            this.id = doc.get("_id", ObjectId.class);
-            this.name = doc.get("name", String.class);
-            this.elo = doc.get("elo", Integer.class);
+            this.id = doc.get(ConstantLog.ID, ObjectId.class);
+            this.name = doc.get(ConstantLog.NAME, String.class);
+            this.elo = doc.get(ConstantLog.ELO, Integer.class);
         } else {
             this.name = nm;
             this.elo = BASE_ELO;
@@ -52,7 +54,7 @@ public class SimplifiedPlayer {
      * @return a Document
      */
     public final Document toDoc() {
-        return new Document("name", name).append("elo", elo);
+        return new Document(ConstantLog.NAME, name).append(ConstantLog.ELO, elo);
     }
 
     /**
@@ -62,7 +64,7 @@ public class SimplifiedPlayer {
         if (this.id == null) {
             this.id = MongoConection.insertPlayer(this.toDoc());
         } else {
-            MongoConection.updatePlayer(new Document("_id", id),
+            MongoConection.updatePlayer(new Document(ConstantLog.ID, id),
                     new Document("$set", this.toDoc()));
         }
   }

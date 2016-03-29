@@ -2,6 +2,8 @@ package universite.bordeaux.app.GameDataStructure;
 
 import org.bson.Document;
 
+import universite.bordeaux.app.Constant.ConstantLog;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,19 +74,19 @@ public class Player implements PlayerItf {
      * @param doc the Document to load
      */
     public Player(final Document doc) {
-        this.playerName = doc.get("name", String.class);
-        this.points = doc.get("points", Integer.class);
-        this.strategy = doc.get("points", String.class);
-        this.turns = doc.get("turns", Integer.class);
-        this.gameElo = doc.get("elo", Integer.class);
+        this.playerName = doc.get(ConstantLog.NAME, String.class);
+        this.points = doc.get(ConstantLog.POINTS, Integer.class);
+        this.strategy = doc.get(ConstantLog.STRATEGY, String.class);
+        this.turns = doc.get(ConstantLog.TURNS, Integer.class);
+        this.gameElo = doc.get(ConstantLog.ELO, Integer.class);
         victoryCards = new HashMap<>();
-        this.victoryCards = docToHash(doc.get("victorycards", Document.class));
+        this.victoryCards = docToHash(doc.get(ConstantLog.VICTOYCARDS, Document.class));
         deck = new HashMap<>();
-        this.deck = docToHash(doc.get("deck", Document.class));
+        this.deck = docToHash(doc.get(ConstantLog.DECK, Document.class));
         firstHand = new HashMap<>();
-        this.firstHand = docToHash(doc.get("firsthand", Document.class));
+        this.firstHand = docToHash(doc.get(ConstantLog.FIRSTHAND, Document.class));
         opening = new ArrayList<>();
-        this.opening = doc.get("opening", ArrayList.class);
+        this.opening = doc.get(ConstantLog.OPENING, ArrayList.class);
 
     }
 
@@ -96,15 +98,15 @@ public class Player implements PlayerItf {
     @Override
     public final Document toDoc() {
         return new Document()
-                .append("name", this.playerName)
-                .append("elo", this.gameElo)
-                .append("points", this.points)
-                .append("strategy", this.strategy)
-                .append("turns", this.turns)
-                .append("victorycards", hashToDoc(this.victoryCards))
-                .append("deck", hashToDoc(this.deck))
-                .append("firsthand", hashToDoc(this.firstHand))
-                .append("opening", opening);
+                .append(ConstantLog.NAME, this.playerName)
+                .append(ConstantLog.ELO, this.gameElo)
+                .append(ConstantLog.POINTS, this.points)
+                .append(ConstantLog.STRATEGY, this.strategy)
+                .append(ConstantLog.TURNS, this.turns)
+                .append(ConstantLog.VICTOYCARDS, hashToDoc(this.victoryCards))
+                .append(ConstantLog.DECK, hashToDoc(this.deck))
+                .append(ConstantLog.FIRSTHAND, hashToDoc(this.firstHand))
+                .append(ConstantLog.OPENING, opening);
     }
 
     /**
