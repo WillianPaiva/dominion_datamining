@@ -9,30 +9,53 @@ import junit.framework.TestSuite;
 
 import org.bson.Document;
 
+import universite.bordeaux.app.Constant.ConstantLog;
+import universite.bordeaux.app.ReadersAndParser.Readers.LogReader;
+import universite.bordeaux.app.ReadersAndParser.Readers.LogReaderAbs;
+
 public class HeaderParserTest extends TestCase {
-	protected FileReader fr1;
-	protected FileReader fr2;
+	protected LogReader lr1;
+	protected LogReader lr2;
+	protected LogReader lr3;
+	
 
 	protected void setUp(){
 		File log = new File("testFolder/20121210/game-20121210-000100-ed802b83.html"); 
-		fr1 = new FileReader(log);	
+		lr1 = LogReaderFactory.createrReader(log);
 		
 		File log2 = new File("testFolder/20121210/game-20121210-000005-8ef23689.html"); 
-		fr2 = new FileReader(log2);	
+		lr2 =LogReaderFactory.createrReader(log2);
+		
+		File log3 = new File("testFolder/20121210/game-20101110-000556-5f5e69d5.html"); 
+		lr3 =LogReaderFactory.createrReader(log3);
+		
 	}
 	
 	public void testGetFile(){
-		assertNotNull(fr2);
+		assertNotNull(lr1);
+		assertNotNull(lr3);
 	}
 	
-	public void testFileNotEmpty(){
-		assertTrue(!fr2.isEmpty());
+	public void testDocNotNull(){
+		assertNotNull(lr1.getDoc());
+		assertNotNull(lr3.getDoc());
+	}
+	
+	public void testWinnnersNotNull(){
+		assertNotNull(lr3.getDoc().get(ConstantLog.WINNERS));
 	}
 	/*
-	public void testWinnnersNotNull(){
-		assertNotNull(HeaderParser.getWinners(fr1));
-	}
-	
+	 * 
+	 .append(ConstantLog.DATE, this.getDateTime())
+            .append(ConstantLog.FILENAME, this.log.getName())
+            .append(ConstantLog.ELOGAP, 0)
+            .append(ConstantLog.WINNERS, this.getWinners())
+            .append(ConstantLog.CARDSGONNE, this.getCardsGone())
+            .append(ConstantLog.MARKET, this.getMarket())
+            .append(ConstantLog.TRASH, hashToDoc(this.getTrash()))
+            .append(ConstantLog.PLAYERS, this.getPlayers())
+            .append(ConstantLog.LOG, this.getGameLog());
+            
 	public void testWinnersNoEmply(){
 		ArrayList<String> wins = HeaderParser.getWinners(fr1);
 		assertEquals(wins.size(),1);
