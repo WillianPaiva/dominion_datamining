@@ -26,7 +26,7 @@ class Player:
         document = {"name": self.playerName,
                     "elo": self.elo,
                     "points": self.points,
-                    "stratgy": self.strategy,
+                    "strategy": self.strategy,
                     "turns": self.turns,
                     "victorycards": self.victoryCards,
                     "deck": self.deck,
