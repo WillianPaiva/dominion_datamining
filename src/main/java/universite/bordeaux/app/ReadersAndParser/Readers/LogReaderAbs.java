@@ -169,6 +169,43 @@ public abstract class LogReaderAbs {
         this.log.rewindFile();
         return market;
     }
+    
+    /** 
+	 * the function adds turns, victory cards and points to the object PlayerItf
+	 * @param PlayerItf pl, org.jsoup.nodes.Document doc
+	 */
+    protected void getPointsVcTurnPlayer(PlayerItf pl, org.jsoup.nodes.Document doc) {
+
+        String[] firstBreak;
+
+        firstBreak = doc.text().split("points");
+
+        //set the player points
+        String[] p = firstBreak[0].split(":");
+        String temp = p[p.length - 1].replace(" ", "");
+
+        try {
+            pl.setPoints(Integer.parseInt(temp));
+        } catch (NumberFormatException e) {
+            pl.setPoints(0);
+        }
+
+        //split the string to get all victory points cards
+        String list = firstBreak[1].split(";")[0];
+        list = list.substring(2, list.length() - 1)
+            .replace("and", "");
+        if (!list.contains("nothing")) {
+            String[] victoryCards = list.split(",");
+            pl.setVictoryCard(getCards(victoryCards,
+                                       SEARCH_TRESEHOLD));
+            //insert the victorycards on the player object
+        }
+        pl.setTurns(Integer.parseInt(firstBreak[1]
+                                     .split(";")[1]
+                                     .replace(" turns", "")
+                                     .replace(" ", "")));  
+    	
+    }
 
     /**
      * reads the player section of the log
@@ -196,52 +233,9 @@ public abstract class LogReaderAbs {
                 while (!this.log.getLine().contains("----------------------")) {
                     //create the player
                     PlayerItf pl = createPlayer(doc);
-                    //break the string into 2 parts to find the points
-                    if (doc.text().contains("points")) {
-                        String[] firstBreak;
-                        if(pl.getPlayerName().contains("points")) {
-                            firstBreak = doc.text()
-                                .replaceAll(pl.getPlayerName(),
-                                            "playername").split("points");
-                        } else {
-                            firstBreak = doc.text().split("points");
-                        }
+                    
+                    this.getPointsVcTurnPlayer(pl, doc);
 
-                        //set the player points
-                        String[] p = firstBreak[0].split(":");
-                        String temp = p[p.length - 1].replace(" ", "");
-                        if (temp.contains("resigned")) {
-                            pl.setPoints(0);
-                        } else {
-                            try {
-                                pl.setPoints(Integer.parseInt(temp));
-                            } catch (NumberFormatException e) {
-                                pl.setPoints(0);
-                            }
-                        }
-
-                        //split the string to get all victory points cards
-                        if (!doc.text().contains("resigned")) {
-                            String list = firstBreak[1].split(";")[0];
-                            list = list.substring(2, list.length() - 1)
-                                .replace("and", "");
-                            if (!list.contains("nothing")) {
-                                String[] victoryCards = list.split(",");
-                                pl.setVictoryCard(getCards(victoryCards,
-                                                           SEARCH_TRESEHOLD));
-                                //insert the victorycards on the player object
-                            }
-                            pl.setTurns(Integer.parseInt(firstBreak[1]
-                                                         .split(";")[1]
-                                                         .replace(" turns", "")
-                                                         .replace(" ", "")));
-                        } else {
-                            pl.setTurns(Integer.parseInt(doc.text()
-                                                         .split(";")[1]
-                                                         .replace(" turns", "")
-                                                         .replace(" ", "")));
-                        }
-                    }
                     //get next line
                     doc = Jsoup.parse(this.log.jumpline());
                     //get opening cards
