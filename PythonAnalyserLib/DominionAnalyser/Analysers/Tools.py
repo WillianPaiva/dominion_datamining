@@ -62,6 +62,17 @@ def generate_elo():
     apply_function_to_query(elo_calculator,
                             MongoInterface.logs_col.find().sort("date"))
 
+def detect_bigmoney_strategy(match):
+    game = Match(match)
+    is_big_money_flag = True
+    for player in game.player:
+        deck = player.deck
+        for card in deck:
+            if not(card in ("province", "gold", "silver", "duchy", "smithy")):
+                is_big_money_flag = False
+        if is_big_money_flag:
+            player.strategy = "big money"
+    MongoInterface.update_log(game.ident, game.toDoc())
 
 def generate_simplified_player(match):
     game = Match(match)
