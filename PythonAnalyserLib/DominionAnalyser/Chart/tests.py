@@ -3,10 +3,13 @@ from DataSet import *
 
 data = DataSet()
 
-data.addEntry("testPlot", [(1, 1),(2, 2), (3, 3)])
-plotLine("x axis", "y axis", data)
+data.add_entry("testPlot", [(1, 1),(2, 2), (3, 3)])
+plot_line("x axis", "y axis", data)
+
+plot_cloud("x axis", "y axis", data)
 
 data2 = DataSet()
-data2.addEntry("one", [3])
-data2.addEntry("two", [4])
-plotBar("yaxis", data2)
+data2.add_entry("one", [3])
+data2.add_entry("two", [4])
+data2.add_entry("three", [5])
+plot_bar("xaxis", "yaxis", data2)
