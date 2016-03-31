@@ -95,13 +95,13 @@ Ce document a pour but de clarifier et de décrire aussi précisément que possi
 
  \section{Public visé et suggestions de lecture}
 
-Ce document est destiné à tout utilisateur, développeur, testeur, chef de projet ou de la documentation écrivain qui a besoin de comprendre l'architecture de base du système et de ses spécifications.\\
+Ce document est destiné à tout utilisateur, développeur, testeur, chef de projet ou écrivain de documentation qui a besoin de comprendre l'architecture de base du système et de ses spécifications.\\
 Voici les utilisations potentielles pour chacun des types de lecteurs:\\
 \begin{itemize}
 
-\item \textbf{Développeur: }le développeur qui veut lire, changer, modifier ou ajouter de nouveaux besoins dans le programme existant, doit tout d'abord consulter ce document et mettre à jour les besoins en manière appropriée afin de ne pas détruire leur signification réelle et de transmettre les informations correctement aux prochaines phases du processus de développement.\\
+\item \textbf{Développeur: }le développeur qui veut lire, changer, modifier ou ajouter de nouveaux besoins dans le programme existant, doit tout d'abord consulter ce document et mettre à jour les besoins en manière appropriée afin de ne pas détruire leur signification réelle et de transmettre des informations correctement aux prochaines phases du processus de développement.\\
 
-\item \textbf{Utilisateur: }l'utilisateur de ce programme en revue les schémas et les spécifications présentées dans ce document et détermine si le logiciel a toutes les besoins appropriés et si le développeur du logiciel a mis en œuvre tous.\\
+\item \textbf{Utilisateur: }l'utilisateur de ce programme fait la revue des schémas et les spécifications présentées dans ce document et détermine si le logiciel a tous les besoins appropriés et si le développeur du logiciel a mis en œuvre tous.\\
 
 \item \textbf{Testeur: }le testeur a besoin de ce document pour vérifier que les besoins initiaux de ce programme correspondent actuellement  au programme exécutable correctement.\\
 \end{itemize}
@@ -212,7 +212,7 @@ Les \textit{Logs} présentent des incohérences de données qui peuvent être pr
   \item \textbf{Numéro de log}\\
    La numérotation des logs n'est pas unique ce qui implique qu'elle ne peut pas être utilisée pour identifier un log.
   \item \textbf{Noms d'utilisateur}\\
-    Les logs montrent qu'aucune restriction n’a été faite sur les noms d'utilisateur du jeu et quelques noms d'utilisateur ont des mots clés et des caractères spéciaux qui peuvent entrer en conflit avec l'analyseur.
+    Les logs montrent qu'aucune restriction n’a été fait sur les noms d'utilisateur du jeu et quelques noms d'utilisateur ont des mots clés et des caractères spéciaux qui peuvent entrer en conflit avec l'analyseur.
    \item \textbf{Données manquantes}\\
     Certains des logs ont une partie des données manquantes (comme: l'en-tête, la reprise des utilisateurs $\ldots$).
    \item \textbf{Format de log}\\
@@ -402,11 +402,12 @@ Beyond Silver\\
 Penultimate Province Rule\\
 Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
 
-Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
+
 
 \textbf{Cette image décrit le processus de décision associé à la stratégie Big Money}\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{big-money}\\
-The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
+%The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
+Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
 Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
 Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetés, la liste de ces cartes peuvent être trouvés sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
@@ -430,7 +431,7 @@ L'utilisateur doit être capable de parcourir le processus d'analyse sur un ense
 \section{Fiabilité}
 
 Le client demande que le nombre maximum de log doivent être analysé, que les données fournies ont des incohérences et quelques logs ne seront pas possibles d'analyser.\\
-L'analyseur devra analyser 100% des données présentes sur le log et restaure toute information manquante si possible.\\
+L'analyseur devra analyser 100\% des données présentes sur le log et restaure toute information manquante si possible.\\
 \section{Attributs de qualité de logiciels}
 
 Même si seulement une ligne de commande est prévue pour le programme final, elle devrait avoir une courbe facile à apprendre et être facile à utiliser.\\
@@ -472,8 +473,7 @@ La répartition des tâches du projet et l'estimation de la durée de chacune d'
      \item L'article \cite{Chom56} est le plus important...
      \item Le livre \cite{Kan93} a une importantance...
    \end{itemize}
-
-\bibliography{biblio}
 \end{document}
 \fi
+\bibliography{biblio}
 \end{document}
