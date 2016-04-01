@@ -2,6 +2,12 @@ from DominionAnalyser.Mongo import MongoInterface
 
 
 class SimplifiedPlayer:
+    """SimplifiedPlayer is the class that represents the player with less information
+
+    this class is designed to represent just the player and its Elo
+    it is used to create a separated collection on the database, with
+    the intention of creating a leader board """
+
     def __init__(self, document):
         self.id = document.get('id')
         self.name = document.get('name')

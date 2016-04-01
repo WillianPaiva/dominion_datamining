@@ -19,14 +19,12 @@ def apply_function_to_query(function, query, progress_bar=True):
     the function argument needs to be a function that takes a match as an
     argument
     """
-
     n = query.count()
     progress_bar = pyprind.ProgBar(n, monitor=True, width=70)
     for match in query:
         function(match)
         if (progress_bar):
             progress_bar.update(item_id=match.get("_id"), force_flush=True)
-    print(progress_bar)
 
 
 def elo_calculator(match):
@@ -69,6 +67,7 @@ def elo_calculator(match):
 def generate_elo():
     apply_function_to_query(elo_calculator,
                             MongoInterface.logs_col.find().sort("date"))
+
 
 def detect_bigmoney_strategy(match):
     game = Match(match)
