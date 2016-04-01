@@ -1,12 +1,13 @@
 from DominionAnalyser.Match.Match import Match
 from DominionAnalyser.Match.Player import Player
-from DominionAnalyser.Match.Log import *
+from DominionAnalyser.Match.Log import Log
 from DominionAnalyser.Match.SimplifiedPlayer import SimplifiedPlayer
 from DominionAnalyser.Mongo import MongoInterface
 from collections import Counter
 import pyprind
 import math
 
+#a list with all victory cards on the game
 victory_cards = ["estate", "duchy", "province", "colony", "vineyard",
                  "greathall", "tunnel", "gardens", "island", "silkroad",
                  "feodum", "duke", "damejosephine", "distantlands", "harem",
@@ -65,11 +66,13 @@ def elo_calculator(match):
 
 
 def generate_elo():
+    """ generates the elo for all logs on the database"""
     apply_function_to_query(elo_calculator,
                             MongoInterface.logs_col.find().sort("date"))
 
 
 def detect_bigmoney_strategy(match):
+    """defines if one or more players in the match used the bigmoney strategy"""
     game = Match(match)
     is_big_money_flag = True
     for player in game.players:
@@ -83,10 +86,13 @@ def detect_bigmoney_strategy(match):
 
 
 def detect_strategy_on_all_logs(strategy):
+    """takes one strategy function and apply it on all logs on the database"""
     apply_function_to_query(strategy, MongoInterface.logs_col.find())
 
 
 def generate_simplified_player(match):
+    """generate a simplified player based on the match
+    and save on the database"""
     game = Match(match)
     for pl in game.players:
         player = Player(pl)
@@ -95,16 +101,20 @@ def generate_simplified_player(match):
 
 
 def generate_player_table():
+    """ generates the players collection on the database and
+    populates it with all players"""
     apply_function_to_query(generate_simplified_player,
                             MongoInterface.logs_col.find())
 
 
 def get_player_elo_data(playerName, match):
+    """ return the player elo on a given match"""
     game = Match(match)
     return game.get_player(playerName).elo
 
 
 def genereate_player_elo_curve(playerName):
+    """ generate a list with the elo sequence of a player"""
     player_curve = []
     apply_function_to_query(
         lambda x: player_curve.append(get_player_elo_data(playerName, x)),
@@ -114,6 +124,7 @@ def genereate_player_elo_curve(playerName):
 
 
 def determine_winners_greening(match):
+    """ creates a list with  greening turns of winnwer players"""
     result = []
     m = Match(match)
     for player in m.winners:
@@ -124,6 +135,7 @@ def determine_winners_greening(match):
 
 
 def generate_greening_list():
+    """ generates a dictionary the greening data"""
     result = []
     apply_function_to_query(
         lambda x: result.extend(determine_winners_greening(x)),
@@ -132,6 +144,7 @@ def generate_greening_list():
 
 
 def check_move(move, cards, play):
+    """ check if a move and card is part of a play"""
     list_play_cards = list(play.cards)
     intersec = [c for c in list_play_cards if c in cards]
     if intersec:
@@ -145,6 +158,7 @@ def check_move(move, cards, play):
 
 
 def find_turn(move, cards, player, turns):
+    """finds the first turn where a move was done """
     for turn in turns:
         for pm in turn.players_moves:
             if pm.name == player:
