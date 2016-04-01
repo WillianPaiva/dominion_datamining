@@ -73,13 +73,13 @@ def generate_elo():
 def detect_bigmoney_strategy(match):
     game = Match(match)
     is_big_money_flag = True
-    for player in game.player:
+    for player in game.players:
         deck = player.deck
         for card in deck:
-            if not(card in ("province", "gold", "silver", "duchy", "smithy")):
+            if not (card in ("province", "gold", "silver", "duchy", "smithy")):
                 is_big_money_flag = False
         if is_big_money_flag:
-            player.strategy = "big money"
+            player.strategy = "bigmoney"
     MongoInterface.update_log(game.ident, game.toDoc())
 
 def generate_simplified_player(match):
