@@ -18,19 +18,17 @@ class TestMatch(unittest.TestCase):
         self.assertEqual([p.to_doc() for p in m.log.turns],
                          LogTest.dummy.get("log"))
 
-test.updateLog(ma.id, ma.toDoc())
+    def test_match_doc_diff(self):
+        self.maxDiff = None
+        m = Match(LogTest.dummy)
+        doc = {"date": LogTest.dummy.get("date"),
+               "filename": LogTest.dummy.get("filename"),
+               "eloGap": LogTest.dummy.get("eloGap"),
+               "winners": LogTest.dummy.get("winners"),
+               "cardsgonne": LogTest.dummy.get("cardsgonne"),
+               "market": LogTest.dummy.get("market"),
+               "trash": LogTest.dummy.get("trash"),
+               "players": LogTest.dummy.get("players"),
+               "log": LogTest.dummy.get("log")}
+        self.assertEqual(m.toDoc(), doc)
 
-print(ma.id)
-
-# print(ma.players)
-for p in ma.players:
-    t = Player(p)
-    print(t.playerName)
-
-for p in test.logs_col.find():
-    ma = Match(p)
-    for p in ma.players:
-        t = Player(p)
-        print(t.playerName)
-        print("*********************************************************")
-    print("---------------------------------------------------------")
