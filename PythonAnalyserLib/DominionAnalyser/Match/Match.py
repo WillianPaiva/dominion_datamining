@@ -1,4 +1,5 @@
 from DominionAnalyser.Match.Player import Player
+from DominionAnalyser.Match.Log import Log
 
 
 class Match:
@@ -33,7 +34,7 @@ class Match:
         self.eloGap = document.get('eloGap')
 
         #the step by step of all moves done in the game.
-        self.log = document.get('log')
+        self.log = Log(document.get('log'))
 
         #the name of the parsed file.
         self.fileName = document.get('filename')
@@ -53,5 +54,5 @@ class Match:
                     "market": self.market,
                     "trash": self.trash,
                     "players": [p.toDoc() for p in self.players],
-                    "log": self.log}
+                    "log": [l.to_doc() for l in self.log.turns]}
         return document
