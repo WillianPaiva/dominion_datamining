@@ -94,8 +94,7 @@ def generate_simplified_player(match):
     """generate a simplified player based on the match
     and save on the database"""
     game = Match(match)
-    for pl in game.players:
-        player = Player(pl)
+    for player in game.players:
         splayer = SimplifiedPlayer({"name": player.playerName, "elo": 1000})
         splayer.save()
 
@@ -113,7 +112,7 @@ def get_player_elo_data(playerName, match):
     return game.get_player(playerName).elo
 
 
-def genereate_player_elo_curve(playerName):
+def generate_player_elo_curve(playerName):
     """ generate a list with the elo sequence of a player"""
     player_curve = []
     apply_function_to_query(
