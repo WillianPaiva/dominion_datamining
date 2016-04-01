@@ -46,3 +46,14 @@ class TestTools(unittest.TestCase):
     def test_generate_simplified_players(self):
         generate_player_table()
         self.assertEqual(MongoInterface.players_col.count(), 2)
+
+    def test_generate_elo(self):
+        generate_player_table()
+        generate_elo()
+        m = Match(MongoInterface.logs_col.find_one())
+        self.assertEqual(m.get_player("kloijh").elo, 1026.9403557437306)
+        self.assertEqual(m.get_player("Anuski").elo, 994.9403557437306)
+        d = generate_player_elo_curve("kloijh")
+        self.assertEqual(d, [1026.9403557437306])
+        g = generate_greening_list()
+        self.assertEqual(g, {10: 1})
