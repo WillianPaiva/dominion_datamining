@@ -248,7 +248,7 @@ Les \textit{Logs} présentent des incohérences de données qui peuvent être pr
   Interface utilisateur
 L'interface utilisateur du programme sera composé d'un exécutable (minière de domination) qui sera exécuté avec certains paramètres pour exécuter l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
 
-\includegraphics[scale=0.45,keepaspectratio]{UseCaseParsing}\\
+\includegraphics[scale=0.45,keepaspectratio]{diaRessources/UseCaseParsing}\\
 Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
 \subsection{Lancement de l'analyse du log}
 \subsubsection{Description et priorité}
@@ -312,7 +312,7 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
 L'analyseur va prendre les logs sous format \textit{HTML} et va identifier les mots clés présents sur ces logs.\\
 L'analyseur est chargé de lire les logs et collecter l'information importante sans perdre la structure du log.\\
 Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce diagramme:\\
-\includegraphics[scale=0.35,keepaspectratio]{UseCaseParser}
+\includegraphics[scale=0.35,keepaspectratio]{diaRessources/UseCaseParser}
 
 \begin{itemize}
 \item Winners: liste des gagnants du jeu, il peut y avoir plusieurs gagnants en cas d'égalité.
@@ -332,7 +332,7 @@ Le parser doit lire chaque élément montré dans le graphique précédent en ta
 \textbf{Niveau de priorité = haute}\\
 Cette fonctionnalité est la création d'une structure de données où les données du log seront écrites.
 Voici une représentation graphique d'une vue d'ensemble de la structure de données:\\
-\includegraphics[scale=0.5,keepaspectratio]{game-log}
+\includegraphics[scale=0.5,keepaspectratio]{diaRessources/game-log}
 
 \subsection{Créer une base de données orientée document }
 
@@ -410,7 +410,7 @@ Pour chaque jeu dans l'ordre chronologique, ce module va demander au elo initial
 
 Plus d'informations sur ELO peuvent être consultés sur \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
 Le schéma suivant illustre le processus du calcul de elo:\\
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{elocalc}\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/elocalc}\\
 
 \subsection{Reconnaître les stratégies}
 \subsubsection{Description et priorité}
@@ -425,7 +425,7 @@ Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strate
 
 
 \textbf{Cette image décrit le processus de décision associé à la stratégie Big Money}\\
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{big-money}\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/big-money}\\
 %The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
 Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
 Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
@@ -475,7 +475,7 @@ La répartition des tâches du projet et l'estimation de la durée de chacune d'
 \section{Structure des classes}
 
 
-\includegraphics[scale=0.45,keepaspectratio]{architecture/nouvelleArch}\\
+\includegraphics[scale=0.45,keepaspectratio]{diaRessources/nouvelleArch}\\
 
 
 \chapter{Fonctionnement et tests}
