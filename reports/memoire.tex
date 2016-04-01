@@ -408,9 +408,10 @@ L'analyseur devra calculer la finale ELO pour chaque joueur et ce qui était un 
 Pour chaque jeu dans l'ordre chronologique, ce module va demander au elo initiale des joueurs de la base de données relationnelle et les gagnants du jeu, puis il va calculer la nouvelle elo de chaque joueur de l'issue du jeu. Le module sera ensuite définir le elo calculés dans la base de données orientée documents au jeu en cours d'analyse et mettra également à jour l'elo globale pour chacun des joueurs qui participent au jeu sur la base de données relationnelle.\\
 
 Plus d'informations sur ELO peuvent être consultés sur \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
+\iffalse
 Le schéma suivant illustre le processus du calcul de elo:\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/elocalc}\\
-
+\fi
 \subsection{Reconnaître les stratégies}
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
