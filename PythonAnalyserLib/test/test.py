@@ -32,3 +32,11 @@ class TestMatch(unittest.TestCase):
                "log": LogTest.dummy.get("log")}
         self.assertEqual(m.toDoc(), doc)
 
+
+class TestTools(unittest.TestCase):
+    MongoInterface.client = mongomock.MongoClient()
+    MongoInterface.db = MongoInterface.client["game-logs"]
+    MongoInterface.players_col = MongoInterface.db["players"]
+    MongoInterface.logs_col = MongoInterface.db["logs"]
+    MongoInterface.logs_col.insert_one(LogTest.dummy)
+
