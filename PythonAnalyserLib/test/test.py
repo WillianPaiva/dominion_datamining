@@ -42,3 +42,7 @@ class TestTools(unittest.TestCase):
 
     def test_mongomock(self):
         self.assertEqual(MongoInterface.logs_col.count(), 1)
+
+    def test_generate_simplified_players(self):
+        generate_player_table()
+        self.assertEqual(MongoInterface.players_col.count(), 2)
