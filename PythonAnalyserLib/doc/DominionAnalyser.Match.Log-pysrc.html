@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DominionAnalyser.Match.Log</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="DominionAnalyser-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="DominionAnalyser-module.html">Package&nbsp;DominionAnalyser</a> ::
+        <a href="DominionAnalyser.Match-module.html">Package&nbsp;Match</a> ::
+        Module&nbsp;Log
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="DominionAnalyser.Match.Log-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="DominionAnalyser.Match.Log-module.html">Module DominionAnalyser.Match.Log</a></h1>
+<pre class="py-src">
+<a name="Log"></a><div id="Log-def"><a name="L1"></a><tt class="py-lineno"> 1</tt> <a class="py-toggle" href="#" id="Log-toggle" onclick="return toggle('Log');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Log-class.html">Log</a><tt class="py-op">:</tt> </tt>
+</div><div id="Log-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Log-expanded"><a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line">    <tt class="py-docstring">"""class to represent the data structure of the game log</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">    a log is basically formed by a list of Turn"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="Log.__init__"></a><div id="Log.__init__-def"><a name="L6"></a><tt class="py-lineno"> 6</tt> <a class="py-toggle" href="#" id="Log.__init__-toggle" onclick="return toggle('Log.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Log-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">document</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Log.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Log.__init__-expanded"><a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">turns</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-0" class="py-name" targets="Class DominionAnalyser.Match.Log.Turn=DominionAnalyser.Match.Log.Turn-class.html"><a title="DominionAnalyser.Match.Log.Turn" class="py-name" href="#" onclick="return doclink('link-0', 'Turn', 'link-0');">Turn</a></tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">t</tt> <tt class="py-keyword">in</tt> <tt class="py-name">document</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="Turn"></a><div id="Turn-def"><a name="L10"></a><tt class="py-lineno">10</tt> <a class="py-toggle" href="#" id="Turn-toggle" onclick="return toggle('Turn');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Turn-class.html">Turn</a><tt class="py-op">:</tt> </tt>
+</div><div id="Turn-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Turn-expanded"><a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-docstring">""" class representing the turn data structure</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">    a Turn has a number and a list of PlayerMove"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="Turn.__init__"></a><div id="Turn.__init__-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="Turn.__init__-toggle" onclick="return toggle('Turn.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Turn-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">document</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Turn.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Turn.__init__-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">number</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"turn"</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">players_moves</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-1" class="py-name" targets="Class DominionAnalyser.Match.Log.PlayerMove=DominionAnalyser.Match.Log.PlayerMove-class.html"><a title="DominionAnalyser.Match.Log.PlayerMove" class="py-name" href="#" onclick="return doclink('link-1', 'PlayerMove', 'link-1');">PlayerMove</a></tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">                              <tt class="py-keyword">for</tt> <tt class="py-name">p</tt> <tt class="py-keyword">in</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"playersMove"</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="Turn.to_doc"></a><div id="Turn.to_doc-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="Turn.to_doc-toggle" onclick="return toggle('Turn.to_doc');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Turn-class.html#to_doc">to_doc</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Turn.to_doc-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Turn.to_doc-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">document</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"turn"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">number</tt><tt class="py-op">,</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">                    <tt class="py-string">"playersMove"</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-name">p</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Method DominionAnalyser.Match.Log.Play.to_doc()=DominionAnalyser.Match.Log.Play-class.html#to_doc,Method DominionAnalyser.Match.Log.PlayerMove.to_doc()=DominionAnalyser.Match.Log.PlayerMove-class.html#to_doc,Method DominionAnalyser.Match.Log.Turn.to_doc()=DominionAnalyser.Match.Log.Turn-class.html#to_doc"><a title="DominionAnalyser.Match.Log.Play.to_doc
+DominionAnalyser.Match.Log.PlayerMove.to_doc
+DominionAnalyser.Match.Log.Turn.to_doc" class="py-name" href="#" onclick="return doclink('link-2', 'to_doc', 'link-2');">to_doc</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">p</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">players_moves</tt><tt class="py-op">]</tt><tt class="py-op">}</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">document</tt> </tt>
+</div></div><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="PlayerMove"></a><div id="PlayerMove-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="PlayerMove-toggle" onclick="return toggle('PlayerMove');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.PlayerMove-class.html">PlayerMove</a><tt class="py-op">:</tt> </tt>
+</div><div id="PlayerMove-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="PlayerMove-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt class="py-docstring">"""class representing the PlayerMove data-structure</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    a PlayerMove is composed by the name of the player and</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    a list of Play made by the player this turn"""</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
+<a name="PlayerMove.__init__"></a><div id="PlayerMove.__init__-def"><a name="L32"></a><tt class="py-lineno">32</tt> <a class="py-toggle" href="#" id="PlayerMove.__init__-toggle" onclick="return toggle('PlayerMove.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.PlayerMove-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">document</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PlayerMove.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PlayerMove.__init__-expanded"><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">name</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"name"</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">plays</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-3" class="py-name" targets="Class DominionAnalyser.Match.Log.Play=DominionAnalyser.Match.Log.Play-class.html"><a title="DominionAnalyser.Match.Log.Play" class="py-name" href="#" onclick="return doclink('link-3', 'Play', 'link-3');">Play</a></tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">p</tt> <tt class="py-keyword">in</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"plays"</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="PlayerMove.to_doc"></a><div id="PlayerMove.to_doc-def"><a name="L36"></a><tt class="py-lineno">36</tt> <a class="py-toggle" href="#" id="PlayerMove.to_doc-toggle" onclick="return toggle('PlayerMove.to_doc');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.PlayerMove-class.html#to_doc">to_doc</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PlayerMove.to_doc-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PlayerMove.to_doc-expanded"><a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-name">document</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"name"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">name</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                    <tt class="py-string">"plays"</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-name">p</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="DominionAnalyser.Match.Log.Play.to_doc
+DominionAnalyser.Match.Log.PlayerMove.to_doc
+DominionAnalyser.Match.Log.Turn.to_doc" class="py-name" href="#" onclick="return doclink('link-4', 'to_doc', 'link-2');">to_doc</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">p</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">plays</tt><tt class="py-op">]</tt><tt class="py-op">}</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">document</tt> </tt>
+</div></div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="Play"></a><div id="Play-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="Play-toggle" onclick="return toggle('Play');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Play-class.html">Play</a><tt class="py-op">:</tt> </tt>
+</div><div id="Play-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Play-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt class="py-docstring">"""class representing a Play data-structure</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring">    a Play is composed by a list of cards used in the play the type</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">    of the play and a  list of Play representing the Plays generated by</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">    this Play"""</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
+<a name="Play.__init__"></a><div id="Play.__init__-def"><a name="L49"></a><tt class="py-lineno">49</tt> <a class="py-toggle" href="#" id="Play.__init__-toggle" onclick="return toggle('Play.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Play-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">document</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Play.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Play.__init__-expanded"><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cards</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"cards"</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">move_type</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"type"</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"following"</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">following</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-5" class="py-name"><a title="DominionAnalyser.Match.Log.Play" class="py-name" href="#" onclick="return doclink('link-5', 'Play', 'link-3');">Play</a></tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">p</tt> <tt class="py-keyword">in</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"following"</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">following</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"> </tt>
+<a name="Play.to_doc"></a><div id="Play.to_doc-def"><a name="L57"></a><tt class="py-lineno">57</tt> <a class="py-toggle" href="#" id="Play.to_doc-toggle" onclick="return toggle('Play.to_doc');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.Log.Play-class.html#to_doc">to_doc</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Play.to_doc-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Play.to_doc-expanded"><a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">document</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"cards"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cards</tt><tt class="py-op">,</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">                    <tt class="py-string">"type"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">move_type</tt><tt class="py-op">,</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">                    <tt class="py-string">"following"</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-name">f</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="DominionAnalyser.Match.Log.Play.to_doc
+DominionAnalyser.Match.Log.PlayerMove.to_doc
+DominionAnalyser.Match.Log.Turn.to_doc" class="py-name" href="#" onclick="return doclink('link-6', 'to_doc', 'link-2');">to_doc</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">f</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">following</tt><tt class="py-op">]</tt><tt class="py-op">}</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">document</tt> </tt>
+</div></div><a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="DominionAnalyser-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Apr  2 00:09:30 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

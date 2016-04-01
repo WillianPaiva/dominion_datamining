@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DominionAnalyser.Match.SimplifiedPlayer</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="DominionAnalyser-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="DominionAnalyser-module.html">Package&nbsp;DominionAnalyser</a> ::
+        <a href="DominionAnalyser.Match-module.html">Package&nbsp;Match</a> ::
+        Module&nbsp;SimplifiedPlayer
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="DominionAnalyser.Match.SimplifiedPlayer-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="DominionAnalyser.Match.SimplifiedPlayer-module.html">Module DominionAnalyser.Match.SimplifiedPlayer</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package DominionAnalyser=DominionAnalyser-module.html"><a title="DominionAnalyser" class="py-name" href="#" onclick="return doclink('link-0', 'DominionAnalyser', 'link-0');">DominionAnalyser</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package DominionAnalyser.Mongo=DominionAnalyser.Mongo-module.html"><a title="DominionAnalyser.Mongo" class="py-name" href="#" onclick="return doclink('link-1', 'Mongo', 'link-1');">Mongo</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Module DominionAnalyser.Mongo.MongoInterface=DominionAnalyser.Mongo.MongoInterface-module.html"><a title="DominionAnalyser.Mongo.MongoInterface" class="py-name" href="#" onclick="return doclink('link-2', 'MongoInterface', 'link-2');">MongoInterface</a></tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="SimplifiedPlayer"></a><div id="SimplifiedPlayer-def"><a name="L4"></a><tt class="py-lineno"> 4</tt> <a class="py-toggle" href="#" id="SimplifiedPlayer-toggle" onclick="return toggle('SimplifiedPlayer');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="DominionAnalyser.Match.SimplifiedPlayer.SimplifiedPlayer-class.html">SimplifiedPlayer</a><tt class="py-op">:</tt> </tt>
+</div><div id="SimplifiedPlayer-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="SimplifiedPlayer-expanded"><a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line">    <tt class="py-docstring">"""SimplifiedPlayer is the class that represents the player with less information</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">    this class is designed to represent just the player and its Elo</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">    it is used to create a separated collection on the database, with</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">    the intention of creating a leader board """</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="SimplifiedPlayer.__init__"></a><div id="SimplifiedPlayer.__init__-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="SimplifiedPlayer.__init__-toggle" onclick="return toggle('SimplifiedPlayer.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.SimplifiedPlayer.SimplifiedPlayer-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">document</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SimplifiedPlayer.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="SimplifiedPlayer.__init__-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">id</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'id'</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">name</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'name'</tt><tt class="py-op">)</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elo</tt> <tt class="py-op">=</tt> <tt class="py-name">document</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'elo'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="SimplifiedPlayer.save"></a><div id="SimplifiedPlayer.save-def"><a name="L16"></a><tt class="py-lineno">16</tt> <a class="py-toggle" href="#" id="SimplifiedPlayer.save-toggle" onclick="return toggle('SimplifiedPlayer.save');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="DominionAnalyser.Match.SimplifiedPlayer.SimplifiedPlayer-class.html#save">save</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SimplifiedPlayer.save-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="SimplifiedPlayer.save-expanded"><a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-docstring">"""insert or update the player on the database</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">        this function will search the database on the players collection</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">        and see if player exists if it already exists and 'update' is true it</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">        will update the player data on the database else it does nothing,</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">        and if player don't exists it saves the new player</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-name">player</tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name"><a title="DominionAnalyser.Mongo.MongoInterface" class="py-name" href="#" onclick="return doclink('link-3', 'MongoInterface', 'link-2');">MongoInterface</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Method DominionAnalyser.Match.Match.Match.get_player()=DominionAnalyser.Match.Match.Match-class.html#get_player,Function DominionAnalyser.Mongo.MongoInterface.get_player()=DominionAnalyser.Mongo.MongoInterface-module.html#get_player"><a title="DominionAnalyser.Match.Match.Match.get_player
+DominionAnalyser.Mongo.MongoInterface.get_player" class="py-name" href="#" onclick="return doclink('link-4', 'get_player', 'link-4');">get_player</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">document</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"name"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">name</tt><tt class="py-op">,</tt> <tt class="py-string">"elo"</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elo</tt><tt class="py-op">}</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">player</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">            <tt id="link-5" class="py-name"><a title="DominionAnalyser.Mongo.MongoInterface" class="py-name" href="#" onclick="return doclink('link-5', 'MongoInterface', 'link-2');">MongoInterface</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Function DominionAnalyser.Mongo.MongoInterface.insert_player()=DominionAnalyser.Mongo.MongoInterface-module.html#insert_player"><a title="DominionAnalyser.Mongo.MongoInterface.insert_player" class="py-name" href="#" onclick="return doclink('link-6', 'insert_player', 'link-6');">insert_player</a></tt><tt class="py-op">(</tt><tt class="py-name">document</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">            <tt id="link-7" class="py-name"><a title="DominionAnalyser.Mongo.MongoInterface" class="py-name" href="#" onclick="return doclink('link-7', 'MongoInterface', 'link-2');">MongoInterface</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Function DominionAnalyser.Mongo.MongoInterface.update_player()=DominionAnalyser.Mongo.MongoInterface-module.html#update_player"><a title="DominionAnalyser.Mongo.MongoInterface.update_player" class="py-name" href="#" onclick="return doclink('link-8', 'update_player', 'link-8');">update_player</a></tt><tt class="py-op">(</tt><tt class="py-name">player</tt><tt class="py-op">[</tt><tt class="py-string">"_id"</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">document</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="DominionAnalyser-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Apr  2 00:09:30 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
