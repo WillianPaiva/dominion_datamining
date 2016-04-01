@@ -112,3 +112,44 @@ def genereate_player_elo_curve(playerName):
         MongoInterface.logs_col.find({"players.name": playerName}).sort(
             "date"))
     return player_curve
+
+
+def determine_winners_greening(match):
+    result = []
+    m = Match(match)
+    for player in m.winners:
+        t = find_turn("buys", victory_cards, player, m.log.turns)
+        if t != 0:
+            result.append(t)
+    return result
+
+
+def generate_greening_list():
+    result = []
+    apply_function_to_query(
+        lambda x: result.extend(determine_winners_greening(x)),
+        MongoInterface.logs_col.find())
+    return Counter(result)
+
+
+def check_move(move, cards, play):
+    list_play_cards = list(play.cards)
+    intersec = [c for c in list_play_cards if c in cards]
+    if intersec:
+        if play.move_type == move:
+            return True
+    if play.following:
+        for p in play.following:
+            if check_move(move, cards, p):
+                return True
+    return False
+
+
+def find_turn(move, cards, player, turns):
+    for turn in turns:
+        for pm in turn.players_moves:
+            if pm.name == player:
+                for p in pm.plays:
+                    if check_move(move, cards, p):
+                        return turn.number
+    return 0
