@@ -1,9 +1,16 @@
 from DominionAnalyser.Match.Match import Match
 from DominionAnalyser.Match.Player import Player
+from DominionAnalyser.Match.Log import *
 from DominionAnalyser.Match.SimplifiedPlayer import SimplifiedPlayer
 from DominionAnalyser.Mongo import MongoInterface
+from collections import Counter
 import pyprind
 import math
+
+victory_cards = ["estate", "duchy", "province", "colony", "vineyard",
+                 "greathall", "tunnel", "gardens", "island", "silkroad",
+                 "feodum", "duke", "damejosephine", "distantlands", "harem",
+                 "nobles", "fairgrounds", "farmland"]
 
 
 def apply_function_to_query(function, query):
