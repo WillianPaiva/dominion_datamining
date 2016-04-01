@@ -1,4 +1,6 @@
 class Player:
+    """Player is the class representing the player present inside the log"""
+
     def __init__(self, document):
 
         self.playerName = document.get('name')
