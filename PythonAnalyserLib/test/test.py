@@ -13,7 +13,10 @@ class TestMatch(unittest.TestCase):
         self.assertEqual([p.toDoc() for p in m.players],
                          LogTest.dummy.get("players"))
 
-ma.eloGap = 100
+    def test_log(self):
+        m = Match(LogTest.dummy)
+        self.assertEqual([p.to_doc() for p in m.log.turns],
+                         LogTest.dummy.get("log"))
 
 test.updateLog(ma.id, ma.toDoc())
 
