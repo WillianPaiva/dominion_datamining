@@ -1,5 +1,10 @@
-from DominionDataAnalyser.Match import *
-from DominionDataAnalyser.MongoInterface import *
+import unittest
+import mongomock
+from test import LogTest
+from DominionAnalyser.Match.Match import Match
+from DominionAnalyser.Match.Player import Player
+from DominionAnalyser.Analysers.Tools import *
+from bson.objectid import ObjectId
 
 test = MongoInterface()
 
