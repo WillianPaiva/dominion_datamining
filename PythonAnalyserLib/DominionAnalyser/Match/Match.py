@@ -2,6 +2,10 @@ from DominionAnalyser.Match.Player import Player
 
 
 class Match:
+    """the class representing the Match
+
+    the Match is composed by all elements present in the game log"""
+
     def __init__(self, document):
 
         #the log id on the mongoDB database.
