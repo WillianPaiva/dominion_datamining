@@ -13,7 +13,7 @@ victory_cards = ["estate", "duchy", "province", "colony", "vineyard",
                  "nobles", "fairgrounds", "farmland"]
 
 
-def apply_function_to_query(function, query):
+def apply_function_to_query(function, query, progress_bar=True):
     """takes a function and apply it to every log returned from the query
 
     the function argument needs to be a function that takes a match as an
@@ -24,7 +24,8 @@ def apply_function_to_query(function, query):
     progress_bar = pyprind.ProgBar(n, monitor=True, width=70)
     for match in query:
         function(match)
-        progress_bar.update(item_id=match.get("_id"), force_flush=True)
+        if (progress_bar):
+            progress_bar.update(item_id=match.get("_id"), force_flush=True)
     print(progress_bar)
 
 
