@@ -82,6 +82,11 @@ def detect_bigmoney_strategy(match):
             player.strategy = "bigmoney"
     MongoInterface.update_log(game.ident, game.toDoc())
 
+
+def detect_strategy_on_all_logs(strategy):
+    apply_function_to_query(strategy, MongoInterface.logs_col.find())
+
+
 def generate_simplified_player(match):
     game = Match(match)
     for pl in game.players:
