@@ -137,7 +137,7 @@ Afin d'Atteindre cet objectif, le but du projet est de créer une base de donné
   Enfin, nous devrons décider quelle stratégie est utilisée avec chaque jeu, ou même reconnaître les changements de stratégie lors d'un match. Nous pourrions aussi reconnaître qui a appliqué une première stratégie (qui l'a \textit{inventé}). Si nous pouvons détecter assez  stratégie liée aux données, nous pouvons également détecter le processus d'apprentissage d'habitude des joueurs.
 
 
-\chapter{Description globale}
+\section{Description globale}
 
 
 \section{Fonctions de produit}
@@ -211,7 +211,7 @@ Cette section présente un aperçu des problèmes possibles qui peuvent limiter 
 \item Les \textit{Logs} fournis ne sont pas a un format standard ce qui peut retarder le temps de développement l'analyseur les problèmes qu'il peut soulever au cours du développement ne sont pas connus pour le moment.
 \end{itemize}
 
-\chapter{Les logs}
+\section{Les logs}
 \subsection{Description des données}
 Les données qui ont été fournies par le client sont compressées en format tar.bz2, un fichier pour chaque jour de log, la taille totale des données compressée est 13 Go.\\
 Les données décompressées font un total de 400 Go.\\
@@ -241,7 +241,7 @@ Les \textit{Logs} présentent des incohérences de données qui peuvent être pr
      %Comme les données sont compressées et l'équipement fourni à travailler sur le projet ne peut pas gérer les données non compressées, le projet va travailler avec des données compressées, et après un premier indice de référence, 4 heures a été nécessaire pour décompresser.
 \end{itemize}
 
-\chapter{Besoins fonctionnels}
+\section{Besoins fonctionnels}
 \iffalse
 \section{Interface utilisateur}
 %TODO: retravailler cette portion
@@ -442,7 +442,7 @@ L'analyseur doit être capable de reconnaître le moment de \textit{\textbf{gree
 En savoir plus à propos de \textit{\textbf{greening}} sur \url{http://wiki.dominionstrategy.com/index.php/Greening}.\\
 Le programme va reconnaître quand greening arrive en détectant lorsque les cartes de victoire commencent à être achetées.
 
-\chapter{Besoins non fonctionnelles }
+\section{Besoins non fonctionnelles }
 \section{Besoins de performance}
 
 Aucun besoin de performance spécifique n’a été faite par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
@@ -458,7 +458,7 @@ Même si seulement une ligne de commande est prévue pour le programme final, el
 Les données générées par l'analyseur n’ont pas besoin à être lisible par l'homme.\\
 Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
-\chapter{Besoins organisationnels}
+\section{Besoins organisationnels}
 
 La répartition des tâches du projet et l'estimation de la durée de chacune d'elle sont présentées sur le planning suivant:\\
 
