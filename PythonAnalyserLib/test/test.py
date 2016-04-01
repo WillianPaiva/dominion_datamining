@@ -6,9 +6,12 @@ from DominionAnalyser.Match.Player import Player
 from DominionAnalyser.Analysers.Tools import *
 from bson.objectid import ObjectId
 
-test = MongoInterface()
 
-ma = Match(test.logs_col.find_one())
+class TestMatch(unittest.TestCase):
+    def test_player(self):
+        m = Match(LogTest.dummy)
+        self.assertEqual([p.toDoc() for p in m.players],
+                         LogTest.dummy.get("players"))
 
 ma.eloGap = 100
 
