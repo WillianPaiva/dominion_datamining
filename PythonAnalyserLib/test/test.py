@@ -40,3 +40,5 @@ class TestTools(unittest.TestCase):
     MongoInterface.logs_col = MongoInterface.db["logs"]
     MongoInterface.logs_col.insert_one(LogTest.dummy)
 
+    def test_mongomock(self):
+        self.assertEqual(MongoInterface.logs_col.count(), 1)
