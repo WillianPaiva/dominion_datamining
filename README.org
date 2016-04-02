@@ -15,6 +15,8 @@ in case of using a system wide installation just make sure the *mongod* process 
 
 
 ** running the parser
+*before running the parser you need to place all the tar.bz2 files on the folder sampleLogs*
+
 if a system wide instance of *mongod* is being used just run the *execute* on the root folder of the repository.
 
 if no instance of *mongod* run the *startMongo* on the root folder of the repository which will create create a local installation of mongoDB
