@@ -3,6 +3,7 @@
  */
 package universite.bordeaux.app.GameDataStructure;
 
+
 import java.util.HashMap;
 import java.util.Map;
 import org.bson.Document;
@@ -18,14 +19,18 @@ import junit.framework.TestSuite;
  *
  */
 public class PlayerTest extends TestCase {
-	
+
+
+
+
 	protected Player p1;
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() {
-		this.p1 = new Player("mlfarfan");
+
+        this.p1 = new Player("mlfarfan");
 	}
 	
 	public void testGetPlayerName() {
