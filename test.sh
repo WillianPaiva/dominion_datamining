@@ -1,6 +1,6 @@
 #!/bin/sh
 mvn -q test -B
 
-cd PythonAnalyserLib
-pip install -r dependency.txt
-py.test test/*
+pip install --upgrade pip
+pip install -r PythonAnalyserLib/dependency.txt
+py.test PythonAnalyserLib/test/*
