@@ -1,3 +1,5 @@
 #!/bin/sh
-pip install --user -r PythonAnalyserLib/dependency.txt
+mvn -q test -B
+
+pip install -r PythonAnalyserLib/dependency.txt
 py.test PythonAnalyserLib/test/*
