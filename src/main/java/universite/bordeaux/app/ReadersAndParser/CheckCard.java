@@ -237,6 +237,7 @@ public final class CheckCard {
                                                                    "huntinggrounds",
                                                                    "candlestickmaker",
                                                                    "stonemason",
+                                                                   "stash",
                                                                    "doctor",
                                                                    "masterpiece",
                                                                    "advisor",

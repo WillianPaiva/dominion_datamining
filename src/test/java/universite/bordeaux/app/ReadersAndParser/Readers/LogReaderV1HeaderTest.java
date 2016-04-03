@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * @author mlfarfan
  *
  */
-public class LogReaderV1Test extends TestCase {
+public class LogReaderV1HeaderTest extends TestCase {
 	
 	protected LogReader lr1;
 	protected LogReader lr2;
@@ -161,7 +161,7 @@ public class LogReaderV1Test extends TestCase {
 	}
 	
 	public static Test suite(){
-		TestSuite suite = new TestSuite(LogReaderV1Test.class);
+		TestSuite suite = new TestSuite(LogReaderV1HeaderTest.class);
 		return suite;	
 	}
 		

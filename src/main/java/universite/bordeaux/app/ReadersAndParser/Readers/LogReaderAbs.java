@@ -135,10 +135,18 @@ public abstract class LogReaderAbs {
 
             //parse the line trash and add the list to the game object
             if (!doc.text().contains("nothing")) {
-                String[] trash = doc.text()
-                    .replace("trash: ", "")
-                    .replace(" and", "")
-                    .split(",");
+            	String[] trash = null;
+            	if (doc.text().contains(" and") && !doc.text().contains(",")) {
+            		trash = doc.text()
+                            .replace("trash: ", "")
+                            .replace(" and", ",")
+                            .split(",");
+            	}else{
+            		trash = doc.text()
+                            .replace("trash: ", "")
+                            .replace(" and", "")
+                            .split(",");
+            	}
                 result = getCards(trash, SEARCH_TRESEHOLD);
             }
         }
