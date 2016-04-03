@@ -11,25 +11,38 @@ import universite.bordeaux.app.ReadersAndParser.Readers.LogReaderV2;
 import universite.bordeaux.app.ReadersAndParser.Readers.LogReaderV3;
 
 
-public final class LogReaderFactory{
+/**
+ * @author mlfarfan
+ * factory for indentify the version log
+ *
+ */
+public final class LogReaderFactory {
 
-  private LogReaderFactory(){
+ /**
+ * Constructor class
+ */
+private LogReaderFactory() {
 
   }
 
-  public static LogReader createrReader(File log){
+ /**
+ * @param log
+ * @return object LogReader corresponding to the version
+ */
+public static LogReader createrReader(File log) {
 
       FileReader fr = new FileReader(log);
-      if (fr.searchLineWithString("(.*)----------------------(.*)") == null){
+      if (fr.searchLineWithString("(.*)----------------------(.*)") == null) {
           return null;
       }
       fr.jumpline();
       Document doc = Jsoup.parse(fr.jumpline());
       
-      if (doc.select("b").text().contains("points")) {
+      if (doc.select("b").text().matches(".* points*$")) {
     	  fr.close();
           return new LogReaderV2(log);
-      } else if(fr.searchLineWithString(".+>:.resigned.*") != null) {
+      } else if (doc.select("body").text().contains("resigned") 
+    		  || fr.searchLineWithString(".+>: *resigned.*") != null) {
     	  fr.close();
     	  return new LogReaderV3(log);
       } else {

@@ -1,5 +1,10 @@
 package universite.bordeaux.app.ReadersAndParser.Readers;
 
+/**
+ * class for all types of action that can make a player on each move 
+ * @author mlfarfan
+ *
+ */
 public final class LogElements {
 
     /**

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bson.Document;
 import universite.bordeaux.app.Constant.ConstantLog;
-import universite.bordeaux.app.ReadersAndParser.HeaderParserTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

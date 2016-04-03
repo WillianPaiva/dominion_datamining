@@ -6,7 +6,12 @@ import org.bson.Document;
 
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
 
-public class LogReaderV3 extends LogReaderAbs implements LogReader{
+/**
+ * @author mlfarfan
+ * this version contains one or mores players who left the game
+ * only have information pertaining to the number of turns and the oppening
+ */
+public class LogReaderV3 extends LogReaderAbs implements LogReader {
 
 	public LogReaderV3(File fileLog) {
 		super(fileLog);
@@ -29,28 +34,30 @@ public class LogReaderV3 extends LogReaderAbs implements LogReader{
 	 * @param PlayerItf pl, org.jsoup.nodes.Document doc
 	 */
 	protected final void getPointsVcTurnPlayer(PlayerItf pl, org.jsoup.nodes.Document doc) {
-		String[] firstBreak;
+		
+		
+		if (!doc.text().contains("resigned")) {
+			String[] firstBreak;
 
-        firstBreak = doc.text().split("points");
+			if (doc.text().contains(" points ")) {
+	        	firstBreak = doc.text().split(" points ");
+	        } else {
+	        	firstBreak = doc.text().split(" point ");
+	        }
+	        
 
-        //set the player points
-        String[] p = firstBreak[0].split(":");
-        String temp = p[p.length - 1].replace(" ", "");
-
-		//IF resigned
-		if (temp.contains("resigned")) {
-            pl.setPoints(0);
-        } else {
-            try {
+	        //set the player points
+	        String[] p = firstBreak[0].split(":");
+	        String temp = p[p.length - 1].replace(" ", "");
+	        
+	        try {
                 pl.setPoints(Integer.parseInt(temp));
             } catch (NumberFormatException e) {
                 pl.setPoints(0);
             }
-        }
-
-		if (!doc.text().contains("resigned")) {
-            String list = firstBreak[1].split(";")[0];
-            list = list.substring(2, list.length() - 1)
+	        
+	        String list = firstBreak[1].split(";")[0];
+            list = list.substring(1, list.length() - 1)
                 .replace("and", "");
             if (!list.contains("nothing")) {
                 String[] victoryCards = list.split(",");
@@ -62,12 +69,18 @@ public class LogReaderV3 extends LogReaderAbs implements LogReader{
                                          .split(";")[1]
                                          .replace(" turns", "")
                                          .replace(" ", "")));
-        }else {
-            pl.setTurns(Integer.parseInt(doc.text()
-                                         .split(";")[1]
-                                         .replace(" turns", "")
-                                         .replace(" ", "")));
-        }
+		} else {		
+			pl.setPoints(0);
+			String turns = doc.text();
+			if (pl.getPlayerName().contains(";")) {
+				turns = turns.replaceAll(pl.getPlayerName(), " ");
+			}
+			pl.setTurns(Integer.parseInt(turns
+                    .split(";")[1]
+                    .replace(" turns", "")
+                    .replace(" ", "")));
+			
+		}
 		
 	}
 

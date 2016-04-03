@@ -157,11 +157,15 @@ public class LogHandler {
                         try {
                             MongoConection.insertMatch(temp.getDoc());
                         } catch (Exception e) {
-                            ErrorLogger.getInstance().logError("insertMatch bad Log format " + log.getName() + " " + e.toString());
+                            ErrorLogger.getInstance().logError(
+                            		"insertMatch bad Log format " 
+                                    + log.getName() + " " + e.toString());
                         }
                         temp.close();
                     } else {
-                    	ErrorLogger.getInstance().logError("log without header, game aborted by the player. " + log.getName());
+                    	ErrorLogger.getInstance().logError(
+                    		"log without header, game aborted by the player. " 
+                    		+ log.getName());
                     }
                     progressBar(Math.round(((float) filesParsed
                                             / (float) totalFilesToBeParsed)
