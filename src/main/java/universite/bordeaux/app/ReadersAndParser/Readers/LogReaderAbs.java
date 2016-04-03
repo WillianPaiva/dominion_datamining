@@ -24,9 +24,9 @@ import universite.bordeaux.app.ReadersAndParser.CheckCard;
 import universite.bordeaux.app.ReadersAndParser.FileReader;
 
 
-
 /**
- *
+ * @author mlfarfan
+ * class for the common code for all the different versions LogReaderVx
  */
 public abstract class LogReaderAbs {
     /**
@@ -48,6 +48,10 @@ public abstract class LogReaderAbs {
      * the file reader with the log data.
      */
     protected FileReader log;
+    
+    /**
+     * the object document for the BD
+     */
     private org.jsoup.nodes.Document doc;
 
     /**
@@ -133,7 +137,7 @@ public abstract class LogReaderAbs {
             if (!doc.text().contains("nothing")) {
                 String[] trash = doc.text()
                     .replace("trash: ", "")
-                    .replace("and", "")
+                    .replace(" and", "")
                     .split(",");
                 result = getCards(trash, SEARCH_TRESEHOLD);
             }
@@ -161,7 +165,7 @@ public abstract class LogReaderAbs {
             Elements links = doc.select("span");
             for (Element link : links) {
                 String temp = CheckCard.verifyCard(link.text());
-                if(temp != null) {
+                if (temp != null) {
                     market.add(temp);
                 }
             }
@@ -172,13 +176,19 @@ public abstract class LogReaderAbs {
     
     /** 
 	 * the function adds turns, victory cards and points to the object PlayerItf
-	 * @param PlayerItf pl, org.jsoup.nodes.Document doc
+	 * @param PlayerItf pl
+	 * @param org.jsoup.nodes.Document doc
 	 */
     protected void getPointsVcTurnPlayer(PlayerItf pl, org.jsoup.nodes.Document doc) {
 
         String[] firstBreak;
-
-        firstBreak = doc.text().split("points");
+        
+        if (doc.text().contains(" points ")) {
+        	firstBreak = doc.text().split(" points ");
+        } else {
+        	firstBreak = doc.text().split(" point ");
+        }
+        
 
         //set the player points
         String[] p = firstBreak[0].split(":");
@@ -192,7 +202,7 @@ public abstract class LogReaderAbs {
 
         //split the string to get all victory points cards
         String list = firstBreak[1].split(";")[0];
-        list = list.substring(2, list.length() - 1)
+        list = list.substring(1, list.length() - 1)
             .replace("and", "");
         if (!list.contains("nothing")) {
             String[] victoryCards = list.split(",");
@@ -318,14 +328,14 @@ public abstract class LogReaderAbs {
      * @param limit the character index for the number and card name
      * @return a HashMap with cards and quantities
      */
-    protected final HashMap<String, Integer> getCards(final String[] cardsToParse,
-                                                      final int  limit) {
+    protected final HashMap<String, Integer> getCards(
+    			final String[] cardsToParse, final int  limit) {
         HashMap<String, Integer> cards = new HashMap<>();
         for (String x : cardsToParse) {
 
             x = x.trim();
-            String nb = x.substring(0,x.indexOf(' '));
-            String card = x.substring(x.indexOf(' ')+1);
+            String nb = x.substring(0, x.indexOf(' '));
+            String card = x.substring(x.indexOf(' ') + 1);
             int qty;
             try {
                 qty = Integer.parseInt(nb);
@@ -504,7 +514,7 @@ public abstract class LogReaderAbs {
             trashes = true;
             cards = cards.replaceAll("and trashes it", "");
         } else if (cards.contains("giving")) {
-            cards = cards.split("giving")[0].replaceAll(",","");
+            cards = cards.split("giving")[0].replaceAll(",", "");
         }
         cards = cards
             .replaceAll(" and then ", ",")
@@ -661,7 +671,7 @@ public abstract class LogReaderAbs {
 
 
     /**
-     * reponsible to recognize and iterate over all turns of a log and call the proper
+     * reponsable to recognize and iterate over all turns of a log and call the proper
      * function to treat the action made.
      * @return a list of Documents representing the turns.
      */
@@ -683,10 +693,11 @@ public abstract class LogReaderAbs {
         while (!finished) {
             if (doc.text().matches("(.*)'s turn [0-9]*(.*)")) {
                 int tempTurn = 0;
-                //if a turn is possessed by another player this turn has no number in the log
+                //if a turn is possessed by another player 
+                //this turn has no number in the log
                 if (!doc.text().contains("(possessed by")) {
                     String[] tn = doc.text().split("'s turn");
-                    tempTurn = Integer.parseInt(tn[tn.length -1]
+                    tempTurn = Integer.parseInt(tn[tn.length - 1]
                                                 .replaceAll("[^0-9]+", ""));
                 }
                 if (tempTurn > turn) {
@@ -811,7 +822,8 @@ public abstract class LogReaderAbs {
                             t.insertMove(playername,
                                          countLevel(doc.text()),
                                          ConstantLog.TRASH,
-                                         getCardsForTrashingMove(log.getLine()));
+                                         getCardsForTrashingMove(
+                                        		 log.getLine()));
                             break;
                         case REVEALS:
                             Collection<HashMap<String, Integer>> revealCards;
@@ -927,7 +939,7 @@ public abstract class LogReaderAbs {
      */
     protected final Document hashToDoc(final HashMap<String, Integer> map) {
     	Document temp = new Document();
-    	if(map != null ) {      
+    	if (map != null) {      
 	        for (String x: map.keySet()) {
 	            temp.append(x, map.get(x));
 	        }
@@ -955,7 +967,7 @@ public abstract class LogReaderAbs {
     /**
      * closes the file descriptor.
      */
-    public final void close(){
+    public final void close() {
         log.close();
     }
 

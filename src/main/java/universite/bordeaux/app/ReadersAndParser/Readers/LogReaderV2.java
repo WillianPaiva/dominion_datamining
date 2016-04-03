@@ -7,6 +7,10 @@ import org.bson.Document;
 import universite.bordeaux.app.GameDataStructure.Player;
 import universite.bordeaux.app.GameDataStructure.PlayerItf;
 
+/**
+ * @author mlfarfan
+ * LogReaderV2 this version contains the name player in the tag b
+ */
 public class LogReaderV2 extends LogReaderAbs implements LogReader {
 	
 	/** 

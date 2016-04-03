@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+/**
+ * @author mlfarfan
+ * to verify that the name of the card is a valid name
+ *
+ */
 public final class CheckCard {
 
     private CheckCard(){}
-    public static String verifyCard(String card){
-        String result = card.trim().replaceAll("\\s+","")
-            .replaceAll("'","").toLowerCase();
+    /**
+     * @param card string name card
+     * @return the name standard
+     */
+    public static String verifyCard(String card) {
+        String result = card.trim().replaceAll("\\s+", "")
+            .replaceAll("'", "").toLowerCase();
         ArrayList<String> cardList = new ArrayList<>(Arrays.asList("cellar",
                                                                    "chapel",
                                                                    "envoy",
@@ -125,7 +134,7 @@ public final class CheckCard {
                                                                    "forge",
                                                                    "kingscourt",
                                                                    "peddler",
-                                                                   "platinium",
+                                                                   "platinum",
                                                                    "colony",
                                                                    "bagofgold",
                                                                    "diadem",
@@ -304,10 +313,11 @@ public final class CheckCard {
                                                                    "duchy",
                                                                    "gold",
                                                                    "province"));
-        if(cardList.contains(result)){
+        if (cardList.contains(result)) {
             return result;
-        }else if(cardList.contains(result.substring(0, result.length()-1))){
-            return result.substring(0, result.length()-1);
+        } else if (cardList.contains(result.substring(0, 
+        			result.length() - 1))) {
+            return result.substring(0, result.length() - 1);
         }
         return null;
 
