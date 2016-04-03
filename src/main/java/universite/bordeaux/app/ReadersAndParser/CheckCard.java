@@ -37,6 +37,7 @@ public final class CheckCard {
                                                                    "spy",
                                                                    "thief",
                                                                    "throneroom",
+                                                                   "tactician",
                                                                    "councilroom",
                                                                    "festival",
                                                                    "laboratory",
