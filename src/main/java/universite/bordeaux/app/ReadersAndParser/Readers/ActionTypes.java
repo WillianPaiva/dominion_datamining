@@ -1,5 +1,10 @@
 package universite.bordeaux.app.ReadersAndParser.Readers;
 
+/**
+ * enum for all types of action that can make a player on each turn
+ * @author mlfarfan
+ *
+ */
 public enum ActionTypes {
 
     PLAYS(1),
@@ -19,11 +24,11 @@ public enum ActionTypes {
     DISCARDING(15),
     NOT_DEFINED(16);
 
-
-
-
     private int value;
 
+    /**
+     * @param value of type action
+     */
     private ActionTypes(final int value) { this.value = value;}
 
 };

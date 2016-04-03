@@ -2,6 +2,8 @@ package universite.bordeaux.app.GameDataStructure;
 
 import org.bson.Document;
 
+import com.mongodb.annotations.Immutable;
+
 import universite.bordeaux.app.Constant.ConstantLog;
 
 import java.util.ArrayList;
@@ -80,11 +82,13 @@ public class Player implements PlayerItf {
         this.turns = doc.get(ConstantLog.TURNS, Integer.class);
         this.gameElo = doc.get(ConstantLog.ELO, Integer.class);
         victoryCards = new HashMap<>();
-        this.victoryCards = docToHash(doc.get(ConstantLog.VICTOYCARDS, Document.class));
+        this.victoryCards = docToHash(doc.get(ConstantLog.VICTOYCARDS, 
+        					Document.class));
         deck = new HashMap<>();
         this.deck = docToHash(doc.get(ConstantLog.DECK, Document.class));
         firstHand = new HashMap<>();
-        this.firstHand = docToHash(doc.get(ConstantLog.FIRSTHAND, Document.class));
+        this.firstHand = docToHash(doc.get(ConstantLog.FIRSTHAND, 
+        				 Document.class));
         opening = new ArrayList<>();
         this.opening = doc.get(ConstantLog.OPENING, ArrayList.class);
 
@@ -159,7 +163,7 @@ public class Player implements PlayerItf {
     /** 
      * @param victoryCard HashMap<String, Integer>
      */
-    public final void setVictoryCard(final HashMap<String, Integer> victoryCard){
+    public final void setVictoryCard(final HashMap<String, Integer> victoryCard) {
     	this.victoryCards = victoryCard;
     }
     /**
@@ -176,7 +180,8 @@ public class Player implements PlayerItf {
     /** 
      * @param deck HashMap<String, Integer>
      */
-    public final void setDeck(final HashMap<String, Integer> deck){
+    @Override
+    public final void setDeck(final HashMap<String, Integer> deck) {
     	this.deck = deck;
     }
     /**
@@ -194,8 +199,6 @@ public class Player implements PlayerItf {
     public final void setTurns(final int trs) {
         this.turns = trs;
     }
-
-
 
     /**
      * @param s opening cards
@@ -216,10 +219,17 @@ public class Player implements PlayerItf {
         this.firstHand.put(cardName, quantity);
     }
     
-    public final void setFirstHand(final HashMap<String, Integer> firstHand){
+    /**
+     * @param firstHand HashMap<String, Integer>
+     */
+    @Override
+    public final void setFirstHand(final HashMap<String, Integer> firstHand) {
     	this.firstHand = firstHand;
     }
 
+    /**
+     * overrride the function toString
+     */
     @Override
     public final String toString() {
         return "\n"

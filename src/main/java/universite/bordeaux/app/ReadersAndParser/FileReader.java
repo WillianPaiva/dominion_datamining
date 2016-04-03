@@ -36,7 +36,8 @@ public class FileReader {
         try {
             scan = new Scanner(logFile);
         } catch (IOException e) {
-            ErrorLogger.getInstance().logError("file not found" + log.getName());
+            ErrorLogger.getInstance().logError("file not found" 
+            						+ log.getName());
         }
     }
 
@@ -67,7 +68,8 @@ public class FileReader {
         try {
         this.line = this.scan.nextLine();
         } catch (NoSuchElementException e) {
-            ErrorLogger.getInstance().logError("jumpline bad Log format " + log.getName());
+            ErrorLogger.getInstance().logError("jumpline bad Log format " 
+            								+ log.getName());
         }
         return this.line;
     }
