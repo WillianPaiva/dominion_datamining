@@ -1,10 +1,14 @@
 \chapter{Fonctionnement et Tests}
 
-\section{Partie 1}
+Dans cette partie nous allons tout d'abord nous pencher sur le fonctionnement et les tests concernant la partie parser du projet, puis nous allons aborder les mêmes points pour la partie analyse des données.
 
-Intro
+\section{Parser}
 
-\subsection{Sous-partie 1}
+Cette partie du projet est écrite en java, nous avons utilisé JUnit afin de mener à bien ces tests. De plus le dépôt git est muni d'un outil d'intégration continue (Travis) qui est assoscié à nos tests afin de garantir que le développement ne produit pas d'erreurs sur le fonctionnement du programme.
+
+\subsection{Politique de tests}
+
+Du fait de l'utilisation de java, pour chaque classe non-utilitaire un premier test vérifie systématiquement que la création des objets fonctionne correctement, une fois ce critère validé, des tests spécifiques à chaque classe sont effectués en fonction des fonctionnalités qu'elles remplissent.
 
 \paragraph*{Paragraphe 1 (n'apparaitra pas dans l'index)} Bla
 
