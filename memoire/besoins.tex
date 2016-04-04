@@ -1,6 +1,5 @@
 \chapter{Analyse des besoins}
 
-Intro
 
 Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans le cas de tout projet d'ailleurs, la définition des besoins est une étape cruciale du démarrage de l'activité. On va donc évoquer tout d'abord les besoins fonctionnels, puis les besoins non-fonctionnels.
 
@@ -9,7 +8,7 @@ Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans l
 \iffalse
 \section{Interface utilisateur}
 %TODO: retravailler cette portion
-L'interface utilisateur du programme sera composé d'un exécutable (minière de domination) qui sera exécuté avec certains paramètres pour exécuter l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
+L'interface utilisateur du programme sera composée d'un exécutable (minière de domination) qui sera exécutée avec certains paramètres pour réaliser l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
 
 \includegraphics[scale=0.45,keepaspectratio]{diaRessources/UseCaseParsing}\\
 Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
@@ -17,8 +16,8 @@ Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur d
 \subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
-  \item L'utilisateur devra placer tous les logs compressés (fichiers tar.bz2) pour être analysées dans un dossier spécifique.
-  \item si aucune compression est donnée la compression par défaut est \textit{snappy}.
+  \item L'utilisateur devra placer tous les logs compressés (fichiers tar.bz2) destinés à  être analysées dans un dossier spécifique.
+  \item si aucune compression n'est donnée la compression par défaut est \textit{snappy}.
     \item Pour des fins de test, afin d'éviter d'avoir un 4 heures étape d'analyse, l'utilisateur peut spécifier un pourcentage des logs pour être analysée. en spécifiant une valeur comprise entre 0 et 100. l'analyseur choisira au hasard les logs de ceux qui sont prévus et les analyser, en créant une base de données utilisable pour des tests supplémentaires.
     \item Une fois que l'analyse est effectuée un message sera affiché sur la console (traitement de fait).
 
@@ -197,7 +196,7 @@ Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strate
 Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
 Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
-Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
+Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
 
 Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqué à \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), l’analyseur doit garder une trace de la quantité de Points de Victoire de chaque joueur à chaque tour.
 
