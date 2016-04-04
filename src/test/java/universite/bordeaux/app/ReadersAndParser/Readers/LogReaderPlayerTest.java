@@ -147,6 +147,54 @@ public class LogReaderPlayerTest extends TestCase {
 		
 	}
 	
+	public void testPlayerCardsFirstHand() {
+		
+		ArrayList<Document> players1 = (ArrayList<Document>) doclog1.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players2 = (ArrayList<Document>) doclog2.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players3 = (ArrayList<Document>) doclog3.get(ConstantLog.PLAYERS);
+		
+		Document firstHand1 = (Document) players1.get(0).get(ConstantLog.FIRSTHAND);
+		Document firstHand2 = (Document) players2.get(1).get(ConstantLog.FIRSTHAND);
+		Document firstHand3 = (Document) players3.get(2).get(ConstantLog.FIRSTHAND);
+		
+		assertNotNull(firstHand1);
+		assertNotNull(firstHand2);
+		assertNotNull(firstHand3);
+		
+		assertEquals(firstHand1.size(), 2);
+		assertEquals(firstHand2.size(), 1);
+		assertEquals(firstHand3.size(), 2);
+		
+		assertEquals(firstHand1.get(CheckCard.verifyCard("Coppers")), 3);
+		assertEquals(firstHand2.get(CheckCard.verifyCard("Coppers")), 5);
+		assertEquals(firstHand3.get(CheckCard.verifyCard("Estates")), 2);
+		
+	}
+	
+	public void testPlayerCardsOpening() {
+		
+		ArrayList<Document> players1 = (ArrayList<Document>) doclog1.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players2 = (ArrayList<Document>) doclog2.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players3 = (ArrayList<Document>) doclog3.get(ConstantLog.PLAYERS);
+		
+		ArrayList<String> opening1 =  (ArrayList<String>) players1.get(1).get(ConstantLog.OPENING);
+		ArrayList<String> opening2 =  (ArrayList<String>) players2.get(0).get(ConstantLog.OPENING);
+		ArrayList<String> opening3 =  (ArrayList<String>) players3.get(2).get(ConstantLog.OPENING);
+		
+		assertNotNull(opening1);
+		assertNotNull(opening2);
+		assertNotNull(opening3);
+		
+		//System.out.println(opening1);
+		assertEquals(opening1.size(), 2);
+		assertEquals(opening2.size(), 2);
+		assertEquals(opening3.size(), 2);
+		
+		System.out.println(opening3);
+		assertEquals(opening1.get(0), CheckCard.verifyCard("Potion"));		
+		assertEquals(opening2.get(0), CheckCard.verifyCard("Silver"));		
+		assertEquals(opening3.get(0), CheckCard.verifyCard("Chapel"));		
+	}
 	
 	public static Test suite(){
 		TestSuite suite = new TestSuite(LogReaderPlayerTest.class);
