@@ -97,7 +97,7 @@ public class LogReaderPlayerTest extends TestCase {
 		
 	}
 	
-	public void testPlayerNumberCardVictory() {
+	public void testPlayerCardVictory() {
 		
 		ArrayList<Document> players1 = (ArrayList<Document>) doclog1.get(ConstantLog.PLAYERS);
 		ArrayList<Document> players2 = (ArrayList<Document>) doclog2.get(ConstantLog.PLAYERS);
@@ -115,12 +115,35 @@ public class LogReaderPlayerTest extends TestCase {
 		assertEquals(victoryCards2.size(), 3);
 		assertEquals(victoryCards3.size(), 3);
 		
-		//probleme Colonies Duchies
-		
+		//probleme Colonies Duchies	
 		
 		assertEquals(victoryCards1.get(CheckCard.verifyCard("Province")), 1);
 		assertEquals(victoryCards2.get(CheckCard.verifyCard("Great Hall")), 1);
 		assertEquals(victoryCards3.get(CheckCard.verifyCard("Duchy")), 1);
+		
+	}
+	
+	public void testPlayercardsDeck(){
+		
+		ArrayList<Document> players1 = (ArrayList<Document>) doclog1.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players2 = (ArrayList<Document>) doclog2.get(ConstantLog.PLAYERS);
+		ArrayList<Document> players3 = (ArrayList<Document>) doclog3.get(ConstantLog.PLAYERS);
+		
+		Document deckCards1 = (Document) players1.get(0).get(ConstantLog.DECK);
+		Document deckCards2 = (Document) players2.get(0).get(ConstantLog.DECK);
+		Document deckCards3 = (Document) players3.get(1).get(ConstantLog.DECK);
+		
+		assertNotNull(deckCards1);
+		assertNotNull(deckCards2);
+		assertNotNull(deckCards3);
+		
+		assertEquals(deckCards1.size(), 11);
+		assertEquals(deckCards2.size(), 11);
+		assertEquals(deckCards3.size(), 13);
+		
+		assertEquals(deckCards1.get(CheckCard.verifyCard("Bishops")), 2);
+		assertEquals(deckCards2.get(CheckCard.verifyCard("Merchant Ship")), 1);
+		assertEquals(deckCards3.get(CheckCard.verifyCard("Coppers")), 6);
 		
 	}
 	

@@ -267,7 +267,7 @@ public abstract class LogReaderAbs {
                     //next line
                     doc = Jsoup.parse(this.log.jumpline());
                     //get deck cards
-                    if (!doc.text().contains("0 cards")) {
+                    if (doc.text().split("cards")[0].replaceAll("[^0-9]+","") != "0"){
                         String[] deck = doc.text()
                             .split("\\[[0-9]* cards\\]")[1]
                             .split(",");
