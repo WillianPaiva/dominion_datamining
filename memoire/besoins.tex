@@ -4,11 +4,12 @@
 Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans le cas de tout projet d'ailleurs, la définition des besoins est une étape cruciale du démarrage de l'activité. On va donc évoquer tout d'abord les besoins fonctionnels, puis les besoins non-fonctionnels.
 
 
-\section{Besoins fonctionnels}
+\section{Besoins fonctionnels} 
+Les besoins fonctionnels sont ceux qui permettent de remplir les conditions du cahier des charges ; ils sont incontournables. Il s'agit donc ici de voir comment on va répondre à la demande formulée à l'origine du projet. 
 \iffalse
 \section{Interface utilisateur}
 %TODO: retravailler cette portion
-L'interface utilisateur du programme sera composée d'un exécutable (minière de domination) qui sera exécutée avec certains paramètres pour réaliser l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
+L'interface utilisateur du programme sera composée d'un exécutable (\textit{dominionmining}minière de domination) qui sera exécuté avec certains paramètres pour réaliser l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
 
 \includegraphics[scale=0.45,keepaspectratio]{diaRessources/UseCaseParsing}\\
 Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
@@ -57,23 +58,36 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
 \end{itemize}
 \fi
 \subsection{Modélisation des données}
+La première démarche consistait à modéliser les données disponibles pour créer une cohérence entre tous les formats existants. Il fallait commencer par décompresser les données, même si, comme on l'a vu, cela ne pouvait être fait que par "tranches" de temps (journées de \textit{Logs}) à cause des ressources mémoire disponibles. 
 
 \subsubsection{Décompression des logs}
-\paragraph*{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
+\paragraph*{Description et priorité} 
+
+
+
+\textbf{Niveau de priorité = haute}
+
+
+
 \begin{itemize}
   \item Les fichiers tar.bz2 seront stockés dans un dossier.
   \item Le programme va  décompresser un fichier spécifié à partir de ce dossier dans un dossier temporaire.
-  \item Le programme va  supprimer les logs décompressés  à la demande du parser.
+  \item Le programme va  supprimer les \textit{Logs} décompressés  à la demande du parser.
 \end{itemize}
 
 \subsubsection{Parser}
 
-\paragraph*{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-L'analyseur va prendre les logs sous format \textit{HTML} et va identifier les mots clés présents sur ces logs.\\
-L'analyseur est chargé de lire les logs et collecter l'information importante sans perdre la structure du log.\\
-Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce diagramme:\\
+\paragraph*{Description et priorité} 
+
+
+
+\textbf{Niveau de priorité = haute}
+
+
+
+Compte tenu des problèmes mis en évidence en analysant un échantillon de \textit{Logs} (comme par exemple des incohérences de syntaxe), l'utilisation d'un parser (comme \textit{YACC} et \textit{LEX}) n'est pas recommandée. C'est pour cette raison que l'on va créer un parser qui utilisera les mots-clés et l'HTML déjà présents dans les \textit{Logs}. Ce parser sera responsable de la lecture et de la collecte des informations importantes sans perdre la structure du \textit{Log}.
+Un aperçu des data devant être reconnues par le parser est représenté dans l'illustration suivante :\\
+
 \includegraphics[scale=0.35,keepaspectratio]{diaRessources/UseCaseParser}
 
 \begin{itemize}
