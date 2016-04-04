@@ -54,10 +54,10 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
 \end{itemize}
 \end{itemize}
 \fi
-\section{Modélisation des données}
+\subsection{Modélisation des données}
 
-\subsection{Décompression des logs}
-\subsubsection{Description et priorité}
+\subsubsection{Décompression des logs}
+%\paragraph{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
   \item Les fichiers tar.bz2 seront stockés dans un dossier.
@@ -65,9 +65,9 @@ Afin de permettre à l'utilisateur de demander des statistiques spécifiques con
   \item Le programme va  supprimer les logs décompressés  à la demande du parser.
 \end{itemize}
 
-\subsection{Parser}
+\subsubsection{Parser}
 
-\subsubsection{Description et priorité}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 L'analyseur va prendre les logs sous format \textit{HTML} et va identifier les mots clés présents sur ces logs.\\
 L'analyseur est chargé de lire les logs et collecter l'information importante sans perdre la structure du log.\\
@@ -87,20 +87,20 @@ Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce
 \end{itemize}
 Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme de parsing\\
 
-\subsection{Créer game-log}
-\subsubsection{Description et priorité}
+\subsubsection{Créer game-log}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 Cette fonctionnalité est la création d'une structure de données où les données du log seront écrites.
 Voici une représentation graphique d'une vue d'ensemble de la structure de données:\\
 \includegraphics[scale=0.5,keepaspectratio]{diaRessources/game-log}
 
-\subsection{Créer une base de données orientée document }
+\subsubsection{Créer une base de données orientée document }
 
-\subsubsection{Description et priorité}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 Ce module sera responsable pour créer la base de données orientée document, contenant des données au format JSON.
-\subsection{Se connecter à la base de données orientée document }
-\subsubsection{Description et priorité}
+\subsubsection{Se connecter à la base de données orientée document }
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
 \item La base de données orientée document sera en charge des échanges à travers un socket spécifique.
@@ -110,8 +110,8 @@ Ce module sera responsable pour créer la base de données orientée document, c
 \end{itemize}
 
 
-\subsection{Compression}
-\subsubsection{Description et priorité}
+\subsubsection{Compression}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
 La base de données orientée document contiendra la plupart des données et un certain niveau de compression devra être appliquée.
@@ -119,18 +119,18 @@ La base de données que nous allons utiliser est focalisé sur mongodb, et il of
 Au cours du développement \textit{Snappy} est utilisé car il offre une meilleure performance.
 Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du log.
 
-\subsection{Sauvegarder game-log}
+\subsubsection{Sauvegarder game-log}
 
-\subsubsection{Description et priorité}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
 \item La base de données orientée document permet de convertir la structure log de jeu dans un document au format JSON.
 \item Les données fournies au format JSON seront stockées dans la base de données.
 \end{itemize}
 %partie de python à discuter
-\section{Analyse des données}
-\subsection{Recueillir des données}
-\subsubsection{Description et priorité}
+\subsection{Analyse des données}
+\subsubsection{Recueillir des données}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
 
@@ -140,8 +140,8 @@ Mais le programme final devrait donner à l'utilisateur la possibilité de chois
 \item Si l'utilisateur souhaite appliquer un script python de logs de jeu, le programme demandera les logs de jeu et les mettre dans un fichier texte, ce fichier contiendra chaque action faite par chaque joueur et le script sera appliqué à ce fichier.
 \end{itemize}
 
-\subsection{restorer game-log}
-\subsubsection{Description et priorité}
+\subsubsection{restorer game-log}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
 Cette fonction est responsable pour restaurer l'information manquante sur les logs analysés, en utilisant la déduction basique sur la base des données obtenues par le log.\\
@@ -154,15 +154,16 @@ En cas d'un en-tête du jeu manquant ou partie manquante:
 \item Cartes de joueur: le programme permet de garder une trace des actions effectuées au cours du jeu par rapport aux cartes de joueurs et les ajouter dans cette liste.
   \end{itemize}
 
-\subsection{Plotting}
-\subsubsection{Description et priorité}
+\subsubsection{Plotting}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
 Le module de traçage va obtenir les données converties obtenues après le processus de recueillir des données et de les tracer dans une interface graphique. Ce module va fonctionner d'une manière similaire de \textit{GnuPlot}.
 
-\subsection{Calculater \textit{\textbf{ELO}}}
-\subsection{Plotting}
-\subsubsection{Description et priorité}
+\subsubsection{Calculer l'\textit{\textbf{ELO}}}
+%TODO
+\subsubsection{Plotting}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
 L'analyseur devra calculer la finale ELO pour chaque joueur et ce qui était un joueur ELO sur un jeu donné.
@@ -170,11 +171,12 @@ Pour chaque jeu dans l'ordre chronologique, ce module va demander au elo initial
 
 Plus d'informations sur ELO peuvent être consultés sur \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
 \iffalse
+%TODO: refaire le diagramme du calcul de l'elo
 Le schéma suivant illustre le processus du calcul de elo:\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/elocalc}\\
 \fi
-\subsection{Reconnaître les stratégies}
-\subsubsection{Description et priorité}
+\subsubsection{Reconnaître les stratégies}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
 Le wiki de dominion décrit quelques stratégies qui peuvent être utilisés dans le jeu.\\Par exemple :\\
@@ -195,8 +197,8 @@ Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reco
 
 Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqué à \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), l’analyseur doit garder une trace de la quantité de Points de Victoire de chaque joueur à chaque tour.
 
-\subsection{Reconnaître Greening}
-\subsubsection{Description et priorité}
+\subsubsection{Reconnaître le Greening}
+%\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
 L'analyseur doit être capable de reconnaître le moment de \textit{\textbf{greening}} sur chaque match.
