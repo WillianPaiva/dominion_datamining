@@ -1,6 +1,19 @@
 \chapter{Architecture et description du logiciel}
 Dans cette partie, nous allons d'abord vous parler de la partie concernant le parsing puis passer à la partie d'analyse des données et de rendu graphique.
 
+\section{Architecture globale}
+
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[scale=0.45, keepaspectratio]{./presentation/overview.jpg}
+  \end{center}
+  \caption{représentation de l'architecture globale du projet}
+\end{figure}
+
+L'architecture de notre projet se décompose en 3 parties distinctes et indépendantes. Une première partie permet de charger les données contenues dans les logs puis de les inscrire dans la base de données.\newline
+La base de données stocke ces données et peut en recevoir de nouvelles ou bien répondre aux requètes qui lui sont soumises.\newline
+La dernière partie correspond à une librairie python permettant à l'utilisateur d'effectuer des analyses prédéfinies ou bien de produire ses propres analyses. Pour cela, l'utilisateur dispose de fonctions de communications avec la base de données.
+
 \section{Partie parser}
 Cette partie est écrite en java, l'autre possibilité que nous avions était de coder le parser en python mais après quelques petits tests nous nous sommes rendus compte que le parser en python serait beaucoup trop lent. Voici l'architecture de la partie Java de notre projet:
 %TODO: ajouter une image de l'architecture java
