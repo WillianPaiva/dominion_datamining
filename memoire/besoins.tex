@@ -78,6 +78,7 @@ Un aperçu des données pour être reconnu par l'analyseur est illustré dans ce
 \item Winners: liste des gagnants du jeu, il peut y avoir plusieurs gagnants en cas d'égalité.
 \item Market: liste des 10 cartes disponibles pour être acheté par les joueurs.
 \item Cards Gone: liste des cartes qui ont été entièrement acquises à la fin de la partie.
+\item First hand: liste des cartes obtenues au début de partie.%à voir
 \item Player Name: Nom du joueur.
 \item Victory points: nombre de points à la fin de la partie.
 \item Player cards: liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
@@ -134,13 +135,13 @@ Mais le programme final devrait donner à l'utilisateur la possibilité de chois
 \textbf{Niveau de priorité = haute}\\
 \begin{itemize}
 
-\item L'analyseur de données va convertir les résultats de la requête dans un format utilisable par le module de traçage.
+\item L'analyseur de données va convertir les résultats de la requête dans un format utilisable par le module de plotting.
 \item Si les données sont simples à lire (par exemple: un numéro, un nom, une phrase), l'analyseur de données sera tout simplement envoyer le résultat au format texte.
 \item La dernière requête sera mémorisée avec son résultat afin de gagner du temps si la prochaine requête faite par l'utilisateur est le même.
 \item Si l'utilisateur souhaite appliquer un script python de logs de jeu, le programme demandera les logs de jeu et les mettre dans un fichier texte, ce fichier contiendra chaque action faite par chaque joueur et le script sera appliqué à ce fichier.
 \end{itemize}
 
-\subsubsection{restorer game-log}
+\subsubsection{Restaurer game-log}
 %\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
@@ -158,7 +159,7 @@ En cas d'un en-tête du jeu manquant ou partie manquante:
 %\subsubsection{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
-Le module de traçage va obtenir les données converties obtenues après le processus de recueillir des données et de les tracer dans une interface graphique. Ce module va fonctionner d'une manière similaire de \textit{GnuPlot}.
+Le module de plotting va obtenir les données converties obtenues après le processus de recueillir des données et de les tracer dans une interface graphique. Ce module va fonctionner d'une manière similaire de \textit{GnuPlot}.
 
 \subsubsection{Calculer l'\textit{\textbf{ELO}}}
 %TODO
@@ -193,7 +194,7 @@ Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strate
 Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
 Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
-Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetés, la liste de ces cartes peuvent être trouvés sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
+Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
 
 Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqué à \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), l’analyseur doit garder une trace de la quantité de Points de Victoire de chaque joueur à chaque tour.
 
@@ -211,7 +212,7 @@ Le programme va reconnaître quand greening arrive en détectant lorsque les car
 
 \subsection{Besoins de performance}
 
-Aucun besoin de performance spécifique n’a été faite par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
+Aucun besoin de performance spécifique n’a été fait par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
 L'utilisateur doit être capable de parcourir le processus d'analyse sur un ensemble de données précis sans devoir attendre que la même requête à refaire.
 
 \subsection{Fiabilité}
@@ -221,7 +222,7 @@ L'analyseur devra analyser 100\% des données présentes sur le log et restaure 
 \subsection{Attributs de qualité de logiciels}
 
 Même si seulement une ligne de commande est prévue pour le programme final, elle devrait avoir une courbe facile à apprendre et être facile à utiliser.\\
-Les données générées par l'analyseur n’ont pas besoin à être lisible par l'homme.\\
+Les données générées par l'analyseur n’ont pas besoin à être lisibles par l'homme.\\
 Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
 \section{Besoins organisationnels}
