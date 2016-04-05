@@ -1,66 +1,58 @@
 \chapter{Présentation du projet}
 
-Intro\footnotemark\\
-%note en bas de page
+Le jeu de cartes \textit{Dominion} a été mis à disposition, sur un serveur de jeu, d'octobre 2010 à mars 2013. Les parties effectuées via ce serveur ont été enregistrées dans des \textit{logs} qui mémorisaient toutes les actions des joueurs ; ces \textit{logs} ont été mis à disposition du public. Mais ces enregistrements n'ont pas conservé un certain nombre d'informations ayant trait à des décisions prises par les joueurs.\\
 
-\section{Sujet}
+Un wiki relatif au jeu a été élaboré ; il offre des avis d'experts susceptibles de servir d'aide à la décision pour les joueurs. Il propose des conseils, notamment au niveau stratégique. Le but de ce projet, proposé par Yvan Le Borgne, chercheur au Labri, est de traiter ces \textit{logs} (soit plus de 12 millions de parties) afin de répondre à plusieurs interrogations. Il s'agira principalement de comparer Les données recueillies aux préconisations de ce wiki, afin de valider, à travers les contenus des parties, l'éventuelle efficacité des avis et suggestions fournies par les experts. dans cette optique, on cherchera à élaborer des outils de validation présentant une efficacité suffisante.\\
+ 
+A cet effet, le projet a pour but de créer une base de données recensant les parties ; puis un travail d'analyse sera effectué à partir de cette base de données.
+Pour cela, notre programme devra tout d'abord extraire les données présentes dans les logs, car ceux-ci sont trop volumineux et trop compliqués pour pouvoir les utiliser directement (structure non standardisée). Il s'agira donc, dans un premier temps, de mettre au point des structures de données permettant de les stocker de façon plus efficace. Une manière simple de représenter les données extraites et analysées sera proposée à l'utilisateur.\\
 
-Bla(cf. fig. 1.1)\\
+Par ailleurs, il manque des informations dans les enregistrements (\textit{logs}). On cherchera à trouver par quelle méthode on peut les reconstituer et les mettre dans un format contenant toutes les informations.
+En outre, on cherchera à optimiser les opérations menées dans l'analyse des donnnées, en recherchant le meilleur équilibre possible entre la mémorisation des recherches, et le re-calcul.\\
 
-%inclusion d'une mage dans le document
-\begin{figure}[!h]
-\begin{center}
-%taille de l'image en largeur
-%remplacer "width" par "height" pour régler la hauteur
-\includegraphics[width=15cm]{presentation/schema}
-\end{center}
-%légende de l'image
-\caption{Schéma descriptif}
-\end{figure}
+Enfin, on esssaiera de déterminer quelle stratégie a été utilisée dans chaque partie, voire de faire émerger les changements de stratégie en cours de partie. Si on prend par exemple une des stratégies (la \textit{Penultimate Province Rule}, peut-on détecter à quel moment cette règle a été appliquée ou contournée ? ou qui a mis au point cette stratégie ? (découverte qui pourrait permettre d'organiser un classement des joueurs les plus performants) (une sorte de ELO\footnotemark demandé par le client). Dans la mesure où on parviendrait à mettre au point un nombre suffisant de ces démarches stratégiques, il s'agirait de déterminer le processus habituel d'apprentissage des joueurs.
 
-%Contenu de la note précédemment marquée avec \footnotemark
-\footnotetext{Note bas de page "intro"}
+\footnotetext{le système de prédiction ELO, mis au point par le Pr Arpad Elo est un système mathématique simple qui permet de prédire la probabilité qu'un joueur d'échec, ou une équipe de baseball ou de basket, en gagne un(e) autre}
 
-Bla
-%retour à la ligne (alinea)
+\section{Règles du jeu}
+Chaque joueur possède un deck de cartes et a accès à un <<marché>> où différentes cartes d'action sont disponibles. Il y a également une pile de "cartes bonus" (en anglais \textit{victory cards}).\\
 
-Bla\\
-%saut de paragraphe
+Les joueurs commencent avec un deck contenant uniquement des cartes de monnaie permettant d'acheter les autres cartes mises à la disposition des joueurs. Les joueurs commencent leur tour avec 5 cartes en main, et le tour d'un joueur se déroule en deux phase : premièrement, la phase d'action, où le joueur peut jouer une carte d'action ; puis une phase d'achat, où le joueur peut acheter des cartes du marché, des cartes de monnaie ou des "cartes bonus".\\
 
-Bla
+La partie se termine dans deux cas : si la réserve de cartes <<Province>> (carte de victoire au score le plus élevé) est vide ; ou bien si 3 piles du marché sont vides. Quand la partie est terminée, les points bonus (découlant des "cartes bonus") de chaque deck sont comptés et le vainqueur est celui qui a le meilleur score.
 
-\newpage
+\section{Introduction au datamining}
+Avec l'augmentation des capacités de stockage des supports informatiques, et le recueil généralisé de données dans le cadre du commerce et de l'entreprise, la question de leur exploitation se pose et est résolue par le \textit{data mining}.
+Il s'agit de découvrir dans de grandes masses de données d'apparence chaotique des structures et des corrélations non perceptibles à première vue. Le \textit{data mining} permet de faire surgir des tendances non encore discernables, et des phénomènes qui ne sont pas encore perceptibles pour fonder des stratégies décisionnelles. Comportement d'achat, caractéristiques de produits, création de l'histoire des productions, etc... sont les domaines principaux d'application du \textit{data mining}.
 
-\section{Problématique soulevée}
+Il existe deux types de \textit{data mining}; une forme de vérification, qui permet de valider une intuition ou une idée générale en exploitant les données disponibles de confirmer une idée préalable ; cette approche est plus limitée que celle de la variante de découverte, qui permet de déccouvrir de l'information cachée, impossible à découvrir par un analyste humain, tant la quantité des données à exploiter est importante. 
 
-Bla
-
-\begin{center}
-Problématique du sujet
-\end{center}
-
-\section{Hypothèse de solution}
-
-%Quoi :
-Bla\\
-
-Voici une liste :
+Une démarche de \textit{data mining} s'organise selon 5 grandes étapes : 
 \begin{itemize}
-\item item 1;
-\item item 2;
-\item item 3;
-\item item 4.
+\item la définition du problème, qui consiste à cibler les besoins auxquels il faut répondre
+\item la collecte des données, lesquelles devront être "nettoyées" pour les rendre exploitables ; cette phase est essentielle pour obtenir des résultats exploitables ; elle doit être effectuée avec le plus grand soin, et fournir une quantité suffisante de données consolidées
+\item la construction du modèle d'analyse testé pour vérifier sa pertinence et modifier si besoin les deux premiers points
+\item l'étude des résultats, en corrigeant là aussi les étapes précédentes si les résultats ne sont pas satisfaisants
+\item la formalisation et la diffusion, laquelle fait des résultats une connaissance partagée, et justifie de ce fait le soin qu'on a apporté aux étapes précédentes. 
+
 \end{itemize}
 
-Bla\\
+On n'oubliera cependant pas que les corrélations ne veulent pas nécessairement dire causalités, et que le \textit{data mining} doit être exploité prudemment pour ne pas faire des déductions inappropriées. 
 
-%Comment :
-Bla
 
-Bla\footnotemark\\
 
-%Detail :
-Bla(cf. ref. \cite{cite6}).
-%citation référencé dans le document "bibliographie.bib" inclus à la fin du document
+\section{Positionnement du projet}
+Le projet proposé concerne les phases de consolidation des données fournies pour les rendre exploitables, et de construction d'un modèle d'analyse qui serait testé pour valider la pertinence de son approche et revenir le cas échéant sur la phase précédente. 
+En effet, le sujet tel qu'il a été proposé signalait notamment qu'un certain nombre de données n'avait pas été enregistrées, et qu'il fallait donc les reconstituer, et créer un format valide pour l'ensemble. Par ailleurs, on devait également vérifier les modalités d'apprentissage des joueurs, et leur classement compétitif relatif. 
+Il se situe dans le cadre d'une analyse de vérification, puisqu'il s'agit de valider les affirmations du wiki qui prétend fournir des stratégies pour les joueurs. 
 
-\footnotetext{Note bas de page "bla"}
+
+
+
+
+
+
+
+
+
+

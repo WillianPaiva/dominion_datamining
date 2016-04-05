@@ -1,55 +1,150 @@
 \chapter{Résultats}
 
-\section{Partie 1}
+L'ensemble des activités menées durant les quatre mois de la durée du projet ont permis d'obtenir un certain nombre de résultats. Il s'agissait d'un projet complexe, offrant à la fois un volume considérable de données à traiter, et des données de structure irrégulière. 
 
-Intro
+\section{Parser}
+A l'heure actuelle, les derniers tests réalisés avec le parser lancé dans les serveurs de calcul du CREMI ont montré que le programme a réussi à parser 11742348 \textit{Logs} sur une quantité originelle de un peu plus de 12 millions. 
 
-\subsection{Sous-partie 1}
 
-\paragraph*{Paragraphe 1 (n'apparaitra pas dans l'index)} Bla
+\section{Bibliothèques}
+Les figures suivantes montrent des exemples de possibilités d'utilisation fournies par la bibliothèque.  
 
-\paragraph*{Paragraphe 2} Bla
 
-\paragraph*{Paragraphe 3} Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}12}]:} \PY{k+kn}{from} \PY{n+nn}{DominionAnalyser}\PY{n+nn}{.}\PY{n+nn}{Analysers} \PY{k}{import} \PY{n}{Tools}
+  \PY{k+kn}{from} \PY{n+nn}{DominionAnalyser}\PY{n+nn}{.}\PY{n+nn}{Mongo} \PY{k}{import} \PY{n}{MongoInterface}
+  \PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{plotly} \PY{k}{as} \PY{n+nn}{py}
+  \PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{graph\PYZus{}objs} \PY{k}{as} \PY{n+nn}{go}
+\end{Verbatim}
 
-\subsection{Sous-partie 2}
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}2}]:} \PY{n}{Tools}\PY{o}{.}\PY{n}{generate\PYZus{}player\PYZus{}table}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
 
-Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  0\%                                                                  100\%
+  [\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#] | ETA: 00:00:00 | Item ID: 5703e6522336eb5ea0c69850
+  Total time elapsed: 00:05:51
+\end{Verbatim}
 
-\subsection{Sous-partie 3}
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}3}]:} \PY{n}{Tools}\PY{o}{.}\PY{n}{generate\PYZus{}elo}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
 
-Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  0\%                                                                  100\%
+  [\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#] | ETA: 00:00:00 | Item ID: 5703e5d82336eb5ea0c66304
+  Total time elapsed: 00:15:16
+\end{Verbatim}
 
-\section{Partie 2}
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{MongoInterface}\PY{o}{.}\PY{n}{logs\PYZus{}col}\PY{o}{.}\PY{n}{find\PYZus{}one}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{winners}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
 
-Intro
+\begin{Verbatim}[commandchars=\\\{\}]
+  ['searsjs']
+\end{Verbatim}
 
-\subsection*{Sous-partie 1 ('apparaitra pas dans l'index)} Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}6}]:} \PY{n}{playerCurve} \PY{o}{=} \PY{n}{Tools}\PY{o}{.}\PY{n}{generate\PYZus{}player\PYZus{}elo\PYZus{}curve}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{searsjs}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
 
-\paragraph*{Paragraphe 1 ('apparaitra pas dans l'index)} Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  0\%                                              100\%
+  [\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#] | ETA: 00:00:00 | Item ID: 5703e4ff2336eb5ea0c5dd9f
+  Total time elapsed: 00:00:00
+\end{Verbatim}
 
-\paragraph*{Paragraphe 2} Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}10}]:} \PY{n}{index} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{playerCurve}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
 
-\paragraph*{Paragraphe 3} Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}13}]:} \PY{n}{trace0} \PY{o}{=} \PY{n}{go}\PY{o}{.}\PY{n}{Scatter}\PY{p}{(}
+  \PY{n}{x} \PY{o}{=} \PY{n}{index}\PY{p}{,}
+  \PY{n}{y} \PY{o}{=} \PY{n}{playerCurve}\PY{p}{,}
+  \PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{searsjs elo curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+  \PY{n}{line} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}
+  \PY{n}{color} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rgb(205, 12, 24)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{n}{width} \PY{o}{=} \PY{l+m+mi}{4}\PY{p}{)}
+  \PY{p}{)}
+\end{Verbatim}
 
-\newpage
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}14}]:} \PY{n}{data} \PY{o}{=} \PY{p}{[}\PY{n}{trace0}\PY{p}{]}
+\end{Verbatim}
 
-\subsection*{Sous-partie 2}
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}15}]:} \PY{n}{layout} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{elo curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+  \PY{n}{xaxis} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{matchs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{n}{yaxis} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{elo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{p}{)}
+\end{Verbatim}
 
-Bla
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}17}]:} \PY{n}{py}\PY{o}{.}\PY{n}{sign\PYZus{}in}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{******}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*****}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{fig} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{data}\PY{p}{,} \PY{n}{layout}\PY{o}{=}\PY{n}{layout}\PY{p}{)}
+  \PY{n}{py}\PY{o}{.}\PY{n}{iplot}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{styled\PYZhy{}line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
 
-%galerie d'image
-\begin{figure}[htp]
-  \centering
-  \subfloat[Première image]{\label{fig:première}\includegraphics[scale=0.8]{resultats/gallerie}}
-  ~ %espace entre deux images sur une même ligne
-  \subfloat[Deuxième image]{\label{fig:deuxième}\includegraphics[scale=0.8]{resultats/gallerie}}
-  ~
-  \subfloat[Troisième image]{\label{fig:troisième}\includegraphics[scale=0.8]{resultats/gallerie}}
-  ~\\ %saute une ligne dans la galerie d'image
-  \subfloat[Quatrième image]{\label{fig:quatrième}\includegraphics[scale=0.8]{resultats/gallerie}}
-  ~
-  \subfloat[Cinquième image]{\label{fig:cinquième}\includegraphics[scale=0.8]{resultats/gallerie}}
-  \caption{Différents screenshots quelque chose, en gallerie}
-  \label{fig:gallerie1}
-\end{figure}
+\begin{Verbatim}[commandchars=\\\{\}]
+  High five! You successfuly sent some data to your account on plotly. View your plot in your browser at https://plot.ly/\textasciitilde{}WillianPaiva/0 or inside your plot.ly account where it is named 'styled-line'
+\end{Verbatim}
+
+% \begin{Verbatim}[commandchars=\\\{\}]
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{p2}\\
+% \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}18}]:} \PY{n}{greening} \PY{o}{=} \PY{n}{Tools}\PY{o}{.}\PY{n}{generate\PYZus{}greening\PYZus{}list}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  0\%                                                                  100\%
+  [\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#] | ETA: 00:00:00 | Item ID: 5703e6522336eb5ea0c69850
+  Total time elapsed: 00:02:26
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor}25}]:} \PY{n}{index} \PY{o}{=}\PY{p}{[}\PY{p}{]}
+  \PY{n}{value} \PY{o}{=}\PY{p}{[}\PY{p}{]}
+  \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{greening}\PY{p}{)}\PY{p}{:}
+  \PY{n}{index}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{k}\PY{p}{)}
+  \PY{n}{value}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{greening}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
+
+
+  \PY{n}{trace0} \PY{o}{=} \PY{n}{go}\PY{o}{.}\PY{n}{Scatter}\PY{p}{(}
+  \PY{n}{x} \PY{o}{=} \PY{n}{index}\PY{p}{,}
+  \PY{n}{y} \PY{o}{=} \PY{n}{value}\PY{p}{,}
+  \PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{greening curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+  \PY{n}{line} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}
+  \PY{n}{color} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rgb(205, 12, 24)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{n}{width} \PY{o}{=} \PY{l+m+mi}{4}\PY{p}{)}
+  \PY{p}{)}
+
+  \PY{n}{data} \PY{o}{=} \PY{p}{[}\PY{n}{trace0}\PY{p}{]}
+
+  \PY{n}{layout} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{greening curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+  \PY{n}{xaxis} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{turn}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{n}{yaxis} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pertinence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+  \PY{p}{)}
+  \PY{n}{py}\PY{o}{.}\PY{n}{sign\PYZus{}in}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*******}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{********}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{fig} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{data}\PY{p}{,} \PY{n}{layout}\PY{o}{=}\PY{n}{layout}\PY{p}{)}
+  \PY{n}{py}\PY{o}{.}\PY{n}{iplot}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{styled\PYZhy{}line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  High five! You successfuly sent some data to your account on plotly. View your plot in your browser at https://plot.ly/\textasciitilde{}WillianPaiva/0 or inside your plot.ly account where it is named 'styled-line'
+\end{Verbatim}
+
+% \begin{Verbatim}[commandchars=\\\{\}]
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{p4}\\
+% \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor} }]:}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  {\color{incolor}In [{\color{incolor} }]:}
+\end{Verbatim}
