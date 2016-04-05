@@ -16,8 +16,8 @@ La dernière partie correspond à une librairie python permettant à l'utilisate
 
 \section{Partie parser}
 Cette partie est écrite en java, l'autre possibilité que nous avions était de coder le parser en python mais après quelques petits tests nous nous sommes rendus compte que le parser en python serait beaucoup trop lent. Voici l'architecture de la partie Java de notre projet:
-%TODO: ajouter une image de l'architecture java
-%\includegraphics{}
+
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/nouvelleArch}\\
 
 En raison de logs au format variable, il est nécessaire de produire plusieurs versions de parser afin de garder une robustesse au niveau du parsing et d'éviter une classe trop grosse. Pour cela, à l'ouverture d'un log, le LogHandler demande la création d'un parser à une classe utilisant le design pattern factory. Cette classe va examiner le log en question et choisir la bonne version du parser a utiliser puis renvoyer ce parser au log handler. Afin d'éviter des duplications de code inutiles, le parser en lui même est implémenté à l'aide d'une classe abstraite regroupant toutes les similitudes entre les parsers puis les différences sont implémentées dans la classe du parser en question à proprement parler. Le LogHandler va ensuite envoyer sur une base de données les données obtenues à l'aide du parser.
 
@@ -27,10 +27,11 @@ Elle est capable de recevoir de nouvelles données à stocker, de modifier sa st
 
 \section{Partie Analyse}
 Cette partie est écrite en python à la demande du client. Nous avons choisi de proposer plusieurs librairies contenant des outils basiques permettant de travailler sur les données acquises lors du parsing. Voici un schéma regroupant les différentes librairies et leurs liens:
-%TODO: ajouter une image de l'architecture python
-%\includegraphics{}
+
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/Python_arch}\\
+
 Tout d'abord, le module MongoInterface permet de communiquer avec la base de données.\newline
-Les objets Matchs et Player sont utilisés lors de la récupération de données afin de le mettre en forme pour une utilisation plus aisée par le client. Ce sont des structures de données regroupant toutes les information relatives au match ou joueur en question.\newline
+Les objets Matchs et Player sont utilisés lors de la récupération de données afin de les mettre en forme pour une utilisation plus aisée par le client. Ce sont des structures de données regroupant toutes les information relatives au match ou joueur en question.\newline
 La bilbiothèque Tools regroupe les fonctions d'analyse basique pouvant être utilisées sur les logs, pour appliquer ces fonctions, il faut utiliser la fonction \textit{apply\_function\_to\_query}. Si dans le futur, le client ou bien des personnes souhaitant travailler sur ce projet veulent étoffer les fonctions proposées, il suffira de les ajouter dans cette libraire.\newline
 La solution proposée pour afficher les resultats consiste en un module Plotter et un module DataSet. Le module DataSet permet de mettre en forme les données à représenter de manière simple pour l'utilisateur, et le module Plotter propose une solution simple pour afficher des résultats de base (lignes cassées, nuage de points ou barres).
 
