@@ -19,7 +19,21 @@ Ensuite nous avons pris chaque donnée de la structure et avons validé qu'elle 
 
 \subsection{Tests unitaires}
 
+Les tests proposes pour la validation du module Java sont faites avec des logs réeeles et sans aucune altération.\\
+On a disposé de six logs, deux représentafs de chaque type de version. \\
 
+Dans la class LogReaderFactoryTest, on voulait tester la lecture du log, la creation du object LogReader qui instance la version correspondant et la construction du object Document complet avec tous les donnéées du log pour envoyer au base de données. \\
+
+Dans les class LogReaderV1HeaderTest, LogReaderV2HeaderTest et LogReaderV3HeaderTest, on rendre en le détail du object Document, et on analyse que les attributes Date, name, Winners, Cards Gonne, cards Market et cards Trash soient corrects en nom, nombre et quantite a ce-lui qui on trouve dans les logs. \\
+
+Dans la class LogReaderPlayerTest on valide les données propres du joueur, pour les test on utilise trois log, un de chaque version et pendant les preuves on prend un joueur different au hasard de chaque log. On verifie que le nombre de joueur du object corresponde ou nombre du log, les noms des joueur, les nombre points et les nombre de turns. \\
+Pour les données de Cards Victory, cards Deck, Cards FirstHand et Cards Opening on valide nombre, nom et quantite. \\
+
+Finalement la class PlayerTest qui verifie la conection avec la base de donnée et la pas duplication de Joueurs avec le même nom.
+
+\includegraphics[scale=0.35,keepaspectratio]{./unit_tests_jave}
+
+Avec un total de 51 test executées, avec aucun erreur ou échec.
 
 \subsection{Tests de couverture}
 Voici les resultats obtenus lors des tests de couverture de la partie Parser du projet:
