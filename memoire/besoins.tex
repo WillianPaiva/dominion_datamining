@@ -122,24 +122,24 @@ Un aperçu des données devant être reconnues par le parser est représenté da
 \includegraphics[scale=0.35,keepaspectratio]{diaRessources/UseCaseParser}
 
 \begin{itemize}
-\item Winners: liste des gagnants du jeu, il peut y avoir plusieurs gagnants en cas d'égalité.
-\item Market: liste des 10 cartes disponibles pour être acheté par les joueurs.
+\item Winners: liste des gagnants du jeu ; il peut y avoir plusieurs gagnants en cas d'égalité.
+\item Market: liste des 10 cartes disponibles pour être achetées par les joueurs.
 \item Cards Gone: liste des cartes qui ont été entièrement acquises à la fin de la partie.
-\item First hand: liste des cartes obtenues au début de partie.%à voir
-\item Player Name: Nom du joueur.
+\item First hand: liste des cartes obtenues au début de la partie.%à voir
+\item Player Name: nom du joueur.
 \item Victory points: nombre de points à la fin de la partie.
 \item Player cards: liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
 \item Victory cards: liste des cartes de victoire le joueur avec le acheté.
 \item Trash: liste des cartes qui sont jetés à la fin de la partie.
 \item Game Moves: liste des actions effectuées pendant chaque tour d'un joueur.
 \end{itemize}
-Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme de parsing\\
+Lorsque l'utilisateur exécute le parser, celui-ci va identifier les types d'informations concernant chacun des éléments représentés dans le graphique précédent, les trier, et les charger dans une structure de données du type "document", puis alimenter la base de données avec le document. \\
 
 \subsubsection{Créer le game-log}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
-Cette fonctionnalité est la création d'une structure de données où les données du log seront écrites.
-Voici une représentation graphique d'une vue d'ensemble de la structure de données:\\
+Cette fonctionnalité consiste à créer une structure de données dans laquelle les données du \textit{Log} seront chargées.
+La figure suivante est la représentation graphique d'une vue d'ensemble de la structure des données:\\
 \includegraphics[scale=0.5,keepaspectratio]{diaRessources/game-log}
 
 \subsubsection{Créer une base de données orientée document }
