@@ -5,7 +5,39 @@ Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans l
 
 
 \section{Besoins fonctionnels} 
-Les besoins fonctionnels sont ceux qui permettent de remplir les conditions du cahier des charges ; ils sont incontournables. Il s'agit donc ici de voir comment on va répondre à la demande formulée à l'origine du projet. 
+Les besoins fonctionnels sont ceux qui permettent de remplir les conditions du cahier des charges ; ils sont incontournables. Il s'agit donc ici de voir comment on va répondre à la demande formulée à l'origine du projet.
+
+\section{Interface utilisateur}
+L'interface utilisateur se compose de deux bilibliothèques qui permettront à l'utilisateur d'exploiter les données récupérées par le parser. L'utilisateur pourra appeler les fonctions proposées par le programme ou bien écrire ses propres fonctions et les appliquer aux données.
+
+\subsection{Se connecter à la base de données orientée documents}
+
+\paragraph*{Description et piorité}
+
+\textbf{Niveau de priorité = haute}
+
+Cette librairie offrera des fonctions simples d'accès en lecture/écriture sur la base de données, de ce fait cette librairie pourra:
+\begin{itemize}
+\item récupérer un log ou les informations générales d'un joueur
+\item mettre à jour les données relatives à un log ou aux informations générales d'un joueur
+\item créer de nouvelles données issues des analyses effectuées
+\end{itemize}
+
+\subsection{Outils d'analyse}
+
+\paragraph*{Description et piorité}
+
+\textbf{Niveau de priorité = haute}
+
+Une seconde librairie proposera une solution à l'utilisateur pour effectuer des analyses prédéfinies sur les données récupérées ainsi qu'un moyen d'appliquer de manière générale une analyse créée par l'utilisateur. Cette librairie pourra donc:
+\begin{itemize}
+\item appliquer une fonction spécifiée par l'utilisateur aux logs récupérés par une requète de l'utilisateur. La fonction spécifiée recevra un log et pourra travailler sur le log en question
+\item générer l'ELO de chaque joueur pour chaque partie ainsi qu'un elo global de chaque joueur
+\item détecter les différentes stratégies utilisées par les joueurs lors d'une partie ou de l'ensemble des parties
+\item repérer quand le \textit{greening} survient
+\end{itemize}
+
+Les informations relatives au stratégies et au \textit{greening} seront couvertes un peu plus tard dans le rapport.
 \iffalse
 \section{Interface utilisateur}
 %TODO: retravailler cette portion
@@ -86,7 +118,7 @@ La première démarche consistait à modéliser les données disponibles pour cr
 
 
 Compte tenu des problèmes mis en évidence en analysant un échantillon de \textit{Logs} (comme par exemple des incohérences de syntaxe), l'utilisation d'un parser (comme \textit{YACC} et \textit{LEX}) n'est pas recommandée. C'est pour cette raison que l'on va créer un parser qui utilisera les mots-clés et l'HTML déjà présents dans les \textit{Logs}. Ce parser sera responsable de la lecture et de la collecte des informations importantes sans perdre la structure du \textit{Log}.
-Un aperçu des data devant être reconnues par le parser est représenté dans l'illustration suivante :\\
+Un aperçu des données devant être reconnues par le parser est représenté dans l'illustration suivante :\\
 
 \includegraphics[scale=0.35,keepaspectratio]{diaRessources/UseCaseParser}
 
@@ -104,7 +136,7 @@ Un aperçu des data devant être reconnues par le parser est représenté dans l
 \end{itemize}
 Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme de parsing\\
 
-\subsubsection{Créer game-log}
+\subsubsection{Créer le game-log}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 Cette fonctionnalité est la création d'une structure de données où les données du log seront écrites.
@@ -115,7 +147,7 @@ Voici une représentation graphique d'une vue d'ensemble de la structure de donn
 
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
-Ce module sera responsable pour créer la base de données orientée document, contenant des données au format JSON.
+Ce module sera responsable de la création de la base de données orientée document, contenant des données au format JSON.
 \subsubsection{Se connecter à la base de données orientée document }
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
@@ -132,11 +164,11 @@ Ce module sera responsable pour créer la base de données orientée document, c
 \textbf{Niveau de priorité = moyen}\\
 
 La base de données orientée document contiendra la plupart des données et un certain niveau de compression devra être appliquée.
-La base de données que nous allons utiliser est focalisé sur mongodb, et il offre 2 niveaux de compression \textit{Zlib} et \textit{Snappy}.
+La base de données que nous allons utiliser est focalisée sur mongodb, et elle offre 2 niveaux de compression \textit{Zlib} et \textit{Snappy}.
 Au cours du développement \textit{Snappy} est utilisé car il offre une meilleure performance.
 Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du log.
 
-\subsubsection{Sauvegarder game-log}
+\subsubsection{Sauvegarder le game-log}
 
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
@@ -154,10 +186,10 @@ Mais le programme final devrait donner à l'utilisateur la possibilité de chois
 \item L'analyseur de données va convertir les résultats de la requête dans un format utilisable par le module de plotting.
 \item Si les données sont simples à lire (par exemple: un numéro, un nom, une phrase), l'analyseur de données sera tout simplement envoyer le résultat au format texte.
 \item La dernière requête sera mémorisée avec son résultat afin de gagner du temps si la prochaine requête faite par l'utilisateur est le même.
-\item Si l'utilisateur souhaite appliquer un script python de logs de jeu, le programme demandera les logs de jeu et les mettre dans un fichier texte, ce fichier contiendra chaque action faite par chaque joueur et le script sera appliqué à ce fichier.
+\item Si l'utilisateur souhaite appliquer une fonction aux logs de jeu, le programme demandera les logs de jeu et appliquera la fonction a chaque log
 \end{itemize}
 
-\subsubsection{restorer game-log}
+\subsubsection{restorer le game-log}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
@@ -171,20 +203,21 @@ En cas d'un en-tête du jeu manquant ou partie manquante:
 \item Cartes de joueur: le programme permet de garder une trace des actions effectuées au cours du jeu par rapport aux cartes de joueurs et les ajouter dans cette liste.
   \end{itemize}
 
+\iffalse
 \subsubsection{Plotting}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
 Le module de plotting va obtenir les données converties obtenues après le processus de recueillir des données et de les tracer dans une interface graphique. Ce module va fonctionner d'une manière similaire de \textit{GnuPlot}.
+\fi
 
 \subsubsection{Calculer l'\textit{\textbf{ELO}}}
 %TODO
-\subsubsection{Plotting}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
-L'analyseur devra calculer la finale ELO pour chaque joueur et ce qui était un joueur ELO sur un jeu donné.
-Pour chaque jeu dans l'ordre chronologique, ce module va demander au elo initiale des joueurs de la base de données relationnelle et les gagnants du jeu, puis il va calculer la nouvelle elo de chaque joueur de l'issue du jeu. Le module sera ensuite définir le elo calculés dans la base de données orientée documents au jeu en cours d'analyse et mettra également à jour l'elo globale pour chacun des joueurs qui participent au jeu sur la base de données relationnelle.\\
+L'analyseur devra calculer l'ELO final de chaque joueur ainsi que son ELO temporaire à l'issue d'une partie.\newline
+pour chaque partie dans l'ordre chronologique, l'analyseur demandera l'ELO initial de ce joueur grace aux données générales du joueur. L'analyseur va ensuite calculer l'ELO de chaque joueur à l'issue de cette partie et les ajouter aux données relatives au log en question et va également mettre à jour l'ELO général des joueurs concernés dans leurs données générales afin de pouvoir continuer à calculer leur évolution.
 
 Plus d'informations sur ELO peuvent être consultés sur \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
 \iffalse
@@ -207,10 +240,10 @@ Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strate
 \textbf{Cette image décrit le processus de décision associé à la stratégie Big Money}\\
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/big-money}\\
 %The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
-Et l'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
+L'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
 Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
-Afin de reconnaître la stratégie inventé Beyond Silver, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver}\\
+Afin de reconnaître la stratégie Beyond Silver ou Big Money, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver} et \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
 
 Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqué à \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), l’analyseur doit garder une trace de la quantité de Points de Victoire de chaque joueur à chaque tour.
 
@@ -220,7 +253,7 @@ Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqu�
 
 L'analyseur doit être capable de reconnaître le moment de \textit{\textbf{greening}} sur chaque match.
 En savoir plus à propos de \textit{\textbf{greening}} sur \url{http://wiki.dominionstrategy.com/index.php/Greening}.\\
-Le programme va reconnaître quand greening arrive en détectant lorsque les cartes de victoire commencent à être achetées.
+Le programme va reconnaître quand le greening commence en détectant lorsque les cartes de victoire commencent à être achetées.
 
 \newpage
 
@@ -229,17 +262,17 @@ Le programme va reconnaître quand greening arrive en détectant lorsque les car
 \subsection{Besoins de performance}
 
 Aucun besoin de performance spécifique n’a été fait par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
-L'utilisateur doit être capable de parcourir le processus d'analyse sur un ensemble de données précis sans devoir attendre que la même requête à refaire.
+L'utilisateur doit être capable de parcourir le processus d'analyse sur un ensemble de données précis sans devoir attendre que la même requête soir refaite.
 
 \subsection{Fiabilité}
-
-Le client demande que le nombre maximum de log doivent être analysé, que les données fournies ont des incohérences et quelques logs ne seront pas possibles d'analyser.\\
-L'analyseur devra analyser 100\% des données présentes sur le log et restaure toute information manquante si possible.\\
+Le client demande qu'un maximum de logs soient récupérés, la totalité des logs ne pourra pas être parsé mais une marge de 5 à 10\% de logs peut être ignorée.\newline
+En revanche lorsque un log est parsé, le programme devra récuperer 100\% des données présentes de celui-ci et si possible restaurer les informations non présentes dans le log de départ.
 \subsection{Attributs de qualité de logiciels}
 
-Même si seulement une ligne de commande est prévue pour le programme final, elle devrait avoir une courbe facile à apprendre et être facile à utiliser.\\
+Le programme devra pouvoir lancer la phase initiale de parsing en une seule ligne de commande.\\
+Les fonctions présentes dans la librairie à l'attention de l'utilisateur devront avoir un nom clair et facile à comprendre.\\
 Les données générées par l'analyseur n’ont pas besoin à être lisibles par l'homme.\\
-Les game log générés devront être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
+Les game log générés devront pouvoir être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
 \section{Besoins organisationnels}
 
@@ -254,7 +287,7 @@ La répartition des tâches du projet et l'estimation de la durée de chacune d'
 \includegraphics[scale=0.45,keepaspectratio]{gantt}\\
 
 \newpage
-
+\iffalse
 \section{Développement}
 
 Intro
@@ -312,3 +345,4 @@ Bla\\
 \end{center}
 \caption{Tableau récapitulatif des tests}
 \end{figure}
+\fi
