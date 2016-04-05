@@ -1,44 +1,293 @@
 \chapter{Analyse des besoins}
 
-Intro
 
-\section{Besoins fonctionnels}
+Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans le cas de tout projet d'ailleurs, la définition des besoins est une étape cruciale du démarrage de l'activité. On va donc évoquer tout d'abord les besoins fonctionnels, puis les besoins non-fonctionnels.
 
-Après une analyse des besoins fonctionnels du projet, nous avons défini deux sous catégories. D'un côté, les besoins [...], de l'autre, les besoins [...].
 
-\subsection{Sous-partie 1}
+\section{Besoins fonctionnels} 
+Les besoins fonctionnels sont ceux qui permettent de remplir les conditions du cahier des charges ; ils sont incontournables. Il s'agit donc ici de voir comment on va répondre à la demande formulée à l'origine du projet.
 
-Bla
+\section{Interface utilisateur}
+L'interface utilisateur se compose de deux bilibliothèques qui permettront à l'utilisateur d'exploiter les données récupérées par le parser. L'utilisateur pourra appeler les fonctions proposées par le programme ou bien écrire ses propres fonctions et les appliquer aux données.
 
-\subsection{Sous-partie 2}
+\subsection{Se connecter à la base de données orientée documents}
 
-Bla
+\paragraph*{Description et piorité}
+
+\textbf{Niveau de priorité = haute}
+
+Cette librairie offrera des fonctions simples d'accès en lecture/écriture sur la base de données, de ce fait cette librairie pourra:
+\begin{itemize}
+\item récupérer un log ou les informations générales d'un joueur
+\item mettre à jour les données relatives à un log ou aux informations générales d'un joueur
+\item créer de nouvelles données issues des analyses effectuées
+\end{itemize}
+
+\subsection{Outils d'analyse}
+
+\paragraph*{Description et piorité}
+
+\textbf{Niveau de priorité = haute}
+
+Une seconde librairie proposera une solution à l'utilisateur pour effectuer des analyses prédéfinies sur les données récupérées ainsi qu'un moyen d'appliquer de manière générale une analyse créée par l'utilisateur. Cette librairie pourra donc:
+\begin{itemize}
+\item appliquer une fonction spécifiée par l'utilisateur aux logs récupérés par une requète de l'utilisateur. La fonction spécifiée recevra un log et pourra travailler sur le log en question
+\item générer l'ELO de chaque joueur pour chaque partie ainsi qu'un elo global de chaque joueur
+\item détecter les différentes stratégies utilisées par les joueurs lors d'une partie ou de l'ensemble des parties
+\item repérer quand le \textit{greening} survient
+\end{itemize}
+
+Les informations relatives au stratégies et au \textit{greening} seront couvertes un peu plus tard dans le rapport.
+\iffalse
+\section{Interface utilisateur}
+%TODO: retravailler cette portion
+L'interface utilisateur du programme sera composée d'un exécutable (\textit{dominionmining}minière de domination) qui sera exécuté avec certains paramètres pour réaliser l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
+
+\includegraphics[scale=0.45,keepaspectratio]{diaRessources/UseCaseParsing}\\
+Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
+\subsection{Lancement de l'analyse du log}
+\subsubsection{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+\begin{itemize}
+  \item L'utilisateur devra placer tous les logs compressés (fichiers tar.bz2) destinés à  être analysées dans un dossier spécifique.
+  \item si aucune compression n'est donnée la compression par défaut est \textit{snappy}.
+    \item Pour des fins de test, afin d'éviter d'avoir un 4 heures étape d'analyse, l'utilisateur peut spécifier un pourcentage des logs pour être analysée. en spécifiant une valeur comprise entre 0 et 100. l'analyseur choisira au hasard les logs de ceux qui sont prévus et les analyser, en créant une base de données utilisable pour des tests supplémentaires.
+    \item Une fois que l'analyse est effectuée un message sera affiché sur la console (traitement de fait).
+
+\end{itemize}
+
+\subsection{Statistiques demandées}
+\subsubsection{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+La demande d'une statistique peut être faite en tapant les états de \textit{dominionmining (paramètres)}.  \\
+Les noms de stratégie possibles sont: big money, pen province, beyond silver.\\
+Si d'autres stratégies sont reconnues par le programme, ils seront ajoutés à la liste.\\
+La liste des paramètres qui seront possible d'utiliser sera déterminée dans le futur.\\
+
+Le retour d'une statistique peut être un graphique affiché dans une fenêtre ou exportés vers un fichier. Si sa une valeur unique, un nom ou une phrase, il sera retourné à l'invite.
+
+\subsection{Mappage des données de jeu}
+
+Afin de permettre à l'utilisateur de demander des statistiques spécifiques concernant un jeu, le programme peut être exécuté afin de générer des logs de jeu simplifiées et un script python sera appliqué à ce log. Cela permettrait une plus grande flexibilité dans le type de statistiques affichables par le programme.
+\begin{itemize}
+\item Le programme sera lancé en utilisant la commande suivante: \textit{dominionmining data\_to\_query user\_script.py}
+ \item Le script python sera appliquée au résultat généré et retourner les statistiques demandées par l'utilisateur.
+\item Le fichier généré contenant les résultats de la requête aura le format suivant:
+\begin{itemize}
+\item Le nom du fichier produit est \textit{game.txt}
+\item Le log simplifié contiendra chaque action effectuée par le joueur, une action par ligne. Liste des actions et leur format:
+\begin{itemize}
+\item Révéler une carte: \textit{joueur\_x révèle carte\_nom}
+\item Piocher des cartes: \textit{joueur\_x jete n cartes}
+\item Acheter une carte: \textit{joueur\_x buys carte\_name}
+\item Jeter des cartes: \textit{joueur\_x trashes n cartes}
+\item Mettre une carte \textit{joueur\_x puts carte\_name}
+\item Gagner une carte: \textit{joueur\_x gains carte\_name}
+\item Jouer une carte: \textit{joueur\_x jouer une carte\_name}
+
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\fi
+\subsection{Modélisation des données}
+La première démarche consistait à modéliser les données disponibles pour créer une cohérence entre tous les formats existants. Il fallait commencer par décompresser les données, même si, comme on l'a vu, cela ne pouvait être fait que par "tranches" de temps (journées de \textit{Logs}) à cause des ressources mémoire disponibles. 
+
+\subsubsection{Décompression des logs}
+\paragraph*{Description et priorité} 
+
+
+
+\textbf{Niveau de priorité = haute}
+
+
+
+\begin{itemize}
+  \item Les fichiers tar.bz2 seront stockés dans un dossier.
+  \item Le programme va  décompresser un fichier spécifié à partir de ce dossier dans un dossier temporaire.
+  \item Le programme va  supprimer les \textit{Logs} décompressés  à la demande du parser.
+\end{itemize}
+
+\subsubsection{Parser}
+
+\paragraph*{Description et priorité} 
+
+
+
+\textbf{Niveau de priorité = haute}
+
+
+
+Compte tenu des problèmes mis en évidence en analysant un échantillon de \textit{Logs} (comme par exemple des incohérences de syntaxe), l'utilisation d'un parser (comme \textit{YACC} et \textit{LEX}) n'est pas recommandée. C'est pour cette raison que l'on va créer un parser qui utilisera les mots-clés et l'HTML déjà présents dans les \textit{Logs}. Ce parser sera responsable de la lecture et de la collecte des informations importantes sans perdre la structure du \textit{Log}.
+Un aperçu des données devant être reconnues par le parser est représenté dans l'illustration suivante :\\
+
+\includegraphics[scale=0.35,keepaspectratio]{diaRessources/UseCaseParser}
+
+\begin{itemize}
+\item Winners: liste des gagnants du jeu, il peut y avoir plusieurs gagnants en cas d'égalité.
+\item Market: liste des 10 cartes disponibles pour être acheté par les joueurs.
+\item Cards Gone: liste des cartes qui ont été entièrement acquises à la fin de la partie.
+\item First hand: liste des cartes obtenues au début de partie.%à voir
+\item Player Name: Nom du joueur.
+\item Victory points: nombre de points à la fin de la partie.
+\item Player cards: liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
+\item Victory cards: liste des cartes de victoire le joueur avec le acheté.
+\item Trash: liste des cartes qui sont jetés à la fin de la partie.
+\item Game Moves: liste des actions effectuées pendant chaque tour d'un joueur.
+\end{itemize}
+Le parser doit lire chaque élément montré dans le graphique précédent en tant que partie des données lorsque l'utilisateur exécute le programme de parsing\\
+
+\subsubsection{Créer le game-log}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+Cette fonctionnalité est la création d'une structure de données où les données du log seront écrites.
+Voici une représentation graphique d'une vue d'ensemble de la structure de données:\\
+\includegraphics[scale=0.5,keepaspectratio]{diaRessources/game-log}
+
+\subsubsection{Créer une base de données orientée document }
+
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+Ce module sera responsable de la création de la base de données orientée document, contenant des données au format JSON.
+\subsubsection{Se connecter à la base de données orientée document }
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+\begin{itemize}
+\item La base de données orientée document sera en charge des échanges à travers un socket spécifique.
+\item La base de données orientée document recevra les logs de jeu au format JSON.
+\item La base de données orientée document recevra les demandes du programme relatif à chaque élément de données qu'il contient.
+\item La base de données orientée document enverra les résultats des demandes effectuées par le programme.
+\end{itemize}
+
+
+\subsubsection{Compression}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = moyen}\\
+
+La base de données orientée document contiendra la plupart des données et un certain niveau de compression devra être appliquée.
+La base de données que nous allons utiliser est focalisée sur mongodb, et elle offre 2 niveaux de compression \textit{Zlib} et \textit{Snappy}.
+Au cours du développement \textit{Snappy} est utilisé car il offre une meilleure performance.
+Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du log.
+
+\subsubsection{Sauvegarder le game-log}
+
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+\begin{itemize}
+\item La base de données orientée document permet de convertir la structure log de jeu dans un document au format JSON.
+\item Les données fournies au format JSON seront stockées dans la base de données.
+\end{itemize}
+%partie de python à discuter
+\subsection{Analyse des données}
+\subsubsection{Recueillir des données}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+\begin{itemize}
+
+\item L'analyseur de données va convertir les résultats de la requête dans un format utilisable par le module de plotting.
+\item Si les données sont simples à lire (par exemple: un numéro, un nom, une phrase), l'analyseur de données sera tout simplement envoyer le résultat au format texte.
+\item La dernière requête sera mémorisée avec son résultat afin de gagner du temps si la prochaine requête faite par l'utilisateur est le même.
+\item Si l'utilisateur souhaite appliquer une fonction aux logs de jeu, le programme demandera les logs de jeu et appliquera la fonction a chaque log
+\end{itemize}
+
+\subsubsection{restorer le game-log}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = moyen}\\
+
+Cette fonction est responsable pour restaurer l'information manquante sur les logs analysés, en utilisant la déduction basique sur la base des données obtenues par le log.\\
+En cas d'un en-tête du jeu manquant ou partie manquante:
+  \begin{itemize}
+\item Gagnants / cartes de victoire / points de victoire manquant: le programme peut garder la trace des cartes détenues par les joueurs pendant le jeu afin de savoir combien de cartes victoire qu'ils ont à la fin de la partie.
+\item Market manquant: Le programme peut garder la trace des cartes achetées au cours du jeu afin de reconstituer partiellement ou totalement les cartes disponibles sur Market.
+\item Cartes Gone: Comme avec les données manquantes de Market, le programme permet de garder une trace de cartes achetées et compter la quantité achetée pour chaque carte, si le montant maximum de cartes est acheté, la carte a disparu à la fin de la partie.
+\item Nom du joueur manquant: le jeu se déplace partie d'un log assure également le suivi des noms des joueurs, le programme sera tout simplement de les restaurer dans l'en-tête.
+\item Cartes de joueur: le programme permet de garder une trace des actions effectuées au cours du jeu par rapport aux cartes de joueurs et les ajouter dans cette liste.
+  \end{itemize}
+
+\iffalse
+\subsubsection{Plotting}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+
+Le module de plotting va obtenir les données converties obtenues après le processus de recueillir des données et de les tracer dans une interface graphique. Ce module va fonctionner d'une manière similaire de \textit{GnuPlot}.
+\fi
+
+\subsubsection{Calculer l'\textit{\textbf{ELO}}}
+%TODO
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+
+L'analyseur devra calculer l'ELO final de chaque joueur ainsi que son ELO temporaire à l'issue d'une partie.\newline
+pour chaque partie dans l'ordre chronologique, l'analyseur demandera l'ELO initial de ce joueur grace aux données générales du joueur. L'analyseur va ensuite calculer l'ELO de chaque joueur à l'issue de cette partie et les ajouter aux données relatives au log en question et va également mettre à jour l'ELO général des joueurs concernés dans leurs données générales afin de pouvoir continuer à calculer leur évolution.
+
+Plus d'informations sur ELO peuvent être consultés sur \url{https://en.wikipedia.org/wiki/Elo_rating_system}\\
+\iffalse
+%TODO: refaire le diagramme du calcul de l'elo
+Le schéma suivant illustre le processus du calcul de elo:\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/elocalc}\\
+\fi
+\subsubsection{Reconnaître les stratégies}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = moyen}\\
+
+Le wiki de dominion décrit quelques stratégies qui peuvent être utilisés dans le jeu.\\Par exemple :\\
+Big Money\\
+Beyond Silver\\
+Penultimate Province Rule\\
+Pour plus de détails sur \url{http://wiki.dominionstrategy.com/index.php/Strategy}\\
+
+
+
+\textbf{Cette image décrit le processus de décision associé à la stratégie Big Money}\\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/big-money}\\
+%The analyzer has to recognize when a player buys only money cards and specific cards related to the big money strategy. It also has to keep track of the remaining provinces to be bought.\\
+L'analyseur devra être en mesure de reconnaître quelle stratégie a été utilisée sur un match donné (si une  stratégie a été utilisée) et générer des statistiques.\\
+Plus de détails \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
+
+Afin de reconnaître la stratégie Beyond Silver ou Big Money, l'analyseur doit reconnaître lorsque certains types de cartes sont achetées, la liste de ces cartes peuvent être trouvée sur : \url{http://wiki.dominionstrategy.com/index.php/Silver#Beyond_Silver} et \url{http://wiki.dominionstrategy.com/index.php/Big_Money}\\
+
+Afin de reconnaître que Penultimate Province Rule est respecté (comme expliqué à \url{http://dominionstrategy.com/2011/03/28/the-penultimate-province-rule/}), l’analyseur doit garder une trace de la quantité de Points de Victoire de chaque joueur à chaque tour.
+
+\subsubsection{Reconnaître le Greening}
+\paragraph*{Description et priorité}
+\textbf{Niveau de priorité = haute}\\
+
+L'analyseur doit être capable de reconnaître le moment de \textit{\textbf{greening}} sur chaque match.
+En savoir plus à propos de \textit{\textbf{greening}} sur \url{http://wiki.dominionstrategy.com/index.php/Greening}.\\
+Le programme va reconnaître quand le greening commence en détectant lorsque les cartes de victoire commencent à être achetées.
 
 \newpage
 
 \section{Besoins non-fonctionnels}
 
-Comme précédemment, nous avons choisi de distinguer deux catégories pour les besoins non-fonctionnels. D'une part, nous avons les besoins non-fonctionnels pour les [...], et d'autre part ceux pour [...]. Nous avons aussi pris en compte les contraintes de développement, que nous détaillerons à la fin de cette partie.
+\subsection{Besoins de performance}
 
-\subsection{Sous-partie 1}
+Aucun besoin de performance spécifique n’a été fait par le client. Mais pour l'analyseur le temps d’exécution  doit être inférieur à une heure.\\
+L'utilisateur doit être capable de parcourir le processus d'analyse sur un ensemble de données précis sans devoir attendre que la même requête soir refaite.
 
-Bla\\
+\subsection{Fiabilité}
+Le client demande qu'un maximum de logs soient récupérés, la totalité des logs ne pourra pas être parsé mais une marge de 5 à 10\% de logs peut être ignorée.\newline
+En revanche lorsque un log est parsé, le programme devra récuperer 100\% des données présentes de celui-ci et si possible restaurer les informations non présentes dans le log de départ.
+\subsection{Attributs de qualité de logiciels}
 
-Aperçu du rendu souhaité :
+Le programme devra pouvoir lancer la phase initiale de parsing en une seule ligne de commande.\\
+Les fonctions présentes dans la librairie à l'attention de l'utilisateur devront avoir un nom clair et facile à comprendre.\\
+Les données générées par l'analyseur n’ont pas besoin à être lisibles par l'homme.\\
+Les game log générés devront pouvoir être analysés par l'utilisateur afin de permettre la plus grande souplesse possible dans le traitement des logs.
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[height=10cm]{besoins/rendu}
-\end{center}
-\caption{Rendu attendu}
-\end{figure}
+\section{Besoins organisationnels}
 
-\subsection{Sous-partie 2}
+La répartition des tâches du projet et l'estimation de la durée de chacune d'elle sont présentées sur le planning suivant:\\
 
-Bla
+\subsection{Planning prévisionnel}
+
+\includegraphics[scale=0.45,keepaspectratio]{planning}\\
+
+\subsection{Diagramme de Gantt}
+
+\includegraphics[scale=0.45,keepaspectratio]{gantt}\\
 
 \newpage
-
+\iffalse
 \section{Développement}
 
 Intro
@@ -96,3 +345,4 @@ Bla\\
 \end{center}
 \caption{Tableau récapitulatif des tests}
 \end{figure}
+\fi
