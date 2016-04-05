@@ -34,7 +34,7 @@ Une seconde librairie proposera une solution à l'utilisateur pour effectuer des
 \item appliquer une fonction spécifiée par l'utilisateur aux logs récupérés par une requète de l'utilisateur. La fonction spécifiée recevra un log et pourra travailler sur le log en question
 \item générer l'ELO de chaque joueur pour chaque partie ainsi qu'un elo global de chaque joueur
 \item détecter les différentes stratégies utilisées par les joueurs lors d'une partie ou de l'ensemble des parties
-\item repérer quand le \texti{greening} survient
+\item repérer quand le \textit{greening} survient
 \end{itemize}
 
 Les informations relatives au stratégies et au \textit{greening} seront couvertes un peu plus tard dans le rapport.
@@ -168,7 +168,7 @@ La base de données que nous allons utiliser est focalisée sur mongodb, et elle
 Au cours du développement \textit{Snappy} est utilisé car il offre une meilleure performance.
 Mais le programme final devrait donner à l'utilisateur la possibilité de choisir le niveau de compression lors du démarrage de l'analyse du log.
 
-\subsubsection{Sauvegarder game-log}
+\subsubsection{Sauvegarder le game-log}
 
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
@@ -189,7 +189,7 @@ Mais le programme final devrait donner à l'utilisateur la possibilité de chois
 \item Si l'utilisateur souhaite appliquer une fonction aux logs de jeu, le programme demandera les logs de jeu et appliquera la fonction a chaque log
 \end{itemize}
 
-\subsubsection{restorer game-log}
+\subsubsection{restorer le game-log}
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = moyen}\\
 
@@ -287,7 +287,7 @@ La répartition des tâches du projet et l'estimation de la durée de chacune d'
 \includegraphics[scale=0.45,keepaspectratio]{gantt}\\
 
 \newpage
-
+\iffalse
 \section{Développement}
 
 Intro
@@ -345,3 +345,4 @@ Bla\\
 \end{center}
 \caption{Tableau récapitulatif des tests}
 \end{figure}
+\fi

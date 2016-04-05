@@ -4,37 +4,50 @@ Dans cette partie nous allons tout d'abord nous pencher sur le fonctionnement et
 
 \section{Parser}
 
-Cette partie du projet est écrite en java, nous avons utilisé JUnit afin de mener à bien ces tests. De plus le dépôt git est muni d'un outil d'intégration continue (Travis) qui est assoscié à nos tests afin de garantir que le développement ne produit pas d'erreurs sur le fonctionnement du programme.
+Cette partie du projet est écrite en java, nous avons utilisé JUnit afin de mener à bien ces tests unitaires. De plus le dépôt git est muni d'un outil d'intégration continue (Travis) qui est assoscié à nos tests afin de garantir que le développement ne produit pas d'erreurs sur le fonctionnement du programme. \\
+
+En plus on a faire l'analyse de couverture en utilisant le plugin Cobertura Maven qui nous a aider à détecter les points plus faibles ou niveau de test et ainsi proposer des autres tests unitaires pour avoir un meilleur couverture.
+
 
 \subsection{Politique de tests}
 
-Du fait de l'utilisation de java, pour chaque classe non-utilitaire un premier test vérifie systématiquement que la création des objets fonctionne correctement, une fois ce critère validé, des tests spécifiques à chaque classe sont effectués en fonction des fonctionnalités qu'elles remplissent.
+Du fait de l'utilisation de java, pour chaque classe non-utilitaire un premier test vérifie systématiquement que la création des objets fonctionne correctement, une fois ce critère validé, des tests spécifiques à chaque classe sont effectués en fonction des fonctionnalités qu'elles remplissent.\\
+
+Le but de nos test est de verifier l'extraction des donnéees des logs, pour cela, nous avons choisi deux logs réels représentatifs de chaque version et avons appliqué la stratégie suivante:  \\
+En premier lieu nous avons réalisé des test pour verifier la bonne detection de la version pour les différents types de version. \\
+Ensuite nous avons pris chaque donnée de la structure et avons validé qu'elle ne soit pas vide, dans le cas où l'élément est une liste, nous vérifions que le nombre d'éléments correspond, et finalement pour les éléments carte/quantité, comme par exemple \textit{victory cards} ou \textit{market} nous vérifions que le couple nom, valeur corresponde.
+
+\subsection{Tests unitaires}
 
 
 
-\paragraph*{Paragraphe 1 (n'apparaitra pas dans l'index)} Bla
+\subsection{Tests de couverture}
 
-\paragraph*{Paragraphe 2} Bla
+on n'a pas fait des test logHandler
+de la class player on n'a pas fait de tests pour faire la convertion document à object, car pour la partie de java on va juste à ajouter des données en la basse de données, pas de lire de la basse de données et creer un object.
 
-\paragraph*{Paragraphe 3} Bla
 
-\subsection{Sous-partie 2}
+\section{Bugs}
 
-Bla
+\paragraph*{Dictionnaire de Cards} 
 
-\subsection{Sous-partie 3}
+Il existe une classe qui sert à verifier l'existence d'une carte et returne en même temps le nom générique de la carte donnée.\\
+Il y a des problèmes avec les cartes dont le pluriel change radicalement du singulier. par exemple les cartes Colonies (Colony) et Duchies (Duchy). \\
 
-Bla
+Pour resoudre le bug il faut changer le dictionaire actuelmement implementé, pour ajouter la convertion de cartes en pluriel qui sont des cas atypiques.
 
-\section{Partie 2}
+Pour la classe logReaderAbs, il y a des actions qui ne sont pas testées car, dans les logs selectionnés pour les tests il n'existe pas toutes les actions possibles pour les Joueurs, une solution serait de modifier le .
 
-Intro
+\paragraph*{Nom de Joueurs} 
 
+Dans les logs nous avons trouvé des noms de joueurs très dificiles à traiter car ils ont beaucoup de caractères spéciaux ainsi que des noms explicitement ecrits pour casser des programmes,
+par exemple System.out.println("hola"), ou ;) ou même , des noms avec des mots reservés pour les langages de programmation.
+
+
+\iffalse
 \subsection*{Sous-partie 1 ('apparaitra pas dans l'index)} Bla
 
-\paragraph*{Paragraphe 1 ('apparaitra pas dans l'index)} Bla
 
-\paragraph*{Paragraphe 2} Bla
 
 \paragraph*{Paragraphe 3} Bla
 
@@ -59,3 +72,4 @@ Bla
   \caption{Différents screenshots quelque chose, en gallerie}
   \label{fig:gallerie1}
 \end{figure}
+\fi
