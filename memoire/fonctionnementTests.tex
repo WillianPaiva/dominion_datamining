@@ -6,7 +6,7 @@ Dans cette partie nous allons tout d'abord nous pencher sur le fonctionnement et
 
 Cette partie du projet est écrite en java, nous avons utilisé JUnit afin de mener à bien ces tests unitaires. De plus le dépôt git est muni d'un outil d'intégration continue (Travis) qui est assoscié à nos tests afin de garantir que le développement ne produit pas d'erreurs sur le fonctionnement du programme. \\
 
-En plus on a faire l'analyse de couverture en utilisant le plugin Cobertura Maven qui nous a aider à détecter les points plus faibles ou niveau de test et ainsi proposer des autres tests unitaires pour avoir un meilleur couverture.
+De plus nous avons effectué des tests de couverture en utilisant le plugin Cobertura Maven qui nous a aidé à détecter les points plus faibles au niveau des tests et ainsi proposer d'autres tests unitaires pour avoir une meilleur couverture.
 
 
 \subsection{Politique de tests}
@@ -22,14 +22,12 @@ Ensuite nous avons pris chaque donnée de la structure et avons validé qu'elle 
 
 
 \subsection{Tests de couverture}
+%TODO: ajouter les images pour les tests de couverture
+Nous n'avons pas pu effectuer de tests pour la classe LogHandler par manque de temps.\\ Le test de conversion du document dans le serveur MongoDb vers l'objet n'est pas nécesssaire car le parser se contente d'ajouter des éléments vers la base de données sans jamais récupérer des données déja écrite. Dans le cas ou l'évolution du projet amènerait à des lectures de données depuis la partie Java, il faudra créer ce test.
 
-on n'a pas fait des test logHandler
-de la class player on n'a pas fait de tests pour faire la convertion document à object, car pour la partie de java on va juste à ajouter des données en la basse de données, pas de lire de la basse de données et creer un object.
+\section{Bugs rencontrés}
 
-
-\section{Bugs}
-
-\paragraph*{Dictionnaire de Cards} 
+\paragraph*{Dictionnaire de Cartes} 
 
 Il existe une classe qui sert à verifier l'existence d'une carte et returne en même temps le nom générique de la carte donnée.\\
 Il y a des problèmes avec les cartes dont le pluriel change radicalement du singulier. par exemple les cartes Colonies (Colony) et Duchies (Duchy). \\
@@ -43,6 +41,46 @@ Pour la classe logReaderAbs, il y a des actions qui ne sont pas testées car, da
 Dans les logs nous avons trouvé des noms de joueurs très dificiles à traiter car ils ont beaucoup de caractères spéciaux ainsi que des noms explicitement ecrits pour casser des programmes,
 par exemple System.out.println("hola"), ou ;) ou même , des noms avec des mots reservés pour les langages de programmation.
 
+
+\section{Module d'analyse des donnée}
+Cette partie du projet écrite en Python est cruciale car c'est ce qui sera utilisé par l'utilisateur. Nous avons utilisé le module unittest pour effectuer nos tests unitaires ainsi que mongomock pour simuler l'utilisation d'un serveur MongoDB. Les tests de couverture ont été effectués à l'aide de pytest
+
+\subsection{Politique de tests}
+Nous avons testé le module Match et Tools afin de vérifier leur bon fonctionnement, les tests effectués sont des tests unitaires. Pour effectuer nos tests, nous avons produit un log prédéfini a comparer au résultat des tests effectués.
+
+\subsection{Tests unitaires}
+\paragraph{module Match}
+Trois tests unitaires ont été effectués:
+\begin{itemize}
+\item un test de comparaison du nom des joueurs.
+\item un test de comparaison du log a proprement parler, c'est à dire les actions des joueurs au cours de la partie
+\item un test de comparaison des informations du header.
+\end{itemize}
+
+Ces trois tests passent sans poser de problèmes.
+
+\paragraph{Module Tools}
+Trois tests unitaires ont été effectués:
+\begin{itemize}
+\item un premier test permet de vérifier la bonne crétation de la pseudo base de données (utilisation de mongomock).
+\item un second test vérifie la bonne création des informations gloabales pour chaque joueur présent dans le log test (2 joueurs).
+\item le troisième test vérifie que la fonction de calcul d'elo s'applique correctement ainsi que la détection du \textit{greening}.
+\end{itemize}
+
+\subsection{Tests de couverture}
+Le résultat des tests de couverture est le suivant:\\
+\includegraphics[scale=0.35,keepaspectratio]{./coverage_python_code}
+Nous ne couvrons pas totalement le module Tools, cela s'explique par le fait que nous n'avons pas fait de tests sur la reconaissance des stratégies.\\
+Le module MongoInterface n'est pas entièrement couvert non plus, car nous ne testons pas la création d'index et de collections.
+
+
+\paragraph{conclusions}
+Par manque de temps, nous n'avons pas pu effectuer plus de tests mais une suite logique à ces quelques tests unitaires serait de produire des logs pouvant poser problème, par exemple avec des caractères spéciaux ou bien des mots clefs relatifs au langage python. Concernant les test unitaires des outils, d'autres tests pourraient être effectués pour la detection des stratégies ou bien pour des valeurs d'ELO ambigües.
+
+
+
+\subsection{Bugs rencontrés}
+Du fait du peu de tests, nous n'avons pas rencontré de bugs sur ces tests mais les pistes évoquées dans la partie tests de couverture ne manqueront pas de révéler des faiblesses potentielles dans le code produit.
 
 \iffalse
 \subsection*{Sous-partie 1 ('apparaitra pas dans l'index)} Bla
