@@ -22,8 +22,19 @@ Ensuite nous avons pris chaque donnée de la structure et avons validé qu'elle 
 
 
 \subsection{Tests de couverture}
-%TODO: ajouter les images pour les tests de couverture
-Nous n'avons pas pu effectuer de tests pour la classe LogHandler par manque de temps.\\ Le test de conversion du document dans le serveur MongoDb vers l'objet n'est pas nécesssaire car le parser se contente d'ajouter des éléments vers la base de données sans jamais récupérer des données déja écrite. Dans le cas ou l'évolution du projet amènerait à des lectures de données depuis la partie Java, il faudra créer ce test.
+Voici les resultats obtenus lors des tests de couverture de la partie Parser du projet:
+
+\includegraphics[scale=0.35,keepaspectratio]{./coverage_GameDataStructure}
+
+Dans la partie structure de données n'avons pas testé l'utilisation d'actions successives dans un même tour (combo). L'autre portion de code non testée correspond à la conversion des données d'un joueur contenues dans le serveur vers un objet de type Player, ce cas de figure ne se produit jamais avec l'utilisation que nous faisons de la partie java mais si jamais le projet venait a évoluer et utilise des données de joueurs déja présentes dans le serveur, il faudra effectuer des tests sur cette partie.
+
+\includegraphics[scale=0.35,keepaspectratio]{./coverage_ReadersAndParser}
+
+Pour la partie préparant le parsing (c'est a dire avant l'utilisation du parser), par manque de temps, nous n'avons pas pu tester le LogHandler. Pour le module FileReader, nous n'avons pas testé les cas aux limites, ce qui entraine la non-couverture des lancement d'exceptions. Pour le module LogReaderFactory, la portion non traitée correspond au cas ou une partie du header d'un log est manquante, il aurrait fallu rajouter un ce cas de figure.
+
+\includegraphics[scale=0.35,keepaspectratio]{./coverage_ReadersLog}
+
+Pour le module LogReaderAbs, nous n'avons pas testé le cas de figure ou plusieurs joueurs gagnent à ex-aequo. Le reste du code non couvert correspond à des cas de figures plus rares, pour obtenir une couverture de ces portions de code, il aurait fallu trouver ou bien construire des logs plus variés. Le temps nous a empêché d'effectuer ce travail assez long.
 
 \section{Bugs rencontrés}
 
