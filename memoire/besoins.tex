@@ -7,10 +7,10 @@ Comme on l'a vu dans l'approche théorique du \textit{Data Mining}, comme dans l
 \section{Besoins fonctionnels} 
 Les besoins fonctionnels sont ceux qui permettent de remplir les conditions du cahier des charges ; ils sont incontournables. Il s'agit donc ici de voir comment on va répondre à la demande formulée à l'origine du projet.
 
-\section{Interface utilisateur}
+\subsection{Interface utilisateur}
 L'interface utilisateur se compose d'une bilibliothèque qui permettra à l'utilisateur d'exploiter les données récupérées par le parser. L'utilisateur pourra appeler les fonctions proposées par le programme ou bien écrire ses propres fonctions et les appliquer aux données.
 
-\subsection{Se connecter à la base de données orientée documents}
+\subsubsection{Se connecter à la base de données orientée documents}
 
 \paragraph*{Description et piorité}
 
@@ -18,78 +18,24 @@ L'interface utilisateur se compose d'une bilibliothèque qui permettra à l'util
 
 Cette bibliothèque offrira des fonctions simples d'accès en lecture/écriture sur la base de données ; de ce fait; cette librairie pourra:
 \begin{itemize}
-\item récupérer un \textit{Log} ou les informations générales d'un joueur
-\item mettre à jour les données relatives à un \textit{Log} ou aux informations générales d'un joueur
+\item récupérer un \textit{log} ou les informations générales d'un joueur.
+\item mettre à jour les données relatives à un \textit{log} ou aux informations générales d'un joueur.
 \item créer de nouvelles données issues des analyses effectuées.
 \end{itemize}
 
-\subsection{Outils d'analyse}
+\subsubsection{Outils d'analyse}
 
 \paragraph*{Description et piorité}
 
 \textbf{Niveau de priorité = haute}
 
-Une seconde fonctionnalité de la  bibliothèque proposera une solution à l'utilisateur pour effectuer des analyses prédéfinies sur les données récupérée, ainsi qu'un moyen d'appliquer de manière générale une analyse créée par l'utilisateur. Elle pourra donc:
+Une seconde fonctionnalité de la  bibliothèque proposera une solution à l'utilisateur pour effectuer des analyses prédéfinies sur les données récupérées, ainsi qu'un moyen d'appliquer de manière générale une analyse créée par l'utilisateur. Elle pourra donc:
 \begin{itemize}
-\item appliquer une fonction spécifiée par l'utilisateur à une liste de documents récupérés par une requête qu'il aura posée. La fonction spécifiée recevra un \textit{Log} et pourra travailler sur le document en question
-\item générer l'ELO de chaque joueur pour chaque parti, ainsi qu'un ELO global de chaque joueur
-\item détecter les différentes stratégies utilisées par les joueurs lors d'une partie ou de l'ensemble des parties
-\item repérer quand le \textit{greening} survient
+\item appliquer une fonction spécifiée par l'utilisateur à une liste de documents récupérés par une requête qu'il aura posée. La fonction spécifiée recevra un \textit{log} et pourra travailler sur le document en question.
+\item générer l'ELO de chaque joueur pour chaque partie, ainsi qu'un ELO global de chaque joueur.
+\item détecter les différentes stratégies utilisées par les joueurs lors d'une partie ou de l'ensemble des parties.
+\item détecter le moment auquel le \textit{greening} survient, c'est a dire le tour ou les joueurs commencent à acheter des <<cartes de victoire>>.
 \end{itemize}
-
-\iffalse
-\section{Interface utilisateur}
-%TODO: retravailler cette portion
-L'interface utilisateur du programme sera composée d'un exécutable (\textit{dominionmining}minière de domination) qui sera exécuté avec certains paramètres pour réaliser l'action souhaitée. Le schéma ci-dessous représente les différentes interactions disponibles pour l'utilisateur:\\
-
-\includegraphics[scale=0.45,keepaspectratio]{diaRessources/UseCaseParsing}\\
-Avant l'utilisation de toutes les fonctionnalités du programme, l'utilisateur doit lancer l'analyse.
-\subsection{Lancement de l'analyse du log}
-\subsubsection{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-\begin{itemize}
-  \item L'utilisateur devra placer tous les logs compressés (fichiers tar.bz2) destinés à  être analysées dans un dossier spécifique.
-  \item si aucune compression n'est donnée la compression par défaut est \textit{snappy}.
-    \item Pour des fins de test, afin d'éviter d'avoir un 4 heures étape d'analyse, l'utilisateur peut spécifier un pourcentage des logs pour être analysée. en spécifiant une valeur comprise entre 0 et 100. l'analyseur choisira au hasard les logs de ceux qui sont prévus et les analyser, en créant une base de données utilisable pour des tests supplémentaires.
-    \item Une fois que l'analyse est effectuée un message sera affiché sur la console (traitement de fait).
-
-\end{itemize}
-
-\subsection{Statistiques demandées}
-\subsubsection{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-La demande d'une statistique peut être faite en tapant les états de \textit{dominionmining (paramètres)}.  \\
-Les noms de stratégie possibles sont: big money, pen province, beyond silver.\\
-Si d'autres stratégies sont reconnues par le programme, ils seront ajoutés à la liste.\\
-La liste des paramètres qui seront possible d'utiliser sera déterminée dans le futur.\\
-
-Le retour d'une statistique peut être un graphique affiché dans une fenêtre ou exportés vers un fichier. Si sa une valeur unique, un nom ou une phrase, il sera retourné à l'invite.
-
-\subsection{Mappage des données de jeu}
-
-Afin de permettre à l'utilisateur de demander des statistiques spécifiques concernant un jeu, le programme peut être exécuté afin de générer des logs de jeu simplifiées et un script python sera appliqué à ce log. Cela permettrait une plus grande flexibilité dans le type de statistiques affichables par le programme.
-\begin{itemize}
-\item Le programme sera lancé en utilisant la commande suivante: \textit{dominionmining data\_to\_query user\_script.py}
- \item Le script python sera appliquée au résultat généré et retourner les statistiques demandées par l'utilisateur.
-\item Le fichier généré contenant les résultats de la requête aura le format suivant:
-\begin{itemize}
-\item Le nom du fichier produit est \textit{game.txt}
-\item Le log simplifié contiendra chaque action effectuée par le joueur, une action par ligne. Liste des actions et leur format:
-\begin{itemize}
-\item Révéler une carte: \textit{joueur\_x révèle carte\_nom}
-\item Piocher des cartes: \textit{joueur\_x jete n cartes}
-\item Acheter une carte: \textit{joueur\_x buys carte\_name}
-\item Jeter des cartes: \textit{joueur\_x trashes n cartes}
-\item Mettre une carte \textit{joueur\_x puts carte\_name}
-\item Gagner une carte: \textit{joueur\_x gains carte\_name}
-\item Jouer une carte: \textit{joueur\_x jouer une carte\_name}
-
-\end{itemize}
-\end{itemize}
-\end{itemize}
-\fi
-
-
 
 \subsection{Modélisation des données}
 La première démarche consistait à modéliser les données disponibles pour créer une cohérence entre tous les formats existants. Il fallait commencer par décompresser les données, même si, comme on l'a vu, cela ne pouvait être fait que par "tranches" de temps (journées de \textit{Logs}) à cause des ressources mémoire disponibles. 
@@ -132,7 +78,7 @@ Un aperçu des données devant être reconnues par le parser est représenté da
 \item Player Name: nom du joueur.
 \item Victory points: nombre de points à la fin de la partie.
 \item Player cards: liste des cartes obtenues à la fin de jeu avec des noms et de quantités differents.
-\item Victory cards: liste des cartes de victoire le joueur avec le acheté.
+\item Victory cards: liste des cartes de victoire que le joueur a acheté.
 \item Trash: liste des cartes qui sont jetés à la fin de la partie.
 \item Game Moves: liste des actions effectuées pendant chaque tour d'un joueur.
 \end{itemize}
@@ -190,14 +136,7 @@ En cas d'un en-tête du jeu manquant par exemple, on utilisera la stratégie sui
 \item \textit{Cartes de joueur}: le programme garde une trace des actions effectuées au cours du jeu en ce qui concerne les cartes de joueurs (actions, tirage,...) et d'en garder la liste.
   \end{itemize}
 
-
-\subsubsection{Plotting}
-\paragraph*{Description et priorité}
-\textbf{Niveau de priorité = haute}\\
-
-La bibliothèque devra comporter une fonctionnalité de \textit{plotting} qui permet de visualiser  les données converties obtenues.
 \subsubsection{Calculer l'\textit{\textbf{ELO}}}
-%TODO
 \paragraph*{Description et priorité}
 \textbf{Niveau de priorité = haute}\\
 
@@ -245,7 +184,7 @@ Les besoins non-fonctionnels sont des possibilités qui n'ont pas été express�
 
 \subsection{Besoins de performance}
 
-Aucun besoin de performance spécifique n’a été exprimé par le client. Cependant, il tombe sous le sens qu'il convient d'optimiser l'exécution des différentes tâches en termes de rapidité et d'accessibilité pour l'utilisateur.\\
+Aucun besoin de performance spécifique n’a été exprimé par le client. Cependant, il tombe sous le sens qu'il convient d'optimiser l'exécution des différentes tâches en termes de rapidité et d'accessibilité pour l'utilisateur, ainsi que pour faciliter le développement.\\
 
 
 \subsection{Fiabilité}
