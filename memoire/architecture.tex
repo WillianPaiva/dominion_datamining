@@ -12,20 +12,24 @@ Cette section concerne la description de l'architecture du projet, en abordant t
   \caption{représentation de l'architecture globale du projet}
 \end{figure}
 
-L'architecture du projet se décompose en 3 parties distinctes et indépendantes. Un premier élément, développé en Java, est responsable du parsing destiné à analyser et structurer les données, dans un format compatible avec la base de données, et de s'en servir pour l'alimenter. 
+L'architecture du projet se décompose en 3 parties distinctes et indépendantes. Un premier élément, développé en Java, est responsable du parsing destiné à analyser et structurer les données, dans un format compatible avec la base de données, et de s'en servir pour l'alimenter.\\
 
 %charger les données e première partie permet de charger les données contenues dans les Logs puis de les inscrire dans la base de données.\newline
-%La base de données stocke ces données et peut en recevoir de nouvelles ou bien répondre aux requetes qui lui sont soumises.\newline
+La base de données stocke ces données et peut en recevoir de nouvelles ou bien répondre aux requetes qui lui sont soumises.\\
 
-La dernière partie correspond à une bibliothèque en Python qui met à disposition des outils permettant de raffiner et d'analyser les données disponibles dans la base. 
+La dernière partie correspond à une bibliothèque en Python qui met à disposition des outils permettant de raffiner et d'analyser les données disponibles dans la base. \\
 
 %permettant à l'utilisateur d'effectuer des analyses prédéfinies ou bien de produire ses propres analyses. Pour cela, l'utilisateur dispose de fonctions de communications avec la base de données.
 
 \section{Parser}
 %Cette partie est écrite en java, l'autre possibilité que nous avions était de coder le parser en python mais après quelques petits tests nous nous sommes rendus compte que le parser en python serait beaucoup trop lent. Voici l'architecture de la partie Java de notre projet:
-
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/nouvelleArch}\\
-En raison d'évolutions constantes du serveur du jeu, les formats des \textit{Logs} présentent des petites différences. Plusieurs tranches de \textit{Logs} existent, qui traduisent les changements apportés aux formats au fil du temps. 
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/nouvelleArch}
+  \end{center}
+  \caption{Représentation de l'architecture de la partie parser}
+\end{figure}
+En raison d'évolutions constantes du serveur du jeu, les formats des \textit{Logs} présentent de petites différences. Plusieurs tranches de \textit{Logs} existent, qui traduisent les changements apportés aux formats au fil du temps. 
 Pour résoudre ce problème il a fallu identifier les tranches, leur donner un numéro de version, et créer un \textit{LogReader} adapté à chaque version. A cette fin, il a été utilisé un \textit{design pattern factory}.
 Pour la création des \textit{LogReaders}, une classe abstraite, la \textit{LogReaderAbs} a été créée, comportant toutes les méthodes utilisées pour le parsing qui sont communes à l'ensemble des \textit{LogReaders}. 
 
@@ -38,11 +42,15 @@ MongoDB a été choisi pour gérer les documents ainsi générés car ses caract
 %Elle est capable de recevoir de nouvelles données à stocker, de modifier sa structure (changement ou ajout de champs dans les données) et modifier les données contenues.
 
 \section{Bibliothèque}
-Cette partie est écrite en Python à la demande du client. Plusieurs bibliothèques, contenant des outils nécessaires pour de travailler sur les données acquises lors du parsin, sont proposées. Il s'agira de la structure des données, de l'interface de communication avec la base de données, et d'outils utilisables par le client.
+Cette partie est écrite en Python à la demande du client. Plusieurs bibliothèques, contenant des outils nécessaires pour travailler sur les données acquises lors du parsing, sont proposées. Il s'agira de la structure des données, de l'interface de communication avec la base de données, et d'outils utilisables par le client.
 
 Voici un schéma regroupant les différents modules et leurs liens:
-
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/Python_arch}\\
+\begin{figure}[!h]
+  \begin{center}
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diaRessources/Python_arch}\\
+  \end{center}
+  \caption{Représentation de l'architecture de la partie Analyse des données}
+\end{figure}
 
 \subsection{Structure des données}
 Il s'agissait de créer des structures de données facilitant le travail à effectuer sur celles-ci. Un type de données est appelé \textit{Match} ; il correspond aux documents "Log" ; un autre type est dénommé \textit{SimplifiedPlayer}, et correspond aux données concernant les joueurs et leur ELO final. 
@@ -60,10 +68,10 @@ Cette interface a été créée pour faciliter la communication du client avec l
 Il s'agit d'un ensemble de fonctions destinées à raffiner et analyser les données de la base. On y trouve les fonctionnalités suivantes : 
 \begin{itemize}
 \item génération de \textit{SimplifiedPlayers} dans la base de données
-\item calcul d(ELO pour chaque \textit{SimplifiedPlayers} et chaque \textit{Log}
+\item calcul d'ELO pour chaque \textit{SimplifiedPlayers} et chaque \textit{Log}
 \item génération de courbes d'ELO pour un joueur donné
 \item génération de listes contenant les \textit{greenings} pour chague \textit{Log} de la base de données
-\item tentative de reconnaître les stratégies \textit{BigMoney} dans les \textit{Logs} (outil non fonctionnel)
+\item tentative de reconnaissance des stratégies \textit{BigMoney} dans les \textit{Logs} (outil non fonctionnel)
 \end{itemize}
 
 \section{Extensions possibles}
@@ -71,143 +79,3 @@ Le projet étant arrivé à la phase où on pourrait commencer à exploiter les 
 
 %Sur la partie parser, il est très facile d'ajouter une nouvelle version de parser permettant de lire par exemple des logs d'un nouvelle version du serveur de jeu, cela permettrait de regouper des données sur une plus grande période et donc d'obtenir des statistiques plus intéressantes.\newline
 %ur la partie Python, il est possible d'ajouter de nouvelles fonctions d'analyse des données, des données peuvent également être rajoutées pour les logs mais il faudra faire attention à la lecture de ces données car les objets ne permettrons pas un accès facile à celles-ci (sauf si l'utilisateur modifie également les structures de données).
-
-\iffalse
-Dans cette partie nous cherchons à décrire dans un premier temps [...], puis, c[...].
-
-\section{Partie 1}
-
-Intro
-
-\subsection{Sous-partie 1}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[height=12cm]{autre_partie/image1}
-Pend{center}
-\caption[autre partie générale]{autre partie image 1\protect\footnotemark}
-%\floatfoot{Source: (Citation command)}
-% avec le package "floatrow"
-\end{figure}
-
-%footnote protected pour apparaitre dans la légende d'une image
-\footnotetext{Schéma d'après : \textit{Auteur 1 \& Propriétaire image}, LICENCE (cf. ref. \cite{cite4})}
-
-\newpage{}
-
-\subsection{Sous-partie 2}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[height=12cm]{autre_partie/image2}
-\end{center}
-\caption[autre partie]{autre partie globale de notre quelque chose}
-\end{figure}
-
-Nous retrouvons ici, blabla\footnote{Application bla - Interface blabla} [...].
-
-\subsubsection{Sous-sous-partie 1}
-
-Le bla (cf. ref. \cite{cite6}) est [...]:
-
-\begin{itemize}
-\item item1;
-\item item2;
-\item item3;
-\item item4;
-\item item5.
-\end{itemize}
-
-\newpage
-
-\subsubsection{Sous-sous-partie 2}
-
-%Les lignes :
-% \setcounter{secnumdepth}{4}
-% \setcounter{tocdepth}{4}
-%dans le fichier "main.tex" permettent de faire en sorte que les paragraphes soient interprété comme des titres de niveau 5
-\paragraph{Paragraphe 1 (agissant comme titre niveau 5)}
-%forcer un saut de ligne
-~\\
-\hskip7mm
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[height=6cm]{autre_partie/image3}
-\end{center}
-\caption[Structure d'unz autre chose]{Structure d'une autre chose\protect\footnotemark}
-\end{figure}
-
-Ce schéma représente bla.
-
-\footnotetext{Schéma et explication d'après le wiki bla (cf. ref. \cite{cite0})}
-
-\paragraph{Paragraphe 2}
-~\\
-\hskip7mm
-
-%fixer les floats précédemment définis
-%\FloatBarrier
-
-Bla
-
-\subparagraph{Sous-paragraphe 1}
-~\\
-\hskip7mm
-
-Bla
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[height=10cm]{autre_partie/image4}
-\end{center}
-\caption{Diagramme de truc}
-\end{figure}
-
-\subparagraph{Sous-paragraphe 2}
-~\\
-\hskip7mm
-
-Bla\\
-
-Bla
-
-\subparagraph{Sous-paragraphe 3}
-~\\
-\hskip7mm
-
-Bla
-
-\subsubsection{Sous-sous-partie 3}
-
-Bla
-
-\section{Partie 2}
-
-Bla
-
-\footnotetext{D'après le schéma disponible sur la documentfation officielle disponible sur le site blalbla}
-
-Bla
-
-\subsection{Sous-partie 1}
-
-Bla
-
-\subsection{Sous-partie 2}
-
-Bla
-
-\paragraph*{Paragraphe 1 (n'apparaitra pas dans l'index)}
-Bla
-
-\paragraph*{Paragraphe 2}
-Bla
-
-\paragraph*{Paragraphe 3}
-Bla
-
-\subsection{Sous-partie 3}
-
-Bla
-\fi
