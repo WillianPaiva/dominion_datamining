@@ -1,39 +1,29 @@
 \chapter{Analyse de l'existant}
 
-\section{Analyse de l'existant}
-
-\subsection{Description des données}
-Les données qui ont été fournies par le client avaient été compressées au format \textit{tar.bz2}. Un fichier contenait chaque journée du Log, et le total des données compressées se montait à 13 Go. Une fois décompressées, les données faisaient un total de 400 Go. 
-Chaque journée du Log est au format html. 
+\section{Description des données}
+Les données qui ont été fournies par le client avaient été compressées au format \textit{tar.bz2}. Un fichier contenait chaque journée de Logs, et le total des données compressées se montait à 13 Go. Une fois décompressées, les données faisaient un total de 400 Go. 
+Chaque Log est au format html. 
 Chaque \textit{Log} doit contenir : 
 \begin{itemize}
-\item une en-tête contenant le numéro du jeu, et le gagnant
-\item un résumé du match contenant les cartes utilisées pendant le match, et comment le match a fini
-\item un résumé du joueur, contenant toutes les "cartes bonus" du joueur, le \textit{deck} et les points
+\item une en-tête contenant le numéro du jeu, et le gagnant.
+\item un résumé du match contenant les cartes utilisées pendant le match, et comment le match a fini.
+\item un résumé du joueur, contenant toutes les "cartes de victoire" du joueur, le \textit{deck}, les points et le nombre de tours joués.
 \item l'enregistrement des différentes étapes du jeu, qui contient tous les détails des mouvements effectués par les joueurs au cours de la partie.  
 \end{itemize}
 
-\subsection{Incohérences dans les données}
-Les\textit{Logs} présentent des incohérences qui peuvent créer des problèmes pour le développement du parser ; quelques uns des problèmes rencontrés ont été les suivants : 
+\section{Incohérences dans les données}
+Les \textit{logs} présentent des incohérences qui peuvent créer des problèmes pour le développement du parser ; quelques-un des problèmes rencontrés ont été les suivants : 
 \begin{itemize}
-\item \textbf{Numéro de \textit{Log}} : la numération des logs n'était pas unique, ce qui voulait dire qu'on ne pouvait pas l'utiliser pour identifier un log.
+\item \textbf{Numéro de \textit{log}} : la numérotation des logs n'était pas unique, ce qui voulait dire qu'on ne pouvait pas l'utiliser pour identifier un log.
 \item \textbf{Nom d'utilisateur} : les logs font apparaître qu'il n'y avait pas de restriction quant aux noms des joueurs, et un certain nombre de noms de joueurs contiennent des mots-clés et utilisent des caractères spéciaux qui entrent en conflit avec le parser. 
 \item \textbf{Données manquantes} : dans quelques logs, il manque une partie des données(comme par exemple l'en-tête, le résumé du joueur, etc...)
-\item \textbf{Format du \textit{Log}} : la syntaxe utilisée pour saisir les \textit{Logs} n'est pas cohérente, et offre des différences entre différents \textit{Logs}
+\item \textbf{Format du \textit{log}} : la syntaxe utilisée pour saisir les \textit{logs} n'est pas cohérente, et offre des différences entre différents \textit{logs}
 \item \textbf{Compression des données} : comme les données sont compressées, et que le matériel fourni pour travailler sur le projet ne peut gérer les données une fois décompressées, il faudra travailler sur le projet avec des données compressées. Un premier essai de décompression a montré qu'il fallait un minimum de 4 heures pour tout décompresser. Il allait falloir en outre décompresser par tranches et effacer les contenus au fur et à mesure pour pouvoir fonctionner avec le matériel disponible. 
 \end{itemize}
 
+\section{Goko Dominion-tools}
 
-
-
-
-
-
-
-%goko-dominion-tools est le principal outil disponible pour exploiter les logs, mais cette version ne fonctionne plus car les serveurs goko ont été fermés. Les fonctionnalités offertes par cet outil sont très proches de ce que nous voulons proposer, notamment un parsing de logs, une recherche dans ces logs et un leaderboard. Le programme est écrit en python et est disponible sur github.
-%TODO: chercher quelques bots à présneter
-
-%parler de bdd, big data/datamining
+Goko-dominion-tools est le principal outil disponible pour exploiter les logs, cet outil permet essentiellement de parser des logs bruts. Les fonctionnalités offertes par cet outil sont très proches de ce que nous voulons proposer, notamment un parsing de logs, une recherche dans ces logs et un classement. Le programme est écrit en python et est disponible sur github.
 
 %\section{Bilan récapitulatif}
 
